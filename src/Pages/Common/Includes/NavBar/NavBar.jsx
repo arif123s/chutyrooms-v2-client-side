@@ -1,8 +1,11 @@
+import chutyLogo from "../../../../assets/icons/Chuty-Logo.svg"
+import propertyLogo from "../../../../assets/icons/Property.svg"
+import "./NavBar.css"
 
 const NavBar = () => {
     return (
       <div className="navbar bg-base-100">
-        <div className="navbar-start">
+        <div className="">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
@@ -25,7 +28,9 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Item 1</a>
+                <a>
+                  <img src={propertyLogo}></img>
+                </a>
               </li>
               <li>
                 <a>Parent</a>
@@ -43,12 +48,17 @@ const NavBar = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <a className="nav-chuty-logo">
+            <img src={chutyLogo}></img>
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Item 1</a>
+              <a className="bg-[#E8F5ED] text-[#159947]">
+                <img src={propertyLogo}></img>
+                Chuty Property
+              </a>
             </li>
             <li>
               <details>
@@ -67,9 +77,6 @@ const NavBar = () => {
               <a>Item 3</a>
             </li>
           </ul>
-        </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
         </div>
       </div>
     );
