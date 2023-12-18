@@ -1,4 +1,17 @@
 .nav-chuty-logo{
-    width: 165px;
-    height: 60px;
+    width: 150px;
+    height: 56px;
+}
+
+.nav-item:hover{
+/* border:1px solid #128b40; */
+background: #C5E5D1;
+/* background: #159947;
+color: #FFFFFF; */
+}
+
+ .nav-icon{
+margin-right: 4px;
+width: 18px;
+height: 18px;
 }
