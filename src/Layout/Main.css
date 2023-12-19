@@ -5,3 +5,10 @@
 .container{
     width: 1192px;
 }
+
+
+@media (max-width: 575.98px) {
+    .container{
+    width: 100%;
+}
+}
