@@ -1,0 +1,86 @@
+.footer-container {
+  padding-top: 36px;
+  padding-bottom: 36px;
+  background: #159947;
+  color: #ffffff;
+}
+
+.footer-head-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+}
+
+.nav-items-container {
+  margin: auto;
+  margin-top: 32px;
+  display: flex;
+  gap: 50px;
+}
+
+.nav-items-title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28.8px;
+  letter-spacing: 0.6px;
+  margin-bottom: 18px;
+}
+
+.app-google-icon {
+  width: 108px;
+  height: 36px;
+}
+
+.app-google-icon-container {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-item-title {
+  font-size: 14px;
+}
+
+.qr-img {
+  width: 25px;
+  height: 25px;
+  margin-left: 12px;
+}
+
+.divide {
+  width: 1px;
+height: 220px;
+background: #FFFFFF;
+  /* border-left: 1px solid #ffffff;
+  height: 220px; */
+}
+
+.payment-items-container{
+    display: flex;
+    align-items: center;
+}
+
+.payment-items{
+display: grid;
+grid-template-columns: repeat(3,1fr);
+gap: 10px;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.payment-icon{
+    width: 80px;
+/* height: 46px; */
+
+}
+
+.payment-arrow{
+  width: 32px;
+height: 32px;
+}
+
+.discover-items-container{
+  display: flex;
+  gap: 30px;
+}
