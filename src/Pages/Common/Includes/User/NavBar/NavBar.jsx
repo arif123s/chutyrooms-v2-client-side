@@ -73,7 +73,11 @@ const NavBar = () => {
         </div>
 
         {menu && (
-          <div className="py-3 px-2  rounded-md">
+          <div
+            className="py-3 px-2 
+        duration-300
+          "
+          >
             <a className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0">
               Login
             </a>
