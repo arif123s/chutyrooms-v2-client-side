@@ -1,6 +1,6 @@
 .footer-container {
-  padding-top: 36px;
-  padding-bottom: 36px;
+  padding-top: 24px;
+  padding-bottom: 26px;
   background: #159947;
   color: #ffffff;
 }
@@ -9,7 +9,7 @@
   text-align: center;
   font-size: 24px;
   font-weight: 500;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   letter-spacing: 2px;
 }
 
@@ -20,29 +20,31 @@
 }
 
 .nav-items-container {
-  /* width: 100%; */
-  margin: auto;
   margin-top: 32px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(4, 1fr);
+  /* background: blue; */
 }
 
 .download-app-container {
-  width: 220px;
+display: flex;
 }
 
-.nav-items-title {
+.download-app{
+ width: 210px;
+}
+
+.nav-item-title {
   font-size: 18px;
   font-weight: 500;
   line-height: 28.8px;
   letter-spacing: 0.6px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   text-align: center;
 }
 
 .app-google-icon {
-  width: 108px;
+  width: 110px;
   height: 36px;
 }
 
@@ -51,13 +53,10 @@
   gap: 12px;
 }
 
-.nav-item-title {
-  font-size: 14px;
-}
 
 .qr-img {
-  width: 25px;
-  height: 25px;
+  width: 32px;
+  height: 32px;
   margin-left: 12px;
 }
 
@@ -65,12 +64,19 @@
   width: 1px;
   height: 220px;
   background: #50b375;
+  margin-left: 36px;
+  margin-right: 36px;
+}
+
+.payment-container{
+display: flex;
 }
 
 .payment-items-container {
   display: flex;
   align-items: center;
-  width: 230px;
+    justify-content: center;
+  width: 220px;
 }
 
 .payment-items {
@@ -79,6 +85,8 @@
   gap: 10px;
   padding-left: 10px;
   padding-right: 10px;
+  margin-top: 6px;
+
 }
 
 .payment-icon {
@@ -91,16 +99,21 @@
   height: 32px;
 }
 
+
 .discover-container {
-  width: 300px;
+ display: flex;
 }
 
-.discover-items-container {
+.discover-items-container{
+width: 300px;
+}
+
+.discover-items {
   display: flex;
   gap: 30px;
 }
 
-.discover-items-container a {
+.discover-items a {
   font-size: 14px;
 }
 
@@ -110,8 +123,19 @@
   margin-bottom: 8px;
 }
 
+.social-accounts-container{
+  display: flex;
+  gap: 22px;
+  margin-bottom: 12px;
+}
+
+.social-icon{
+  width: 32px;
+  height: 32px;
+}
+
 .subscribe-email-input {
-  width: 160px;
+  width: 170px;
   padding-left: 10px;
   gap: 10px;
   background: #159947;
@@ -120,7 +144,7 @@
   border-radius: 5px 0px 0px 5px;
   font-size: 16px;
   letter-spacing: 0.48px;
-  height: 44px;
+  height: 40px;
 }
 
 .subscribe-email-input::placeholder {
@@ -131,7 +155,7 @@
 
 .subscribe-btn {
   width: 100px;
-  height: 48px;
+  height: 40px;
   padding: 10px;
   border-radius: 0px 5px 5px 0px;
   background: #ffffff;
@@ -139,7 +163,6 @@
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.54px;
-  height: 44px;
 }
 
 .copyright-text{
@@ -147,6 +170,7 @@
   justify-content: flex-end;
   margin: auto;
   margin-top: 40px;
+  font-size: 14px;
 }
 
 
@@ -183,45 +207,46 @@
   }
 
   .download-app-container {
-    width: 220px;
-    margin: auto;
+    display: block;
   }
 
-  .nav-items-title {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 28.8px;
-    letter-spacing: 0.6px;
-    margin-bottom: 18px;
+  .download-app{
+   width: 220px;
+    margin: auto;
+}
+
+  .nav-item-title {
+    font-size: 15px;
+    margin-bottom: 10px;
     text-align: center;
   }
 
   .app-google-icon {
     width: 108px;
-    height: 36px;
+    /* height: 36px; */
   }
 
   .app-google-icon-container {
-    display: flex;
-    gap: 12px;
-  }
-
-  .nav-item-title {
-    font-size: 10px;
+    /* display: flex; */
+    gap: 8px;
   }
 
   .qr-img {
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     margin-left: 12px;
   }
 
   .divide {
-    width: 100%;
-    height: 1px;
-    background: #50b375;
-    border: none;
-  }
+  width: 85%;
+  height: 1px;
+  margin: auto;
+  margin-top: 16px;
+}
+
+.payment-container{
+display: block;
+}
 
   .payment-items-container {
     margin: auto;
@@ -239,7 +264,6 @@
 
   .payment-icon {
     width: 80px;
-    /* height: 46px; */
   }
 
   .payment-arrow {
@@ -247,19 +271,25 @@
     height: 32px;
   }
 
-  .discover-container {
-    width: 300px;
-    margin: auto;
-  }
 
-  .discover-items-container {
+  .discover-container {
+ display: block;
+}
+
+.discover-items-container{
+/* width: 367px; */
+ width: 300px;
+    margin: auto;
+}
+
+  .discover-items {
     /* width: 220px; */
     margin: auto;
     display: flex;
     gap: 30px;
   }
 
-  .discover-items-container a {
+  .discover-items a {
     font-size: 14px;
   }
 
@@ -276,14 +306,8 @@
   .subscribe-email-input {
     width: 160px;
     padding-left: 10px;
-    gap: 10px;
-    background: #159947;
-    color: #ffffff;
-    border: 1px solid #ffffff;
-    border-radius: 5px 0px 0px 5px;
     font-size: 16px;
-    letter-spacing: 0.48px;
-    height: 44px;
+    height: 32px;
   }
 
   .subscribe-email-input::placeholder {
@@ -294,87 +318,340 @@
 
   .subscribe-btn {
     width: 100px;
-    height: 48px;
-    padding: 10px;
-    border-radius: 0px 5px 5px 0px;
-    background: #ffffff;
-    color: #159947;
+    height: 32px;
+    padding: 4px;
     font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.54px;
-    height: 44px;
   }
 
   .copyright-text{
     justify-content: center;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 28px;
 }
 }
 
-
+/****************************
+        Responsive
+****************************/
 
 @media (min-width: 576px) and (max-width: 767.98px) {
+    .footer-container {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .footer-head-title {
+    font-size: 18px;
+    margin-bottom: 14px;
+    letter-spacing: 2px;
+  }
+
+  .custom-hr {
+    background: #50b375;
+    height: 1px;
+    border: none;
+  }
+
+  .nav-items-container {
+    width: 100%;
+    margin: auto;
+    margin-top: 8px;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 8px;
+    justify-content: center;
+  }
+
+  .download-app-container {
+    display: block;
+  }
+
+  .download-app{
+   width: 240px;
+    margin: auto;
 }
+
+  .nav-item-title {
+    font-size: 15px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .app-google-icon {
+    width: 108px;
+    height: 36px;
+  }
+
+  .app-google-icon-container {
+    display: flex;
+    gap: 8px;
+  }
+
+  .qr-img {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+  }
+
+  .divide {
+  width: 85%;
+  height: 1px;
+  margin: auto;
+  margin-top: 16px;
+}
+
+.payment-container{
+display: block;
+}
+
+  .payment-items-container {
+    margin: auto;
+    /* align-items: center; */
+    width: 240px;
+  }
+
+  .payment-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .payment-icon {
+    width: 80px;
+  }
+
+  .payment-arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .discover-container {
+ display: block;
+}
+
+.discover-items-container{
+/* width: 367px; */
+ width: 300px;
+    margin: auto;
+}
+
+  .discover-items {
+    margin: auto;
+    display: flex;
+    gap: 30px;
+  }
+
+  .discover-items a {
+    font-size: 14px;
+  }
+
+  .contact-container {
+    margin: auto;
+  }
+
+  .contact-info {
+    font-size: 14px;
+    letter-spacing: 0.48px;
+    margin-bottom: 8px;
+  }
+
+  .subscribe-email-input {
+    width: 180px;
+    height: 32px;
+  }
+
+  .subscribe-btn {
+    width: 110px;
+    height: 32px;
+    padding: 4px;
+  }
+
+  .copyright-text{
+    justify-content: center;
+    margin: auto;
+    margin-top: 28px;
+}
+}
+
+/****************************
+        Responsive
+****************************/
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .footer-container {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 24px;
+  padding-bottom: 26px;
 }
 
 .footer-head-title {
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  letter-spacing: 2px;
-}
-
-.custom-hr {
-  background: #50b375;
-  height: 1px;
-  border: none;
+  font-size: 22px;
 }
 
 .nav-items-container {
-  /* width: 100%; */
-  margin: auto;
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  margin-top: 32px;
 }
 
 .download-app-container {
-  width: 190px;
+display: flex;
+padding-left: 4px;
+/* background: blue; */
+
 }
 
-.nav-items-title {
-  font-size: 16px;
+.download-app{
+ width: 170px;
+}
+
+.nav-item-title {
+  font-size: 15px;
+  margin-bottom: 4px;
   font-weight: 500;
-  line-height: 28.8px;
-  letter-spacing: 0.6px;
-  margin-bottom: 18px;
-  text-align: center;
 }
 
 .app-google-icon {
-  width: 90px;
+  width: 70px;
   height: 36px;
 }
 
 .app-google-icon-container {
-  display: flex;
-  gap: 4px;
-}
-
-.nav-item-title {
-  font-size: 14px;
+  gap: 8px;
 }
 
 .qr-img {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
+  margin-left: 8px;
+}
+
+.divide {
+  height: 280px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.payment-items-container {
+  width: 160px;
+}
+
+.payment-items {
+  gap: 4px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-top: 6px;
+}
+
+.payment-icon {
+  width: 80px;
+}
+
+.payment-arrow {
+  width: 28px;
+  height: 28px;
+}
+
+.discover-items-container{
+width: 150px;
+}
+
+.discover-items {
+  display: block;
+}
+
+.discover-items a {
+  font-size: 13px;
+}
+
+.contact-container{
+  width: 185px;
+}
+
+.contact-info {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.social-accounts-container{
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.social-icon{
+  width: 28px;
+  height: 28px;
+}
+
+.subscribe-email-input {
+  width: 110px;
+  padding-left: 10px;
+  font-size: 14px;
+  height: 32px;
+}
+
+.subscribe-email-input::placeholder {
+  font-size: 12px;
+}
+
+.subscribe-btn {
+  width: 70px;
+  height: 32px;
+  padding: 4px;
+  font-size: 12px;
+}
+
+.copyright-text{
+  display: flex;
+  justify-content: flex-end;
+  margin: auto;
+  margin-top: 40px;
+  font-size: 14px;
+}
+}
+
+/****************************
+        Responsive
+****************************/
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .footer-container {
+  padding-top: 24px;
+  padding-bottom: 26px;
+}
+
+.footer-head-title {
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+.nav-items-container {
+  margin-top: 32px;
+}
+
+.download-app{
+ width: 210px;
+}
+
+.nav-item-title {
+  font-size: 17px;
+  line-height: 28.8px;
+  margin-bottom: 14px;
+}
+
+.app-google-icon {
+  width: 90px;
+}
+
+.app-google-icon-container {
+  display: flex;
+  gap: 6px;
+}
+
+
+.qr-img {
+  width: 32px;
+  height: 32px;
   margin-left: 12px;
 }
 
@@ -382,43 +659,50 @@
   width: 1px;
   height: 220px;
   background: #50b375;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
+
 .payment-items-container {
-  display: flex;
-  align-items: center;
-  width: 200px;
+  width: 210px;
 }
 
 .payment-items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-  padding-left: 4px;
-  padding-right: 4px;
+  gap: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-top: 6px;
+
 }
 
 .payment-icon {
-  width: 60px;
+  width: 80px;
   /* height: 46px; */
 }
 
 .payment-arrow {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
+
 
 .discover-container {
-  width: 150px;
+ display: flex;
 }
 
-.discover-items-container {
-  display: block;
-  gap: 0px;
-  /* justify-content: center; */
+.discover-items-container{
+width: 225px;
 }
 
-.discover-items-container a {
+.discover-items {
+  display: flex;
+  gap: 10px;
+}
+
+.discover-items a {
   font-size: 14px;
 }
 
@@ -428,9 +712,165 @@
   margin-bottom: 8px;
 }
 
+.social-accounts-container{
+  display: flex;
+  gap: 22px;
+  margin-bottom: 12px;
+}
+
+.social-icon{
+  width: 32px;
+  height: 32px;
+}
+
 .subscribe-email-input {
-  width: 120px;
-  padding-left: 4px;
+  width: 150px;
+  padding-left: 10px;
+  font-size: 16px;
+  height: 36px;
+}
+
+.subscribe-email-input::placeholder {
+  color: #ffffff;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.subscribe-btn {
+  width: 80px;
+  height: 36px;
+  padding: 4px;
+  font-size: 14px;
+}
+
+.copyright-text{
+  display: flex;
+  justify-content: flex-end;
+  margin: auto;
+  margin-top: 40px;
+  font-size: 14px;
+}
+}
+
+
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+
+.footer-head-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+
+.download-app{
+ width: 210px;
+}
+
+.nav-item-title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28.8px;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.app-google-icon {
+  width: 110px;
+  height: 36px;
+}
+
+.app-google-icon-container {
+  display: flex;
+  gap: 12px;
+}
+
+
+.qr-img {
+  width: 32px;
+  height: 32px;
+  margin-left: 12px;
+}
+
+.divide {
+  width: 1px;
+  height: 220px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.payment-container{
+display: flex;
+}
+
+.payment-items-container {
+  display: flex;
+  align-items: center;
+    justify-content: center;
+  width: 220px;
+}
+
+.payment-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 6px;
+
+}
+
+.payment-icon {
+  width: 80px;
+  /* height: 46px; */
+}
+
+.payment-arrow {
+  width: 32px;
+  height: 32px;
+}
+
+
+.discover-container {
+ display: flex;
+}
+
+.discover-items-container{
+width: 300px;
+}
+
+.discover-items {
+  display: flex;
+  gap: 30px;
+}
+
+.discover-items a {
+  font-size: 14px;
+}
+
+.contact-info {
+  font-size: 14px;
+  letter-spacing: 0.48px;
+  margin-bottom: 8px;
+}
+
+.social-accounts-container{
+  display: flex;
+  gap: 22px;
+  margin-bottom: 12px;
+}
+
+.social-icon{
+  width: 32px;
+  height: 32px;
+}
+
+.subscribe-email-input {
+  width: 170px;
+  padding-left: 10px;
+  gap: 10px;
   background: #159947;
   color: #ffffff;
   border: 1px solid #ffffff;
@@ -447,30 +887,16 @@
 }
 
 .subscribe-btn {
-  width: 80px;
+  width: 100px;
   height: 40px;
   padding: 10px;
-  border-radius: 0px 5px 5px 0px;
-  background: #ffffff;
-  color: #159947;
   font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.54px;
-  height: 40px;
 }
 
 .copyright-text{
-  display: flex;
-  justify-content: flex-end;
-  margin: auto;
   margin-top: 40px;
+  font-size: 14px;
 }
-}
-
-@media (min-width: 992px) and (max-width: 1199.98px) {
-}
-
-@media (min-width: 1200px) and (max-width: 1399.98px) {
 }
 
 @media (min-width: 1400px) {

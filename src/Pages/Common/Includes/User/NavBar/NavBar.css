@@ -1,17 +1,68 @@
-.nav-chuty-logo{
-    width: 150px;
-    height: 56px;
+.nav-chuty-logo {
+  width: 150px;
+  height: 56px;
 }
 
-.nav-item:hover{
-/* border:1px solid #128b40; */
-background: #C5E5D1;
-/* background: #159947;
+.nav-item:hover {
+  /* border:1px solid #128b40; */
+  background: #c5e5d1;
+  /* background: #159947;
 color: #FFFFFF; */
 }
 
- .nav-icon{
-margin-right: 4px;
-width: 18px;
-height: 18px;
+.nav-icon {
+  margin-right: 4px;
+  width: 18px;
+  height: 18px;
+}
+
+.menu-mobile{
+    /* display: none; */
+}
+
+.menu-icon{
+    display: none;
+}
+
+@media (max-width: 575.98px) {
+  .nav-chuty-logo {
+  width: 120px;
+  height: 52px;
+}
+  .menu-mobile {
+   display: none;
+  }
+  .menu-icon{
+    display: block;
+}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  
+  .menu-mobile {
+   display: none;
+  }
+    .menu-icon{
+    display: block;
+}
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .menu-mobile {
+   display: none;
+  }
+    .menu-icon{
+    display: block;
+}
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+ 
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  
+}
+
+@media (min-width: 1400px) {
 }

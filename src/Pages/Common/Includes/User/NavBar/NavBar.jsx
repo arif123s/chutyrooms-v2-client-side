@@ -1,10 +1,16 @@
 import chutyLogo from "../../../../../assets/icons/Chuty-Logo.svg"
-import propertyLogo from "../../../../../assets/icons/Property.svg"
-import memberLogo from "../../../../../assets/icons/Member.svg"
+import propertyIcon from "../../../../../assets/icons/Property.svg"
+import memberIcon from "../../../../../assets/icons/Member.svg"
 import globalLogo from "../../../../../assets/icons/Global.svg"
+import menuIcon from "../../../../../assets/icons/menu.svg";
 import "./NavBar.css"
+import { useState } from "react";
 
 const NavBar = () => {
+
+  const [menu,setMenu]=useState(false);
+
+  console.log(menu)
 
   // const [activeLink, setActiveLink] = useState(null);
 
@@ -15,29 +21,7 @@ const NavBar = () => {
   //   const isLinkActive = (link) => activeLink === link;
 
     return (
-      <div className="navbar container mx-auto pt-[32px]">
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          ></ul>
-        </div>
+      <div className=" custom-container mx-auto pt-[12px] lg:pt-[32px]">
         <div className="flex w-full justify-between">
           <a className="nav-chuty-logo">
             <img src={chutyLogo}></img>
@@ -55,18 +39,18 @@ const NavBar = () => {
                 <img className="nav-icon" src={propertyLogo}></img>
                 Chuty Property
               </NavLink> */}
-              <a className="bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
-                <img className="nav-icon" src={propertyLogo}></img>
+              <a className="menu-mobile bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
+                <img className="nav-icon" src={propertyIcon}></img>
                 Chuty Property
               </a>
             </li>
             <li>
               <a className="nav-item bg-[#E8F5ED] text-[#159947] flex items-center px-[16px] py-[10px] rounded-[8px]">
-                <img className="nav-icon" src={memberLogo}></img>
+                <img className="nav-icon" src={memberIcon}></img>
                 Deal Membership
               </a>
             </li>
-            <li>
+            <li className="menu-mobile">
               <a className="flex">
                 <img src={globalLogo}></img>
                 <select className="bg-[#F8FEFF]" name="" id="">
@@ -74,13 +58,43 @@ const NavBar = () => {
                 </select>
               </a>
             </li>
-            <li>
+            <li className="menu-mobile">
               <a className="bg-[#159947] text-white px-[16px] py-[10px] rounded-[8px] border-0">
                 Login
               </a>
             </li>
+            <img
+              className="menu-icon"
+              onClick={() => setMenu(!menu)}
+              src={menuIcon}
+              alt=""
+            />
           </ul>
         </div>
+
+        {menu && (
+          <div className="py-3 px-2  rounded-md">
+            <a className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0">
+              Login
+            </a>
+
+            <hr className="my-3" />
+
+            <a className="flex">
+              <img src={globalLogo}></img>
+              <select className="bg-[#F8FEFF]" name="" id="">
+                <option value="">BDT</option>
+              </select>
+            </a>
+
+            <hr className="my-3" />
+
+            <a className=" bg-[#E8F5ED] w-44  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
+              <img className="nav-icon" src={propertyIcon}></img>
+              Chuty Property
+            </a>
+          </div>
+        )}
 
         {/* <div className=" hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
