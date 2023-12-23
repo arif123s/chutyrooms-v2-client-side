@@ -25,13 +25,14 @@ color: #FFFFFF; */
 }
 
 .menu-container {
-  /* height: fit-content; */
+  width: 100%;
   border-radius: 8px;
   background: #FFFFFF;
   box-shadow: 0px 4px 12px 0px rgba(35, 184, 85, 0.08);
   height: 162px;
   overflow: hidden;
-  /* transition: height 1s ease-in; */
+
+  display: none;
 }
 
 .menu-icon {
@@ -46,6 +47,10 @@ color: #FFFFFF; */
   .menu-mobile {
     display: none;
   }
+
+  .menu-container {
+  display: block;
+}
   .menu-icon {
     display: block;
   }
@@ -58,6 +63,10 @@ color: #FFFFFF; */
   .menu-icon {
     display: block;
   }
+
+  .menu-container {
+  display: block;
+}
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -67,6 +76,10 @@ color: #FFFFFF; */
   .menu-icon {
     display: block;
   }
+
+    .menu-container {
+  display: block;
+}
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {

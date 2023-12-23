@@ -3,14 +3,15 @@ import propertyIcon from "../../../../../assets/icons/Property.svg"
 import memberIcon from "../../../../../assets/icons/Member.svg"
 import globalLogo from "../../../../../assets/icons/Global.svg"
 import menuIcon from "../../../../../assets/icons/menu.svg";
+// import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 import "./NavBar.css"
 import { useEffect, useState } from "react";
+import {  useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 
-  const [menu,setMenu]=useState(false);
-
-//  const [isVisible, setIsVisible] = useState(false);
+  const [menu,setMenu]=useState(true);
+  const navigate = useNavigate();
 
  useEffect(() => {
    // Set the duration in milliseconds (e.g., 3000 for 3 seconds)
@@ -18,12 +19,16 @@ const NavBar = () => {
 
    // After the specified duration, hide the menu
    const timeoutId = setTimeout(() => {
-     setMenu(true);
+     setMenu(false);
    }, duration);
 
    // Clean up the timeout to avoid memory leaks
    return () => clearTimeout(timeoutId);
  }, []);
+
+ const handleLogin = () =>{
+  navigate('/login')
+ }
 
   // const [activeLink, setActiveLink] = useState(null);
 
@@ -67,12 +72,25 @@ const NavBar = () => {
               <a className="flex">
                 <img src={globalLogo}></img>
                 <select className="bg-[#F8FEFF]" name="" id="">
-                  <option value="">BDT</option>
+                  <option className="bg-white " value="BDT">
+                    BDT
+                  </option>
                 </select>
+
+                {/* <div className="bg-[#F8FEFF] flex items-center ml-2" name="" id="">
+                  <p className="bg-white " value="BDT">
+                    BDT
+                  </p>
+                  <img src={arrowDownIcon} alt="" />
+                  <div>
+                    <p>BDT</p>
+                  </div>
+                </div> */}
+
               </a>
             </li>
             <li className="menu-mobile">
-              <a className="bg-[#159947] text-white px-[16px] py-[10px] rounded-[8px] border-0">
+              <a onClick={handleLogin} className="bg-[#159947] text-white px-[16px] py-[10px] rounded-[8px] border-0">
                 Login
               </a>
             </li>
@@ -88,13 +106,13 @@ const NavBar = () => {
         {/* {menu &&  */}
         <div
           className={` duration-500  ${
-            menu ? " menu-container py-3 px-2 block" : "h-0"
+            menu ? " menu-container py-3 px-2 mt-2 block" : "h-0"
           }`}
         >
           <div
-            // className={`transition-trnasform transform duration-1000 ${
-            //   menu ? " block" : "hidden"
-            // }`}
+          // className={`transition-trnasform transform duration-1000 ${
+          //   menu ? " block" : "hidden"
+          // }`}
           >
             <div
               className={`transition-trnasform transform duration-200 ${
@@ -136,7 +154,7 @@ const NavBar = () => {
           </div>
         </div>
 
-        {/* } */}
+        {/*  } */}
 
         {/* <div className=" hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
