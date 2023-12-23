@@ -20,62 +20,59 @@ color: #FFFFFF; */
    
 } */
 
-.menu-container{
-      /* height: 0;
-      transition: height 5s ease; */
+.menu-container {
+  /* height: 0; */
 }
 
-.menu-container{
+.menu-container {
   /* height: fit-content; */
   border-radius: 8px;
-background: #FFF;
-box-shadow: 0px 4px 12px 0px rgba(35, 184, 85, 0.08);
-   
+  background: #FFFFFF;
+  box-shadow: 0px 4px 12px 0px rgba(35, 184, 85, 0.08);
+  height: 162px;
+  overflow: hidden;
+  /* transition: height 1s ease-in; */
 }
 
-.menu-icon{
-    display: none;
+.menu-icon {
+  display: none;
 }
-
 
 @media (max-width: 575.98px) {
   .nav-chuty-logo {
-  width: 120px;
-  height: 52px;
-}
-  .menu-mobile {
-   display: none;
+    width: 120px;
+    height: 52px;
   }
-  .menu-icon{
+  .menu-mobile {
+    display: none;
+  }
+  .menu-icon {
     display: block;
-}
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-  
   .menu-mobile {
-   display: none;
+    display: none;
   }
-    .menu-icon{
+  .menu-icon {
     display: block;
-}
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .menu-mobile {
-   display: none;
+    display: none;
   }
-    .menu-icon{
+  .menu-icon {
     display: block;
-}
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
- 
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
-  
 }
 
 @media (min-width: 1400px) {

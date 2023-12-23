@@ -125,7 +125,7 @@ width: 300px;
 
 .social-accounts-container{
   display: flex;
-  gap: 22px;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
@@ -295,6 +295,7 @@ display: block;
 
   .contact-container {
     margin: auto;
+    text-align: center;
   }
 
   .contact-info {
@@ -302,6 +303,11 @@ display: block;
     letter-spacing: 0.48px;
     margin-bottom: 8px;
   }
+
+  .social-accounts-container{
+  gap: 10px;
+  justify-content: center;
+}
 
   .subscribe-email-input {
     width: 160px;
@@ -449,6 +455,7 @@ display: block;
 
   .contact-container {
     margin: auto;
+    text-align: center;
   }
 
   .contact-info {
@@ -456,6 +463,11 @@ display: block;
     letter-spacing: 0.48px;
     margin-bottom: 8px;
   }
+
+   .social-accounts-container{
+  gap: 10px;
+  justify-content: center;
+}
 
   .subscribe-email-input {
     width: 180px;
@@ -574,7 +586,7 @@ width: 150px;
 
 .social-accounts-container{
   display: flex;
-  gap: 6px;
+  gap: 10px;
   margin-bottom: 12px;
 }
 
@@ -714,7 +726,7 @@ width: 225px;
 
 .social-accounts-container{
   display: flex;
-  gap: 22px;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
@@ -858,7 +870,7 @@ width: 300px;
 
 .social-accounts-container{
   display: flex;
-  gap: 22px;
+  gap: 12px;
   margin-bottom: 12px;
 }
 

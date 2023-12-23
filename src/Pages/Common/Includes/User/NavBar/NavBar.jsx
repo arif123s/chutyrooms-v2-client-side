@@ -4,13 +4,26 @@ import memberIcon from "../../../../../assets/icons/Member.svg"
 import globalLogo from "../../../../../assets/icons/Global.svg"
 import menuIcon from "../../../../../assets/icons/menu.svg";
 import "./NavBar.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
 
   const [menu,setMenu]=useState(false);
 
-  console.log(menu)
+//  const [isVisible, setIsVisible] = useState(false);
+
+ useEffect(() => {
+   // Set the duration in milliseconds (e.g., 3000 for 3 seconds)
+   const duration = 5000;
+
+   // After the specified duration, hide the menu
+   const timeoutId = setTimeout(() => {
+     setMenu(true);
+   }, duration);
+
+   // Clean up the timeout to avoid memory leaks
+   return () => clearTimeout(timeoutId);
+ }, []);
 
   // const [activeLink, setActiveLink] = useState(null);
 
@@ -72,33 +85,58 @@ const NavBar = () => {
           </ul>
         </div>
 
-        {menu && (
+        {/* {menu &&  */}
+        <div
+          className={` duration-500  ${
+            menu ? " menu-container py-3 px-2 block" : "h-0"
+          }`}
+        >
           <div
-            className="py-3 px-2 
-        duration-300
-          "
+            // className={`transition-trnasform transform duration-1000 ${
+            //   menu ? " block" : "hidden"
+            // }`}
           >
-            <a className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0">
-              Login
-            </a>
+            <div
+              className={`transition-trnasform transform duration-200 ${
+                menu ? " block" : "hidden"
+              }`}
+            >
+              <a className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0">
+                Login
+              </a>
 
-            <hr className="my-3" />
+              <hr className="my-3" />
+            </div>
 
-            <a className="flex">
-              <img src={globalLogo}></img>
-              <select className="bg-[#F8FEFF]" name="" id="">
-                <option value="">BDT</option>
-              </select>
-            </a>
+            <div
+              className={`transition-trnasform transform duration-[1200] ${
+                menu ? " block" : "hidden"
+              }`}
+            >
+              <a className="flex">
+                <img src={globalLogo}></img>
+                <select className="bg-[#F8FEFF]" name="" id="">
+                  <option value="">BDT</option>
+                </select>
+              </a>
 
-            <hr className="my-3" />
+              <hr className="my-3" />
+            </div>
 
-            <a className=" bg-[#E8F5ED] w-44  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
-              <img className="nav-icon" src={propertyIcon}></img>
-              Chuty Property
-            </a>
+            <div
+              className={`transition-trnasform transform duration-[1500] ${
+                menu ? " block" : "hidden"
+              }`}
+            >
+              <a className=" bg-[#E8F5ED] w-44  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
+                <img className="nav-icon" src={propertyIcon}></img>
+                Chuty Property
+              </a>
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* } */}
 
         {/* <div className=" hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
