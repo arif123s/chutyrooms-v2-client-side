@@ -18,7 +18,7 @@ const Login = () => {
               placeholder="Enter your phone number or email"
             />
           </div>
-          <div className="mb-4">
+          <div className="">
             <label className="input-title" htmlFor="phone">
               Password
             </label>
@@ -29,7 +29,7 @@ const Login = () => {
             />
           </div>
 
-          <div className="flex justify-between mt-3 text-[14px] mb-[20px]">
+          <div className="flex justify-between mt-3 text-[12px] lg:text-[14px] mb-[20px]">
             <div className="flex items-center">
               <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" />
               <span>Remember me?</span>
