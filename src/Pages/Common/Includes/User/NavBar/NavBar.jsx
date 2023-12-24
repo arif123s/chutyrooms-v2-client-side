@@ -120,7 +120,10 @@ const NavBar = () => {
               menu ? " block" : "hidden"
             }`}
           >
-            <a className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0">
+            <a
+              onClick={handleLogin}
+              className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
+            >
               Login
             </a>
 
