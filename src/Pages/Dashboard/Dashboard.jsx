@@ -9,7 +9,10 @@ const Dashboard = () => {
       <div>
         <div className="flex dark">
           <SideBar></SideBar>
+          <div>
+            
           <Outlet></Outlet>
+          </div>
         </div>
       </div>
     );
