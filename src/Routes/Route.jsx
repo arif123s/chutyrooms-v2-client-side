@@ -6,7 +6,7 @@ import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
 import HomePage from "../Pages/Home/Home/HomePage/HomePage";
 import Login from "../Pages/Auth/Login/Login";
 import Register from "../Pages/Auth/Register/Register";
-import OtpVerification from "../Pages/Verification/OtpVerification";
+import OtpVerification from "../Pages/Verification/OtpVerification/OtpVerification";
 
 export const router = createBrowserRouter([
   {

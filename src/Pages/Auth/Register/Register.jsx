@@ -101,8 +101,8 @@ const navigate = useNavigate();
               type="checkbox"
               name="terms"
               id="terms"
-            />     
-            
+            />
+
             <p>
               {/* eslint-disable-next-line react/no-unescaped-entities */}I
               agree to Chutyrooms's{" "}
@@ -120,8 +120,8 @@ const navigate = useNavigate();
         </div>
 
         <div className="flex my-[20px] justify-center gap-4">
-          <img className="w-[30px]" src={fbIcon} alt="" />
-          <img className="w-[30px]" src={googleIcon} alt="" />
+          <img className="social-icon" src={fbIcon} alt="" />
+          <img className="social-icon" src={googleIcon} alt="" />
         </div>
 
         <div className="text-center">

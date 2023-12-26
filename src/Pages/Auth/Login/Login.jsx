@@ -68,8 +68,8 @@ const Login = () => {
         </div>
 
         <div className="flex my-[20px] justify-center gap-4">
-          <img className="w-[30px]" src={fbIcon} alt="" />
-          <img className="w-[30px]" src={googleIcon} alt="" />
+          <img className="social-icon" src={fbIcon} alt="" />
+          <img className="social-icon" src={googleIcon} alt="" />
         </div>
 
         <div className="text-center">
