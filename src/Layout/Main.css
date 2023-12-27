@@ -1,6 +1,14 @@
-* {
-  font-family: "Gilroy";
-}
+
+
+ /* .no-spinners-input {
+         -moz-appearance: textfield;
+      }
+      
+      .no-spinners-input::-webkit-outer-spin-button,
+      .no-spinners-input::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+         margin: 0;
+      } */
 
 .custom-container {
   width: 1220px;

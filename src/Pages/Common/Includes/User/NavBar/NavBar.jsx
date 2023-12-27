@@ -25,8 +25,8 @@ const NavBar = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const handleLogin = () => {
-    navigate("/login");
+  const handleNavigate = (route) => {
+    navigate(`/${route}`);
   };
 
   // const [activeLink, setActiveLink] = useState(null);
@@ -40,7 +40,7 @@ const NavBar = () => {
   return (
     <div className=" custom-container mx-auto pt-[12px] lg:pt-[32px]">
       <div className="flex w-full justify-between">
-        <a className="nav-chuty-logo">
+        <a onClick={() => handleNavigate("")} className="nav-chuty-logo">
           <img src={chutyLogo}></img>
         </a>
 
@@ -56,7 +56,10 @@ const NavBar = () => {
                 <img className="nav-icon" src={propertyLogo}></img>
                 Chuty Property
               </NavLink> */}
-            <a className="menu-mobile bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
+            <a
+              onClick={() => handleNavigate("owner-register")}
+              className="menu-mobile bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]"
+            >
               <img className="nav-icon" src={propertyIcon}></img>
               Chuty Property
             </a>
@@ -70,7 +73,11 @@ const NavBar = () => {
           <li className="menu-mobile">
             <a className="flex">
               <img src={globalLogo}></img>
-              <select className="bg-[#F8FEFF]" name="" id="">
+              <select
+                className="bg-[#F8FEFF] appearance-none row-start-1 col-start-1"
+                name=""
+                id=""
+              >
                 <option className="bg-white " value="BDT">
                   BDT
                 </option>
@@ -89,7 +96,7 @@ const NavBar = () => {
           </li>
           <li className="menu-mobile">
             <a
-              onClick={handleLogin}
+              onClick={() => handleNavigate("login")}
               className="bg-[#159947] text-white px-[16px] py-[10px] rounded-[8px] border-0"
             >
               Login
@@ -121,7 +128,7 @@ const NavBar = () => {
             }`}
           >
             <a
-              onClick={handleLogin}
+              onClick={() => handleNavigate("login")}
               className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
             >
               Login

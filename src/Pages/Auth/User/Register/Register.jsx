@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 // import selectBoxIcon from "../../../assets/icons/rectangle-select-box.svg";
-import fbIcon from "../../../assets/icons/facebook-login.svg";
-import googleIcon from "../../../assets/icons/google-login.svg";
+import fbIcon from "../../../../assets/icons/facebook-login.svg";
+import googleIcon from "../../../../assets/icons/google-login.svg";
 
 const Register = () => {
 
@@ -16,7 +16,7 @@ const navigate = useNavigate();
         <h2 className="login-title">Registration</h2>
 
         <form>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="input-title" htmlFor="userId">
               User ID
             </label>
@@ -27,7 +27,7 @@ const navigate = useNavigate();
               type="text"
               placeholder="Enter your user id"
             />
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label className="input-title" htmlFor="name">
@@ -83,7 +83,7 @@ const navigate = useNavigate();
 
           <div className="mb-4">
             <label className="input-title" htmlFor="confirmPassword">
-              Password
+             Confirm Password
             </label>
             <input
               className="input-box"
@@ -120,8 +120,8 @@ const navigate = useNavigate();
         </div>
 
         <div className="flex my-[20px] justify-center gap-4">
-          <img className="social-icon" src={fbIcon} alt="" />
-          <img className="social-icon" src={googleIcon} alt="" />
+          <img className="social-login-icon" src={fbIcon} alt="" />
+          <img className="social-login-icon" src={googleIcon} alt="" />
         </div>
 
         <div className="text-center">
