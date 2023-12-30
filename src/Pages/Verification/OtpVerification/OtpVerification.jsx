@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./OtpVerification.css";
+import { Link } from "react-router-dom";
 
 const OtpVerification = () => {
 
@@ -105,7 +106,9 @@ const OtpVerification = () => {
           /> */}
         </div>
 
-        <button className="login-btn">Submit</button>
+        <Link to={"/property-add"} className="login-btn">
+          Submit
+        </Link>
 
         <p className="text-[14px] lg:text-[16px] mt-[16px] text-center">
           Resend Code

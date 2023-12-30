@@ -29,3 +29,22 @@
           -moz-appearance: textfield !important;
         }
      }
+
+ select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding-right: 50px; 
+      background: url('/src/assets/icons/arrow-down.svg') no-repeat right center; /* Use your custom icon */
+      background-size: 16px; 
+    }
+
+    /* Optional: Add additional styling as needed */
+    select:hover {
+      /* border-color: #999; Highlight border on hover */
+    }
+
+    select:focus {
+      outline: none; 
+      /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);  */
+    }

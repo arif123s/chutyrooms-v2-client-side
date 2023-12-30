@@ -9,6 +9,8 @@ import Login from "../Pages/Auth/Login/Login";
 import OtpVerification from "../Pages/Verification/OtpVerification/OtpVerification";
 import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
+import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
+import NotFound from "../Pages/NotFound/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
             path: "otp",
             element: <OtpVerification></OtpVerification>,
           },
+          {
+            path: "property-add",
+            element: <PropertyAdd></PropertyAdd>,
+          },
         ],
       },
       {
@@ -50,6 +56,10 @@ export const router = createBrowserRouter([
             element: <DashboardHome></DashboardHome>,
           },
         ],
+      },
+      {
+        path: "*",
+        element: <NotFound></NotFound>,
       },
     ],
   },

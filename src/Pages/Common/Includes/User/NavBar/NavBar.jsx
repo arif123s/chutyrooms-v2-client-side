@@ -74,12 +74,15 @@ const NavBar = () => {
             <a className="flex">
               <img src={globalLogo}></img>
               <select
-                className="bg-[#F8FEFF] appearance-none row-start-1 col-start-1"
+                className="w-12 ml-1 pr-1"
                 name=""
                 id=""
               >
                 <option className="bg-white " value="BDT">
                   BDT
+                </option>
+                <option className="bg-white " value="USD">
+                  USD
                 </option>
               </select>
 
