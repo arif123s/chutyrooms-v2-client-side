@@ -5,8 +5,12 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
 import HomePage from "../Pages/Home/Home/HomePage/HomePage";
 import Login from "../Pages/Auth/Login/Login";
-import Register from "../Pages/Auth/Register/Register";
-import OtpVerification from "../Pages/Verification/OtpVerification";
+
+import OtpVerification from "../Pages/Verification/OtpVerification/OtpVerification";
+import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
+import Register from "../Pages/Auth/User/Register/Register";
+import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
+import NotFound from "../Pages/NotFound/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -30,8 +34,16 @@ export const router = createBrowserRouter([
             element: <Register></Register>,
           },
           {
+            path: "owner-register",
+            element: <OwnerRegister></OwnerRegister>,
+          },
+          {
             path: "otp",
             element: <OtpVerification></OtpVerification>,
+          },
+          {
+            path: "property-add",
+            element: <PropertyAdd></PropertyAdd>,
           },
         ],
       },
@@ -48,6 +60,10 @@ export const router = createBrowserRouter([
           //   element: <DashboardHome></DashboardHome>,
           // },
         ],
+      },
+      {
+        path: "*",
+        element: <NotFound></NotFound>,
       },
     ],
   },

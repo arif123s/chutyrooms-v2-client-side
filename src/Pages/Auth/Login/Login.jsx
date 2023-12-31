@@ -57,7 +57,11 @@ const Login = () => {
             <a className="text-[#159947]">Forgot Password?</a>
           </div>
 
-          <input type="submit" className="login-btn" value="Sign In" />
+          <input
+            type="submit"
+            className="login-btn"
+            value="Sign In"
+          />
           {/* <button className="login-btn">Sign In</button> */}
         </form>
 
@@ -68,8 +72,8 @@ const Login = () => {
         </div>
 
         <div className="flex my-[20px] justify-center gap-4">
-          <img className="w-[30px]" src={fbIcon} alt="" />
-          <img className="w-[30px]" src={googleIcon} alt="" />
+          <img className="social-login-icon" src={fbIcon} alt="" />
+          <img className="social-login-icon" src={googleIcon} alt="" />
         </div>
 
         <div className="text-center">

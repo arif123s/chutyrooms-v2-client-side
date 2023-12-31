@@ -5,5 +5,50 @@
 @font-face {
   font-family: 'Gilroy';
   src: local('Gilroy'), url('./fonts/Gilroy-Regular.ttf') format('truetype');
-  /* font-weight: lighter; */
 }
+
+@font-face {
+  font-family: 'Gilroy-bold';
+  src: local('Gilroy'), url('./fonts/Gilroy-Bold.ttf') format('truetype');
+}
+
+/* @layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+} */
+
+* {
+  font-family: "Gilroy";
+}
+
+ @layer base {
+        input[type='number']::-webkit-outer-spin-button,
+        input[type='number']::-webkit-inner-spin-button,
+        input[type='number'] {
+          -webkit-appearance: none;
+          margin: 0;
+          -moz-appearance: textfield !important;
+        }
+     }
+
+ select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding-right: 50px; 
+      background: url('/src/assets/icons/arrow-down.svg') no-repeat right center; /* Use your custom icon */
+      background-size: 16px; 
+    }
+
+    /* Optional: Add additional styling as needed */
+    select:hover {
+      /* border-color: #999; Highlight border on hover */
+    }
+
+    select:focus {
+      outline: none; 
+      /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);  */
+    }
