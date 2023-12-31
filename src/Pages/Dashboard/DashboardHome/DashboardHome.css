@@ -1,0 +1,30 @@
+
+.booking-overview-container{
+    font-family: "Gilroy-bold";
+}
+.booking-quantity
+{
+    font-weight: 700;
+    color: #020F07;
+    font-size: 30px;
+}
+
+.booking-type-title
+{
+    color: #808783;
+    font-size: 14px;
+
+}
+
+.circle-background
+{
+    fill: none;
+    stroke: #E8F5ED;
+}
+
+
+.circle-progress{
+    fill: none;
+    stroke: #159947;
+
+}

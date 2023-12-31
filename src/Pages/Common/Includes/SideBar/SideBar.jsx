@@ -1,24 +1,71 @@
 
-import { useState } from "react";
-import Menu from "../../../../assets/icons/menu.svg"
+import { useState, useRef, useEffect } from "react";
+// import Menu from "../../../../assets/icons/menu.svg"
+import ChutyLogo from "../../../../assets/icons/Chuty-logo.svg"
+import ChutySmallLogo from "../../../../assets/icons/Chuty-logo-small.svg"
 import Category from "../../../../assets/icons/category.svg"
 import CategoryGreen from "../../../../assets/icons/category-green.svg"
 // // import Key from "../../../../assets/icons/key.svg"
 import Key from "../../../../assets/icons/key.svg"
 import KeyGreen from "../../../../assets/icons/key-green.svg"
-// import Arrow from "../../../../assets/icons/arrow-down.svg"
-// import Rectangle from "../../../../assets/icons/Rectangle.svg"
-// import RectangleGreen from "../../../../assets/icons/Rectangle-green.svg"
-// import "../SideBar/SideBar.css"
+import Arrow from "../../../../assets/icons/arrow-down.svg"
+import ArrowGreen from "../../../../assets/icons/arrow-down-green.svg"
+import Rectangle from "../../../../assets/icons/Rectangle.svg"
+import RectangleGreen from "../../../../assets/icons/Rectangle-green.svg"
+import "../SideBar/SideBar.css"
 import Email from "../../../../assets/icons/Email.svg"
 import EmailGreen from "../../../../assets/icons/email-green.svg"
 // import { key } from "localforage";
-import  CusNavLink  from "./Includes/CusNavLink";
+import CusNavLink from "./Includes/CusNavLink";
 
-const SideBar = () => {
+const menuClicked = '';
 
-  const [open, setOpen] = useState(true);
+const SideBar = ({open,setOpen}) => {
+
+  // const [open, setOpen] = useState(true);
   const [clickedMenu, setClickedMenu] = useState(false);
+  const [handleclick, sethandleclick] = useState(menuClicked);
+  const prevMenuClicked = useRef(menuClicked);
+  const [toggleOpen , setToggleOpen] = useState(false);
+
+
+
+  useEffect(() => {
+    prevMenuClicked.current = handleclick;
+    // console.log(prevMenuClicked.current);
+  }, [handleclick]);
+
+  const handleSlideUp = (link) => {
+  
+    // console.log(prevMenuClicked.current, link, toggleOpen);
+    
+
+    if(prevMenuClicked.current != link){
+      setToggleOpen(true);
+    }
+    else if (toggleOpen){
+      setToggleOpen(false);
+    }
+    else if (!toggleOpen){
+      setToggleOpen(true);
+    }
+    setActive(link);
+    sethandleclick(link);
+ 
+    // console.log(prevMenuClicked.current, handleclick);
+  };
+
+  const ishandleclick = (link) => handleclick === link;
+
+  const [active, setActive] = useState(false);
+
+  // alert(clickedMenu)
+
+  const ColorhandleClick = (color) => {
+    setActive(color)
+  };
+
+  const iscolorClick = (color) => active === color;
 
   // const [handleNavLink, setHandleNavLink] = useState(true);
 
@@ -41,125 +88,75 @@ const SideBar = () => {
   // const iscolorClick = (color) => active === color;
 
   const lists = [
-    { name: 'Dashboard', path: '/', icon : Category,clickedicon: CategoryGreen, submenu: [
+    {
+      name: 'Dashboard', path: '/', icon: Category, clickedicon: CategoryGreen, submenu: [
 
-    ]},
-    { name: 'Rooms', path: '#', icon: Key,clickedicon:KeyGreen, submenu: [
-      { name: 'All Rooms', path: '#'},
-      { name: 'Edit Rooms', path: '#'}
-    ] },
-    { name: 'Email', path: '#',icon: Email,clickedicon:EmailGreen, submenu: [
-      { name: 'All Emails', path: '#'},
-      { name: 'Edit Email', path: '#'}
-    ] },
+      ]
+    },
+    {
+      name: 'Rooms', path: '#', icon: Key, clickedicon: KeyGreen, submenu: [
+        { name: 'All Rooms', path: '#' },
+        { name: 'Edit Rooms', path: '#' }
+      ]
+    },
+    {
+      name: 'Email', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
+        { name: 'All Emails', path: '#' },
+        { name: 'Edit Email', path: '#' }
+      ]
+    },
   ];
 
   return (
-    <div>
+    <div className={`${open ? "sidebar-width" : "sidebar-close-width"}  sidebar-small`}>
+        <div className="chuty-logo-division">
+        <img src={open==true ? ChutyLogo: ChutySmallLogo}  className={`${open ? "h-[48px] " : "h-[40px]"}  px-5 hidden lg:block md:block `}></img>
+        <img src={open==true ? ChutySmallLogo: ChutyLogo}  className={`${open ? "h-[48px] " : "h-[40px]"} px-5 lg:hidden md:hidden`}></img>
+        </div>
 
-      {/* <div className={`${open ? "w-72 " : "w-20"} bg-white h-screen p-5  pt-8 relative duration-300`}>
+      <div className={`sidebar-content`}>
 
-        <img src={Menu} className={`absolute cursor-pointer -right-1 top-0 w-6  ${!open && "rotate-180"}`} onClick={() => setOpen(!open)}></img>
-
+        {/* <img src={Menu} className={`absolute cursor-pointer -right-1 top-0 w-6  ${!open && "rotate-180"}`} onClick={() => setOpen(!open)}></img> */}
       
 
-        <div >
+        {lists.map((list, i) => 
+          <div key={i}  className={`sidebar-content-section`} >
+            <div  onClick={() => handleSlideUp(list.name)} className={` ${active == list.name   ? 'onclick-color' : 'onclickcancel-color'} duration-200 rounded-[0.5rem]  submenu-list cursor-pointer  ${!open ? "sm:p-[0rem]" : "sm:p-[0.65rem]"}`}>
 
-      
+              <div className="sidebar-menu-division" >
+                <img src={active === list.name ? list.clickedicon : list.icon} className={`cursor-pointer duration-500  ${open ? " rotate-[360deg]" : "sidebar-menu-image-cus"}`}></img>
+                <span className={`sidebar-menu-title ${!open && "sidebar-show-hide"
+                  } `}>
+                    {/* {prevMenuClicked.current}{handleclick} */}
+                  {list.name}</span>
+                {list.submenu.length > 0 && <img src={active == list.name ? ArrowGreen : Arrow} className={`sidebar-icons ${active === list.name && toggleOpen ? 'rotate-180' : ''} ${!open && "scale-0"
+                  }`}></img>
 
-      </div> */}
+                }
 
+              </div>
 
-      <div className={`${open ? "w-72 " : "w-20"} bg-white h-screen p-5  pt-8 relative duration-300`}>
-
-        <img src={Menu} className={`absolute cursor-pointer -right-1 top-0 w-6  ${!open && "rotate-180"}`} onClick={() => setOpen(!open)}></img>
-
-        {/* <div onClick={() => ColorhandleClick("dashboard")} className={`${active === 'dashboard' ? 'onclick-color' : 'onclickcancel-color'} rounded p-[0.5rem]`} >
-          <div className="flex gap-x-4 items-center cursor-pointer">
-
-            <img src={active === 'dashboard' ? CategoryGreen : Category}
-              className={`cursor-pointer duration-500  ${open && "rotate-[360deg]"
-                }`}
-            />
-
-            <h1 onClick={() => ColorhandleClick('dashboard')}
-              className={`text-color origin-left font-medium text-xl duration-200 ${!open && "scale-0"
-                }  ${active == 'dashboard' ? 'onclick-color' : 'onclickcancel-color'}`}
-            >
-              Dashboard
-            </h1>
-          </div>
-        </div> */}
-        
-        {/* <div>
-          <div onClick={() => ColorhandleClick("rooms")} className={`${active === 'rooms' ? 'onclick-color' : 'onclickcancel-color'} duration-200 rounded p-[0.5rem] cursor-pointer`}>
-
-            <div className="flex pt-2 " onClick={() => handleSlideUp("rooms")} >
-              <img src={active === 'rooms' ? KeyGreen : Key} className={`cursor-pointer duration-500 ${open && "rotate-[360deg]"}`}></img>
-              <span className={` origin-left ml-4 font-medium text-xl duration-200 ${!open && "scale-0"
-                } `}>Rooms</span>
-              <img src={Arrow} className={`cursor-pointer ml-20  duration-500 ${active === 'rooms' ? 'rotate-180' : ''} ${!open && "scale-0"
-                }`}>
-
-              </img>
             </div>
+            { handleclick == list.name && toggleOpen &&
+            <ul className={`transition-transform transform duration-300 bg-white   ${!open && 'lg:absolute md:absolute navbar-list-menu sm:w-[200px] sm:top-0 sm:shadow-[0rem_0rem_2.5rem_0rem_rgba(82,63,105,0.1)] sm:rounded-lg'}`}>
+
+              {list.submenu.map((item, i) =>
+
+                <li key={i} onClick={() => ColorhandleClick(item.name)} className={`flex   sm:pt-3 pb-3 sm:pl-10 pl-4 cursor-pointer hover:bg-light-white rounded-lg text-color text-sm items-center gap-x-4 ${active === item.name  ? 'onclick-color' : 'onclickcancel-color'} } duration-200`}>
+                  <img src={active === item.name ? RectangleGreen : Rectangle}></img>
+
+                  <span className={`${!open} cus-origin-transform  duration-200 `}> {item.name}</span>
+                </li>
+
+              )}
+
+            </ul>
+      }
 
           </div>
-
-          <ul className={`transition-transform transform duration-300 ${handleclick == 'rooms' ? '' : 'hidden'}`}>
-
-            <li onClick={() => ColorhandleClick("allrooms")} className={`flex  rounded-md pt-2 pl-10  cursor-pointer hover:bg-light-white text-color text-sm items-center gap-x-4 ${active === 'allrooms' ? 'onclick-color' : 'onclickcancel-color'} duration-200`}>
-              <img src={active === 'allrooms' ? RectangleGreen : Rectangle}></img>
-
-              <span className={`${!open && "hidden"} origin-left  duration-200 `}> All Rooms</span>
-            </li>
-
-            <li onClick={() => ColorhandleClick("editrooms")} className={`flex  rounded-md pt-2 pl-10  cursor-pointer hover:bg-light-white text-color text-sm items-center gap-x-4 ${active === 'editrooms' ? 'onclick-color' : 'onclickcancel-color'} duration-200`}>
-              <img src={active === 'editrooms' ? RectangleGreen : Rectangle}></img>
-
-              <span className={`${!open && "hidden"} origin-left  duration-200 `}> Edit Rooms</span>
-            </li>
-          </ul>
-
-        </div> */}
-        {lists.map((list, i) => {
-          return(
-        <CusNavLink key={i} propsCus = {list} handleMenu = {open} >
-          
-        </CusNavLink>
-          )
-        })
+        )
         }
-        {/* <div >
 
-          <div onClick={() => ColorhandleClick("email")} className={`${active === 'email' ? 'onclick-color' : 'onclickcancel-color'} duration-200 rounded p-[0.5rem] cursor-pointer`}>
-            <div className="flex " onClick={() => handleSlideUp("emails")} >
-              <img src={active === 'email' ? EmailGreen : Email} className={`cursor-pointer duration-500 ${open && "rotate-[360deg]"
-                }`}></img> <span onClick={() => ColorhandleClick("email")} className={`text-color origin-left ml-4 font-medium text-xl duration-200 ${!open && "scale-0"
-                  } ${active === 'email' ? 'onclick-color' : 'onclickcancel-color'}`}>Email</span>
-              <img src={Arrow} className={`cursor-pointer ml-20 duration-500 ${!open && "scale-0"
-                }`}>
-
-              </img>
-            </div>
-          </div>
-
-          <ul className={`transition-transform transform duration-500 ${handleclick == 'emails' ? '' : 'h-0 hidden'}`}>
-
-            <li onClick={() => ColorhandleClick("allemails")} className={`flex  rounded-md p-2 pl-10  cursor-pointer hover:bg-light-white text-color text-sm items-center gap-x-4 ${active === 'allemails' ? 'onclick-color' : 'onclickcancel-color'} `}>
-              <img src={active === 'allemails' ? RectangleGreen : Rectangle} ></img>
-
-              <span className={`${!open && "hidden"} origin-left  `}> All Email</span>
-            </li>
-
-            <li onClick={() => ColorhandleClick("editemails")} className={`flex rounded-md p-2 pl-10  cursor-pointer hover:bg-light-white text-color text-sm items-center gap-x-4 ${active === 'editemails' ? 'onclick-color' : 'onclickcancel-color'}`} >
-              <img src={active === 'editemails' ? RectangleGreen : Rectangle}></img>
-
-              <span className={`${!open && "hidden"} origin-left  `}> Edit Email</span>
-            </li>
-          </ul>
-
-        </div> */}
 
       </div>
 

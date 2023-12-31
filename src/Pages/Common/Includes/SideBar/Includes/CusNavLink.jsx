@@ -24,6 +24,7 @@ const CusNavLink = (props) => {
 
     const handleSlideUp = (link) => {
 
+        setActive(color);
         sethandleclick(link);
 
     };
@@ -36,7 +37,7 @@ const CusNavLink = (props) => {
 
     const ColorhandleClick = (color) => {
 
-        alert(color)
+        // alert(color)
         setActive(color)
     };
 
