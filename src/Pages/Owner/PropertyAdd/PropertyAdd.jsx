@@ -2,6 +2,7 @@ import starFill from "../../../assets/icons/star-fill.svg";
 import starBlank from "../../../assets/icons/star-blank.svg";
 import delteIcon from "../../../assets/icons/delete.svg";
 import imgIcon from "../../../assets/icons/img.svg";
+import videoIcon from "../../../assets/icons/frame.svg";
 import "./PropertyAdd.css";
 import { useState } from "react";
 
@@ -433,8 +434,8 @@ const PropertyAdd = () => {
               />
             </div>
             <label htmlFor="fileInput" className="input-label">
-              <div className="w-full h-[110px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                <div className="mt-[38px]">
+              <div className="w-full h-[116px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                <div className="mt-[30px]">
                   {selectedFile ? (
                     <>
                       <div className="grid justify-center ">
@@ -451,7 +452,7 @@ const PropertyAdd = () => {
                   ) : (
                     <>
                       <div className="flex justify-center mb-[8px]">
-                        <img className="w-[20px]" src={imgIcon} alt="" />
+                        <img className="w-[20px]" src={videoIcon} alt="" />
                       </div>
                       <p className="property-input-title text-center">Upload</p>
                     </>
@@ -467,6 +468,22 @@ const PropertyAdd = () => {
               style={{ display: "none" }}
             />
           </div>
+        </div>
+        {/* Checkin */}
+        <div className="mt-[18px]">
+          <p className="mb-[12px]">
+            Check In <span className="ml-[26px] mr-[12px]">:</span>{" "}
+            <span className="text-[16px] font-semibold">12 AM</span>
+          </p>
+          <p>
+            Check Out <span className="ml-[12px] mr-[12px]">:</span>{" "}
+            <span className="text-[16px] font-semibold">12 AM</span>
+          </p>
+        </div>
+
+        {/* Cancellation Policy */}
+        <div className="mt-[18px]">
+
         </div>
       </form>
     </div>
