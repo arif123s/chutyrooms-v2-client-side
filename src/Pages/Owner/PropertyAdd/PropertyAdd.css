@@ -1,6 +1,6 @@
 .property-add-container{
     margin-top: 42px;
-    padding: 44px 56px 32px 56px;
+    padding: 44px 24px 32px 24px;
 border-radius: 8px;
 background:  #FFFFFF;
 color:  #020F07;
@@ -25,3 +25,36 @@ padding: 12px 14px;
 border-radius: 8px;
 border: 1px solid #E6E7E6;
 }
+
+.property-images-container{
+display: grid;
+grid-template-columns: 1fr 4fr;
+}
+
+.property-display-images{
+display: grid;
+grid-template-columns: repeat(4,1fr);
+}
+
+@media (max-width: 575.98px) {
+  .property-images-container{
+display: grid;
+grid-template-columns: 1fr;
+}
+
+.property-display-images{
+display: grid;
+grid-template-columns: repeat(1,1fr);
+}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+ .property-images-container{
+display: grid;
+grid-template-columns: 1fr;
+}
+.property-display-images{
+display: grid;
+grid-template-columns: repeat(2,1fr);
+}
+}            

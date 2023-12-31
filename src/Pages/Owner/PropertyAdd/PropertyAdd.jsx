@@ -3,6 +3,9 @@ import starBlank from "../../../assets/icons/star-blank.svg";
 import delteIcon from "../../../assets/icons/delete.svg";
 import imgIcon from "../../../assets/icons/img.svg";
 import videoIcon from "../../../assets/icons/frame.svg";
+import minusIcon from "../../../assets/icons/minus.svg";
+import plusIcon from "../../../assets/icons/plus.svg";
+import starIcon from "../../../assets/icons/star.svg";
 import "./PropertyAdd.css";
 import { useState } from "react";
 
@@ -94,13 +97,13 @@ const PropertyAdd = () => {
           </div>
         </div>
         <div className="mt-[18px]">
-          <label className="property-input-title" htmlFor="address">
+          <label className="property-input-title" htmlFor="description">
             Description
           </label>
           <textarea
-            className="property-description block input-box h-[96px]"
-            name=""
-            id=""
+            className="property-description block input-box h-[120px]"
+            name="description"
+            id="description"
             placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
           ></textarea>
         </div>
@@ -180,7 +183,8 @@ const PropertyAdd = () => {
         </div>
         {/* Image */}
         <div className="mt-[18px] ">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-[18px]">
+          {/* <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-[18px]"> */}
+          <div className="property-images-container  gap-x-[18px]">
             {/* Logo */}
 
             <div>
@@ -234,10 +238,150 @@ const PropertyAdd = () => {
 
             {/* Display Image */}
 
-            <div>
-              <h2 className="mb-[0px]">Display Image</h2>
-              <div className="relative">
-                <div className="flex justify-end absolute top-[8px] right-[8px]">
+            <div className="property-display-images gap-x-[18px]">
+              <div>
+                <h2 className="mb-[0px]">Display Image</h2>
+                <div className="relative">
+                  <div className="flex justify-end absolute top-[8px] right-[8px]">
+                    <img
+                      className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
+                      src={delteIcon}
+                      alt=""
+                    />
+                  </div>
+                  <label htmlFor="fileInput" className="input-label">
+                    <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                      <div className="mt-[48px]">
+                        {selectedFile ? (
+                          <>
+                            <div className="grid justify-center ">
+                              <div className="flex items-center mb-[8px]">
+                                <img
+                                  src={URL.createObjectURL(selectedFile)}
+                                  alt="Selected File"
+                                  className="w-8 mr-1"
+                                />
+                                <span className="">{selectedFile.name}</span>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex justify-center mb-[8px]">
+                              <img className="w-[20px]" src={imgIcon} alt="" />
+                            </div>
+                            <p className="property-input-title text-center">
+                              Browse Photo
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </label>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                </div>
+              </div>
+
+              <div className="relative mt-[22px]">
+                <div className="flex justify-end absolute top-[19px] right-[8px]">
+                  <img
+                    className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
+                    src={delteIcon}
+                    alt=""
+                  />
+                </div>
+                <label htmlFor="fileInput" className="input-label">
+                  <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                    <div className="mt-[48px]">
+                      {selectedFile ? (
+                        <>
+                          <div className="grid justify-center ">
+                            <div className="flex items-center mb-[8px]">
+                              <img
+                                src={URL.createObjectURL(selectedFile)}
+                                alt="Selected File"
+                                className="w-8 mr-1"
+                              />
+                              <span className="">{selectedFile.name}</span>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-center mb-[8px]">
+                            <img className="w-[20px]" src={imgIcon} alt="" />
+                          </div>
+                          <p className="property-input-title text-center">
+                            Browse Photo
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+              </div>
+
+              <div className="relative mt-[22px]">
+                <div className="flex justify-end absolute top-[19px] right-[8px]">
+                  <img
+                    className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
+                    src={delteIcon}
+                    alt=""
+                  />
+                </div>
+                <label htmlFor="fileInput" className="input-label">
+                  <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                    <div className="mt-[48px]">
+                      {selectedFile ? (
+                        <>
+                          <div className="grid justify-center ">
+                            <div className="flex items-center mb-[8px]">
+                              <img
+                                src={URL.createObjectURL(selectedFile)}
+                                alt="Selected File"
+                                className="w-8 mr-1"
+                              />
+                              <span className="">{selectedFile.name}</span>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-center mb-[8px]">
+                            <img className="w-[20px]" src={imgIcon} alt="" />
+                          </div>
+                          <p className="property-input-title text-center">
+                            Browse Photo
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: "none" }}
+                />
+              </div>
+
+              <div className="relative mt-[22px]">
+                <div className="flex justify-end absolute top-[19px] right-[8px]">
                   <img
                     className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
                     src={delteIcon}
@@ -282,148 +426,10 @@ const PropertyAdd = () => {
                 />
               </div>
             </div>
-
-            <div className="relative mt-[22px]">
-              <div className="flex justify-end absolute top-[19px] right-[8px]">
-                <img
-                  className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                  src={delteIcon}
-                  alt=""
-                />
-              </div>
-              <label htmlFor="fileInput" className="input-label">
-                <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                  <div className="mt-[48px]">
-                    {selectedFile ? (
-                      <>
-                        <div className="grid justify-center ">
-                          <div className="flex items-center mb-[8px]">
-                            <img
-                              src={URL.createObjectURL(selectedFile)}
-                              alt="Selected File"
-                              className="w-8 mr-1"
-                            />
-                            <span className="">{selectedFile.name}</span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex justify-center mb-[8px]">
-                          <img className="w-[20px]" src={imgIcon} alt="" />
-                        </div>
-                        <p className="property-input-title text-center">
-                          Browse Photo
-                        </p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </label>
-              <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-            </div>
-
-            <div className="relative mt-[22px]">
-              <div className="flex justify-end absolute top-[19px] right-[8px]">
-                <img
-                  className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                  src={delteIcon}
-                  alt=""
-                />
-              </div>
-              <label htmlFor="fileInput" className="input-label">
-                <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                  <div className="mt-[48px]">
-                    {selectedFile ? (
-                      <>
-                        <div className="grid justify-center ">
-                          <div className="flex items-center mb-[8px]">
-                            <img
-                              src={URL.createObjectURL(selectedFile)}
-                              alt="Selected File"
-                              className="w-8 mr-1"
-                            />
-                            <span className="">{selectedFile.name}</span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex justify-center mb-[8px]">
-                          <img className="w-[20px]" src={imgIcon} alt="" />
-                        </div>
-                        <p className="property-input-title text-center">
-                          Browse Photo
-                        </p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </label>
-              <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-            </div>
-
-            <div className="relative mt-[22px]">
-              <div className="flex justify-end absolute top-[19px] right-[8px]">
-                <img
-                  className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                  src={delteIcon}
-                  alt=""
-                />
-              </div>
-              <label htmlFor="fileInput" className="input-label">
-                <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                  <div className="mt-[48px]">
-                    {selectedFile ? (
-                      <>
-                        <div className="grid justify-center ">
-                          <div className="flex items-center mb-[8px]">
-                            <img
-                              src={URL.createObjectURL(selectedFile)}
-                              alt="Selected File"
-                              className="w-8 mr-1"
-                            />
-                            <span className="">{selectedFile.name}</span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="flex justify-center mb-[8px]">
-                          <img className="w-[20px]" src={imgIcon} alt="" />
-                        </div>
-                        <p className="property-input-title text-center">
-                          Browse Photo
-                        </p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </label>
-              <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-            </div>
           </div>
         </div>
         {/* Video */}
-        <div className="mt-[18px]">
+        <div className="mt-[18px] ">
           <h2> Property Video {`(Optional)`}</h2>
           <div className="relative">
             <div className="flex justify-end absolute top-[8px] right-[8px]">
@@ -434,7 +440,7 @@ const PropertyAdd = () => {
               />
             </div>
             <label htmlFor="fileInput" className="input-label">
-              <div className="w-full h-[116px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+              <div className="w-full h-[120px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
                 <div className="mt-[30px]">
                   {selectedFile ? (
                     <>
@@ -483,7 +489,95 @@ const PropertyAdd = () => {
 
         {/* Cancellation Policy */}
         <div className="mt-[18px]">
+          <h2 className="property-input-title">Cancellation Policy</h2>
 
+          <div className="py-[10px] px-[14px] border-[1px] rounded-[8px] border-[#E6E7E6] flex gap-x-[120px]">
+            <div className="flex gap-x-[24px] items-center">
+              <div>
+                <h2 className="property-input-title">Duration</h2>
+                <p className="flex gap-x-[15px] text-[16px] mb-[12px]">
+                  <span>23 hours</span>
+                  <span>45 minute</span>
+                </p>
+                <p className="flex gap-x-[15px] text-[16px]">
+                  <span>23 hours</span>
+                  <span>45 minute</span>
+                </p>
+              </div>
+
+              <div>
+                <h2 className="property-input-title">Refund</h2>
+                <div className="flex gap-x-[4px] mb-[12px]">
+                  <img src={minusIcon} alt="" />
+                  <p className="text-[16px]">
+                    <span>10</span>%
+                  </p>
+                  <img src={plusIcon} alt="" />
+                </div>
+                <div className="flex gap-x-[4px]">
+                  <img src={minusIcon} alt="" />
+                  <p className="text-[16px]">
+                    <span>10</span>%
+                  </p>
+                  <img src={plusIcon} alt="" />
+                </div>
+              </div>
+
+              <div className="text-[16px]">
+                <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]">
+                  Add
+                </button>
+                <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center">
+                  Remove
+                </button>
+              </div>
+            </div>
+
+            <h2 className="flex items-center text-[16px] text-[#159947]">
+              <img className="w-[16px]" src={starIcon} alt="" />
+              Lorem ipsum Lorem ipsum
+            </h2>
+          </div>
+        </div>
+
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="short-description">
+            Short Description
+          </label>
+          <textarea
+            className="property-description block input-box h-[120px]"
+            name="short-description"
+            id="short-description"
+            placeholder=""
+          ></textarea>
+        </div>
+
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="instruction">
+            Instruction
+          </label>
+          <textarea
+            className="property-description block input-box h-[120px]"
+            name="instruction"
+            id="instruction"
+            placeholder=""
+          ></textarea>
+        </div>
+
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="payment-method">
+            Payment Method
+          </label>
+          <textarea
+            className="property-description block input-box h-[120px]"
+            name="payment-method"
+            id="payment-method"
+            placeholder=""
+          ></textarea>
+        </div>
+
+        <div className="mt-[18px]">
+          <h2 className="property-input-title">Locate Your Property</h2>
         </div>
       </form>
     </div>
