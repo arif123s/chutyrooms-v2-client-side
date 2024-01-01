@@ -1,60 +1,72 @@
-.property-add-container{
-    margin-top: 42px;
-    padding: 44px 24px 32px 24px;
-border-radius: 8px;
-background:  #FFFFFF;
-color:  #020F07;
-  /* box-shadow: 0px 4px 12px 0px rgba(35, 184, 85, 0.08); */
+.property-add-container {
+  margin-top: 42px;
+  margin-bottom: 42px;
+  padding: 44px 24px 32px 24px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #020f07;
+  /* width: 100%; */
 }
 
-.property-add-title{
-font-size: 24px;
-font-weight: 600;
-letter-spacing: 0.72px;
+.property-add-title {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.72px;
 }
 
-.property-input-title{
-    font-size: 14px;
-line-height: 145%; 
-margin-bottom: 12px;
+.property-input-title {
+  font-size: 14px;
+  line-height: 145%;
+  margin-bottom: 12px;
 }
 
-.property-description{
-    height: 120px;
-padding: 12px 14px;
-border-radius: 8px;
-border: 1px solid #E6E7E6;
+.property-description {
+  height: 120px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e6e7e6;
 }
 
-.property-images-container{
-display: grid;
-grid-template-columns: 1fr 4fr;
+.property-images-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  column-gap: 18px;
 }
 
-.property-display-images{
-display: grid;
-grid-template-columns: repeat(4,1fr);
+.property-display-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 18px;
 }
 
 @media (max-width: 575.98px) {
-  .property-images-container{
-display: grid;
-grid-template-columns: 1fr;
-}
+  .property-images-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
 
-.property-display-images{
-display: grid;
-grid-template-columns: repeat(1,1fr);
-}
+  .property-display-images {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); 
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
- .property-images-container{
-display: grid;
-grid-template-columns: 1fr;
+  .property-images-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
+  .property-display-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-.property-display-images{
-display: grid;
-grid-template-columns: repeat(2,1fr);
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .property-add-container {
+    margin-top: 18px;
+    padding: 22px 17px 0px 19px;
+  }
 }
-}            

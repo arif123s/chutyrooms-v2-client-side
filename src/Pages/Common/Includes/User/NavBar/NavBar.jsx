@@ -65,7 +65,7 @@ const NavBar = () => {
             </a>
           </li>
           <li>
-            <a className="nav-item bg-[#E8F5ED] text-[#159947] flex items-center px-[16px] py-[10px] rounded-[8px]">
+            <a className="nav-item bg-[#E8F5ED] text-[#159947] flex items-center p-[4px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
               <img className="nav-icon" src={memberIcon}></img>
               Deal Membership
             </a>
@@ -73,11 +73,7 @@ const NavBar = () => {
           <li className="menu-mobile">
             <a className="flex">
               <img src={globalLogo}></img>
-              <select
-                className="w-12 ml-1 pr-1"
-                name=""
-                id=""
-              >
+              <select className="w-12 ml-1 pr-1" name="" id="">
                 <option className="bg-white " value="BDT">
                   BDT
                 </option>
@@ -108,7 +104,7 @@ const NavBar = () => {
           <img
             className="menu-icon"
             onClick={() => setMenu(!menu)}
-            src={menuIcon}
+            src={menuIcon} 
             alt=""
           />
         </ul>
@@ -120,11 +116,7 @@ const NavBar = () => {
           menu ? " menu-container py-3 px-2 mt-2 block" : "h-0"
         }`}
       >
-        <div
-        // className={`transition-trnasform transform duration-1000 ${
-        //   menu ? " block" : "hidden"
-        // }`}
-        >
+        <div>
           <div
             className={`transition-trnasform transform duration-200 ${
               menu ? " block" : "hidden"
