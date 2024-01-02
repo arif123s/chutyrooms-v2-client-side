@@ -65,7 +65,7 @@ const NavBar = () => {
             </a>
           </li>
           <li>
-            <a className="nav-item bg-[#E8F5ED] text-[#159947] flex items-center p-[4px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
+            <a className="nav-item bg-[#E8F5ED] text-[#159947] flex items-center p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
               <img className="nav-icon" src={memberIcon}></img>
               Deal Membership
             </a>

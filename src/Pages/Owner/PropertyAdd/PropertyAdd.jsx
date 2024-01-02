@@ -10,12 +10,55 @@ import "./PropertyAdd.css";
 import { useState } from "react";
 
 const PropertyAdd = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [logo, setLogo] = useState(null);
+ const [displayImages, setDisplayImages] = useState([null, null, null, null]);
+  const [video, setVideo] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+
+  const handleLogoSelect = (event) => {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      setLogo({
+        name: fileInput.files[0].name,
+        url: URL.createObjectURL(fileInput.files[0]),
+      });
+    } else {
+      setLogo(null);
+    }
   };
+
+   const handleDisplayImageSelect = (index, event) => {
+     const fileInput = event.target;
+     if (fileInput.files.length > 0) {
+       const newImages = [...displayImages];
+       newImages[index] = {
+         name: fileInput.files[0].name,
+         url: URL.createObjectURL(fileInput.files[0]),
+       };
+       setDisplayImages(newImages);
+     } else {
+       const newImages = [...displayImages];
+       newImages[index] = null;
+       setDisplayImages(newImages);
+     }
+   };
+
+     const handleVideoSelect = (event) => {
+       const fileInput = event.target;
+       if (fileInput.files.length > 0) {
+         setVideo({
+           name: fileInput.files[0].name,
+           url: URL.createObjectURL(fileInput.files[0]),
+         });
+       } else {
+         setVideo(null);
+       }
+     };
+
+     const handleVideoDelete =()=>{
+      setVideo(null)
+     }
+
 
   return (
     <div className="custom-container ">
@@ -193,7 +236,7 @@ const PropertyAdd = () => {
 
               <div>
                 <h2 className="mb-[12px]">Logo</h2>
-                <div className=" mt-[12px]">
+                <div className=" ">
                   {/* <div className="flex justify-end absolute top-[8px] right-[8px]">
                     <img
                       className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
@@ -202,20 +245,24 @@ const PropertyAdd = () => {
                     />
                   </div> */}
 
-                  <label htmlFor="fileInput" className="input-label">
-                    <div className="w-full h-[148px] rounded-[8px] p-[8px] bg-[#F2F5F6] border-[1px] border-[#E6E7E6] mt-[12px]">
-                      <div className="mt-[48px]">
-                        {selectedFile ? (
+                  <label htmlFor="logo" className="input-label">
+                    <div className="w-full h-[148px] p-[55px] flex justify-center items-center rounded-[8px] bg-[#F2F5F6] border-[1px] border-[#E6E7E6] mt-[12px]">
+                      <div className="">
+                        {logo ? (
                           <>
                             <div className="grid justify-center ">
                               <div className="flex items-center mb-[8px]">
                                 <img
-                                  src={URL.createObjectURL(selectedFile)}
+                                  // src={URL.createObjectURL(logoImage)}
+                                  src={logo.url}
                                   alt="Selected File"
                                   className="w-8 mr-1"
                                 />
-                                <span className="">{selectedFile.name}</span>
+                                <span className="">{logo.name}</span>
                               </div>
+                              <p className="property-input-title text-center">
+                                Browse Photo
+                              </p>
                             </div>
                           </>
                         ) : (
@@ -233,9 +280,10 @@ const PropertyAdd = () => {
                   </label>
                   <input
                     type="file"
-                    id="fileInput"
-                    accept="image/*"
-                    onChange={handleFileChange}
+                    id="logo"
+                    name="logo"
+                    // accept="image/*"
+                    onChange={handleLogoSelect}
                     style={{ display: "none" }}
                   />
                 </div>
@@ -243,32 +291,91 @@ const PropertyAdd = () => {
 
               {/* Display Image */}
 
-              <div className="property-display-images">
-                <div>
-                  <h2 className="">Display Image</h2>
-                  <div className="relative">
-                    {/* <div className="flex justify-end absolute top-[8px] right-[8px]">
-                      <img
-                        className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                        src={delteIcon}
-                        alt=""
-                      />
-                    </div> */}
-
-                    <label htmlFor="fileInput" className="input-label">
-                      <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                        <div className="mt-[48px]">
-                          {selectedFile ? (
+              <div>
+                <h2 className="">Display Image</h2>
+                <div className="property-display-images">
+                  {displayImages.map((image, index) => (
+                    <div key={index}>
+                      <label
+                        htmlFor={`display-image-${index}`}
+                        className="input-label"
+                      >
+                        <div className="w-full h-[148px] flex justify-center items-center rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                          {image ? (
                             <>
                               <div className="grid justify-center ">
                                 <div className="flex items-center mb-[8px]">
                                   <img
-                                    src={URL.createObjectURL(selectedFile)}
+                                    src={image.url}
+                                    alt={image.name}
+                                    className="w-8 mr-1"
+                                  />
+                                  <span className="">{image.name}</span>
+                                </div>
+                                <p className="property-input-title text-center">
+                                  Browse Photo
+                                </p>
+                              </div>
+                              {/* <img
+                                src={image.url}
+                                alt={image.name}
+                                className="selected-image"
+                              />
+                              <span>{image.name}</span> */}
+                            </>
+                          ) : (
+                            // <label htmlFor={`display-image-${index}`}>
+                            <>
+                              <div>
+                                <div className="flex justify-center mb-[8px]">
+                                  <img
+                                    className="w-[20px]"
+                                    src={imgIcon}
+                                    alt=""
+                                  />
+                                </div>
+                                <p className="property-input-title text-center">
+                                  Browse Photo
+                                </p>
+                              </div>
+                            </>
+                            // </label>
+                          )}
+                        </div>
+                      </label>
+                      <input
+                        type="file"
+                        id={`display-image-${index}`}
+                        name={`display-image-${index}`}
+                        style={{ display: "none" }}
+                        onChange={(event) =>
+                          handleDisplayImageSelect(index, event)
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* <div>
+                  <h2 className="">Display Image</h2>
+                  <div className="relative">
+                    <label htmlFor="fileInput" className="input-label">
+                      <div className="w-full h-[148px] flex justify-center items-center rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                        <div className="">
+                          {displayImage ? (
+                            <>
+                              <div className="grid justify-center ">
+                                <div className="flex items-center mb-[8px]">
+                                  <img
+                                    src={URL.createObjectURL(displayImage)}
                                     alt="Selected File"
                                     className="w-8 mr-1"
                                   />
-                                  <span className="">{selectedFile.name}</span>
+                                  <span className="">{displayImage.name}</span>
                                 </div>
+                                <p className="property-input-title text-center">
+                                  Browse Photo
+                                </p>
                               </div>
                             </>
                           ) : (
@@ -292,34 +399,31 @@ const PropertyAdd = () => {
                       type="file"
                       id="fileInput"
                       accept="image/*"
-                      onChange={handleFileChange}
+                      onChange={handleDisplayImage}
                       style={{ display: "none" }}
                     />
                   </div>
-                </div>
+                </div> */}
 
-                <div className="relative mt-[22px]">
-                  <div className="flex justify-end absolute top-[19px] right-[8px]">
-                    <img
-                      className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                      src={delteIcon}
-                      alt=""
-                    />
-                  </div>
+                {/* <div className="relative mt-[22px]">
+              
                   <label htmlFor="fileInput" className="input-label">
-                    <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                      <div className="mt-[48px]">
-                        {selectedFile ? (
+                    <div className="w-full h-[148px] flex justify-center items-center rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                      <div className="">
+                        {displayImage ? (
                           <>
                             <div className="grid justify-center ">
                               <div className="flex items-center mb-[8px]">
                                 <img
-                                  src={URL.createObjectURL(selectedFile)}
+                                  src={URL.createObjectURL(displayImage)}
                                   alt="Selected File"
                                   className="w-8 mr-1"
                                 />
-                                <span className="">{selectedFile.name}</span>
+                                <span className="">{displayImage.name}</span>
                               </div>
+                              <p className="property-input-title text-center">
+                                Browse Photo
+                              </p>
                             </div>
                           </>
                         ) : (
@@ -339,33 +443,30 @@ const PropertyAdd = () => {
                     type="file"
                     id="fileInput"
                     accept="image/*"
-                    onChange={handleFileChange}
+                    onChange={handleDisplayImage}
                     style={{ display: "none" }}
                   />
                 </div>
 
                 <div className="relative mt-[22px]">
-                  <div className="flex justify-end absolute top-[19px] right-[8px]">
-                    <img
-                      className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                      src={delteIcon}
-                      alt=""
-                    />
-                  </div>
+              
                   <label htmlFor="fileInput" className="input-label">
-                    <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                      <div className="mt-[48px]">
-                        {selectedFile ? (
+                    <div className="w-full h-[148px] flex justify-center items-center rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                      <div className="">
+                        {displayImage ? (
                           <>
                             <div className="grid justify-center ">
                               <div className="flex items-center mb-[8px]">
                                 <img
-                                  src={URL.createObjectURL(selectedFile)}
+                                  src={URL.createObjectURL(displayImage)}
                                   alt="Selected File"
                                   className="w-8 mr-1"
                                 />
-                                <span className="">{selectedFile.name}</span>
+                                <span className="">{displayImage.name}</span>
                               </div>
+                              <p className="property-input-title text-center">
+                                Browse Photo
+                              </p>
                             </div>
                           </>
                         ) : (
@@ -385,33 +486,30 @@ const PropertyAdd = () => {
                     type="file"
                     id="fileInput"
                     accept="image/*"
-                    onChange={handleFileChange}
+                    onChange={handleDisplayImage}
                     style={{ display: "none" }}
                   />
                 </div>
 
                 <div className="relative mt-[22px]">
-                  <div className="flex justify-end absolute top-[19px] right-[8px]">
-                    <img
-                      className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                      src={delteIcon}
-                      alt=""
-                    />
-                  </div>
+               
                   <label htmlFor="fileInput" className="input-label">
-                    <div className="w-full h-[148px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                      <div className="mt-[48px]">
-                        {selectedFile ? (
+                    <div className="w-full h-[148px] flex justify-center items-center rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                      <div className="">
+                        {displayImage ? (
                           <>
                             <div className="grid justify-center ">
                               <div className="flex items-center mb-[8px]">
                                 <img
-                                  src={URL.createObjectURL(selectedFile)}
+                                  src={URL.createObjectURL(displayImage)}
                                   alt="Selected File"
                                   className="w-8 mr-1"
                                 />
-                                <span className="">{selectedFile.name}</span>
+                                <span className="">{displayImage.name}</span>
                               </div>
+                              <p className="property-input-title text-center">
+                                Browse Photo
+                              </p>
                             </div>
                           </>
                         ) : (
@@ -431,10 +529,10 @@ const PropertyAdd = () => {
                     type="file"
                     id="fileInput"
                     accept="image/*"
-                    onChange={handleFileChange}
+                    onChange={handleDisplayImage}
                     style={{ display: "none" }}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -442,26 +540,26 @@ const PropertyAdd = () => {
           <div className="mt-[18px] ">
             <h2> Property Video {`(Optional)`}</h2>
             <div className="relative">
-              <div className="flex justify-end absolute top-[8px] right-[8px]">
+              <div onClick={handleVideoDelete} className="flex justify-end absolute top-[8px] right-[8px]">
                 <img
                   className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
                   src={delteIcon}
                   alt=""
                 />
               </div>
-              <label htmlFor="fileInput" className="input-label">
+              <label htmlFor="video" className="input-label">
                 <div className="w-full h-[120px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
                   <div className="mt-[30px]">
-                    {selectedFile ? (
+                    {video ? (
                       <>
                         <div className="grid justify-center ">
-                          <div className="flex mb-[8px]">
+                          <div className="flex mb-[8px] items-center">
                             <img
-                              src={URL.createObjectURL(selectedFile)}
+                              src={video.url}
                               alt="Selected File"
-                              className=""
+                              className="w-10 mr-1"
                             />
-                            <span className="">{selectedFile.name}</span>
+                            <span className="">{video.name}</span>
                           </div>
                         </div>
                       </>
@@ -480,9 +578,9 @@ const PropertyAdd = () => {
               </label>
               <input
                 type="file"
-                id="fileInput"
+                id="video"
                 accept="image/*"
-                onChange={handleFileChange}
+                onChange={handleVideoSelect}
                 style={{ display: "none" }}
               />
             </div>
