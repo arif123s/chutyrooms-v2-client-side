@@ -1,15 +1,14 @@
 .property-add-container {
   margin-top: 42px;
   margin-bottom: 42px;
-  padding: 44px 24px 32px 24px;
+  padding: 24px 24px 32px 24px;
   border-radius: 8px;
   background: #ffffff;
   color: #020f07;
-  /* width: 100%; */
 }
 
 .property-add-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   letter-spacing: 0.72px;
 }
@@ -40,6 +39,12 @@
 }
 
 @media (max-width: 575.98px) {
+  .property-add-container {
+  margin-top: 36px;
+  margin-bottom: 32px;
+  padding: 22px 10px 0px 10px;
+}
+
   .property-images-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -50,6 +55,22 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr); 
   }
+
+  .custom-table{
+  display: grid;
+  column-gap: 16px;
+  }
+
+  .custom-table tr {
+ 
+ 
+}
+
+.custom-table th,
+.custom-table td {
+  margin-right: 24px;
+}
+
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {

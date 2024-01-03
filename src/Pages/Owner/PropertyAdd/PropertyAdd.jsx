@@ -11,9 +11,44 @@ import { useState } from "react";
 
 const PropertyAdd = () => {
   const [logo, setLogo] = useState(null);
- const [displayImages, setDisplayImages] = useState([null, null, null, null]);
+  const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [video, setVideo] = useState(null);
+  const [policies, setPolicies] = useState([
+    {
+      id: 0,
+      content: (
+        <div>
+          <h2 className="property-input-title">Duration</h2>
+          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
+            <span>23 hours</span>
+            <span>45 minute</span>
+          </p>
+          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
+            <span>23 hours</span>
+            <span>45 minute</span>
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: 1,
+      content: (
+        <div>
+          <h2 className="property-input-title">Duration</h2>
+          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
+            <span>23 hours</span>
+            <span>45 minute</span>
+          </p>
+          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
+            <span>23 hours</span>
+            <span>45 minute</span>
+          </p>
+        </div>
+      ),
+    },
+  ]);
 
+  console.log(policies);
 
   const handleLogoSelect = (event) => {
     const fileInput = event.target;
@@ -21,51 +56,86 @@ const PropertyAdd = () => {
       setLogo({
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
+        logoFile: fileInput.files[0],
       });
     } else {
       setLogo(null);
     }
   };
 
-   const handleDisplayImageSelect = (index, event) => {
-     const fileInput = event.target;
-     if (fileInput.files.length > 0) {
-       const newImages = [...displayImages];
-       newImages[index] = {
-         name: fileInput.files[0].name,
-         url: URL.createObjectURL(fileInput.files[0]),
-       };
-       setDisplayImages(newImages);
-     } else {
-       const newImages = [...displayImages];
-       newImages[index] = null;
-       setDisplayImages(newImages);
-     }
-   };
+  const handleDisplayImageSelect = (index, event) => {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      const newImages = [...displayImages];
+      newImages[index] = {
+        name: fileInput.files[0].name,
+        url: URL.createObjectURL(fileInput.files[0]),
+        displayImageFile: fileInput.files[0],
+      };
+      setDisplayImages(newImages);
+    } else {
+      const newImages = [...displayImages];
+      newImages[index] = null;
+      setDisplayImages(newImages);
+    }
+  };
 
-     const handleVideoSelect = (event) => {
-       const fileInput = event.target;
-       if (fileInput.files.length > 0) {
-         setVideo({
-           name: fileInput.files[0].name,
-           url: URL.createObjectURL(fileInput.files[0]),
-         });
-       } else {
-         setVideo(null);
-       }
-     };
+  const handleVideoSelect = (event) => {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      setVideo({
+        name: fileInput.files[0].name,
+        url: URL.createObjectURL(fileInput.files[0]),
+      });
+    } else {
+      setVideo(null);
+    }
+  };
 
-     const handleVideoDelete =()=>{
-      setVideo(null)
-     }
+  const handleVideoDelete = () => {
+    setVideo(null);
+  };
 
+  const addPolicy = () => {
+    const newPolicy = {
+      id: policies.length,
+      content: (
+        <div>
+          <h2 className="property-input-title">Duration</h2>
+          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
+            <span>23 hours</span>
+            <span>45 minute</span>
+          </p>
+          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
+            <span>23 hours</span>
+            <span>45 minute</span>
+          </p>
+        </div>
+      ),
+    };
+
+    const updatedPolicies = [...policies, newPolicy];
+    setPolicies(updatedPolicies);
+  };
+
+  const removePolicy = () => {
+    const updatedPolicies = policies.slice(0, -1);
+    setPolicies(updatedPolicies);
+  };
+
+  const handlePolicyChange = (id, value) => {
+    const updatedPolicies = policies.map((policy) =>
+      policy.id === id ? { ...policy, content: value } : policy
+    );
+    setPolicies(updatedPolicies);
+  };
 
   return (
     <div className="custom-container ">
       <div className="property-add-container">
         <h2 className="property-add-title">Property Adding</h2>
 
-        <form className="mt-[24px] text-[14px]" action="">
+        <form className="mt-[20px] text-[14px]" action="">
           {/* General info */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px]">
             <div className="">
@@ -168,16 +238,16 @@ const PropertyAdd = () => {
               Property Type
             </h2>
 
-            <div className="flex items-center gap-x-[12px]">
-              <div className="flex gap-x-[8px]">
+            <div className="flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
+              <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                 <input type="checkbox" name="hotel-type1" id="hotel-type1" />
                 <label htmlFor="hotel-type1"> Hotel</label>
               </div>
-              <div className="flex gap-x-[8px]">
+              <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                 <input type="checkbox" name="hotel-type2" id="hotel-type2" />
                 <label htmlFor="hotel-type2"> Resort</label>
               </div>
-              <div className="flex gap-x-[8px]">
+              <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                 <input type="checkbox" name="hotel-type3" id="hotel-type3" />
                 <label htmlFor="hotel-type3"> Cottage</label>
               </div>
@@ -196,16 +266,22 @@ const PropertyAdd = () => {
               <h2 className="property-input-title" htmlFor="address">
                 General
               </h2>
-              <div className="flex items-center gap-x-[12px]">
-                <div className="flex gap-x-[8px]">
+              <div className="flex items-center gap-x-[8px] md:gap-x-[12px] lg:gap-x-[12px]">
+                <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                   <input type="checkbox" name="hotel-type1" id="hotel-type1" />
-                  <label className="text-[16px]" htmlFor="hotel-type1">
+                  <label
+                    className="text-[14px] md:text-[16px] lg:text-[16px]"
+                    htmlFor="hotel-type1"
+                  >
                     Near from sea beach
                   </label>
                 </div>
-                <div className="flex gap-x-[8px]">
+                <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                   <input type="checkbox" name="hotel-type2" id="hotel-type2" />
-                  <label className="text-[16px]" htmlFor="hotel-type2">
+                  <label
+                    className="text-[14px] md:text-[16px] lg:text-[16px]"
+                    htmlFor="hotel-type2"
+                  >
                     Safety lockers
                   </label>
                 </div>
@@ -251,13 +327,15 @@ const PropertyAdd = () => {
                         {logo ? (
                           <>
                             <div className="grid justify-center ">
-                              <div className="flex items-center mb-[8px]">
-                                <img
-                                  // src={URL.createObjectURL(logoImage)}
-                                  src={logo.url}
-                                  alt="Selected File"
-                                  className="w-8 mr-1"
-                                />
+                              <div className="flex items-center mb-[8px] md:block md:justify-center">
+                                <div className="flex md:justify-center">
+                                  <img
+                                    // src={URL.createObjectURL(logoImage)}
+                                    src={logo.url}
+                                    alt="Selected File"
+                                    className="w-8 mr-1"
+                                  />
+                                </div>
                                 <span className="">{logo.name}</span>
                               </div>
                               <p className="property-input-title text-center">
@@ -304,12 +382,14 @@ const PropertyAdd = () => {
                           {image ? (
                             <>
                               <div className="grid justify-center ">
-                                <div className="flex items-center mb-[8px]">
-                                  <img
-                                    src={image.url}
-                                    alt={image.name}
-                                    className="w-8 mr-1"
-                                  />
+                                <div className="flex items-center mb-[8px] md:block md:justify-center">
+                                  <div className="flex md:justify-center">
+                                    <img
+                                      src={image.url}
+                                      alt={image.name}
+                                      className="w-8 mr-1"
+                                    />
+                                  </div>
                                   <span className="">{image.name}</span>
                                 </div>
                                 <p className="property-input-title text-center">
@@ -540,7 +620,10 @@ const PropertyAdd = () => {
           <div className="mt-[18px] ">
             <h2> Property Video {`(Optional)`}</h2>
             <div className="relative">
-              <div onClick={handleVideoDelete} className="flex justify-end absolute top-[8px] right-[8px]">
+              <div
+                onClick={handleVideoDelete}
+                className="flex justify-end absolute top-[8px] right-[8px]"
+              >
                 <img
                   className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
                   src={delteIcon}
@@ -589,11 +672,15 @@ const PropertyAdd = () => {
           <div className="mt-[18px]">
             <p className="mb-[12px]">
               Check In <span className="ml-[26px] mr-[12px]">:</span>{" "}
-              <span className="text-[16px] font-semibold">12 AM</span>
+              <span className="text-[14px] md:text-[16px] lg:text-[16px] font-semibold">
+                12 AM
+              </span>
             </p>
             <p>
               Check Out <span className="ml-[12px] mr-[12px]">:</span>{" "}
-              <span className="text-[16px] font-semibold">12 AM</span>
+              <span className="text-[14px] md:text-[16px] lg:text-[16px] font-semibold">
+                12 AM
+              </span>
             </p>
           </div>
 
@@ -603,14 +690,64 @@ const PropertyAdd = () => {
 
             <div className="py-[10px] px-[14px] border-[1px] rounded-[8px] border-[#E6E7E6] md:flex lg:flex gap-x-[120px]">
               <div className="md:flex lg:flex gap-x-[24px] items-center">
-                <div className="flex gap-x-[24px] items-center justify-between ">
+                <table className="table">
+                  {/* head */}
+                  <thead className="">
+                    <tr className="text-left mt-[24px]">
+                      <th className="property-input-title  font-normal">
+                        Duration
+                      </th>
+                      <th className="property-input-title font-normal">
+                        Refund
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="">
+                    <tr className="">
+                      <td>
+                        <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
+                          <span>23 hours</span>
+                          <span>45 minute</span>
+                        </p>
+                      </td>
+                      <td>
+                        <div className="flex gap-x-[4px] ">
+                          <img src={minusIcon} alt="" />
+                          <p className="text-[14px] md:text-[16px] lg:text-[16px]">
+                            <span>10</span>%
+                          </p>
+                          <img src={plusIcon} alt="" />
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr className="">
+                      <td>
+                        <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
+                          <span>23 hours</span>
+                          <span>45 minute</span>
+                        </p>
+                      </td>
+                      <td>
+                        <div className="flex gap-x-[4px] ">
+                          <img src={minusIcon} alt="" />
+                          <p className="text-[14px] md:text-[16px] lg:text-[16px]">
+                            <span>10</span>%
+                          </p>
+                          <img src={plusIcon} alt="" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                {/* <div className="flex gap-x-[24px] items-center justify-between ">
                   <div>
                     <h2 className="property-input-title">Duration</h2>
-                    <p className="flex gap-x-[15px] text-[16px] mb-[12px]">
+                    <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
                       <span>23 hours</span>
                       <span>45 minute</span>
                     </p>
-                    <p className="flex gap-x-[15px] text-[16px]">
+                    <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
                       <span>23 hours</span>
                       <span>45 minute</span>
                     </p>
@@ -620,22 +757,22 @@ const PropertyAdd = () => {
                     <h2 className="property-input-title">Refund</h2>
                     <div className="flex gap-x-[4px] mb-[12px]">
                       <img src={minusIcon} alt="" />
-                      <p className="text-[16px]">
+                      <p className="text-[14px] md:text-[16px] lg:text-[16px]">
                         <span>10</span>%
                       </p>
                       <img src={plusIcon} alt="" />
                     </div>
                     <div className="flex gap-x-[4px]">
                       <img src={minusIcon} alt="" />
-                      <p className="text-[16px]">
+                      <p className="text-[14px] md:text-[16px] lg:text-[16px]">
                         <span>10</span>%
                       </p>
                       <img src={plusIcon} alt="" />
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="text-[16px] mt-3 md:mt-3 lg:mt-3 flex justify-end md:justify-start lg:justify-start gap-x-2 md:block lg:block">
+                <div className="text-[14px] md:text-[16px] lg:text-[16px] mt-3 md:mt-3 lg:mt-3 flex justify-end md:justify-start lg:justify-start gap-x-2 md:block lg:block">
                   <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]">
                     Add
                   </button>
@@ -649,6 +786,36 @@ const PropertyAdd = () => {
                 <img className="w-[16px]" src={starIcon} alt="" />
                 Lorem ipsum Lorem ipsum
               </h2>
+            </div>
+          </div>
+
+          <div className="mt-[18px]">
+            <button
+              onClick={addPolicy}
+              className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]"
+            >
+              Add
+            </button>
+
+            <button
+              onClick={removePolicy}
+              className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]"
+            >
+              Remove
+            </button>
+
+            <div>
+              {policies.map((policy) => (
+                <div key={policy.id}>
+                  {/* <textarea
+                    value={policy.content}
+                    onChange={(e) =>
+                      handlePolicyChange(policy.id, e.target.value)
+                    }
+                  /> */}
+                  {/* {policy.content} */}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -691,10 +858,19 @@ const PropertyAdd = () => {
           <div className="mt-[18px]">
             <h2 className="property-input-title">Locate Your Property</h2>
 
-            <script
+            {/* <script
               src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY&libraries=geometry&callback=initMap&v=weekly&channel=2"
               defer
-            ></script>
+            ></script> */}
+
+            <div className="mt-[20px] flex justify-end gap-x-[12px]">
+              <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
+                Cancel
+              </button>
+              <button className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]">
+                Save
+              </button>
+            </div>
           </div>
         </form>
       </div>
