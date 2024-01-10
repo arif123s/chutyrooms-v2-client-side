@@ -44,18 +44,18 @@ const navigate = useNavigate();
 
           <div className="mb-4">
             <label className="input-title" htmlFor="email">
-              Email
+              Phone/Email
             </label>
             <input
               className="input-box"
               id="email"
               name="email"
-              type="email"
-              placeholder="Enter your valid email"
+              type="text"
+              placeholder="Enter your phone number or email"
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="input-title" htmlFor="phone">
               Phone Number
             </label>
@@ -66,7 +66,7 @@ const navigate = useNavigate();
               type="number"
               placeholder="Enter your phone number"
             />
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label className="input-title" htmlFor="password">
@@ -83,7 +83,7 @@ const navigate = useNavigate();
 
           <div className="mb-4">
             <label className="input-title" htmlFor="confirmPassword">
-             Confirm Password
+              Confirm Password
             </label>
             <input
               className="input-box"

@@ -1,21 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
 import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
 
 const OwnerRegister = () => {
-     const [inputValue, setInputValue] = useState("");
+    //  const [inputValue, setInputValue] = useState("");
        const navigate = useNavigate();
 
        const handleNavigate = (route) => {
          navigate(`/${route}`);
        };
 
-     const handleInput = (event) => {
-       // Remove non-numeric characters
-       const sanitizedValue = event.target.value.replace(/[^0-9]/g, "");
-       setInputValue(sanitizedValue);
-     };
+    //  const handleInput = (event) => {
+
+    //    const sanitizedValue = event.target.value.replace(/[^0-9]/g, "");
+    //    setInputValue(sanitizedValue);
+    //  };
 
   return (
     <div className="login-container">
@@ -37,28 +37,22 @@ const OwnerRegister = () => {
 
         <div className="mb-4">
           <label className="input-title" htmlFor="email">
-            Email
+            Phone/Email
           </label>
           <input
             className="input-box"
             id="email"
             name="email"
-            type="email"
-            placeholder="Enter your valid email"
+            type="text"
+            placeholder="Enter your phone number or email"
           />
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="input-title" htmlFor="phone">
             Phone Number
           </label>
-          {/* <input
-            className="input-box"
-            id="phone"
-            name="phone"
-            type="number"
-            placeholder="Enter your phone number"
-          /> */}
+        
           <input
             type="text"
             pattern="[0-9]*"
@@ -68,7 +62,7 @@ const OwnerRegister = () => {
             onInput={handleInput}
             placeholder="Enter your phone number"
           />
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <label className="input-title" htmlFor="password">

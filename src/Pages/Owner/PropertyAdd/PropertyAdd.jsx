@@ -3,52 +3,44 @@ import starBlank from "../../../assets/icons/star-blank.svg";
 import delteIcon from "../../../assets/icons/delete.svg";
 import imgIcon from "../../../assets/icons/img.svg";
 import videoIcon from "../../../assets/icons/frame.svg";
-import minusIcon from "../../../assets/icons/minus.svg";
-import plusIcon from "../../../assets/icons/plus.svg";
-import starIcon from "../../../assets/icons/star.svg";
+import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
+
 import "./PropertyAdd.css";
 import { useState } from "react";
+import EditableRow from "./CancellationPolicy/CancellationPolicy";
+
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+
+const libraries = ["places"];
+const mapContainerStyle = {
+  width: "100%",
+  height: "230px",
+  borderRadius: "8px",
+};
+const center = {
+  lat: 23.862725477930507, // default latitude ,
+  lng: 90.40080333547479, // default longitude
+};
 
 const PropertyAdd = () => {
   const [logo, setLogo] = useState(null);
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [video, setVideo] = useState(null);
-  const [policies, setPolicies] = useState([
-    {
-      id: 0,
-      content: (
-        <div>
-          <h2 className="property-input-title">Duration</h2>
-          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
-            <span>23 hours</span>
-            <span>45 minute</span>
-          </p>
-          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
-            <span>23 hours</span>
-            <span>45 minute</span>
-          </p>
-        </div>
-      ),
-    },
-    {
-      id: 1,
-      content: (
-        <div>
-          <h2 className="property-input-title">Duration</h2>
-          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
-            <span>23 hours</span>
-            <span>45 minute</span>
-          </p>
-          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
-            <span>23 hours</span>
-            <span>45 minute</span>
-          </p>
-        </div>
-      ),
-    },
-  ]);
 
-  console.log(policies);
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
+    libraries,
+  });
+
+  if (loadError) {
+    return <div className="text-center py-[60px]">Error loading maps!</div>;
+  }
+
+  if (!isLoaded) {
+    return <div className="text-center py-[60px]">Loading maps...</div>;
+  }
+
+  // console.log(policies);
 
   const handleLogoSelect = (event) => {
     const fileInput = event.target;
@@ -96,40 +88,6 @@ const PropertyAdd = () => {
     setVideo(null);
   };
 
-  const addPolicy = () => {
-    const newPolicy = {
-      id: policies.length,
-      content: (
-        <div>
-          <h2 className="property-input-title">Duration</h2>
-          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
-            <span>23 hours</span>
-            <span>45 minute</span>
-          </p>
-          <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
-            <span>23 hours</span>
-            <span>45 minute</span>
-          </p>
-        </div>
-      ),
-    };
-
-    const updatedPolicies = [...policies, newPolicy];
-    setPolicies(updatedPolicies);
-  };
-
-  const removePolicy = () => {
-    const updatedPolicies = policies.slice(0, -1);
-    setPolicies(updatedPolicies);
-  };
-
-  const handlePolicyChange = (id, value) => {
-    const updatedPolicies = policies.map((policy) =>
-      policy.id === id ? { ...policy, content: value } : policy
-    );
-    setPolicies(updatedPolicies);
-  };
-
   return (
     <div className="custom-container ">
       <div className="property-add-container">
@@ -166,37 +124,54 @@ const PropertyAdd = () => {
               <label className="property-input-title" htmlFor="country">
                 Country
               </label>
-              <select className="input-box" name="country" id="country">
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="India">India</option>
-              </select>
+              <div className="property-input-div">
+                <select id="country" className=" property-input" name="country">
+                  <option value="Bangladesh">Bangladesh</option>
+                  <option value="India">India</option>
+                </select>
+                <img
+                  // className="absolute top-[14px] right-[12px] arrow-icon"
+                  className="arrow-icon"
+                  src={arrowDownIcon}
+                  alt=""
+                />
+              </div>
             </div>
             <div className="">
               <label className="property-input-title" htmlFor="">
                 Division
               </label>
-              <select className="input-box" name="" id="">
-                <option value="Chittagong">Chittagong</option>
-                <option value="Dhaka">Dhaka</option>
-              </select>
+              <div className="property-input-div">
+                <select className="property-input" name="" id="">
+                  <option value="Chittagong">Chittagong</option>
+                  <option value="Dhaka">Dhaka</option>
+                </select>
+                <img className="arrow-icon" src={arrowDownIcon} alt="" />
+              </div>
             </div>
             <div className="">
               <label className="property-input-title" htmlFor="">
                 State/District
               </label>
-              <select className="input-box" name="" id="">
-                <option value="Chittagong">Chittagong</option>
-                <option value="Cox's Bazar">Cox{`'`}s Bazar</option>
-              </select>
+              <div className="property-input-div">
+                <select className="property-input" name="" id="">
+                  <option value="Chittagong">Chittagong</option>
+                  <option value="Cox's Bazar">Cox{`'`}s Bazar</option>
+                </select>
+                <img className="arrow-icon" src={arrowDownIcon} alt="" />
+              </div>
             </div>
             <div className="">
               <label className="property-input-title" htmlFor="">
                 Area
               </label>
-              <select className="input-box" name="" id="">
-                <option value="GEC">GEC</option>
-                <option value="Cox's Bazar">Muradpur</option>
-              </select>
+              <div className="property-input-div">
+                <select className="property-input" name="" id="">
+                  <option value="GEC">GEC</option>
+                  <option value="Cox's Bazar">Muradpur</option>
+                </select>
+                <img className="arrow-icon" src={arrowDownIcon} alt="" />
+              </div>
             </div>
             <div className="">
               <label className="property-input-title" htmlFor="address">
@@ -672,153 +647,34 @@ const PropertyAdd = () => {
           <div className="mt-[18px]">
             <p className="mb-[12px]">
               Check In <span className="ml-[26px] mr-[12px]">:</span>{" "}
-              <span className="text-[14px] md:text-[16px] lg:text-[16px] font-semibold">
-                12 AM
+              <input
+                className="rounded-[8px] h-[36px] w-[60px] p-[8px] border-[1px] border-[#E6E7E6]"
+                type="number"
+                name=""
+                id=""
+              />
+              <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
+                AM
               </span>
             </p>
             <p>
               Check Out <span className="ml-[12px] mr-[12px]">:</span>{" "}
-              <span className="text-[14px] md:text-[16px] lg:text-[16px] font-semibold">
-                12 AM
+              <input
+                className="rounded-[8px] h-[36px] w-[60px] p-[8px] border-[1px] border-[#E6E7E6]"
+                type="number"
+                name=""
+                id=""
+              />
+              <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
+                AM
               </span>
             </p>
           </div>
-
           {/* Cancellation Policy */}
           <div className="mt-[18px]">
-            <h2 className="property-input-title">Cancellation Policy</h2>
-
-            <div className="py-[10px] px-[14px] border-[1px] rounded-[8px] border-[#E6E7E6] md:flex lg:flex gap-x-[120px]">
-              <div className="md:flex lg:flex gap-x-[24px] items-center">
-                <table className="table">
-                  {/* head */}
-                  <thead className="">
-                    <tr className="text-left mt-[24px]">
-                      <th className="property-input-title  font-normal">
-                        Duration
-                      </th>
-                      <th className="property-input-title font-normal">
-                        Refund
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="">
-                    <tr className="">
-                      <td>
-                        <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
-                          <span>23 hours</span>
-                          <span>45 minute</span>
-                        </p>
-                      </td>
-                      <td>
-                        <div className="flex gap-x-[4px] ">
-                          <img src={minusIcon} alt="" />
-                          <p className="text-[14px] md:text-[16px] lg:text-[16px]">
-                            <span>10</span>%
-                          </p>
-                          <img src={plusIcon} alt="" />
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td>
-                        <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
-                          <span>23 hours</span>
-                          <span>45 minute</span>
-                        </p>
-                      </td>
-                      <td>
-                        <div className="flex gap-x-[4px] ">
-                          <img src={minusIcon} alt="" />
-                          <p className="text-[14px] md:text-[16px] lg:text-[16px]">
-                            <span>10</span>%
-                          </p>
-                          <img src={plusIcon} alt="" />
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                {/* <div className="flex gap-x-[24px] items-center justify-between ">
-                  <div>
-                    <h2 className="property-input-title">Duration</h2>
-                    <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mb-[12px]">
-                      <span>23 hours</span>
-                      <span>45 minute</span>
-                    </p>
-                    <p className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px]">
-                      <span>23 hours</span>
-                      <span>45 minute</span>
-                    </p>
-                  </div>
-
-                  <div>
-                    <h2 className="property-input-title">Refund</h2>
-                    <div className="flex gap-x-[4px] mb-[12px]">
-                      <img src={minusIcon} alt="" />
-                      <p className="text-[14px] md:text-[16px] lg:text-[16px]">
-                        <span>10</span>%
-                      </p>
-                      <img src={plusIcon} alt="" />
-                    </div>
-                    <div className="flex gap-x-[4px]">
-                      <img src={minusIcon} alt="" />
-                      <p className="text-[14px] md:text-[16px] lg:text-[16px]">
-                        <span>10</span>%
-                      </p>
-                      <img src={plusIcon} alt="" />
-                    </div>
-                  </div>
-                </div> */}
-
-                <div className="text-[14px] md:text-[16px] lg:text-[16px] mt-3 md:mt-3 lg:mt-3 flex justify-end md:justify-start lg:justify-start gap-x-2 md:block lg:block">
-                  <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]">
-                    Add
-                  </button>
-                  <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center">
-                    Remove
-                  </button>
-                </div>
-              </div>
-
-              <h2 className="flex justify-center lg:justify-start items-center text-[16px] text-[#159947] mt-3 lg:mt-0">
-                <img className="w-[16px]" src={starIcon} alt="" />
-                Lorem ipsum Lorem ipsum
-              </h2>
-            </div>
+            <EditableRow></EditableRow>
           </div>
-
-          <div className="mt-[18px]">
-            <button
-              onClick={addPolicy}
-              className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]"
-            >
-              Add
-            </button>
-
-            <button
-              onClick={removePolicy}
-              className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]"
-            >
-              Remove
-            </button>
-
-            <div>
-              {policies.map((policy) => (
-                <div key={policy.id}>
-                  {/* <textarea
-                    value={policy.content}
-                    onChange={(e) =>
-                      handlePolicyChange(policy.id, e.target.value)
-                    }
-                  /> */}
-                  {/* {policy.content} */}
-                </div>
-              ))}
-            </div>
-          </div>
-
+          {/* Short Description */}
           <div className="mt-[18px]">
             <label className="property-input-title" htmlFor="short-description">
               Short Description
@@ -830,38 +686,43 @@ const PropertyAdd = () => {
               placeholder=""
             ></textarea>
           </div>
-
+          {/* Instruction */}
           <div className="mt-[18px]">
             <label className="property-input-title" htmlFor="instruction">
               Instruction
             </label>
             <textarea
-              className="property-description block input-box h-[120px]"
+              className="input-box "
               name="instruction"
               id="instruction"
               placeholder=""
             ></textarea>
           </div>
-
+          {/* Payment Method */}
           <div className="mt-[18px]">
             <label className="property-input-title" htmlFor="payment-method">
               Payment Method
             </label>
             <textarea
-              className="property-description block input-box h-[120px]"
+              className="input-box "
               name="payment-method"
               id="payment-method"
               placeholder=""
             ></textarea>
           </div>
-
+          {/* google map */}
           <div className="mt-[18px]">
             <h2 className="property-input-title">Locate Your Property</h2>
 
-            {/* <script
-              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY&libraries=geometry&callback=initMap&v=weekly&channel=2"
-              defer
-            ></script> */}
+            <div className="">
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                zoom={10}
+                center={center}
+              >
+                <Marker position={center} />
+              </GoogleMap>
+            </div>
 
             <div className="mt-[20px] flex justify-end gap-x-[12px]">
               <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
