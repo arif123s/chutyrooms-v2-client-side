@@ -2,7 +2,7 @@ import chutyLogo from "../../../../../assets/icons/Chuty-Logo.svg";
 import propertyIcon from "../../../../../assets/icons/Property.svg";
 import memberIcon from "../../../../../assets/icons/Member.svg";
 import globalLogo from "../../../../../assets/icons/Global.svg";
-import menuIcon from "../../../../../assets/icons/menu.svg";
+import menuIcon from "../../../../../assets/icons/menu-large.svg";
 import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 // import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 import "./NavBar.css";
@@ -152,7 +152,7 @@ const NavBar = () => {
                 <option value="">BDT</option>
               </select> */}
               <div className="relative pr-[8px]">
-                <select className="w-12 ml-1 p-[4px]" name="" id="">
+                <select className="w-12 ml-1 mr-2 p-[5px]" name="" id="">
                   <option className="bg-white " value="BDT">
                     BDT
                   </option>
@@ -177,7 +177,7 @@ const NavBar = () => {
               menu ? " block" : "hidden"
             }`}
           >
-            <a className=" bg-[#E8F5ED] w-44  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
+            <a className="bg-[#E8F5ED] w-44 text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
               <img className="nav-icon" src={propertyIcon}></img>
               Chuty Property
             </a>
