@@ -3,6 +3,7 @@ import propertyIcon from "../../../../../assets/icons/Property.svg";
 import memberIcon from "../../../../../assets/icons/Member.svg";
 import globalLogo from "../../../../../assets/icons/Global.svg";
 import menuIcon from "../../../../../assets/icons/menu.svg";
+import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 // import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 import "./NavBar.css";
 import { useEffect, useState } from "react";
@@ -58,14 +59,14 @@ const NavBar = () => {
               </NavLink> */}
             <a
               onClick={() => handleNavigate("owner-register")}
-              className="menu-mobile bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]"
+              className="menu-mobile cursor-pointer bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]"
             >
               <img className="nav-icon" src={propertyIcon}></img>
               Chuty Property
             </a>
           </li>
           <li>
-            <a className="nav-item bg-[#E8F5ED] text-[#159947] flex items-center px-[16px] py-[10px] rounded-[8px]">
+            <a className="nav-item cursor-pointer bg-[#E8F5ED] text-[#159947] flex items-center p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
               <img className="nav-icon" src={memberIcon}></img>
               Deal Membership
             </a>
@@ -73,18 +74,22 @@ const NavBar = () => {
           <li className="menu-mobile">
             <a className="flex">
               <img src={globalLogo}></img>
-              <select
-                className="w-12 ml-1 pr-1"
-                name=""
-                id=""
-              >
-                <option className="bg-white " value="BDT">
-                  BDT
-                </option>
-                <option className="bg-white " value="USD">
-                  USD
-                </option>
-              </select>
+              <div className="relative pr-[8px]">
+                <select className="w-12 ml-1 p-[4px]" name="" id="">
+                  <option className="bg-white " value="BDT">
+                    BDT
+                  </option>
+                  <option className="bg-white " value="USD">
+                    USD
+                  </option>
+                </select>
+                <img
+                  // className="absolute top-[6px] right-[0px]"
+                  className="arrow-icon"
+                  src={arrowDownIcon}
+                  alt=""
+                />
+              </div>
 
               {/* <div className="bg-[#F8FEFF] flex items-center ml-2" name="" id="">
                   <p className="bg-white " value="BDT">
@@ -120,11 +125,7 @@ const NavBar = () => {
           menu ? " menu-container py-3 px-2 mt-2 block" : "h-0"
         }`}
       >
-        <div
-        // className={`transition-trnasform transform duration-1000 ${
-        //   menu ? " block" : "hidden"
-        // }`}
-        >
+        <div>
           <div
             className={`transition-trnasform transform duration-200 ${
               menu ? " block" : "hidden"
@@ -147,9 +148,25 @@ const NavBar = () => {
           >
             <a className="flex">
               <img src={globalLogo}></img>
-              <select className="bg-[#F8FEFF]" name="" id="">
+              {/* <select className="bg-[#F8FEFF]" name="" id="">
                 <option value="">BDT</option>
-              </select>
+              </select> */}
+              <div className="relative pr-[8px]">
+                <select className="w-12 ml-1 p-[4px]" name="" id="">
+                  <option className="bg-white " value="BDT">
+                    BDT
+                  </option>
+                  <option className="bg-white " value="USD">
+                    USD
+                  </option>
+                </select>
+                <img
+                  // className="w-[20px] absolute top-[17%] right-[0px]"
+                  className="arrow-icon"
+                  src={arrowDownIcon}
+                  alt=""
+                />
+              </div>
             </a>
 
             <hr className="my-3" />

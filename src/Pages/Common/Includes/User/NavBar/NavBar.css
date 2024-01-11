@@ -41,9 +41,16 @@ color: #FFFFFF; */
 
 @media (max-width: 575.98px) {
   .nav-chuty-logo {
-    width: 120px;
-    height: 52px;
+    width: 90px;
+    height: 24px;
   }
+
+.nav-icon {
+  margin-right: 4px;
+  width: 16px;
+  height: 16px;
+}
+
   .menu-mobile {
     display: none;
   }
@@ -53,10 +60,17 @@ color: #FFFFFF; */
 }
   .menu-icon {
     display: block;
+    width: 24px;
+    height: 24px;
   }
+
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
+    .nav-chuty-logo {
+    width: 114px;
+    height: 24px;
+  }
   .menu-mobile {
     display: none;
   }
@@ -70,6 +84,10 @@ color: #FFFFFF; */
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+   .nav-chuty-logo {
+    width: 134px;
+    height: 24px;
+  }
   .menu-mobile {
     display: none;
   }

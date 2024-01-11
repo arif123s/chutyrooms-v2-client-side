@@ -42,15 +42,14 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      padding-right: 50px; 
-      background: url('/src/assets/icons/arrow-down.svg') no-repeat right center; /* Use your custom icon */
+        padding-right: 30px; 
+  cursor: pointer;
+      /* padding-right: 50px;  */
+      /* background: url('/src/assets/icons/arrow-down.svg') no-repeat right center; Use your custom icon */
       background-size: 16px; 
     }
 
-    /* Optional: Add additional styling as needed */
-    select:hover {
-      /* border-color: #999; Highlight border on hover */
-    }
+   
 
     select:focus {
       outline: none; 
