@@ -134,7 +134,7 @@ const OwnerRegister = () => {
             onClick={() => {
               handleNavigate("login");
             }}
-            className="text-[#159947] hover:cursor-pointer"
+            className="sign-up-btn"
           >
             Sign In
           </a>

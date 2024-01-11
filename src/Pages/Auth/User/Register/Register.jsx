@@ -127,10 +127,7 @@ const navigate = useNavigate();
         <div className="text-center">
           <p className="text-[16px]">
             Already registered?{" "}
-            <a
-              onClick={navigateToLogin}
-              className="text-[#159947] hover:cursor-pointer"
-            >
+            <a onClick={navigateToLogin} className="sign-up-btn">
               Sign In
             </a>
           </p>
