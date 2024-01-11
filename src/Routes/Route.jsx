@@ -11,6 +11,7 @@ import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
+import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
           {
             path: "property-add",
             element: <PropertyAdd></PropertyAdd>,
+          },
+          {
+            path: "room-add",
+            element: <RoomAdd>     </RoomAdd>,
           },
         ],
       },

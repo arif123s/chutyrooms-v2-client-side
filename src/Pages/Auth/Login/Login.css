@@ -54,6 +54,13 @@
   height: 48px;
 }
 
+.sign-up-btn{
+  font-family: 'Gilroy-SemiBold';
+  font-weight: 500;
+  color: #159947;
+  cursor: pointer;
+}
+
 
 @media (max-width: 575.98px) {
  .login-container {

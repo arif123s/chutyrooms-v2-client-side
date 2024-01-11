@@ -10,6 +10,7 @@ import { useState } from "react";
 import EditableRow from "./CancellationPolicy/CancellationPolicy";
 
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { useNavigate } from "react-router-dom";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -23,6 +24,7 @@ const center = {
 };
 
 const PropertyAdd = () => {
+  const navigate = useNavigate();
   const [logo, setLogo] = useState(null);
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [video, setVideo] = useState(null);
@@ -88,6 +90,11 @@ const PropertyAdd = () => {
     setVideo(null);
   };
 
+  const handleSave = (e)=>{
+e.preventDefault()
+    navigate("/room-add")
+  }
+
   return (
     <div className="custom-container ">
       <div className="property-add-container">
@@ -96,6 +103,7 @@ const PropertyAdd = () => {
         <form className="mt-[20px] text-[14px]" action="">
           {/* General info */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px]">
+            {/* Property Name */}
             <div className="">
               <label className="property-input-title" htmlFor="property-name">
                 Property Name
@@ -108,18 +116,21 @@ const PropertyAdd = () => {
                 placeholder="Sea View"
               />
             </div>
+            {/* Bin */}
             <div className="">
               <label className="property-input-title" htmlFor="bin">
                 Bin
               </label>
               <input className="input-box" id="bin" name="bin" type="text" />
             </div>
+            {/* Tin */}
             <div className="">
               <label className="property-input-title" htmlFor="tin">
                 Tin
               </label>
               <input className="input-box" id="tin" name="tin" type="text" />
             </div>
+            {/* Country */}
             <div className="">
               <label className="property-input-title" htmlFor="country">
                 Country
@@ -137,6 +148,7 @@ const PropertyAdd = () => {
                 />
               </div>
             </div>
+            {/* Division */}
             <div className="">
               <label className="property-input-title" htmlFor="">
                 Division
@@ -149,6 +161,7 @@ const PropertyAdd = () => {
                 <img className="arrow-icon" src={arrowDownIcon} alt="" />
               </div>
             </div>
+            {/* State/District */}
             <div className="">
               <label className="property-input-title" htmlFor="">
                 State/District
@@ -161,6 +174,7 @@ const PropertyAdd = () => {
                 <img className="arrow-icon" src={arrowDownIcon} alt="" />
               </div>
             </div>
+            {/* Area */}
             <div className="">
               <label className="property-input-title" htmlFor="">
                 Area
@@ -173,6 +187,7 @@ const PropertyAdd = () => {
                 <img className="arrow-icon" src={arrowDownIcon} alt="" />
               </div>
             </div>
+            {/* Address */}
             <div className="">
               <label className="property-input-title" htmlFor="address">
                 Address
@@ -185,6 +200,7 @@ const PropertyAdd = () => {
               />
             </div>
           </div>
+          {/* Description */}
           <div className="mt-[18px]">
             <label className="property-input-title" htmlFor="description">
               Description
@@ -196,6 +212,7 @@ const PropertyAdd = () => {
               placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
             ></textarea>
           </div>
+          {/* Property Rating */}
           <div className="mt-[18px]">
             <label className="property-input-title" htmlFor="address">
               Property Rating
@@ -208,6 +225,7 @@ const PropertyAdd = () => {
               <img className="w-[20px]" src={starBlank} alt="" />
             </div>
           </div>
+          {/* Property Type */}
           <div className="mt-[18px]">
             <h2 className="property-input-title" htmlFor="address">
               Property Type
@@ -281,10 +299,8 @@ const PropertyAdd = () => {
           </div>
           {/* Image */}
           <div className="mt-[18px] ">
-            {/* <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-[18px]"> */}
             <div className="property-images-container">
               {/* Logo */}
-
               <div>
                 <h2 className="mb-[12px]">Logo</h2>
                 <div className=" ">
@@ -341,9 +357,7 @@ const PropertyAdd = () => {
                   />
                 </div>
               </div>
-
               {/* Display Image */}
-
               <div>
                 <h2 className="">Display Image</h2>
                 <div className="property-display-images">
@@ -728,7 +742,10 @@ const PropertyAdd = () => {
               <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
                 Cancel
               </button>
-              <button className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]">
+              <button
+                onClick={(e) => handleSave(e)}
+                className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+              >
                 Save
               </button>
             </div>

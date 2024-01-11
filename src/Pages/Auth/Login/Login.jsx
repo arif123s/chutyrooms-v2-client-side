@@ -77,11 +77,11 @@ const Login = () => {
         </div>
 
         <div className="text-center">
-          <p className="text-[16px]">
+          <p className="text-[16px] ">
             Don’t have an account?{" "}
             <a
               onClick={navigateToRegister}
-              className="text-[#159947] hover:cursor-pointer"
+              className="sign-up-btn"
             >
               Sign Up
             </a>

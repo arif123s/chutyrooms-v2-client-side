@@ -215,7 +215,7 @@ const CancellationPolicy = () => {
         <div className="py-[10px] px-[14px] border-[1px] rounded-[8px] border-[#E6E7E6] md:flex lg:flex md:gap-x-[18px] lg:gap-x-[120px]">
           <div className="md:flex lg:flex gap-x-[24px] md:items-center lg:items-center">
             <table className="custom-table">
-              <thead className="">
+              <thead className="mt-[]">
                 <tr className="">
                   <th className="property-input-title text-left font-normal mr-[12px] md:mr-[24px] lg:mr-[24px]">
                     <p className="mr-[12px]">Duration</p>
