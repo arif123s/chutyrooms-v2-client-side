@@ -12,6 +12,10 @@
   src: local('Gilroy'), url('./fonts/Gilroy-Bold.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Gilroy-SemiBold';
+  src: local('Gilroy'), url('./fonts/Gilroy-SemiBold.ttf') format('truetype');
+}
 /* @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

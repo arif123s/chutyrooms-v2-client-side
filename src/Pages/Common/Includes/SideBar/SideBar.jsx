@@ -110,8 +110,8 @@ const SideBar = ({open,setOpen}) => {
   return (
     <div className={`${open ? "sidebar-width" : "sidebar-close-width"}  sidebar-small`}>
         <div className="chuty-logo-division">
-        <img src={open==true ? ChutyLogo: ChutySmallLogo}  className={`${open ? "h-[48px] " : "h-[40px]"}  px-5 hidden lg:block md:block `}></img>
-        <img src={open==true ? ChutySmallLogo: ChutyLogo}  className={`${open ? "h-[48px] " : "h-[40px]"} px-5 lg:hidden md:hidden`}></img>
+        <img src={open==true ? ChutyLogo: ChutySmallLogo}  className={`${open ? "h-[48px] " : "h-[40px]"}  px-5  chutylogo`}></img>
+        <img src={open==true ? ChutySmallLogo: ChutyLogo}  className={`${open ? "h-[48px] " : "h-[40px]"} px-5 chutysmall-logo hidden `}></img>
         </div>
 
       <div className={`sidebar-content`}>
@@ -121,9 +121,9 @@ const SideBar = ({open,setOpen}) => {
 
         {lists.map((list, i) => 
           <div key={i}  className={`sidebar-content-section`} >
-            <div  onClick={() => handleSlideUp(list.name)} className={` ${active == list.name   ? 'onclick-color' : 'onclickcancel-color'} duration-200 rounded-[0.5rem]  submenu-list cursor-pointer  ${!open ? "sm:p-[0rem]" : "sm:p-[0.65rem]"}`}>
+            <div  onClick={() => handleSlideUp(list.name)} className={` ${active == list.name   ? 'onclick-color' : 'onclickcancel-color'} duration-200 rounded-[0.5rem]  submenu-list-division h-10 cursor-pointer  ${!open ? "sm:p-[0rem]" : "sm:p-[0.65rem]"}`}>
 
-              <div className="sidebar-menu-division" >
+              <div className="sidebar-menu-division " >
                 <img src={active === list.name ? list.clickedicon : list.icon} className={`cursor-pointer duration-500  ${open ? " rotate-[360deg]" : "sidebar-menu-image-cus"}`}></img>
                 <span className={`sidebar-menu-title ${!open && "sidebar-show-hide"
                   } `}>
@@ -138,11 +138,11 @@ const SideBar = ({open,setOpen}) => {
 
             </div>
             { handleclick == list.name && toggleOpen &&
-            <ul className={`transition-transform transform duration-300 bg-white   ${!open && 'lg:absolute md:absolute navbar-list-menu sm:w-[200px] sm:top-0 sm:shadow-[0rem_0rem_2.5rem_0rem_rgba(82,63,105,0.1)] sm:rounded-lg'}`}>
+            <ul className={`transition-transform transform duration-300 bg-white   ${!open && ' lg:absolute lg:left-[70px] md:absolute submenu-unorder-list navbar-list-menu sm:w-[200px] sm:top-0 sm:shadow-[0rem_0rem_2.5rem_0rem_rgba(82,63,105,0.1)] sm:rounded-lg'}`}>
 
               {list.submenu.map((item, i) =>
 
-                <li key={i} onClick={() => ColorhandleClick(item.name)} className={`flex   sm:pt-3 pb-3 sm:pl-10 pl-4 cursor-pointer hover:bg-light-white rounded-lg text-color text-sm items-center gap-x-4 ${active === item.name  ? 'onclick-color' : 'onclickcancel-color'} } duration-200`}>
+                <li key={i} onClick={() => ColorhandleClick(item.name)} className={`flex h-10  sm:pt-3 pb-3 sm:pl-10 pl-4 cursor-pointer hover:bg-light-white rounded-lg text-color text-sm items-center gap-x-4 ${active === item.name  ? 'onclick-color' : 'onclickcancel-color'} } duration-200`}>
                   <img src={active === item.name ? RectangleGreen : Rectangle}></img>
 
                   <span className={`${!open} cus-origin-transform  duration-200 `}> {item.name}</span>

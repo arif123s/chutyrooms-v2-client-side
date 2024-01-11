@@ -1,9 +1,43 @@
+.dashboard-component{
+    padding: 30px 24px 25px 24px;
+   
+}
+.booking-overview-container
+{
+    
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    column-gap: 24px;
+    padding-bottom: 24px;
+    
+}
 
-.booking-overview-container{
-    font-family: "Gilroy-bold";
+
+
+/* .booking-overview-container
+{
+    
+    display: flex;
+    gap: 15px;
+    padding: 30px 24px 24px 24px;
+   
+} */
+
+.booking-quantity-division
+{
+    
+    background-color: #ffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    padding:24px;
+   
+  
 }
 .booking-quantity
 {
+    font-family: "Gilroy-bold";
     font-weight: 700;
     color: #020F07;
     font-size: 30px;
@@ -19,12 +53,165 @@
 .circle-background
 {
     fill: none;
-    stroke: #E8F5ED;
+    stroke: #F1F1FF;
+    stroke-width: 12px;
 }
 
 
 .circle-progress{
     fill: none;
-    stroke: #159947;
+    stroke: #6F74FF;
+    stroke-width: 12px;
 
+}
+
+.pending-circle-background
+{
+ fill: none;
+ stroke: #FFF2E7;
+ stroke-width: 12px;
+}
+.pending-circle-progress
+{
+
+    fill: none;
+    stroke: #FF800B;
+    stroke-width: 12px;
+
+}
+
+.cancel-circle-background
+{
+    fill: none;
+    stroke: #FDEAE9;
+    stroke-width: 12px;
+}
+
+.cancel-background-progress
+{
+    fill: none;
+    stroke: #F02E25;
+    stroke-width: 12px;
+
+}
+
+.completed-circle-background
+{
+    fill: none;
+    stroke: #E8F5ED;
+    stroke-width: 12px;
+}
+
+.completed-background-progress
+{
+    fill: none;
+    stroke: #159947;
+    stroke-width: 12px;
+}
+
+@media (max-width: 575.98px) {
+
+    .dashboard-component{
+        padding: 30px 26px 25px 5px;
+       
+    }
+    .booking-overview-container
+{
+    /* grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 m-5 */
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 8px;
+    padding: 0px 5px 5px 5px;
+   
+    height: 250px;
+   
+}
+
+.booking-quantity-division
+{
+    /* bg-white flex justify-between items-center  p-[24px] rounded-[8px] */
+    display:flex 1 0 58%;
+    padding: 14px;
+  
+   
+}
+
+.booking-quantity
+{
+   
+    font-size: 24px;
+}
+
+.booking-type-title
+{
+    font-size: 12px;
+}
+
+
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .booking-overview-container
+{
+    /* grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 m-5 */
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 8px;
+    padding: 20px 0px;
+    height: 330px;
+   
+}
+
+.booking-quantity-division
+{
+    /* bg-white flex justify-between items-center  p-[24px] rounded-[8px] */
+    display:flex 1 0 58%;
+    padding: 20px;
+  
+   
+}
+
+.booking-quantity
+{
+   
+    font-size: 26px;
+}
+
+.booking-type-title
+{
+    font-size: 12px;
+}
+
+
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .booking-quantity-division
+        {
+            padding: 14px;
+        }
+
+        .booking-overview-container{
+            column-gap: 12px;
+        }
+
+}
+
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+    .booking-quantity-division
+    {
+        padding: 16px;
+    }
+
+    .booking-overview-container{
+        column-gap: 12px;
+    }
 }

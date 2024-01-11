@@ -1,3 +1,5 @@
+
+
 .text-color{
     color: #808783;
 }
@@ -14,14 +16,14 @@
     font-size: 16px;
 }
 
-.submenu-list 
+.submenu-list-division 
 {
-    padding: 0.65rem;
+    padding: 8px 12px;
 }
 
 .sidebar-width
 {
-    width: 20%;
+    width: 15%;
 }
 .sidebar-close-width
 {
@@ -72,7 +74,8 @@
     display: flex;
     position: relative;
     align-items: center;
-    padding: 4px;
+    gap: 15px;
+   
    
 }
 
@@ -80,7 +83,7 @@
 {
     /* ml-[8px] font-medium  duration-200 */
    font-weight: 500; 
-   padding-left: 8px;
+  
 
 }
 .sidebar-icons
@@ -90,7 +93,7 @@
     overflow: hidden;
     margin-left: 20px;
     position: absolute;
-    top: 6px;
+    top: 4px;
     right: 0px;
 
 }
@@ -101,10 +104,7 @@
 }
 
 @media (max-width: 575.98px) {
-.submenu-list 
-{
-    padding: 0rem;
-}
+
 
 .sidebar-width
 {
@@ -132,13 +132,14 @@
 
 .chuty-logo-division
 {
-    height: 107px;
+    height: 115px;
 }
 
 .sidebar-content
 {
     padding: 0px;
     height: 100vh;
+    z-index: 1;
 }
 
 .sidebar-content-section
@@ -153,12 +154,21 @@
     position: absolute;
     top: 0;
     left: 0;
+    box-shadow: 8px 0px 12px 0px rgba(192, 195, 193, 0.2);
+
 }
 
-.sidebar-menu-division
+
+
+.chutylogo
 {
-    padding-left: 10px;
+    display: none;
 }
+.chutysmall-logo
+{
+    display: block;
+}
+
 
 
 
@@ -167,10 +177,7 @@
 
 @media (min-width: 576px) and (max-width: 767.98px) {
 
-    .submenu-list 
-{
-    padding: 0rem;
-}
+
 
 .sidebar-width
 {
@@ -197,13 +204,14 @@
 
 .chuty-logo-division
 {
-    height: 107px;
+    height: 130px;
 }
 
 .sidebar-content
 {
     padding: 0px;
     height: 100vh;
+    z-index: 1;
 }
 
 .sidebar-content-section
@@ -220,16 +228,23 @@
     left: 0;
 }
 
-.sidebar-menu-division
+
+
+
+.chutylogo
 {
-    padding-left: 10px;
+    display: none;
+}
+.chutysmall-logo
+{
+    display: block;
 }
 
 
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-.sidebar-width
+/* .sidebar-width
 {
     width: 40%;
     overflow: hidden;
@@ -241,7 +256,72 @@
 .sidebar-menu-image-cus
 {
     margin: auto;
+} */
+
+
+
+
+
+.sidebar-width
+{
+    width: 0px;
+    overflow: hidden;
+   
 }
+
+.sidebar-close-width
+{
+    width: 40%;
+    overflow: hidden;
+}
+
+.cus-origin-transform
+{
+    transform-origin: right; 
+}
+
+.sidebar-show-hide
+{
+    display: block;
+}
+
+.chuty-logo-division
+{
+    height: 136px;
+}
+
+.sidebar-content
+{
+    padding: 0px;
+    height: 100vh;
+    z-index: 1;
+}
+
+.sidebar-content-section
+{
+    /* relative px-5 py-1 sm:p-0 */
+   position: relative;
+    padding: 4px 20px;
+    
+}
+.sidebar-small
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+
+.chutylogo
+{
+    display: none;
+}
+.chutysmall-logo
+{
+    display: block;
+}
+
 
 
 }
@@ -256,12 +336,26 @@
 
 .sidebar-width
 {
-   width: 35%;
+   width: 18%;
 }
 
 .sidebar-menu-image-cus
 {
     margin: auto;
+}
+
+.chutylogo
+{
+    display: block;
+}
+.chutysmall-logo
+{
+    display: none;
+}
+
+.submenu-unorder-list
+{
+    left: 70px;
 }
 
 
@@ -270,10 +364,16 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
+    .sidebar-width
+    {
+        width: 15%;
+    }
     .sidebar-close-width
     {
-        width: 8%;
+        width: 7%;
     }
+
+ 
 }
 
 
