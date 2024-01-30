@@ -2,7 +2,7 @@ import chutyLogo from "../../../../../assets/icons/Chuty-Logo.svg";
 import propertyIcon from "../../../../../assets/icons/Property.svg";
 import memberIcon from "../../../../../assets/icons/Member.svg";
 import globalLogo from "../../../../../assets/icons/Global.svg";
-import menuIcon from "../../../../../assets/icons/menu.svg";
+import menuIcon from "../../../../../assets/icons/menu-large.svg";
 import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 // import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 import "./NavBar.css";

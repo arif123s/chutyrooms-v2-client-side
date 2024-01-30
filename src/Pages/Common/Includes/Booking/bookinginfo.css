@@ -7,12 +7,15 @@
     white-space: pre-wrap;
     overflow-wrap: break-word;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 
 }
 
 
-.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range
+ .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range
 {
     background-color:#159947 !important;
     border-radius: 50% !important;
@@ -31,13 +34,14 @@
 
 .react-datepicker__header 
 {
-    background-color: #ffff !important;  
+    background-color: #ffff !important; 
+    border: none !important; 
 }
 
 .react-datepicker__header__dropdown
 {
     margin-top: 12px !important;
-}
+} 
 
 
 .booking-list
@@ -48,6 +52,80 @@
 .table-division
 {
     padding: 24px 16px 20px 8px;
+}
+
+.left-arrow
+{
+    /* margin-right: 85px; */
+    font-size: 25px; 
+    color : #808783;  
+}
+
+.right-arrow
+{
+    /* margin-left: 85px; */
+    font-size: 25px; 
+    color : #808783;  
+}
+
+.month-dropdown
+{
+    background-color: #ffff;
+    padding: 0px;
+    font-family: "Gilroy-SemiBold";
+    font-weight: 500;
+    text-align: center;
+    line-height: 22px;
+}
+
+.year-dropdown
+{
+    background-color: #ffff;
+    padding: 0px;
+    font-family: "Gilroy-SemiBold";
+    font-weight: 500;
+}
+
+.custom-header-div
+{
+    /* margin: 10px; */
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+    background-color: #ffff;
+    border: none;
+    /* height: 60px; */
+
+}
+
+.month-year-division
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.react-datepicker__month-container
+{
+    font-size: 16px;
+}
+
+.react-datepicker__day--keyboard-selected,.react-datepicker__day--today
+{
+    border-radius: 50% !important;
+    background-color: #159947 !important;
+    border: 1px solid #159947 !important;
+}
+
+.calender-icon
+{
+    min-width: 35px;
 }
 
 @media (max-width: 575.98px) {
@@ -62,5 +140,51 @@
     overflow-x: scroll;
       
 }
+
+.calender-icon
+{
+    min-width: 25px;
+}
 }
 
+
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .booking-list
+    {
+       
+        overflow-x: scroll;
+          
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .booking-list
+    {
+       
+        overflow-x: scroll;
+          
+    }
+  }
+  
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .booking-list
+    {
+       
+        overflow-x: scroll;
+          
+    }
+  }
+  
+  @media (min-width: 1200px) and (max-width: 1399.98px) {
+    .booking-list
+    {
+       
+        overflow-x: scroll;
+          
+    }
+  }
+  
+  @media (min-width: 1400px) {
+  }
+  
