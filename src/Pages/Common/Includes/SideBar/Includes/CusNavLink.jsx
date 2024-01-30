@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { key } from "localforage";
 import Key from "../../../../../assets/icons/key.svg"
-
 import Category from "../../../../../assets/icons/category.svg"
 import CategoryGreen from "../../../../../assets/icons/category-green.svg"
 // import Key from "../../../../assets/icons/key.svg"

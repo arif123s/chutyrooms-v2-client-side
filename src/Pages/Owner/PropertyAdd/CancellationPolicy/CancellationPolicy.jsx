@@ -3,92 +3,9 @@ import minusIcon from "../../../../assets/icons/minus.svg";
 import plusIcon from "../../../../assets/icons/plus.svg";
 import starIcon from "../../../../assets/icons/star.svg";
 
-const CancellationPolicy = () => {
-  //   const [policies, setPolicies] = useState([
-  //   {
-  //     id: 0,
-  //     content: (
-  //       <>
-  //         <td>
-  //           <div className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mr-[4px]">
-  //             <div>
-  //               {" "}
-  //               <p
-  //                 contentEditable
-  //                 className="inline-block mr-[2px] w-[22px]"
-  //                 onInput={handleInputChange}
-  //                 dangerouslySetInnerHTML={{ __html: value }}
-  //               >
-  //                 {/* {value} */}
-  //               </p>
-  //               {"hours"}
-  //             </div>
-  //             <div>
-  //               {" "}
-  //               <p contentEditable className="inline-block mr-[2px] w-[22px]">
-  //                 45
-  //               </p>
-  //               {"minute"}
-  //             </div>
-  //           </div>
-  //         </td>
-  //         <td>
-  //           <div className="flex gap-x-[4px] ">
-  //             <img src={minusIcon} alt="" />
-  //             <p className="text-[14px] md:text-[16px] lg:text-[16px]">
-  //               <span>10</span>%
-  //             </p>
-  //             <img src={plusIcon} alt="" />
-  //           </div>
-  //         </td>
-  //       </>
-  //     ),
-  //   },
-  //   {
-  //     id: 1,
-  //     content: (
-  //       <>
-  //         <td>
-  //           <div className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] mr-[24px] mb-[]">
-  //             <div>
-  //               {" "}
-  //               <p contentEditable className="inline-block mr-[2px] w-[22px]">
-  //                 23
-  //               </p>
-  //               {"hours"}
-  //             </div>
-  //             <div>
-  //               {" "}
-  //               <p contentEditable className="inline-block mr-[2px] w-[22px]">
-  //                 45
-  //               </p>
-  //               {"minute"}
-  //             </div>
-  //           </div>
-  //         </td>
-  //         <td>
-  //           <div className="flex gap-x-[4px] ">
-  //             <img src={minusIcon} alt="" />
-  //             <p className="text-[14px] md:text-[16px] lg:text-[16px]">
-  //               <span>10</span>%
-  //             </p>
-  //             <img src={plusIcon} alt="" />
-  //           </div>
-  //         </td>
-  //       </>
-  //     ),
-  //   },
-  // ]);
+const CancellationPolicy = (props) => {
 
-  // const [policies, setPolicies] = useState([
-  //   { duration: { hours: 1, minutes: 15 }, refundPercentage: 50 },
-  //   { duration: { hours: 2, minutes: 30 }, refundPercentage: 75 },
-  // ]);
-
-  const [cancellationData, setCancellationData] = useState([
-    { duration: { hours: 23, minutes: 59 }, refundPercentage: 50 },
-    { duration: { hours: 12, minutes: 0 }, refundPercentage: 25 },
-  ]);
+  const {cancellationData,setCancellationData}=props
 
   const handleAddCancellation = (e) => {
     e.preventDefault();
@@ -281,7 +198,7 @@ const CancellationPolicy = () => {
                             src={minusIcon}
                             alt=""
                           />
-                          <p className="text-[14px] md:text-[16px] lg:text-[16px]">
+                          <p className="text-[14px] md:text-[16px] lg:text-[16px] w-[34px]">
                             <span>{cancellation.refundPercentage}%</span>
                           </p>
                           <img

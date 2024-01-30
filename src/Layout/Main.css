@@ -34,7 +34,7 @@
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .custom-container {
-    width: 768px;
+    width: 751px;
     /* width: 776px; */
      padding-left: 8px;
     padding-right: 8px;
@@ -44,7 +44,7 @@
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
       .custom-container {
-    width: 992px;
+    width: 975px;
     padding-left: 8px;
     padding-right: 8px;
     /* margin: auto; */
@@ -53,9 +53,10 @@
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
         .custom-container {
-    width: 1200px;
+    /* width: 1200px; */
+    width: 1183px;
     padding-left: 8px;
-    padding-right: 8px;
+    /* padding-right: 8px; */
     /* margin: auto; */
   }
 }

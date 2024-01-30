@@ -618,6 +618,7 @@ width: 150px;
   justify-content: flex-end;
   margin: auto;
   margin-top: 40px;
+  padding-right: 8px;
   font-size: 14px;
 }
 }
@@ -642,7 +643,7 @@ width: 150px;
 }
 
 .download-app{
- width: 210px;
+ width: 200px;
 }
 
 .nav-item-title {
@@ -677,7 +678,7 @@ width: 150px;
 
 
 .payment-items-container {
-  width: 210px;
+  width: 200px;
 }
 
 .payment-items {
@@ -706,7 +707,7 @@ width: 150px;
 }
 
 .discover-items-container{
-width: 225px;
+width: 205px;
 }
 
 .discover-items {
@@ -760,6 +761,7 @@ width: 225px;
   justify-content: flex-end;
   margin: auto;
   margin-top: 40px;
+  padding-right: 16px;
   font-size: 14px;
 }
 }
@@ -880,7 +882,7 @@ width: 300px;
 }
 
 .subscribe-email-input {
-  width: 170px;
+  width: 160px;
   padding-left: 10px;
   gap: 10px;
   background: #159947;

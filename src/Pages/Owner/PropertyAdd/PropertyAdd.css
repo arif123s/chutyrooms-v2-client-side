@@ -1,6 +1,5 @@
 .property-add-container {
-  margin-top: 42px;
-  margin-bottom: 42px;
+  margin: 42px 0px;
   padding: 24px 24px 32px 24px;
   border-radius: 8px;
   background: #ffffff;
@@ -28,7 +27,7 @@
   font-size: 14px;
   border-radius: 8px;
   border: 1px solid #c6c6c6;
-  margin-top: 12px;
+  /* margin-top: 12px; */
   position: relative;
   display: inline-block;
 }
@@ -53,7 +52,7 @@ display: flex;
   top: 50%;
   right: 10px; 
   transform: translateY(-50%);
-  pointer-events: none;
+  pointer-events: none; 
 }
 
 .property-description {
@@ -73,6 +72,12 @@ display: flex;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 18px;
+}
+
+.property-img-name{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .custom-table {
