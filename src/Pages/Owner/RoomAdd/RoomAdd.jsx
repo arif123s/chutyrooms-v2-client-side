@@ -1,15 +1,54 @@
 import { useState } from "react";
 import "./RoomAdd.css"
 import { useNavigate } from "react-router-dom";
+import imgIcon from "../../../assets/icons/img.svg";
+import delteIcon from "../../../assets/icons/delete.svg";
+import { useForm } from "react-hook-form";
 
 const RoomAdd = () => {
   const [dashboard,setDashboard]=useState(false);
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const [displayImages, setDisplayImages] = useState([null, null, null, null]);
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    setDashboard(true)
-  };
+    const handleDisplayImageSelect = (index, event) => {
+      const fileInput = event.target;
+      if (fileInput.files.length > 0) {
+        const newImages = [...displayImages];
+        newImages[index] = {
+          name: fileInput.files[0].name,
+          url: URL.createObjectURL(fileInput.files[0]),
+          displayImageFile: fileInput.files[0],
+        };
+        setDisplayImages(newImages);
+      } else {
+        const newImages = [...displayImages];
+        newImages[index] = null;
+        setDisplayImages(newImages);
+      }
+    };
+
+      const handleDeleteImage = (index) => {
+        const newImages = [...displayImages];
+        newImages[index] = null;
+        setDisplayImages(newImages);
+      };
+
+  // const handleSave = () => {
+  //   setDashboard(!dashboard)
+  // };
+
+    const onSubmit = (data) => {
+      // Handle form submission here
+      console.log(data);
+      setDashboard(true)
+    };
 
   const navigateDashboard = (e) => {
     e.preventDefault();
@@ -19,12 +58,15 @@ const RoomAdd = () => {
 
   return (
     <div className="custom-container">
-      <div className="property-add-container">
+      <form
+        className="property-add-container"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h2 className="property-add-title mb-[25px]">Room Adding</h2>
         {/* Room Category */}
         <div>
           <h2 className="property-input-title">Room Category</h2>
-          <div className="flex gap-[18px] text-[16px]">
+          <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
             <div className="flex gap-[8px]">
               <input type="checkbox" name="single" id="single" />
               <label htmlFor="deluxe">Single</label>
@@ -85,6 +127,77 @@ const RoomAdd = () => {
             />
           </div>
         </div>
+        {/* Room image */}
+        <div className="mt-[18px]">
+          <h2 className="">Display Image</h2>
+          <div className="property-display-images">
+            {displayImages.map((image, index) => (
+              <div className="relative" key={index}>
+                <div className="flex justify-end absolute top-[20px] right-[8px]">
+                  <img
+                    className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
+                    src={delteIcon}
+                    onClick={() => handleDeleteImage(index)}
+                    alt=""
+                  />
+                </div>
+                <label
+                  htmlFor={`display-image-${index}`}
+                  className="input-label"
+                >
+                  <div className="w-full h-[148px] flex justify-center items-center rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
+                    {image ? (
+                      <>
+                        <div className="grid justify-center ">
+                          <div className="flex items-center mb-[8px] md:block md:justify-center">
+                            <div className="flex md:justify-center">
+                              <img
+                                src={image.url}
+                                alt={image.name}
+                                className="w-8 mr-1"
+                              />
+                            </div>
+                            <span className="">{image.name}</span>
+                          </div>
+                          <p className="property-input-title text-center">
+                            Browse Photo
+                          </p>
+                        </div>
+                        {/* <img
+                                src={image.url}
+                                alt={image.name}
+                                className="selected-image"
+                              />
+                              <span>{image.name}</span> */}
+                      </>
+                    ) : (
+                      // <label htmlFor={`display-image-${index}`}>
+                      <>
+                        <div>
+                          <div className="flex justify-center mb-[8px]">
+                            <img className="w-[20px]" src={imgIcon} alt="" />
+                          </div>
+                          <p className="property-input-title text-center">
+                            Browse Photo
+                          </p>
+                        </div>
+                      </>
+                      // </label>
+                    )}
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id={`display-image-${index}`}
+                  name={`display-image-${index}`}
+                  style={{ display: "none" }}
+                  onChange={(event) => handleDisplayImageSelect(index, event)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Description */}
         <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="description">
@@ -269,13 +382,14 @@ const RoomAdd = () => {
           />
         </div>
 
-        <div className="mt-[20px] flex justify-end gap-x-[12px]">
-          <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
+        <div className="mt-[20px] flex justify-end items-center gap-x-[12px]">
+          <a className="text-[14px] flex justify-center items-center w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
             Cancel
-          </button>
+          </a>
           <button
-            onClick={(e) => handleSave(e)}
-            className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+            // onClick={handleSave}
+            type="submit"
+            className="text-[14px] flex justify-center items-center w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
           >
             Save
           </button>
@@ -283,15 +397,15 @@ const RoomAdd = () => {
 
         {dashboard && (
           <div className="mt-[18px] text-center">
-            <button
-              onClick={(e) => navigateDashboard(e)}
-              className=" text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+            <a
+              onClick={navigateDashboard}
+              className="text-[14px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
             >
               Go to dashboard
-            </button>
+            </a>
           </div>
         )}
-      </div>
+      </form>
     </div>
   );
 };

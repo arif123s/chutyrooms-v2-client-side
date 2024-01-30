@@ -12,6 +12,7 @@ import Register from "../Pages/Auth/User/Register/Register";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
+import EmailVerification from "../Pages/Verification/EmailVerification/EmailVerification";
 
 export const router = createBrowserRouter([
   {
@@ -43,12 +44,16 @@ export const router = createBrowserRouter([
             element: <OtpVerification></OtpVerification>,
           },
           {
+            path: "/email/verify/:user/:token",
+            element: <EmailVerification></EmailVerification>,
+          },
+          {
             path: "property-add",
             element: <PropertyAdd></PropertyAdd>,
           },
           {
             path: "room-add",
-            element: <RoomAdd>     </RoomAdd>,
+            element: <RoomAdd></RoomAdd>,
           },
         ],
       },

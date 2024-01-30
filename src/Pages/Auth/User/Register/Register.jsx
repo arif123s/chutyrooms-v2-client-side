@@ -2,21 +2,117 @@ import { useNavigate } from "react-router-dom";
 // import selectBoxIcon from "../../../assets/icons/rectangle-select-box.svg";
 import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { otpInfo, registerUser } from "../../../../features/user/userSlice";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [passErrorMessage, setPassErrorMessage] = useState(false);
+  const dispatch = useDispatch();
 
-const navigate = useNavigate();
+  //  const createUserMutation = useMutation((userData) => {
+  //    return fetch("http://127.0.0.1:8000/api/user/register", {
+  //      method: "POST",
+  //      headers: {
+  //        "Content-Type": "application/json",
+  //      },
+  //      body: JSON.stringify(userData),
+  //    }).then((response) => {
+  //      if (!response.ok) {
+  //        throw new Error("Registration failed");
+  //      }
+  //      return response.json();
+  //    });
+  //  });
+  // const isEmailValid = (email) => {
+  //   Regular expression for basic email validation
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return emailRegex.test(email);
+  // };
+
+  // const isPhoneValid = (phone) => {
+  //   Regular expression for basic phone number validation
+  //   This example assumes a simple 10-digit phone number without dashes or spaces
+  //   const phoneRegex = /^\d{10,}$/;
+  //   return phoneRegex.test(phone);
+  // };
+
+  const isPasswordMatch = (password, confirmPassword) => {
+    return password === confirmPassword;
+  };
+
+  const onSubmit = (data) => {
+    // if (isEmailValid(data.phone)) {
+    //   It's a valid email
+    //   console.log("Valid email:", data.phone);
+    //   setErrorMessage(false);
+    // } else if (isPhoneValid(data.phone)) {
+    //   It's a valid phone number
+    //   console.log("Valid phone number:", data.phone);
+    //   setErrorMessage(false);
+    // } else {
+    //   Invalid email or phone number
+    //   console.log("Invalid input:", data.phone);
+    //   setErrorMessage(true);
+    // }
+
+    const password = data.password;
+    const confirmPassword = data.confirmPassword;
+
+    if (!isPasswordMatch(password, confirmPassword)) {
+      // Passwords do not match
+      setPassErrorMessage(true);
+    } else {
+      // Passwords match, you can proceed with the registration logic
+      setPassErrorMessage(false);
+      const user = {
+        name: data.name,
+        username: data.username,
+        type: "user",
+        password,
+      };
+      // send user data to database
+      fetch("http://127.0.0.1:8000/api/user/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          // authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === 102) {
+            // console.log("Successfully registered!", data.data.id);
+            // reset();
+            dispatch(registerUser(data))
+            dispatch(otpInfo(data))
+            navigate(`/otp/${data.data.id}`);
+          }
+          else if (data.status === 101) {
+            console.log("Successfully registered!", data);
+          } else console.log("Registration failed!", data);
+        });
+    }
+  };
 
   const navigateToLogin = () => {
     navigate("/login");
   };
 
-    return (
-      <div className="login-container">
-        <h2 className="login-title">Registration</h2>
+  return (
+    <div className="login-container">
+      <h2 className="login-title">Registration</h2>
 
-        <form>
-          {/* <div className="mb-4">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <div className="mb-4">
             <label className="input-title" htmlFor="userId">
               User ID
             </label>
@@ -29,33 +125,62 @@ const navigate = useNavigate();
             />
           </div> */}
 
-          <div className="mb-4">
-            <label className="input-title" htmlFor="name">
-              Name
-            </label>
-            <input
-              className="input-box"
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Enter your name"
-            />
-          </div>
+        <div className="mb-[14px]">
+          <label className="input-title" htmlFor="name">
+            Name
+          </label>
+          <input
+            className="input-box"
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Enter your name"
+            {...register("name", {
+              required: {
+                value: true,
+                message: "Name is Required",
+              },
+            })}
+          />
+          <label className="">
+            {errors.name?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.name.message}
+              </span>
+            )}
+          </label>
+        </div>
 
-          <div className="mb-4">
-            <label className="input-title" htmlFor="email">
-              Phone/Email
-            </label>
-            <input
-              className="input-box"
-              id="email"
-              name="email"
-              type="text"
-              placeholder="Enter your phone number or email"
-            />
-          </div>
+        <div className="mb-[14px]">
+          <label className="input-title" htmlFor="username">
+            Phone/Email
+          </label>
+          <input
+            className="input-box mb-[4px]"
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Enter your phone number or email"
+            {...register("username", {
+              required: {
+                value: true,
+                message: "Phone or email is Required",
+              },
+            })}
+          />
+          <label className="">
+            {errors.username?.type === "required" && (
+              <span className="label-text-alt text-red-500 block ">
+                {errors.username?.message}
+              </span>
+            )}
+            {/* {errorMessage && (
+              <span className="label-text-alt text-red-500">Invalid input</span>
+            )} */}
+          </label>
+        </div>
 
-          {/* <div className="mb-4">
+        {/* <div className="mb-4">
             <label className="input-title" htmlFor="phone">
               Phone Number
             </label>
@@ -68,72 +193,126 @@ const navigate = useNavigate();
             />
           </div> */}
 
-          <div className="mb-4">
-            <label className="input-title" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="input-box"
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter a password"
-            />
-          </div>
+        <div className="mb-[14px]">
+          <label className="input-title" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="input-box"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter a password"
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Password is Required",
+              },
+              minLength: {
+                value: 8,
+                message: "Password must be 8 characters or longer",
+              },
+            })}
+          />
+          <label className=" mb-0 pb-0">
+            {errors.password?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.password.message}
+              </span>
+            )}
+            {errors.password?.type === "minLength" && (
+              <span className="label-text-alt text-red-500">
+                {errors.password.message}
+              </span>
+            )}
+          </label>
+        </div>
 
-          <div className="mb-4">
-            <label className="input-title" htmlFor="confirmPassword">
-              Confirm Password
-            </label>
-            <input
-              className="input-box"
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm password"
-            />
-          </div>
+        <div className="mb-[14px]">
+          <label className="input-title" htmlFor="confirmPassword">
+            Confirm Password
+          </label>
+          <input
+            className="input-box"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+            {...register("confirmPassword", {
+              required: {
+                value: true,
+                message: "Confirm Password is Required",
+              },
+            })}
+          />
+          <label className=" mb-0 pb-0">
+            {errors.confirmPassword?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.confirmPassword.message}
+              </span>
+            )}
+            {passErrorMessage && (
+              <span className="label-text-alt text-red-500">
+                Passwords Not Matched
+              </span>
+            )}
+          </label>
+        </div>
 
-          <div className="flex items-center mt-3 text-[12px] lg:text-[14px] mb-[20px]">
-            {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
+        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[20px]">
+          <div className="flex items-center">
             <input
               className="w-[12px] mr-2 text-[]"
               type="checkbox"
               name="terms"
               id="terms"
+              {...register("terms", {
+                required: {
+                  value: true,
+                  message: "Please accept the Terms & Conditions",
+                },
+              })}
             />
 
-            <p>
+            <p className="mr-[2px]">
               {/* eslint-disable-next-line react/no-unescaped-entities */}I
               agree to Chutyrooms's{" "}
-              <a className="text-[#159947]">Terms and conditions</a>
             </p>
+            <a className="text-[#159947]">Terms and conditions</a>
           </div>
-
-          <input type="submit" className="login-btn" value="Register" />
-        </form>
-
-        <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">
-          <hr className="w-full bg-[#C6C6C6] h-[1px]" />
-          <span className="mx-4 text[14px]">Or</span>
-          <hr className="w-full bg-[#C6C6C6] h-[1px]" />
+          <label className=" mb-0 pb-0">
+            {errors.terms?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.terms.message}
+              </span>
+            )}
+          </label>
         </div>
 
-        <div className="flex my-[20px] justify-center gap-4">
-          <img className="social-login-icon" src={fbIcon} alt="" />
-          <img className="social-login-icon" src={googleIcon} alt="" />
-        </div>
+        <input type="submit" className="login-btn" value="Register" />
+      </form>
 
-        <div className="text-center">
-          <p className="text-[16px]">
-            Already registered?{" "}
-            <a onClick={navigateToLogin} className="sign-up-btn">
-              Sign In
-            </a>
-          </p>
-        </div>
+      <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">
+        <hr className="w-full bg-[#C6C6C6] h-[1px]" />
+        <span className="mx-4 text[14px]">Or</span>
+        <hr className="w-full bg-[#C6C6C6] h-[1px]" />
       </div>
-    );
+
+      <div className="flex my-[20px] justify-center gap-4">
+        <img className="social-login-icon" src={fbIcon} alt="" />
+        <img className="social-login-icon" src={googleIcon} alt="" />
+      </div>
+
+      <div className="text-center">
+        <p className="text-[16px]">
+          Already registered?{" "}
+          <a onClick={navigateToLogin} className="sign-up-btn">
+            Sign In
+          </a>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Register;

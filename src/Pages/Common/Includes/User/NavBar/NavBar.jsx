@@ -74,12 +74,12 @@ const NavBar = () => {
           <li className="menu-mobile">
             <a className="flex">
               <img src={globalLogo}></img>
-              <div className="relative pr-[8px]">
+              <div className="relative pr-[8px] bg-[#F8FEFF]">
                 <select className="w-12 ml-1 p-[4px]" name="" id="">
-                  <option className="bg-white " value="BDT">
+                  <option className="" value="BDT">
                     BDT
                   </option>
-                  <option className="bg-white " value="USD">
+                  <option className="" value="USD">
                     USD
                   </option>
                 </select>
