@@ -16,6 +16,7 @@
     border: 1px solid #E6E7E6;
     border-radius: 8px;
     column-gap: 23px;
+    position: relative;
     
 }
 
@@ -177,6 +178,16 @@
 /* .datePickerSection{
     position: relative;
 } */
+
+.css-aiu92-MuiButtonBase-root-MuiMenuItem-root.Mui-selected
+{
+    padding: 0px !important;
+    background-color: #ffff !important;
+}
+.css-189msqx-MuiButtonBase-root-MuiMenuItem-root.Mui-selected
+{
+    background-color: #ffff !important;
+}
 
 @media (max-width: 575.98px) {
 .searchBox

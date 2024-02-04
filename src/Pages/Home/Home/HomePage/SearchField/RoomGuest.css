@@ -7,9 +7,8 @@
     font-size: 14px;
     position: absolute;
     padding: 22px;
-   
-   
-   
+    box-shadow: -4px 4px 12px 0px rgba(35, 184, 85, 0.10);
+    right: 125px;  
 }
 
 .room-no-div
@@ -32,7 +31,7 @@
     display: flex;
 }
 
-.adult-div
+.adult-div , .child-div
 {
     display: flex;
     justify-content: space-between;
@@ -84,4 +83,32 @@
 {
     height: 20px;
     width: 20px;
+}
+.childage-selection
+{
+    display: flex;
+    gap: 8px;
+}
+
+.childage
+{
+    padding: 8px 16px;
+    position: relative;
+    margin-bottom: 10px;
+    border: 1px solid #C0C3C1;
+    border-radius: 5px;
+   
+}
+.arrow-icon-down
+{
+    position: absolute;
+    top: calc(50% - 8px);
+    right: 20px;
+}
+
+.childage-select-box
+{
+    
+    background-color: #ffff;
+  
 }

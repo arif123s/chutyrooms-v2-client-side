@@ -4,7 +4,8 @@ import DatePicker from 'react-datepicker';
 import RoomGuest from './RoomGuest';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./SearchField.css";
-import Gps from './../../../../../assets/icons/gps.svg'
+import Gps from './../../../../../assets/icons/gps.svg';
+import { Select, MenuItem } from "@mui/material";
 
 const {RangePicker} = DatePicker;
 const SearchField = () => {
@@ -107,20 +108,27 @@ const SearchField = () => {
       }
 
 
-      const [isRoomGuestVisible, setIsVisible] = useState(false);
+  //     const [isRoomGuestVisible, setIsVisible] = useState(false);
 
-  const RoomGuestVisibility = () => {
-    setIsVisible(true);
-    setIsVisible(!isRoomGuestVisible);
-  };
+  // const RoomGuestVisibility = () => {
+  //   setIsVisible(true);
+  //   setIsVisible(!isRoomGuestVisible);
+  // };
     
+  const [isDivClicked, setDivClicked] = useState(false);
 
-//     const [startDate, setStartDate] = useState(null);
-//   const [endDate, setEndDate] = useState(null);
+  
 
-    // const handleDateRangeChange = (dates) => {
-    //   setDateRanges(dates);
-    // };
+  // const clickedDiv = () => {
+  //   if(isDivClicked == false)
+  //   { 
+  //     setDivClicked(true);
+  //   }
+  //   else if(isDivClicked == true){
+  //   setDivClicked(false); 
+  //   }
+  // };
+
     return (
 
 
@@ -241,27 +249,35 @@ const SearchField = () => {
                 <div className='checkin-checkout-type'>CHECK OUT</div>
                 <div className='checkin-checkout-date'> {endDateformatted}</div>
             </div>
-
+          
             <div className='Room-Guest-division' >
-                <div className='Room-Guest-title'>ROOM & GUEST</div>
+              <div onClick={()=>setDivClicked(!isDivClicked)}>
+              <div className='Room-Guest-title'>ROOM & GUEST</div>
                 <div className='Room-Guest-quantity' >1 Room, 2 Guest </div>
-              
-                    <div>
+              </div>
+           
+       
+                {isDivClicked &&
                      
-                      <RoomGuest/>
-                    </div>
-               
+                     <RoomGuest isDivClicked={isDivClicked} setDivClicked={setDivClicked}></RoomGuest> 
+             } 
+
+
+                {/* <div className={`${isDivClicked ? 'open' : 'closed'}`} >
+                <RoomGuest/>  
+                </div>
+                 */}
+                    
                
             </div>
-
-         
-
 
             <div className='search-button-division'>
                 <button type='button' className='Search-button'>Search</button>
             </div>
            
             </div>
+
+          
 
             </div>
             
