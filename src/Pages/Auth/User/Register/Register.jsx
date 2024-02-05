@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { otpInfo, registerUser } from "../../../../features/user/userSlice";
+import Loading from "../../../Common/Includes/Loading/Loading";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -15,6 +16,11 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const [passErrorMessage, setPassErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   //  const createUserMutation = useMutation((userData) => {
@@ -44,9 +50,13 @@ const Register = () => {
   //   return phoneRegex.test(phone);
   // };
 
-  const isPasswordMatch = (password, confirmPassword) => {
-    return password === confirmPassword;
-  };
+  if (loading) {
+    return <Loading></Loading>;
+  }
+
+  // const isPasswordMatch = (password, confirmPassword) => {
+  //   return password === confirmPassword;
+  // };
 
   const onSubmit = (data) => {
     // if (isEmailValid(data.phone)) {
@@ -62,14 +72,13 @@ const Register = () => {
     //   console.log("Invalid input:", data.phone);
     //   setErrorMessage(true);
     // }
+    setErrorMessage({ status: false, message: "" });
+    setLoading(true);
 
     const password = data.password;
     const confirmPassword = data.confirmPassword;
 
-    if (!isPasswordMatch(password, confirmPassword)) {
-      // Passwords do not match
-      setPassErrorMessage(true);
-    } else {
+    if (password === confirmPassword) {
       // Passwords match, you can proceed with the registration logic
       setPassErrorMessage(false);
       const user = {
@@ -89,17 +98,30 @@ const Register = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          setLoading(false);
           if (data.status === 102) {
-            // console.log("Successfully registered!", data.data.id);
-            // reset();
-            dispatch(registerUser(data))
-            dispatch(otpInfo(data))
-            navigate(`/otp/${data.data.id}`);
-          }
-          else if (data.status === 101) {
             console.log("Successfully registered!", data);
-          } else console.log("Registration failed!", data);
+            sessionStorage.setItem(
+              "user",
+              JSON.stringify({
+                id: data.data.id,
+                otpExpiresAt: data.data.otp_expires_at,
+              })
+            );
+            dispatch(registerUser(data));
+            dispatch(otpInfo(data));
+            navigate(`/otp`);
+          } else if (data.status === 101) {
+            console.log("Successfully registered!", data);
+          } else {
+            console.log("Registration failed!", data.errors.username[0]);
+            setErrorMessage({ status: true, message: data.errors.username[0] });
+          }
         });
+    } else {
+      // Passwords do not match
+      setLoading(false);
+      setPassErrorMessage(true);
     }
   };
 
@@ -109,7 +131,7 @@ const Register = () => {
 
   return (
     <div className="login-container">
-      <h2 className="login-title">Registration</h2>
+      <h2 className="login-title font-['Gilroy-semibold']">Registration</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* <div className="mb-4">
@@ -259,10 +281,10 @@ const Register = () => {
           </label>
         </div>
 
-        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[20px]">
+        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[16px]">
           <div className="flex items-center">
             <input
-              className="w-[12px] mr-2 text-[]"
+              className="w-[12px] mr-2"
               type="checkbox"
               name="terms"
               id="terms"
@@ -289,7 +311,13 @@ const Register = () => {
           </label>
         </div>
 
-        <input type="submit" className="login-btn" value="Register" />
+        {errorMessage.status && (
+          <p className="label-text-alt text-red-500 text-center">
+            {errorMessage.message}
+          </p>
+        )}
+
+        <input type="submit" className="login-btn mt-[4px]" value="Register" />
       </form>
 
       <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">

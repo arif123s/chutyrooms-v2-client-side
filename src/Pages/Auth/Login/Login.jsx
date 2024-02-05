@@ -4,6 +4,9 @@ import googleIcon from "../../../assets/icons/google-login.svg";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Loading from "../../Common/Includes/Loading/Loading";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,17 +15,58 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+    if (loading) {
+      return <Loading></Loading>;
+    }
 
   const onSubmit = (data) => {
     // You can implement your authentication logic here
-    console.log(data);
+    // console.log(data);
 
     // If "Remember Me" is checked, you can save the user's information (e.g., token) to localStorage
     if (data.rememberMe) {
       localStorage.setItem("userToken", "yourUserToken"); // Replace with the actual user token
     }
 
-    navigate('/')
+setErrorMessage({ status: false, message: "" });
+setLoading(true);
+
+
+  const user = {
+    login: data.username,
+    password:data.password
+  };
+
+  // send user data to database
+  fetch("http://127.0.0.1:8000/api/user/login", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setLoading(false);
+      if (data.status) {
+        console.log("Successfully logged in!", data);
+        toast.success(data.message)
+          navigate("/");
+      }else {
+        console.log("Login failed!", data.message);
+        // setErrorMessage({ status: true, message: data.errors.username[0] });
+        toast.error(data.message)
+      }
+    });
+
+
+  
   };
 
   const navigateToRegister = () => {
@@ -30,20 +74,20 @@ const Login = () => {
   };
   return (
     <div className="login-container">
-      <h2 className="login-title">Sign In</h2>
+      <h2 className="login-title font-['Gilroy-semibold']">Sign In</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-[14px]">
-          <label className="input-title" htmlFor="phone">
+          <label className="input-title" htmlFor="username">
             Phone/Email
           </label>
           <input
             className="input-box"
-            id="phone"
-            name="phone"
+            id="username"
+            name="username"
             type="text"
             placeholder="Enter your phone number or email"
-            {...register("phone", {
+            {...register("username", {
               required: {
                 value: true,
                 message: "Phone or email is Required",
@@ -51,9 +95,9 @@ const Login = () => {
             })}
           />
           <label className="">
-            {errors.phone?.type === "required" && (
+            {errors.username?.type === "required" && (
               <span className="label-text-alt text-red-500">
-                {errors.phone?.message}
+                {errors.username?.message}
               </span>
             )}
           </label>

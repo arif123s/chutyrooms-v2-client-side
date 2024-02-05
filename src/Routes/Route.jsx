@@ -5,14 +5,13 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
 import HomePage from "../Pages/Home/Home/HomePage/HomePage";
 import Login from "../Pages/Auth/Login/Login";
-
-import OtpVerification from "../Pages/Verification/OtpVerification/OtpVerification";
 import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
-import EmailVerification from "../Pages/Verification/EmailVerification/EmailVerification";
+import OtpVerification from "../Pages/Auth/Verification/OtpVerification/OtpVerification";
+import EmailVerification from "../Pages/Auth/Verification/EmailVerification/EmailVerification";
 
 export const router = createBrowserRouter([
   {

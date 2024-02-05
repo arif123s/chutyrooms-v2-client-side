@@ -1,54 +1,106 @@
 import { useNavigate } from "react-router-dom";
-// import { useState } from "react";
 import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Loading from "../../../Common/Includes/Loading/Loading";
+import { useDispatch } from "react-redux";
+import { otpInfo, registerUser } from "../../../../features/user/userSlice";
 
 const OwnerRegister = () => {
-    //  const [inputValue, setInputValue] = useState("");
-       const navigate = useNavigate();
-       const {
-         register,
-         handleSubmit,
-         formState: { errors },
-       } = useForm();
-  
-       const [passErrorMessage, setPassErrorMessage] = useState(false);
+  //  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [passErrorMessage, setPassErrorMessage] = useState(false);
+   const [errorMessage, setErrorMessage] = useState({
+     status: false,
+     message: "",
+   });
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
-       const isPasswordMatch = (password, confirmPassword) => {
-         return password === confirmPassword;
-       };
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
-       const onSubmit = (data) => {
-        
-         const password = data.password;
-         const confirmPassword = data.confirmPassword;
+  // const isPasswordMatch = (password, confirmPassword) => {
+  //   return password === confirmPassword;
+  // };
 
-         if (!isPasswordMatch(password, confirmPassword)) {
-           // Passwords do not match
-           setPassErrorMessage(true);
-         } else {
-           // Passwords match, you can proceed with the registration logic
-           setPassErrorMessage(false);
-           console.log("Successfully registered!", data);
-           handleNavigate('otp')
-         }
-       };
+  const handleNavigate = (route) => {
+    navigate(`/${route}`);
+  };
 
-       const handleNavigate = (route) => {
-         navigate(`/${route}`);
-       };
+  const onSubmit = (data) => {
+    setErrorMessage({ status: false, message: "" });
+    setLoading(true);
 
-    //  const handleInput = (event) => {
+    const password = data.password;
+    const confirmPassword = data.confirmPassword;
 
-    //    const sanitizedValue = event.target.value.replace(/[^0-9]/g, "");
-    //    setInputValue(sanitizedValue);
-    //  };
+   
+
+    if (password === confirmPassword) {
+      // Passwords match, you can proceed with the registration logic
+      setPassErrorMessage(false);
+
+      const owner = {
+        name: data.name,
+        username: data.username,
+        type: "owner",
+        password,
+      };
+
+      // send user data to database
+      fetch("http://127.0.0.1:8000/api/user/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(owner),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          if (data.status === 102) {
+            console.log("Successfully registered!", data.data.id);
+             sessionStorage.setItem(
+               "user",
+               JSON.stringify({
+                 id: data.data.id,
+                 otpExpiresAt: data.data.otp_expires_at,
+               })
+             );
+            dispatch(registerUser(data));
+            dispatch(otpInfo(data));
+            navigate(`/otp`);
+          } else if (data.status === 101) {
+            console.log("Successfully registered!", data);
+          } else {
+            console.log("Registration failed!", data)
+          setErrorMessage({ status: true, message: data.errors.username[0] });
+          }
+        });
+    } else {
+      setLoading(false)
+      // Passwords do not match
+      setPassErrorMessage(true);
+    }
+  };
+
+  //  const handleInput = (event) => {
+
+  //    const sanitizedValue = event.target.value.replace(/[^0-9]/g, "");
+  //    setInputValue(sanitizedValue);
+  //  };
 
   return (
     <div className="login-container">
-      <h2 className="login-title">Registration</h2>
+      <h2 className="login-title font-['Gilroy-semibold']">Owner Registration</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-[14px]">
@@ -78,16 +130,16 @@ const OwnerRegister = () => {
         </div>
 
         <div className="mb-[14px]">
-          <label className="input-title" htmlFor="phone">
+          <label className="input-title" htmlFor="username">
             Phone/Email
           </label>
           <input
             className="input-box mb-[4px]"
-            id="phone"
-            name="phone"
+            id="username"
+            name="username"
             type="text"
             placeholder="Enter your phone number or email"
-            {...register("phone", {
+            {...register("username", {
               required: {
                 value: true,
                 message: "Phone or email is Required",
@@ -95,9 +147,9 @@ const OwnerRegister = () => {
             })}
           />
           <label className="">
-            {errors.phone?.type === "required" && (
+            {errors.username?.type === "required" && (
               <span className="label-text-alt text-red-500 block ">
-                {errors.phone?.message}
+                {errors.username?.message}
               </span>
             )}
           </label>
@@ -185,7 +237,7 @@ const OwnerRegister = () => {
           </label>
         </div>
 
-        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[20px]">
+        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[16px]">
           {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
           <div className="flex items-center">
             <input
@@ -216,14 +268,13 @@ const OwnerRegister = () => {
           </label>
         </div>
 
-        <input
-          // onClick={() => {
-          //   handleNavigate("otp");
-          // }}
-          type="submit"
-          className="login-btn"
-          value="Register"
-        />
+        {errorMessage.status && (
+          <p className="label-text-alt text-red-500 text-center">
+            {errorMessage.message}
+          </p>
+        )}
+
+        <input type="submit" className="login-btn mt-[4px]" value="Register" />
       </form>
 
       <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">
