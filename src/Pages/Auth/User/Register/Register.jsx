@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
 import arrowIcon from "../../../../assets/icons/arrow-down.svg";
-import country from "../../../../assets/bd.png";
 import countryIcon from "../../../../assets/bd.svg";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,10 +26,35 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [loginMethod,setLoginMethod]=useState("phone");
-  const countryData = [
-    { code: "+880", name: "Bangladesh", image: country },
-    // Add more countries as needed
-  ];
+ 
+
+ const [showOptions, setShowOptions] = useState(false);
+ const [selectedCountry, setSelectedCountry] = useState({
+   code: "+880",
+   name: "Bangladesh",
+   image: countryIcon,
+ });
+
+    const countryData = [
+      { code: "+880", name: "Bangladesh", image: countryIcon },
+      { code: "+990", name: "India", image: countryIcon },
+      { code: "+220", name: "USA", image: countryIcon },
+      { code: "+750", name: "Australia", image: countryIcon },
+      { code: "+320", name: "Germany", image: countryIcon },
+      { code: "+160", name: "UK", image: countryIcon },
+      { code: "+960", name: "Argentina", image: countryIcon },
+      { code: "+960", name: "Argentina", image: countryIcon },
+      { code: "+960", name: "Argentina", image: countryIcon },
+      { code: "+960", name: "Argentina", image: countryIcon },
+      { code: "+960", name: "Argentina", image: countryIcon },
+      { code: "+960", name: "Argentina", image: countryIcon },
+      // Add more countries as needed
+    ];
+
+  const handleOptionSelect = (option) => {
+    setSelectedCountry(option);
+    setShowOptions(false); // Close the dropdown after selecting an option
+  };
 
   //  const createUserMutation = useMutation((userData) => {
   //    return fetch("http://127.0.0.1:8000/api/user/register", {
@@ -72,7 +96,7 @@ setLoginMethod(type)
   }
 
   const onSubmit = (data) => {
-    console.log(data)
+    // console.log(data)
     // if (isEmailValid(data.phone)) {
     //   It's a valid email
     //   console.log("Valid email:", data.phone);
@@ -92,6 +116,8 @@ setLoginMethod(type)
     const password = data.password;
     const confirmPassword = data.confirmPassword;
 
+    console.log(selectedCountry.code)
+
     if (password === confirmPassword) {
       // Passwords match, you can proceed with the registration logic
       setPassErrorMessage(false);
@@ -100,6 +126,7 @@ setLoginMethod(type)
         username: loginMethod==='phone'?data.phone : data.email,
         type: "user",
         password,
+        countryCode:selectedCountry.code
       };
       console.log('user',user)
       // send user data to database
@@ -127,7 +154,17 @@ setLoginMethod(type)
             dispatch(otpInfo(data));
             navigate(`/otp`);
           } else if (data.status === 101) {
-            console.log("Successfully registered!", data);
+             console.log("Successfully registered!", data);
+             sessionStorage.setItem(
+               "user",
+               JSON.stringify({
+                 id: data.data.id,
+                 otpExpiresAt: data.data.otp_expires_at,
+               })
+             );
+             dispatch(registerUser(data));
+             dispatch(otpInfo(data));
+             navigate(`/otp`);
           } else {
             console.log("Registration failed!", data.errors.username[0]);
             setErrorMessage({ status: true, message: data.errors.username[0] });
@@ -238,47 +275,86 @@ setLoginMethod(type)
         </div> */}
 
         {loginMethod === "phone" ? (
-          <div className=" mb-[14px]">
+          <div className="mb-[14px]">
             <label className="input-title" htmlFor="phone">
               Phone
             </label>
-            <div className="phone-input-box">
-              <div className="flex">
-                <div className="relative w-[102px]  mr-[4px]">
-                  {/* <img className="mr-[3px]" src={countryIcon} alt="" /> */}
-                  <select className="opacity-80 text-[14px] w-full p-0">
-                    {countryData.map((country) => (
-                      <option
-                        key={country.code}
-                        value={country.code}
-                        className="relative"
+            <div className="relative w-full">
+              <div className="phone-input-box">
+                <div className="flex">
+                  <div className="relative mr-[4px]">
+                    <div className="custom-select-container">
+                      <div
+                        className="selected-option flex items-center "
+                        onClick={() => setShowOptions(!showOptions)}
                       >
-                        {country.code}
-                      </option>
-                    ))}
-                  </select>
-                  <img
-                    className="absolute top-1 right-[2px] pointer-events-none"
-                    src={arrowIcon}
-                    alt=""
-                  />
+                        {selectedCountry ? (
+                          <div className="flex items-center mr-[6px]">
+                            <img
+                              src={selectedCountry.image}
+                              alt={selectedCountry.name}
+                              className="w-[20px] h-[14px] mr-[2px]"
+                            />
+                            {/* <span className="country-name">
+                            {selectedCountry.name}
+                          </span> */}
+                            <span className="cursor-default">
+                              {selectedCountry.code}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center mr-[6px]">
+                            <img
+                              src={selectedCountry.image}
+                              alt=""
+                              className="w-[20px] h-[14px] mr-[2px]"
+                            />
+                            <span className="country-code">
+                              {selectedCountry.code}
+                            </span>
+                          </div>
+                        )}
+                        <img className="ml-[14px]" src={arrowIcon} alt="" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <div className="w-[2px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
+                <input
+                  className="w-full block mb-[4px]"
+                  id="phone"
+                  name="phone"
+                  type="number"
+                  placeholder="Enter your phone number"
+                  {...register("phone", {
+                    required: {
+                      value: true,
+                      message: "Phone number is Required",
+                    },
+                  })}
+                />
               </div>
-              <div className="w-[3px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
-              <input
-                // className="input-box mb-[4px]"
-                className="w-full block mb-[4px]"
-                id="phone"
-                name="phone"
-                type="number"
-                placeholder="Enter your phone number"
-                {...register("phone", {
-                  required: {
-                    value: true,
-                    message: "Phone number is Required",
-                  },
-                })}
-              />
+              {showOptions && (
+                <div className="options-container">
+                  <div className="options-list">
+                    {countryData.map((option, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-[6px] p-[2px] hover:bg-[#159947] hover:text-white"
+                        onClick={() => handleOptionSelect(option)}
+                      >
+                        <img
+                          src={option.image}
+                          alt={option.name}
+                          className="w-[26px] h-[20px]"
+                        />
+                        <span className="country-name">{option.name}</span>
+                        <span className="country-code">{option.code}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             <label className="">
               {errors.phone?.type === "required" && (
