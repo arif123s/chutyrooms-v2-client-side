@@ -27,7 +27,6 @@ const Register = () => {
   const dispatch = useDispatch();
   const [loginMethod,setLoginMethod]=useState("phone");
  
-
  const [showOptions, setShowOptions] = useState(false);
  const [selectedCountry, setSelectedCountry] = useState({
    code: "+880",
