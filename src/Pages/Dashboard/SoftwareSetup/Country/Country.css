@@ -1,0 +1,109 @@
+
+.country-list-content
+{
+    padding: 20px;
+    
+ 
+    
+}
+.country-list
+{
+    background-color: #ffff;
+    
+    padding: 20px;
+}
+
+.country-option
+{
+    display: flex;
+    gap: 8px;
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.country-action-div
+{
+    display: flex;
+    gap: 10px;
+}
+
+.active-inactive-btn
+{
+    background-color: #E8F5ED;
+    color: #159947;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.edit-btn
+{
+    background-color: #F2F3F3;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.delete-btn
+{
+    background-color: #FEF5F4;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.country-tbl
+{
+    border: none !important;
+}
+
+.country-tbl-head
+{
+    border-bottom: 1px solid #E6E7E6;
+    text-align: left;
+}
+
+.country-add-division
+{
+    background-color: #ffff;
+    padding: 20px;
+}
+
+.country-add-form
+{
+    width: 50%;
+}
+
+.country-save-btn
+{
+    padding: 10px 15px;
+    background-color: #159947;
+    margin-top: 10px;
+    color: #ffff;
+    border-radius: 5px;
+}
+
+.btn-unclicked
+{
+    padding: 10px 15px;
+    background-color:#ffff;
+    color: black;
+    border: 1px solid #E6E7E6;
+    border-radius: 5px;
+}
+
+
+
+.btn-clicked{     
+   
+    
+    padding: 10px 15px;
+    background-color: #159947;
+    color: #ffff;
+    border-radius: 5px;
+}
+
+input[type="radio"]:checked {
+    border-color: #159947 !important; /* Change the border color when checked */
+    background-color: #159947 !important; /* Change the background color when checked */
+    color: #159947; /* Change the text color when checked */
+  }
+

@@ -13,6 +13,9 @@ import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
 import EmailVerification from "../Pages/Verification/EmailVerification/EmailVerification";
+import Country from "../Pages/Dashboard/SoftwareSetup/Country/Country";
+import CountryList from "../Pages/Dashboard/SoftwareSetup/Country/countrylist";
+import CountryAdd from "../Pages/Dashboard/SoftwareSetup/Country/CountryAdd";
 
 export const router = createBrowserRouter([
   {
@@ -65,10 +68,20 @@ export const router = createBrowserRouter([
             path: "/dashboard",
             element: <DashboardHome></DashboardHome>,
           },
-          // {
-          //   path: "/dashboard",
-          //   element: <DashboardHome></DashboardHome>,
-          // },
+          {
+            path: "/dashboard/country",
+            element: <Country></Country>,
+            children:[
+             { 
+              path:"/dashboard/country",
+              element:<CountryList></CountryList>,
+            },
+             { 
+              path:"/dashboard/country/countryAdd",
+              element:<CountryAdd></CountryAdd>,
+            },
+            ]
+          },
         ],
       },
       {
