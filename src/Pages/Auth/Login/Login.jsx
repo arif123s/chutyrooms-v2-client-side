@@ -15,15 +15,12 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [errorMessage, setErrorMessage] = useState({
-    status: false,
-    message: "",
-  });
+
   const [loading, setLoading] = useState(false);
 
-    if (loading) {
-      return <Loading></Loading>;
-    }
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   const onSubmit = (data) => {
     // You can implement your authentication logic here
@@ -34,39 +31,35 @@ const Login = () => {
       localStorage.setItem("userToken", "yourUserToken"); // Replace with the actual user token
     }
 
-setErrorMessage({ status: false, message: "" });
-setLoading(true);
+    setLoading(true);
 
+    const user = {
+      login: data.username,
+      password: data.password,
+    };
 
-  const user = {
-    login: data.username,
-    password:data.password
-  };
-
-  // send user data to database
-  fetch("http://127.0.0.1:8000/api/user/login", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setLoading(false);
-      if (data.status) {
-        console.log("Successfully logged in!", data);
-        toast.success(data.message)
+    // send user data to database
+    fetch("http://127.0.0.1:8000/api/user/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.status) {
+          console.log("Successfully logged in!", data);
+           localStorage.setItem("accessToken", data.accessToken);
+          toast.success(data.message);
           navigate("/");
-      }else {
-        console.log("Login failed!", data.message);
-        // setErrorMessage({ status: true, message: data.errors.username[0] });
-        toast.error(data.message)
-      }
-    });
-
-
-  
+        } else {
+          console.log("Login failed!", data.message);
+          // setErrorMessage({ status: true, message: data.errors.username[0] });
+          toast.error(data.message);
+        }
+      });
   };
 
   const navigateToRegister = () => {

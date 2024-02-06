@@ -2,11 +2,15 @@ import { useNavigate } from "react-router-dom";
 // import selectBoxIcon from "../../../assets/icons/rectangle-select-box.svg";
 import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
+import arrowIcon from "../../../../assets/icons/arrow-down.svg";
+import country from "../../../../assets/bd.png";
+import countryIcon from "../../../../assets/bd.svg";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { otpInfo, registerUser } from "../../../../features/user/userSlice";
 import Loading from "../../../Common/Includes/Loading/Loading";
+import './Register.css'
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,6 +26,11 @@ const Register = () => {
   });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const [loginMethod,setLoginMethod]=useState("phone");
+  const countryData = [
+    { code: "+880", name: "Bangladesh", image: country },
+    // Add more countries as needed
+  ];
 
   //  const createUserMutation = useMutation((userData) => {
   //    return fetch("http://127.0.0.1:8000/api/user/register", {
@@ -58,7 +67,12 @@ const Register = () => {
   //   return password === confirmPassword;
   // };
 
+  const handleLoginMethod = (type)=>{
+setLoginMethod(type)
+  }
+
   const onSubmit = (data) => {
+    console.log(data)
     // if (isEmailValid(data.phone)) {
     //   It's a valid email
     //   console.log("Valid email:", data.phone);
@@ -83,10 +97,11 @@ const Register = () => {
       setPassErrorMessage(false);
       const user = {
         name: data.name,
-        username: data.username,
+        username: loginMethod==='phone'?data.phone : data.email,
         type: "user",
         password,
       };
+      console.log('user',user)
       // send user data to database
       fetch("http://127.0.0.1:8000/api/user/register", {
         method: "POST",
@@ -133,7 +148,30 @@ const Register = () => {
     <div className="login-container">
       <h2 className="login-title font-['Gilroy-semibold']">Registration</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex gap-[12px]">
+        <button
+          onClick={() => handleLoginMethod("phone")}
+          className={`login-method ${
+            loginMethod === "phone"
+              ? "selected-login-method"
+              : "login-method-btn"
+          }`}
+        >
+          Phone
+        </button>
+        <button
+          onClick={() => handleLoginMethod("email")}
+          className={`login-method ${
+            loginMethod === "email"
+              ? "selected-login-method"
+              : "login-method-btn"
+          }`}
+        >
+          Email
+        </button>
+      </div>
+
+      <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
         {/* <div className="mb-4">
             <label className="input-title" htmlFor="userId">
               User ID
@@ -173,7 +211,7 @@ const Register = () => {
           </label>
         </div>
 
-        <div className="mb-[14px]">
+        {/* <div className="mb-[14px]">
           <label className="input-title" htmlFor="username">
             Phone/Email
           </label>
@@ -196,24 +234,87 @@ const Register = () => {
                 {errors.username?.message}
               </span>
             )}
-            {/* {errorMessage && (
-              <span className="label-text-alt text-red-500">Invalid input</span>
-            )} */}
           </label>
-        </div>
+        </div> */}
 
-        {/* <div className="mb-4">
+        {loginMethod === "phone" ? (
+          <div className=" mb-[14px]">
             <label className="input-title" htmlFor="phone">
-              Phone Number
+              Phone
+            </label>
+            <div className="phone-input-box">
+              <div className="flex">
+                <div className="relative w-[102px]  mr-[4px]">
+                  {/* <img className="mr-[3px]" src={countryIcon} alt="" /> */}
+                  <select className="opacity-80 text-[14px] w-full p-0">
+                    {countryData.map((country) => (
+                      <option
+                        key={country.code}
+                        value={country.code}
+                        className="relative"
+                      >
+                        {country.code}
+                      </option>
+                    ))}
+                  </select>
+                  <img
+                    className="absolute top-1 right-[2px] pointer-events-none"
+                    src={arrowIcon}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="w-[3px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
+              <input
+                // className="input-box mb-[4px]"
+                className="w-full block mb-[4px]"
+                id="phone"
+                name="phone"
+                type="number"
+                placeholder="Enter your phone number"
+                {...register("phone", {
+                  required: {
+                    value: true,
+                    message: "Phone number is Required",
+                  },
+                })}
+              />
+            </div>
+            <label className="">
+              {errors.phone?.type === "required" && (
+                <span className="label-text-alt text-red-500 block ">
+                  {errors.phone?.message}
+                </span>
+              )}
+            </label>
+          </div>
+        ) : (
+          <div className="mb-4">
+            <label className="input-title" htmlFor="email">
+              Email
             </label>
             <input
               className="input-box"
-              id="phone"
-              name="phone"
-              type="number"
-              placeholder="Enter your phone number"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              {...register("email", {
+                required: {
+                  value: true,
+                  message: "Email is Required",
+                },
+              })}
             />
-          </div> */}
+            <label className="">
+              {errors.email?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.email.message}
+                </span>
+              )}
+            </label>
+          </div>
+        )}
 
         <div className="mb-[14px]">
           <label className="input-title" htmlFor="password">
