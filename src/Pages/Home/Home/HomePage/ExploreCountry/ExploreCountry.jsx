@@ -39,20 +39,20 @@ const ExploreCountry = () => {
           1200: {
             slidesPerView: 3,
           },
-        //   1400: {
-        //     slidesPerView: 3,
-        //   },
+          //   1400: {
+          //     slidesPerView: 3,
+          //   },
         }}
       >
         {/* <Swiper {...swiperSettings}> */}
         <SwiperSlide>
-          <img className="" src={place1} alt="" />
+          <img className="" src={place1} alt="Place" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="" src={place2} alt="" />
+          <img className="" src={place2} alt="Place" />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="" src={place3} alt="" />
+          <img className="" src={place3} alt="Place" />
         </SwiperSlide>
       </Swiper>
     </div>

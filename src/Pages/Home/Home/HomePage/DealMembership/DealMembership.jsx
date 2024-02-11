@@ -25,9 +25,9 @@ const DealMembership = () => {
           <span className="membership-title block">Get Discount!</span>
         </div>
         <div className="membership-cards">
-          <img className="membership-card" src={platinum} alt="" />
-          <img className="membership-card" src={gold} alt="" />
-          <img className="membership-card" src={silver} alt="" />
+          <img className="membership-card" src={platinum} alt="Platinum card" />
+          <img className="membership-card" src={gold} alt="Gold card" />
+          <img className="membership-card" src={silver} alt="Silver card" />
         </div>
       </div>
       <div className="membership-cards-slider">
@@ -69,13 +69,17 @@ const DealMembership = () => {
         >
           {/* <Swiper {...swiperSettings}> */}
           <SwiperSlide>
-            <img className="membership-card" src={platinum} alt="" />
+            <img
+              className="membership-card"
+              src={platinum}
+              alt="Platinum card"
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <img className="membership-card" src={gold} alt="" />
+            <img className="membership-card" src={gold} alt="Gold card" />
           </SwiperSlide>
           <SwiperSlide>
-            <img className="membership-card" src={silver} alt="" />
+            <img className="membership-card" src={silver} alt="Silver card" />
           </SwiperSlide>
         </Swiper>
       </div>

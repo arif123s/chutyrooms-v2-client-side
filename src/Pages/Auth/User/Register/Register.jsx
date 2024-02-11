@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { otpInfo, registerUser } from "../../../../features/user/userSlice";
 import Loading from "../../../Common/Includes/Loading/Loading";
-import './Register.css'
+import "./Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,34 +26,34 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState({
     status: false,
     message: "",
-    errors:[]
+    errors: [],
   });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const [loginMethod,setLoginMethod]=useState("phone");
- 
- const [showOptions, setShowOptions] = useState(false);
- const [selectedCountry, setSelectedCountry] = useState({
-   code: "+880",
-   name: "Bangladesh",
-   image: countryIcon,
- });
+  const [loginMethod, setLoginMethod] = useState("phone");
 
-    const countryData = [
-      { code: "+880", name: "Bangladesh", image: countryIcon },
-      { code: "+990", name: "India", image: countryIcon },
-      { code: "+220", name: "USA", image: countryIcon },
-      { code: "+750", name: "Australia", image: countryIcon },
-      { code: "+320", name: "Germany", image: countryIcon },
-      { code: "+160", name: "UK", image: countryIcon },
-      { code: "+960", name: "Argentina", image: countryIcon },
-      { code: "+960", name: "Argentina", image: countryIcon },
-      { code: "+960", name: "Argentina", image: countryIcon },
-      { code: "+960", name: "Argentina", image: countryIcon },
-      { code: "+960", name: "Argentina", image: countryIcon },
-      { code: "+960", name: "Argentina", image: countryIcon },
-      // Add more countries as needed
-    ];
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({
+    code: "+880",
+    name: "Bangladesh",
+    image: countryIcon,
+  });
+
+  const countryData = [
+    { code: "+880", name: "Bangladesh", image: countryIcon },
+    { code: "+990", name: "India", image: countryIcon },
+    { code: "+220", name: "USA", image: countryIcon },
+    { code: "+750", name: "Australia", image: countryIcon },
+    { code: "+320", name: "Germany", image: countryIcon },
+    { code: "+160", name: "UK", image: countryIcon },
+    { code: "+960", name: "Argentina", image: countryIcon },
+    { code: "+960", name: "Argentina", image: countryIcon },
+    { code: "+960", name: "Argentina", image: countryIcon },
+    { code: "+960", name: "Argentina", image: countryIcon },
+    { code: "+960", name: "Argentina", image: countryIcon },
+    { code: "+960", name: "Argentina", image: countryIcon },
+    // Add more countries as needed
+  ];
 
   const handleOptionSelect = (option) => {
     setSelectedCountry(option);
@@ -99,9 +99,9 @@ const Register = () => {
   //   return password === confirmPassword;
   // };
 
-  const handleLoginMethod = (type)=>{
-setLoginMethod(type)
-  }
+  const handleLoginMethod = (type) => {
+    setLoginMethod(type);
+  };
 
   const onSubmit = (data) => {
     // console.log(data)
@@ -129,64 +129,63 @@ setLoginMethod(type)
       setPassErrorMessage(false);
       const user = {
         name: data.name,
-        username: loginMethod==='phone'?data.phone : data.email,
-        role_code:345,
+        username: loginMethod === "phone" ? data.phone : data.email,
+        role_code: 345,
         password,
-        countryCode:selectedCountry.code
+        countryCode: selectedCountry.code,
       };
       // console.log('user',user)
       // send user data to database
-     try{
-       fetch("http://127.0.0.1:8000/api/user/register", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          // authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify(user),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setLoading(false);
-          if (data.status == 102) {
-            console.log("Successfully registered!", data);
-            sessionStorage.setItem(
-              "user",
-              JSON.stringify({
-                id: data.data.id,
-                otpExpiresAt: data.data.otp_expires_at,
-              })
-            );
-            dispatch(registerUser(data));
-            dispatch(otpInfo(data));
-            navigate(`/otp`);
-          }  if (data.status == 101) {
-             console.log("Successfully registered!", data);
-             sessionStorage.setItem(
-               "user",
-               JSON.stringify({
-                 id: data.data.id,
-                 otpExpiresAt: data.data.otp_expires_at,
-               })
-             );
-             dispatch(registerUser(data));
-             dispatch(otpInfo(data));
-             navigate(`/otp`);
-          }
-          else {
-            // console.log("Registration failed!", data?.errors?.username[0]);
-            setErrorMessage({
-              status: true,
-              message: data.message,
-errors:[data.errors]
-            });
-            console.log("errormessage", errorMessage.errors.length);
-          }
-        });
-     }
-     catch(err){
-       console.log("Error during registration:", err);
-     }
+      try {
+        fetch("http://127.0.0.1:8000/api/user/register", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            // authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setLoading(false);
+            if (data.status == 102) {
+              console.log("Successfully registered!", data);
+              sessionStorage.setItem(
+                "user",
+                JSON.stringify({
+                  id: data.data.id,
+                  otpExpiresAt: data.data.otp_expires_at,
+                })
+              );
+              dispatch(registerUser(data));
+              dispatch(otpInfo(data));
+              navigate(`/otp`);
+            }
+            if (data.status == 101) {
+              console.log("Successfully registered!", data);
+              sessionStorage.setItem(
+                "user",
+                JSON.stringify({
+                  id: data.data.id,
+                  otpExpiresAt: data.data.otp_expires_at,
+                })
+              );
+              dispatch(registerUser(data));
+              dispatch(otpInfo(data));
+              navigate(`/otp`);
+            } else {
+              // console.log("Registration failed!", data?.errors?.username[0]);
+              setErrorMessage({
+                status: true,
+                message: data.message,
+                errors: [data.errors],
+              });
+              console.log("errormessage", errorMessage.errors.length);
+            }
+          });
+      } catch (err) {
+        console.log("Error during registration:", err);
+      }
     } else {
       // Passwords do not match
       setLoading(false);
@@ -511,11 +510,14 @@ errors:[data.errors]
           </p>
         )}
 
-        {errorMessage.errors.length > 0 &&
+        {errorMessage.errors?.length > 0 &&
           errorMessage?.errors?.map((err, index) => (
             <div key={index}>
               {Object.values(err).map((value, i) => (
-                <p className="label-text-alt text-rose-500 text-center mb-[2px]" key={i}>
+                <p
+                  className="label-text-alt text-rose-500 text-center mb-[2px]"
+                  key={i}
+                >
                   {value}
                 </p>
               ))}

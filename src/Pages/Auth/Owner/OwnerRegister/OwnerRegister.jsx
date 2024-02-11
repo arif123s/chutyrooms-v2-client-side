@@ -467,7 +467,7 @@ const OwnerRegister = () => {
           </p>
         )}
 
-        {errorMessage.errors.length > 0 &&
+        {errorMessage.errors?.length > 0 &&
           errorMessage?.errors?.map((err, index) => (
             <div key={index}>
               {Object.values(err).map((value, i) => (

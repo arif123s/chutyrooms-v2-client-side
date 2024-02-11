@@ -62,9 +62,10 @@ const Login = () => {
       });
   };
 
-  // const navigateToRegister = () => {
-  //   navigate("/register");
-  // };
+  const navigateToRegister = (e) => {
+    e.preventDefault();
+    navigate("/register");
+  };
 
   return (
     <div className="login-container">
@@ -170,7 +171,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <a
             href="/register"
-            // onClick={navigateToRegister}
+            onClick={(e)=>navigateToRegister(e)}
             className="sign-up-btn"
           >
             Sign Up
