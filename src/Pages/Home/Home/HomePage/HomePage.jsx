@@ -6,7 +6,7 @@ import DealMembership from "./DealMembership/DealMembership";
 const HomePage = () => {
     return (
       <div className="custom-container">
-        <SearchField></SearchField>
+        {/* <SearchField></SearchField> */}
         {/* <h2 className="text-5xl text-center text-green-700 font-bold text center mt-8">
           Hello Chutyrooms!!
         </h2> */}

@@ -21,6 +21,7 @@ const OwnerRegister = () => {
    const [errorMessage, setErrorMessage] = useState({
      status: false,
      message: "",
+     errors: [],
    });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -84,10 +85,10 @@ const OwnerRegister = () => {
 
       const owner = {
         name: data.name,
-        username: data.username,
-        type: "owner",
+        username: loginMethod === "phone" ? data.phone : data.email,
+        role_code: 234,
         password,
-        countryCode:selectedCountry.code
+        countryCode: selectedCountry.code,
       };
 
       // send user data to database
@@ -127,7 +128,11 @@ const OwnerRegister = () => {
              navigate(`/otp`);
           } else {
             console.log("Registration failed!", data)
-          setErrorMessage({ status: true, message: data.errors.username[0] });
+          setErrorMessage({
+            status: true,
+            message: data.message,
+            errors: [data.errors],
+          });
           }
         });
     } else {
@@ -425,7 +430,7 @@ const OwnerRegister = () => {
           </label>
         </div>
 
-        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[16px]">
+        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
           {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
           <div className="flex items-center">
             <input
@@ -462,7 +467,21 @@ const OwnerRegister = () => {
           </p>
         )}
 
-        <input type="submit" className="login-btn mt-[4px]" value="Register" />
+        {errorMessage.errors.length > 0 &&
+          errorMessage?.errors?.map((err, index) => (
+            <div key={index}>
+              {Object.values(err).map((value, i) => (
+                <p
+                  className="label-text-alt text-rose-500 text-center mb-[2px]"
+                  key={i}
+                >
+                  {value}
+                </p>
+              ))}
+            </div>
+          ))}
+
+        <input type="submit" className="login-btn mt-[8px]" value="Register" />
       </form>
 
       <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">

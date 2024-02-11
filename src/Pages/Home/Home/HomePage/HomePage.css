@@ -1,47 +1,64 @@
-.homepage-title{
-    font-size: 32px;
-    font-family: 'Gilroy-bold';
-    font-weight: 700;
-    letter-spacing: 1.08;
-    word-wrap: break-word;
+.homepage-title {
+  font-size: 32px;
+  font-family: "Gilroy-bold";
+  font-weight: 700;
+  letter-spacing: 1.08;
+  word-wrap: break-word;
 }
 
-.hotels-membership-container{
-    display: flex;
-    margin-top: 48px;
-    margin-bottom: 80px;
-    gap: 30px;
+.hotels-membership-container {
+  display: flex;
+  margin-top: 48px;
+  margin-bottom: 80px;
+  gap: 30px;
 }
-
 
 @media (max-width: 575.98px) {
-
+  .homepage-title {
+  font-size: 16px;
+}
+  .hotels-membership-container {
+    display: block;
+    margin: 20px 8px;
+    gap: 0px;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-
+    .hotels-membership-container {
+    display: block;
+    margin: 20px 8px;
+    gap: 0px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-.hotels-membership-container{
+  .hotels-membership-container {
     display: block;
     margin-top: 48px;
     margin-bottom: 80px;
     gap: 30px;
-}
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
-      .custom-container {
+  .custom-container {
     width: 975px;
     padding-left: 8px;
     padding-right: 8px;
     /* margin: auto; */
   }
+
+   .hotels-membership-container {
+    display: block;
+    margin-top: 48px;
+    margin-bottom: 80px;
+    gap: 30px;
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
-        .custom-container {
+  .custom-container {
     /* width: 1200px; */
     width: 1183px;
     padding-left: 8px;

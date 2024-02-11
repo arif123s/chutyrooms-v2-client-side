@@ -49,13 +49,13 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        if (data.status) {
+        if (data.status===true) {
           console.log("Successfully logged in!", data);
            localStorage.setItem("accessToken", data.accessToken);
           toast.success(data.message);
           navigate("/");
         } else {
-          console.log("Login failed!", data.message);
+          console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });
           toast.error(data.message);
         }

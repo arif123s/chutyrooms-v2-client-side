@@ -19,9 +19,14 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const [passErrorMessage, setPassErrorMessage] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState({
+  //   status: false,
+  //   message: "",
+  // });
   const [errorMessage, setErrorMessage] = useState({
     status: false,
     message: "",
+    errors:[]
   });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -54,6 +59,10 @@ const Register = () => {
     setSelectedCountry(option);
     setShowOptions(false); // Close the dropdown after selecting an option
   };
+
+  // if(errorMessage.errors.length>0){
+  //    errorMessage?.errors?.map((a) => console.log(a));
+  // }
 
   //  const createUserMutation = useMutation((userData) => {
   //    return fetch("http://127.0.0.1:8000/api/user/register", {
@@ -115,21 +124,20 @@ setLoginMethod(type)
     const password = data.password;
     const confirmPassword = data.confirmPassword;
 
-    console.log(selectedCountry.code)
-
     if (password === confirmPassword) {
       // Passwords match, you can proceed with the registration logic
       setPassErrorMessage(false);
       const user = {
         name: data.name,
         username: loginMethod==='phone'?data.phone : data.email,
-        type: "user",
+        role_code:345,
         password,
         countryCode:selectedCountry.code
       };
-      console.log('user',user)
+      // console.log('user',user)
       // send user data to database
-      fetch("http://127.0.0.1:8000/api/user/register", {
+     try{
+       fetch("http://127.0.0.1:8000/api/user/register", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -140,7 +148,7 @@ setLoginMethod(type)
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
-          if (data.status === 102) {
+          if (data.status == 102) {
             console.log("Successfully registered!", data);
             sessionStorage.setItem(
               "user",
@@ -152,7 +160,7 @@ setLoginMethod(type)
             dispatch(registerUser(data));
             dispatch(otpInfo(data));
             navigate(`/otp`);
-          } else if (data.status === 101) {
+          }  if (data.status == 101) {
              console.log("Successfully registered!", data);
              sessionStorage.setItem(
                "user",
@@ -164,11 +172,21 @@ setLoginMethod(type)
              dispatch(registerUser(data));
              dispatch(otpInfo(data));
              navigate(`/otp`);
-          } else {
-            console.log("Registration failed!", data.errors.username[0]);
-            setErrorMessage({ status: true, message: data.errors.username[0] });
+          }
+          else {
+            // console.log("Registration failed!", data?.errors?.username[0]);
+            setErrorMessage({
+              status: true,
+              message: data.message,
+errors:[data.errors]
+            });
+            console.log("errormessage", errorMessage.errors.length);
           }
         });
+     }
+     catch(err){
+       console.log("Error during registration:", err);
+     }
     } else {
       // Passwords do not match
       setLoading(false);
@@ -323,7 +341,7 @@ setLoginMethod(type)
                   className="w-full block mb-[4px]"
                   id="phone"
                   name="phone"
-                  type="number"
+                  type="text"
                   placeholder="Enter your phone number"
                   {...register("phone", {
                     required: {
@@ -457,7 +475,7 @@ setLoginMethod(type)
           </label>
         </div>
 
-        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[16px]">
+        <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
           <div className="flex items-center">
             <input
               className="w-[12px] mr-2"
@@ -488,12 +506,23 @@ setLoginMethod(type)
         </div>
 
         {errorMessage.status && (
-          <p className="label-text-alt text-red-500 text-center">
+          <p className="label-text-alt text-rose-500 text-center mb-[2px]">
             {errorMessage.message}
           </p>
         )}
 
-        <input type="submit" className="login-btn mt-[4px]" value="Register" />
+        {errorMessage.errors.length > 0 &&
+          errorMessage?.errors?.map((err, index) => (
+            <div key={index}>
+              {Object.values(err).map((value, i) => (
+                <p className="label-text-alt text-rose-500 text-center mb-[2px]" key={i}>
+                  {value}
+                </p>
+              ))}
+            </div>
+          ))}
+
+        <input type="submit" className="login-btn mt-[8px]" value="Register" />
       </form>
 
       <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">
