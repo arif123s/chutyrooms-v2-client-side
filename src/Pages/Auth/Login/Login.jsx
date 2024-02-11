@@ -62,9 +62,10 @@ const Login = () => {
       });
   };
 
-  const navigateToRegister = () => {
-    navigate("/register");
-  };
+  // const navigateToRegister = () => {
+  //   navigate("/register");
+  // };
+
   return (
     <div className="login-container">
       <h2 className="login-title font-['Gilroy-semibold']">Sign In</h2>
@@ -144,7 +145,9 @@ const Login = () => {
             <span>Remember me?</span>
           </div>
 
-          <a className="text-[#159947]">Forgot Password?</a>
+          <a href="" className="text-[#159947]">
+            Forgot Password?
+          </a>
         </div>
 
         <input type="submit" className="login-btn" value="Sign In" />
@@ -165,7 +168,11 @@ const Login = () => {
       <div className="text-center">
         <p className="text-[16px] ">
           Don’t have an account?{" "}
-          <a onClick={navigateToRegister} className="sign-up-btn">
+          <a
+            href="/register"
+            // onClick={navigateToRegister}
+            className="sign-up-btn"
+          >
             Sign Up
           </a>
         </p>

@@ -9,7 +9,7 @@ import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 // import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 import "./NavBar.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [menu, setMenu] = useState(true);
@@ -28,6 +28,11 @@ const NavBar = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+   const handleClick = (event, route) => {
+     event.preventDefault();
+     navigate(`/${route}`);
+   };
+
   const handleNavigate = (route) => {
     navigate(`/${route}`);
   };
@@ -43,7 +48,11 @@ const NavBar = () => {
   return (
     <div className="custom-container mx-auto pt-[12px] lg:pt-[32px]">
       <div className="flex w-full justify-between">
-        <a onClick={() => handleNavigate("")} className="nav-chuty-logo">
+        <a
+          href="/"
+          onClick={(e) => handleClick(e, "")}
+          className="nav-chuty-logo"
+        >
           <img src={chutyLogo}></img>
         </a>
 
@@ -60,7 +69,9 @@ const NavBar = () => {
                 Chuty Property
               </NavLink> */}
             <a
-              onClick={() => handleNavigate("owner-register")}
+              href="/owner-register"
+              onClick={(e) => handleClick(e, "owner-register")}
+              // onClick={() => handleNavigate("owner-register")}
               onMouseEnter={(e) =>
                 e.target.querySelector(".nav-icon").classList.add("hovered")
               }
@@ -90,7 +101,7 @@ const NavBar = () => {
             </a>
           </li>
           <li className="menu-mobile">
-            <a className="flex">
+            <div className="flex">
               <img src={globalLogo}></img>
               <div className="relative pr-[8px] bg-[#F8FEFF]">
                 <select className="w-12 ml-1 p-[4px]" name="" id="">
@@ -118,11 +129,12 @@ const NavBar = () => {
                     <p>BDT</p>
                   </div>
                 </div> */}
-            </a>
+            </div>
           </li>
           <li className="menu-mobile">
             <a
-              onClick={() => handleNavigate("login")}
+              href="/login"
+              onClick={(e) => handleClick(e, "login")}
               className="bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
             >
               Login
@@ -150,7 +162,9 @@ const NavBar = () => {
             }`}
           >
             <a
-              onClick={() => handleNavigate("login")}
+              href="/login"
+              onClick={(e) => handleClick(e, "login")}
+              // onClick={() => handleNavigate("login")}
               className="bg-[#159947] cursor-pointer text-[14px] md:text-[16px] lg:text-[16px] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
             >
               Login
@@ -195,7 +209,11 @@ const NavBar = () => {
               menu ? " block" : "hidden"
             }`}
           >
-            <a className="bg-[#E8F5ED] cursor-pointer w-44 text-[#159947] nav-item-container flex items-center text-[14px] md:text-[16px] lg:text-[16px] p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
+            <a
+              href="/owner-register"
+              onClick={(e) => handleClick(e, "owner-register")}
+              className="bg-[#E8F5ED] cursor-pointer w-44 text-[#159947] nav-item-container flex items-center text-[14px] md:text-[16px] lg:text-[16px] p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
+            >
               <img className="nav-icon" src={propertyIcon}></img>
               Chuty Property
             </a>

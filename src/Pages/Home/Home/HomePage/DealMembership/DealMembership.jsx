@@ -8,60 +8,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { useEffect, useState } from "react";
+import { Autoplay } from "swiper/modules";
 
 const DealMembership = () => {
-  // const [swiperSettings, setSwiperSettings] = useState({
-  //  slidesPerView:"auto",
-  //         spaceBetween:30,
-  //         centeredSlides:true,
-  //         loop:true,
-  //         autoplay:{
-  //           delay: 2000,
-  //           disableOnInteraction: false,
-  //         },
-  //         speed:1000,
-  //         modules:[Autoplay, Pagination, Navigation],
-  //         className:"mySwiper rounded-[8px]"
-  // });
-
-  // useEffect(() => {
-  //   function handleResize() {
-  //     const windowWidth = window.innerWidth;
-  //     // Adjust settings based on window width
-  //     if (windowWidth < 575) {
-  //       setSwiperSettings({
-  //         ...swiperSettings,
-  //         slidesPerView: 1.3,
-  //         spaceBetween: 10,
-  //       });
-  //     }
-  //      if (windowWidth > 575 && windowWidth<767){
-  //        setSwiperSettings({
-  //          ...swiperSettings,
-  //          slidesPerView: 2,
-  //        });
-  //      }
-  //     else {
-  //       setSwiperSettings({
-  //         ...swiperSettings,
-  //         spaceBetween: 30,
-  //       });
-  //     }
-  //   }
-
-  //   // Initial call to set initial settings
-  //   handleResize();
-
-  //   // Event listener for window resize
-  //   window.addEventListener("resize", handleResize);
-
-  //   // Clean up the event listener
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const images = [platinum, gold, silver];
 
   return (
     <div className="deal-membership-container">
