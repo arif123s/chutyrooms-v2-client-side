@@ -1,6 +1,4 @@
-
-
- /* .no-spinners-input {
+/* .no-spinners-input {
          -moz-appearance: textfield;
       }
       
@@ -34,17 +32,17 @@
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .custom-container {
-    width: 751px;
+    width: 750px;
     /* width: 776px; */
-     padding-left: 8px;
+    padding-left: 8px;
     padding-right: 8px;
     /* margin: auto; */
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
-      .custom-container {
-    width: 975px;
+  .custom-container {
+    width: 973px;
     padding-left: 8px;
     padding-right: 8px;
     /* margin: auto; */
@@ -52,11 +50,11 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
-        .custom-container {
+  .custom-container {
     /* width: 1200px; */
-    width: 1183px;
-    padding-left: 8px;
-    /* padding-right: 8px; */
+    width: 1184px;
+    padding-left: 4px;
+    padding-right: 4px;
     /* margin: auto; */
   }
 }

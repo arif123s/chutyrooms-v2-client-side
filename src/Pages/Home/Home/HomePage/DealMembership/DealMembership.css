@@ -1,7 +1,7 @@
 .deal-membership-container {
   width: 30%;
   margin-top: 60px;
-  padding-right: 6px;
+  /* padding-right: 6px; */
 }
 
 .membership-title {
@@ -39,7 +39,7 @@
 @media (max-width: 575.98px) {
   .deal-membership-container {
     width: 100%;
-    margin-top: 16px;
+    margin-top: 30px;
   }
 
   .membership-title {
@@ -56,14 +56,14 @@
   }
 
    .membership-card {
-    height: 190px;
+    height: 180px;
   }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
   .deal-membership-container {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 40px;
   }
 
   .membership-title {
@@ -80,14 +80,14 @@
   }
 
    .membership-card {
-    height: 170px;
+    height: 160px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .deal-membership-container {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 50px;
   }
 
   .membership-cards-large {
@@ -99,14 +99,14 @@
   }
 
    .membership-card {
-    height: 200px;
+    height: 170px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .deal-membership-container {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 60px;
   }
 
   .membership-cards-large {

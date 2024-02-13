@@ -52,6 +52,16 @@ const Login = () => {
         if (data.status===true) {
           console.log("Successfully logged in!", data);
            localStorage.setItem("accessToken", data.accessToken);
+           localStorage.setItem(
+             "userInfo",
+             JSON.stringify({
+               id: data.data.id,
+               accessToken: data.accessToken,
+               name:data.data.name,
+               img:data.data.image,
+               role:""
+             })
+           );
           toast.success(data.message);
           navigate("/");
         } else {

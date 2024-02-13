@@ -7,15 +7,15 @@ import chat from "../../../../assets/icons/chat-bot.svg";
 
 const HomePage = () => {
   return (
-    <div className="custom-container homepage-container relative">
+    <div className="custom-container homepage-container">
       {/* <SearchField></SearchField> */}
       <div className="hotels-membership-container">
         <PopularHotels></PopularHotels>
         <DealMembership></DealMembership>
       </div>
       <ExploreCountry></ExploreCountry>
-      <div className="w-[60px] h-[60px] bg-[#159947] rounded-full flex justify-center items-center absolute bottom-[280px] right-0 z-10">
-        <img className="" src={chat} alt="Chat" />
+      <div className="chat-box">
+        <img className="w-[18px] md:w-[22px] lg:w-[24px]" src={chat} alt="Chat" />
       </div>
     </div>
   );

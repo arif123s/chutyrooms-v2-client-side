@@ -207,6 +207,12 @@ const PopularHotels = () => {
           <img className="absolute top-3 right-3" src={favourite} alt="" />
         </div>
       </div>
+
+      <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">
+        <button className=" bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0">
+          Show More
+        </button>
+      </div>
     </div>
   );
 };

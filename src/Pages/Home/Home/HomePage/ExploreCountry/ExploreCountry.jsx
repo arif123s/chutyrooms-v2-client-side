@@ -8,28 +8,32 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 
 const ExploreCountry = () => {
   return (
-    <div className="pr-[6px]">
+    <div className="explore-country-container">
       <h2 className="homepage-title">Explore Bangladesh</h2>
       <Swiper
         // slidesPerView={1.2}
-        spaceBetween={20}
+        spaceBetween={15}
         // centeredSlides={true}
-        loop={true}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: false,
-        }}
+        // loop={true}
+        // autoplay={{
+        //   delay: 2000,
+        //   disableOnInteraction: false,
+        // }}
+        navigation={true}
         speed={1000}
-        modules={[Autoplay]}
+        modules={[Autoplay, Navigation]}
         className="mySwiper rounded-[8px] mt-[18px]"
         breakpoints={{
           0: {
-            slidesPerView: 1.2,
+            slidesPerView: 1,
           },
+          // 0: {
+          //   slidesPerView: 1.2,
+          // },
           575: {
             slidesPerView: 2,
           },

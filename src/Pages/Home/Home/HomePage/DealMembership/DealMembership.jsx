@@ -31,7 +31,7 @@ const DealMembership = () => {
         </div>
       </div>
       <div className="membership-cards-slider">
-        <div className="flex">
+        <div className="flex ml-[-4px]">
           <span className="membership-title tracking-[2.88px] mr-[4px]">
             Deal
           </span>
@@ -42,7 +42,7 @@ const DealMembership = () => {
         </div>
         <Swiper
           // slidesPerView={1.2}
-          spaceBetween={20}
+          spaceBetween={15}
           // centeredSlides={true}
           loop={true}
           autoplay={{

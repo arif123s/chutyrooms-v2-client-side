@@ -1,6 +1,6 @@
-.homepage-container{
+.homepage-container {
   margin-bottom: 80px;
-  display: relative;
+  position: relative;
 }
 
 .homepage-title {
@@ -14,60 +14,140 @@
 .hotels-membership-container {
   display: flex;
   margin-top: 48px;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
   gap: 30px;
+}
+
+.chat-box {
+  position: fixed;
+  right: 60px;
+  bottom: 100px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #159947;
+  box-shadow: 0px 6px 50px 12px rgba(16.4, 212.5, 12.4, 0.21);
+  border: 1px solid rgb(149, 232, 143);
+  text-shadow: 0 0 10px #159947, 0 0 20px #159947, 0 0 30px #159947,
+    0 0 40px #159947, 0 0 50px #159947, 0 0 60px #159947, 0 0 70px #159947;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #159947, 0 0 20px #159947, 0 0 30px #159947,
+      0 0 40px #159947, 0 0 50px #159947, 0 0 60px #159947, 0 0 70px #159947;
+  }
+  to {
+    text-shadow: 0 0 20px #159947, 0 0 30px #159947, 0 0 40px #159947,
+      0 0 50px #159947, 0 0 60px #159947, 0 0 70px #159947, 0 0 80px #159947;
+  }
 }
 
 @media (max-width: 575.98px) {
   .homepage-title {
-  font-size: 16px;
-}
+    font-size: 18px;
+  }
+
+  .homepage-container {
+    margin-bottom: 30px;
+  }
+
   .hotels-membership-container {
     display: block;
     margin: 20px 8px;
+    margin-bottom: 30px;
     gap: 0px;
+  }
+
+  .chat-box {
+    right: 0px;
+    bottom: 60px;
+    width: 40px;
+    height: 40px;
   }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-    .hotels-membership-container {
+ .homepage-title {
+    font-size: 24px;
+  }
+
+  .homepage-container {
+    margin-bottom: 40px;
+  }
+
+  .hotels-membership-container {
     display: block;
     margin: 20px 8px;
+    /* margin-top: 20px; */
+    margin-bottom: 34px;
     gap: 0px;
+  }
+
+  .chat-box {
+    right: 0px;
+    bottom: 60px;
+    width: 48px;
+    height: 48px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+  .homepage-container {
+    margin-bottom: 50px;
+  }
+
   .hotels-membership-container {
     display: block;
-    margin-top: 48px;
-    margin-bottom: 80px;
+    margin-top: 34px;
+    margin-bottom: 50px;
     gap: 30px;
+  }
+
+  .chat-box {
+    right: 8px;
+    bottom: 60px;
+    width: 52px;
+    height: 52px;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
-  .custom-container {
-    width: 975px;
-    padding-left: 8px;
-    padding-right: 8px;
-    /* margin: auto; */
+  .homepage-container {
+    margin-bottom: 60px;
   }
 
-   .hotels-membership-container {
+  .hotels-membership-container {
     display: block;
     margin-top: 48px;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
     gap: 30px;
+  }
+
+  .chat-box {
+    right: 8px;
+    bottom: 60px;
+    width: 56px;
+    height: 56px;
   }
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
-  .custom-container {
-    /* width: 1200px; */
-    width: 1183px;
-    padding-left: 8px;
-    /* padding-right: 8px; */
-    /* margin: auto; */
+  
+
+  .hotels-membership-container {
+   /* padding-right: 4px; */
+  }
+
+  .chat-box {
+    right: 16px;
+    bottom: 60px;
+    width: 60px;
+    height: 60px;
   }
 }
