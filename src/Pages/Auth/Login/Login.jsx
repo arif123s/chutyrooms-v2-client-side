@@ -49,22 +49,34 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        if (data.status) {
+        if (data.status===true) {
           console.log("Successfully logged in!", data);
            localStorage.setItem("accessToken", data.accessToken);
+           localStorage.setItem(
+             "userInfo",
+             JSON.stringify({
+               id: data.data.id,
+               accessToken: data.accessToken,
+               name:data.data.name,
+               img:data.data.image,
+               role:""
+             })
+           );
           toast.success(data.message);
           navigate("/");
         } else {
-          console.log("Login failed!", data.message);
+          console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });
           toast.error(data.message);
         }
       });
   };
 
-  const navigateToRegister = () => {
+  const navigateToRegister = (e) => {
+    e.preventDefault();
     navigate("/register");
   };
+
   return (
     <div className="login-container">
       <h2 className="login-title font-['Gilroy-semibold']">Sign In</h2>
@@ -144,7 +156,9 @@ const Login = () => {
             <span>Remember me?</span>
           </div>
 
-          <a className="text-[#159947]">Forgot Password?</a>
+          <a href="" className="text-[#159947]">
+            Forgot Password?
+          </a>
         </div>
 
         <input type="submit" className="login-btn" value="Sign In" />
@@ -165,7 +179,11 @@ const Login = () => {
       <div className="text-center">
         <p className="text-[16px] ">
           Don’t have an account?{" "}
-          <a onClick={navigateToRegister} className="sign-up-btn">
+          <a
+            href="/register"
+            onClick={(e)=>navigateToRegister(e)}
+            className="sign-up-btn"
+          >
             Sign Up
           </a>
         </p>
