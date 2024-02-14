@@ -47,8 +47,16 @@ const NavBar = () => {
     navigate(`/${route}`);
   };
 
-  const handleLogout = () =>{
-    
+  const handleLogout = (e) =>{
+    e.preventDefault()
+    console.log("logout")
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify(
+        null
+      )
+    );
+    window.location.reload();
   }
 
   return (
@@ -170,7 +178,10 @@ const NavBar = () => {
                     <img src={profileIcon} alt="Profile-icon" />
                     <a href="">Profile</a>
                   </div>
-                  <div className="flex items-center gap-[8px]">
+                  <div
+                    onClick={(e) => handleLogout(e)}
+                    className="flex items-center gap-[8px]"
+                  >
                     <img src={logoutIcon} alt="Profile-icon" />
                     <a href="">Logout</a>
                   </div>
@@ -282,13 +293,17 @@ const NavBar = () => {
               ></img>
               Chuty Property
             </a>
-            <hr className="my-3" />
-            <div className="flex items-center gap-[8px]">
-              <img src={logoutIcon} alt="Profile-icon" />
-              <a href="" onClick={handleLogout}>
-                Logout
-              </a>
-            </div>
+            {user && (
+              <div>
+                <hr className="my-3" />
+                <div className="flex items-center gap-[8px]">
+                  <img src={logoutIcon} alt="Profile-icon" />
+                  <a href="" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

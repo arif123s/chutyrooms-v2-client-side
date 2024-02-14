@@ -297,7 +297,7 @@ const Register = () => {
             </label>
             <div className="relative w-full">
               <div className="phone-input-box">
-                <div className="flex">
+                <div className="flex w-[104px]">
                   <div className="relative mr-[4px]">
                     <div className="custom-select-container">
                       <div

@@ -145,6 +145,16 @@ const OtpVerification = () => {
         setLoading(false);
         if (data.status === true) {
           console.log("data", data);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              id: data.data.id,
+              accessToken: data.accessToken,
+              name: data.data.name,
+              img: data.data.image,
+              role: "",
+            })
+          );
           toast.success("Successfully registered!");
           navigate("/");
         } else {

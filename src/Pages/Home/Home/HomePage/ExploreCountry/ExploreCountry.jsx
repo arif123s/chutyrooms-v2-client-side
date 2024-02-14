@@ -58,6 +58,15 @@ const ExploreCountry = () => {
         <SwiperSlide>
           <img className="" src={place3} alt="Place" />
         </SwiperSlide>
+        <SwiperSlide>
+          <img className="" src={place1} alt="Place" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img className="" src={place2} alt="Place" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img className="" src={place3} alt="Place" />
+        </SwiperSlide>
       </Swiper>
     </div>
   );

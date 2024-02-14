@@ -2,7 +2,7 @@
   padding-top: 24px;
   padding-bottom: 26px;
   background: #159947;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .footer-head-title {
@@ -27,11 +27,11 @@
 }
 
 .download-app-container {
-display: flex;
+  display: flex;
 }
 
-.download-app{
- width: 210px;
+.download-app {
+  width: 210px;
 }
 
 .nav-item-title {
@@ -53,7 +53,6 @@ display: flex;
   gap: 12px;
 }
 
-
 .qr-img {
   width: 44px;
   height: 44px;
@@ -68,14 +67,14 @@ display: flex;
   margin-right: 36px;
 }
 
-.payment-container{
-display: flex;
+.payment-container {
+  display: flex;
 }
 
 .payment-items-container {
   display: flex;
   align-items: center;
-    justify-content: center;
+  justify-content: center;
   width: 220px;
 }
 
@@ -86,7 +85,6 @@ display: flex;
   padding-left: 10px;
   padding-right: 10px;
   margin-top: 6px;
-
 }
 
 .payment-icon {
@@ -99,13 +97,12 @@ display: flex;
   height: 32px;
 }
 
-
 .discover-container {
- display: flex;
+  display: flex;
 }
 
-.discover-items-container{
-width: 300px;
+.discover-items-container {
+  width: 300px;
 }
 
 .discover-items {
@@ -123,13 +120,13 @@ width: 300px;
   margin-bottom: 8px;
 }
 
-.social-accounts-container{
+.social-accounts-container {
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
 }
 
-.social-icon{
+.social-icon {
   width: 32px;
   height: 32px;
 }
@@ -165,14 +162,18 @@ width: 300px;
   letter-spacing: 0.54px;
 }
 
-.copyright-text{
+.subscribe-btn:hover {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.copyright-text {
   display: flex;
   justify-content: flex-end;
   margin: auto;
   margin-top: 40px;
   font-size: 14px;
 }
-
 
 /*************************
         Responsive
@@ -210,10 +211,10 @@ width: 300px;
     display: block;
   }
 
-  .download-app{
-   width: 220px;
+  .download-app {
+    width: 220px;
     margin: auto;
-}
+  }
 
   .nav-item-title {
     font-size: 15px;
@@ -238,15 +239,15 @@ width: 300px;
   }
 
   .divide {
-  width: 85%;
-  height: 1px;
-  margin: auto;
-  margin-top: 16px;
-}
+    width: 85%;
+    height: 1px;
+    margin: auto;
+    margin-top: 16px;
+  }
 
-.payment-container{
-display: block;
-}
+  .payment-container {
+    display: block;
+  }
 
   .payment-items-container {
     margin: auto;
@@ -271,16 +272,15 @@ display: block;
     height: 32px;
   }
 
-
   .discover-container {
- display: block;
-}
+    display: block;
+  }
 
-.discover-items-container{
-/* width: 367px; */
- width: 300px;
+  .discover-items-container {
+    /* width: 367px; */
+    width: 300px;
     margin: auto;
-}
+  }
 
   .discover-items {
     /* width: 220px; */
@@ -304,10 +304,10 @@ display: block;
     margin-bottom: 8px;
   }
 
-  .social-accounts-container{
-  gap: 10px;
-  justify-content: center;
-}
+  .social-accounts-container {
+    gap: 10px;
+    justify-content: center;
+  }
 
   .subscribe-email-input {
     width: 160px;
@@ -329,11 +329,11 @@ display: block;
     font-size: 14px;
   }
 
-  .copyright-text{
+  .copyright-text {
     justify-content: center;
     margin: auto;
     margin-top: 28px;
-}
+  }
 }
 
 /****************************
@@ -341,7 +341,7 @@ display: block;
 ****************************/
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-    .footer-container {
+  .footer-container {
     padding-top: 18px;
     padding-bottom: 18px;
   }
@@ -371,10 +371,10 @@ display: block;
     display: block;
   }
 
-  .download-app{
-   width: 240px;
+  .download-app {
+    width: 240px;
     margin: auto;
-}
+  }
 
   .nav-item-title {
     font-size: 15px;
@@ -399,15 +399,15 @@ display: block;
   }
 
   .divide {
-  width: 85%;
-  height: 1px;
-  margin: auto;
-  margin-top: 16px;
-}
+    width: 85%;
+    height: 1px;
+    margin: auto;
+    margin-top: 16px;
+  }
 
-.payment-container{
-display: block;
-}
+  .payment-container {
+    display: block;
+  }
 
   .payment-items-container {
     margin: auto;
@@ -432,16 +432,15 @@ display: block;
     height: 32px;
   }
 
-
   .discover-container {
- display: block;
-}
+    display: block;
+  }
 
-.discover-items-container{
-/* width: 367px; */
- width: 300px;
+  .discover-items-container {
+    /* width: 367px; */
+    width: 300px;
     margin: auto;
-}
+  }
 
   .discover-items {
     margin: auto;
@@ -464,10 +463,10 @@ display: block;
     margin-bottom: 8px;
   }
 
-   .social-accounts-container{
-  gap: 10px;
-  justify-content: center;
-}
+  .social-accounts-container {
+    gap: 10px;
+    justify-content: center;
+  }
 
   .subscribe-email-input {
     width: 180px;
@@ -480,11 +479,11 @@ display: block;
     padding: 4px;
   }
 
-  .copyright-text{
+  .copyright-text {
     justify-content: center;
     margin: auto;
     margin-top: 28px;
-}
+  }
 }
 
 /****************************
@@ -493,134 +492,133 @@ display: block;
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .footer-container {
-  padding-top: 24px;
-  padding-bottom: 26px;
-}
+    padding-top: 24px;
+    padding-bottom: 26px;
+  }
 
-.footer-head-title {
-  font-size: 22px;
-}
+  .footer-head-title {
+    font-size: 22px;
+  }
 
-.nav-items-container {
-  margin-top: 32px;
-}
+  .nav-items-container {
+    margin-top: 32px;
+  }
 
-.download-app-container {
-display: flex;
-padding-left: 4px;
-/* background: blue; */
+  .download-app-container {
+    display: flex;
+    padding-left: 4px;
+    /* background: blue; */
+  }
 
-}
+  .download-app {
+    width: 170px;
+  }
 
-.download-app{
- width: 170px;
-}
+  .nav-item-title {
+    font-size: 15px;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
 
-.nav-item-title {
-  font-size: 15px;
-  margin-bottom: 4px;
-  font-weight: 500;
-}
+  .app-google-icon {
+    width: 70px;
+    height: 36px;
+  }
 
-.app-google-icon {
-  width: 70px;
-  height: 36px;
-}
+  .app-google-icon-container {
+    gap: 8px;
+  }
 
-.app-google-icon-container {
-  gap: 8px;
-}
+  .qr-img {
+    width: 28px;
+    height: 28px;
+    margin-left: 8px;
+  }
 
-.qr-img {
-  width: 28px;
-  height: 28px;
-  margin-left: 8px;
-}
+  .divide {
+    height: 280px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
 
-.divide {
-  height: 280px;
-  margin-left: 8px;
-  margin-right: 8px;
-}
+  .payment-items-container {
+    width: 160px;
+  }
 
-.payment-items-container {
-  width: 160px;
-}
+  .payment-items {
+    gap: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-top: 6px;
+  }
 
-.payment-items {
-  gap: 4px;
-  padding-left: 6px;
-  padding-right: 6px;
-  margin-top: 6px;
-}
+  .payment-icon {
+    width: 80px;
+  }
 
-.payment-icon {
-  width: 80px;
-}
+  .payment-arrow {
+    width: 28px;
+    height: 28px;
+  }
 
-.payment-arrow {
-  width: 28px;
-  height: 28px;
-}
+  .discover-items-container {
+    width: 150px;
+  }
 
-.discover-items-container{
-width: 150px;
-}
+  .discover-items {
+    display: block;
+  }
 
-.discover-items {
-  display: block;
-}
+  .discover-items a {
+    font-size: 13px;
+  }
 
-.discover-items a {
-  font-size: 13px;
-}
+  .contact-container {
+    width: 185px;
+  }
 
-.contact-container{
-  width: 185px;
-}
+  .contact-info {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
 
-.contact-info {
-  font-size: 13px;
-  margin-bottom: 8px;
-}
+  .social-accounts-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
 
-.social-accounts-container{
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
+  .social-icon {
+    width: 28px;
+    height: 28px;
+  }
 
-.social-icon{
-  width: 28px;
-  height: 28px;
-}
+  .subscribe-email-input {
+    width: 110px;
+    padding-left: 10px;
+    font-size: 14px;
+    height: 32px;
+  }
 
-.subscribe-email-input {
-  width: 110px;
-  padding-left: 10px;
-  font-size: 14px;
-  height: 32px;
-}
+  .subscribe-email-input::placeholder {
+    font-size: 12px;
+  }
 
-.subscribe-email-input::placeholder {
-  font-size: 12px;
-}
+  .subscribe-btn {
+    width: 70px;
+    height: 32px;
+    padding: 4px;
+    font-size: 12px;
+  }
 
-.subscribe-btn {
-  width: 70px;
-  height: 32px;
-  padding: 4px;
-  font-size: 12px;
-}
-
-.copyright-text{
-  display: flex;
-  justify-content: flex-end;
-  margin: auto;
-  margin-top: 40px;
-  padding-right: 8px;
-  font-size: 14px;
-}
+  .copyright-text {
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
+    margin-top: 40px;
+    padding-right: 8px;
+    font-size: 14px;
+  }
 }
 
 /****************************
@@ -629,288 +627,278 @@ width: 150px;
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .footer-container {
-  padding-top: 24px;
-  padding-bottom: 26px;
+    padding-top: 24px;
+    padding-bottom: 26px;
+  }
+
+  .footer-head-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .nav-items-container {
+    margin-top: 32px;
+  }
+
+  .download-app {
+    width: 200px;
+  }
+
+  .nav-item-title {
+    font-size: 17px;
+    line-height: 28.8px;
+    margin-bottom: 14px;
+  }
+
+  .app-google-icon {
+    width: 90px;
+  }
+
+  .app-google-icon-container {
+    display: flex;
+    gap: 6px;
+  }
+
+  .qr-img {
+    width: 32px;
+    height: 32px;
+    margin-left: 12px;
+  }
+
+  .divide {
+    width: 1px;
+    height: 220px;
+    background: #50b375;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .payment-items-container {
+    width: 200px;
+  }
+
+  .payment-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-top: 6px;
+  }
+
+  .payment-icon {
+    width: 80px;
+    /* height: 46px; */
+  }
+
+  .payment-arrow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .discover-container {
+    display: flex;
+  }
+
+  .discover-items-container {
+    width: 205px;
+  }
+
+  .discover-items {
+    display: flex;
+    gap: 10px;
+  }
+
+  .discover-items a {
+    font-size: 14px;
+  }
+
+  .contact-info {
+    font-size: 14px;
+    letter-spacing: 0.48px;
+    margin-bottom: 8px;
+  }
+
+  .social-accounts-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .social-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .subscribe-email-input {
+    width: 150px;
+    padding-left: 10px;
+    font-size: 16px;
+    height: 36px;
+  }
+
+  .subscribe-email-input::placeholder {
+    color: #ffffff;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+
+  .subscribe-btn {
+    width: 80px;
+    height: 36px;
+    padding: 4px;
+    font-size: 14px;
+  }
+
+  .copyright-text {
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
+    margin-top: 40px;
+    padding-right: 16px;
+    font-size: 14px;
+  }
 }
-
-.footer-head-title {
-  font-size: 24px;
-  margin-bottom: 24px;
-}
-
-.nav-items-container {
-  margin-top: 32px;
-}
-
-.download-app{
- width: 200px;
-}
-
-.nav-item-title {
-  font-size: 17px;
-  line-height: 28.8px;
-  margin-bottom: 14px;
-}
-
-.app-google-icon {
-  width: 90px;
-}
-
-.app-google-icon-container {
-  display: flex;
-  gap: 6px;
-}
-
-
-.qr-img {
-  width: 32px;
-  height: 32px;
-  margin-left: 12px;
-}
-
-.divide {
-  width: 1px;
-  height: 220px;
-  background: #50b375;
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
-
-.payment-items-container {
-  width: 200px;
-}
-
-.payment-items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  padding-left: 6px;
-  padding-right: 6px;
-  margin-top: 6px;
-
-}
-
-.payment-icon {
-  width: 80px;
-  /* height: 46px; */
-}
-
-.payment-arrow {
-  width: 28px;
-  height: 28px;
-}
-
-
-.discover-container {
- display: flex;
-}
-
-.discover-items-container{
-width: 205px;
-}
-
-.discover-items {
-  display: flex;
-  gap: 10px;
-}
-
-.discover-items a {
-  font-size: 14px;
-}
-
-.contact-info {
-  font-size: 14px;
-  letter-spacing: 0.48px;
-  margin-bottom: 8px;
-}
-
-.social-accounts-container{
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.social-icon{
-  width: 32px;
-  height: 32px;
-}
-
-.subscribe-email-input {
-  width: 150px;
-  padding-left: 10px;
-  font-size: 16px;
-  height: 36px;
-}
-
-.subscribe-email-input::placeholder {
-  color: #ffffff;
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-.subscribe-btn {
-  width: 80px;
-  height: 36px;
-  padding: 4px;
-  font-size: 14px;
-}
-
-.copyright-text{
-  display: flex;
-  justify-content: flex-end;
-  margin: auto;
-  margin-top: 40px;
-  padding-right: 16px;
-  font-size: 14px;
-}
-}
-
-
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
+  .footer-head-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+  }
 
-.footer-head-title {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: 24px;
-  letter-spacing: 2px;
-}
+  .download-app {
+    width: 210px;
+  }
 
-.download-app{
- width: 210px;
-}
+  .nav-item-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28.8px;
+    letter-spacing: 0.6px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
 
-.nav-item-title {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 28.8px;
-  letter-spacing: 0.6px;
-  margin-bottom: 14px;
-  text-align: center;
-}
+  .app-google-icon {
+    width: 110px;
+    height: 36px;
+  }
 
-.app-google-icon {
-  width: 110px;
-  height: 36px;
-}
+  .app-google-icon-container {
+    display: flex;
+    gap: 12px;
+  }
 
-.app-google-icon-container {
-  display: flex;
-  gap: 12px;
-}
+  .qr-img {
+    width: 32px;
+    height: 32px;
+    margin-left: 12px;
+  }
 
+  .divide {
+    width: 1px;
+    height: 220px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 
-.qr-img {
-  width: 32px;
-  height: 32px;
-  margin-left: 12px;
-}
+  .payment-container {
+    display: flex;
+  }
 
-.divide {
-  width: 1px;
-  height: 220px;
-  margin-left: 30px;
-  margin-right: 30px;
-}
-
-.payment-container{
-display: flex;
-}
-
-.payment-items-container {
-  display: flex;
-  align-items: center;
+  .payment-items-container {
+    display: flex;
+    align-items: center;
     justify-content: center;
-  width: 220px;
-}
+    width: 220px;
+  }
 
-.payment-items {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 6px;
+  .payment-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 6px;
+  }
 
-}
+  .payment-icon {
+    width: 80px;
+    /* height: 46px; */
+  }
 
-.payment-icon {
-  width: 80px;
-  /* height: 46px; */
-}
+  .payment-arrow {
+    width: 32px;
+    height: 32px;
+  }
 
-.payment-arrow {
-  width: 32px;
-  height: 32px;
-}
+  .discover-container {
+    display: flex;
+  }
 
+  .discover-items-container {
+    width: 300px;
+  }
 
-.discover-container {
- display: flex;
-}
+  .discover-items {
+    display: flex;
+    gap: 30px;
+  }
 
-.discover-items-container{
-width: 300px;
-}
+  .discover-items a {
+    font-size: 14px;
+  }
 
-.discover-items {
-  display: flex;
-  gap: 30px;
-}
+  .contact-info {
+    font-size: 14px;
+    letter-spacing: 0.48px;
+    margin-bottom: 8px;
+  }
 
-.discover-items a {
-  font-size: 14px;
-}
+  .social-accounts-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
 
-.contact-info {
-  font-size: 14px;
-  letter-spacing: 0.48px;
-  margin-bottom: 8px;
-}
+  .social-icon {
+    width: 32px;
+    height: 32px;
+  }
 
-.social-accounts-container{
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+  .subscribe-email-input {
+    width: 160px;
+    padding-left: 10px;
+    gap: 10px;
+    background: #159947;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 5px 0px 0px 5px;
+    font-size: 16px;
+    letter-spacing: 0.48px;
+    height: 40px;
+  }
 
-.social-icon{
-  width: 32px;
-  height: 32px;
-}
+  .subscribe-email-input::placeholder {
+    color: #ffffff;
+    font-size: 14px;
+    opacity: 0.8;
+  }
 
-.subscribe-email-input {
-  width: 160px;
-  padding-left: 10px;
-  gap: 10px;
-  background: #159947;
-  color: #ffffff;
-  border: 1px solid #ffffff;
-  border-radius: 5px 0px 0px 5px;
-  font-size: 16px;
-  letter-spacing: 0.48px;
-  height: 40px;
-}
+  .subscribe-btn {
+    width: 100px;
+    height: 40px;
+    padding: 10px;
+    font-size: 14px;
+  }
 
-.subscribe-email-input::placeholder {
-  color: #ffffff;
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-.subscribe-btn {
-  width: 100px;
-  height: 40px;
-  padding: 10px;
-  font-size: 14px;
-}
-
-.copyright-text{
-  margin-top: 40px;
-  font-size: 14px;
-}
+  .copyright-text {
+    margin-top: 40px;
+    font-size: 14px;
+  }
 }
 
 @media (min-width: 1400px) {
