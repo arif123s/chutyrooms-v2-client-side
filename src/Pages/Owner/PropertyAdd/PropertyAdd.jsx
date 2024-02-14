@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import CancellationPolicy from "./CancellationPolicy/CancellationPolicy";
 import { useMutation } from "react-query";
+import Loading from "../../Common/Includes/Loading/Loading";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -79,6 +80,8 @@ const PropertyAdd = () => {
     libraries,
   });
 
+  const [loading, setLoading] = useState(false);
+
   // const createPropertyMutation = useMutation((propertyData) => {
   //   return fetch("http://127.0.0.1:8000/api/user/register", {
   //     method: "POST",
@@ -93,7 +96,6 @@ const PropertyAdd = () => {
   //     return response.json();
   //   });
   // });
-
 
   let displayImageCount = 0;
 
@@ -128,8 +130,8 @@ const PropertyAdd = () => {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
 
-  if (!isLoaded) {
-    return <div className="text-center py-[60px]">Loading maps...</div>;
+  if (!isLoaded || loading) {
+    return <Loading></Loading>;
   }
 
   const handleLogoSelect = (event) => {
@@ -227,7 +229,6 @@ const PropertyAdd = () => {
     setVideoError(false);
   };
 
-
   const onSubmit = (data) => {
     displayImages.map((i) => {
       if (i === null) {
@@ -260,6 +261,8 @@ const PropertyAdd = () => {
       return setMapError(true);
     }
 
+    setLoading(true);
+
     // console.log(center);
 
     const propertyData = {
@@ -272,8 +275,9 @@ const PropertyAdd = () => {
     };
 
     console.log(propertyData);
-  // createPropertyMutation.mutate(propertyData);
-    // navigate("/room-add");
+    // createPropertyMutation.mutate(propertyData);
+    setLoading(false);
+    navigate("/room-add");
   };
 
   //   const handleSave = (e)=>{
@@ -1092,7 +1096,7 @@ const PropertyAdd = () => {
                 </p>
               )}
             </div>
-           
+
             {/* Display Image */}
             <div>
               <h2 className="">Display Image</h2>
@@ -1545,22 +1549,21 @@ const PropertyAdd = () => {
                 </span>
               </label>
             )}
-
           </div>
         </div>
-          <div className="mt-[20px] flex justify-end gap-x-[12px]">
-            <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
-              Cancel
-            </button>
-            <button
-              // onClick={(e) => handleSave(e)}
-              type="submit"
-              // disabled={!rectangleBounds}
-              className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
-            >
-              Save
-            </button>
-          </div>
+        <div className="mt-[20px] flex justify-end gap-x-[12px]">
+          <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
+            Cancel
+          </button>
+          <button
+            // onClick={(e) => handleSave(e)}
+            type="submit"
+            // disabled={!rectangleBounds}
+            className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+          >
+            Save
+          </button>
+        </div>
       </form>
     </div>
   );

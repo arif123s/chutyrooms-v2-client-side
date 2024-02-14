@@ -3,11 +3,11 @@
   height: 56px;
 }
 
-.nav-item:hover {
-  /* border:1px solid #128b40; */
-  background: #c5e5d1;
-  /* background: #159947;
-color: #FFFFFF; */
+.nav-item-container:hover {
+  /* background: #c5e5d1; */
+  background: #159947;
+  color: #FFFFFF;
+ 
 }
 
 .nav-icon {
@@ -16,13 +16,33 @@ color: #FFFFFF; */
   height: 18px;
 }
 
-/* .menu-mobile{
-   
+.nav-icon.light {
+  display: none; /* Initially hide the light icon */
+}
+
+a:hover .nav-icon {
+  display: none; /* Hide normal icon on hover */
+}
+
+a:hover .nav-icon.light {
+  display: inline-block; /* Show light icon on hover */
+}
+
+/* .nav-icon-hide {
+  display: none;
+}
+
+.nav-icon-light {
+  display: none;
+}
+
+.nav-icon-light-show {
+  margin-right: 4px;
+  width: 18px;
+  height: 18px;
+  display: block;
 } */
 
-.menu-container {
-  /* height: 0; */
-}
 
 .menu-container {
   width: 100%;

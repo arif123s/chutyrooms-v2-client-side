@@ -1,6 +1,8 @@
 import chutyLogo from "../../../../../assets/icons/Chuty-Logo.svg";
 import propertyIcon from "../../../../../assets/icons/Property.svg";
+import propertyLightIcon from "../../../../../assets/icons/property-light.svg";
 import memberIcon from "../../../../../assets/icons/Member.svg";
+import memberLightIcon from "../../../../../assets/icons/member-light.svg";
 import globalLogo from "../../../../../assets/icons/Global.svg";
 import menuIcon from "../../../../../assets/icons/menu-large.svg";
 import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
@@ -39,7 +41,7 @@ const NavBar = () => {
   //   const isLinkActive = (link) => activeLink === link;
 
   return (
-    <div className=" custom-container mx-auto pt-[12px] lg:pt-[32px]">
+    <div className="custom-container mx-auto pt-[12px] lg:pt-[32px]">
       <div className="flex w-full justify-between">
         <a onClick={() => handleNavigate("")} className="nav-chuty-logo">
           <img src={chutyLogo}></img>
@@ -49,7 +51,7 @@ const NavBar = () => {
           <li>
             {/* <NavLink
                 to="/"
-               className="nav-item bg-[#E8F5ED] text-[#159947] nav-item flex px-[16px] py-[10px] rounded-[8px]"
+               className="nav-item-container bg-[#E8F5ED] text-[#159947] nav-item-container flex px-[16px] py-[10px] rounded-[8px]"
                 activeClassName="active"
                 onClick={() => handleClick("/")}
                 style={{ color: isLinkActive("/") ? "red" : "" }}
@@ -59,15 +61,31 @@ const NavBar = () => {
               </NavLink> */}
             <a
               onClick={() => handleNavigate("owner-register")}
-              className="menu-mobile cursor-pointer bg-[#E8F5ED]  text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]"
+              onMouseEnter={(e) =>
+                e.target.querySelector(".nav-icon").classList.add("hovered")
+              }
+              onMouseLeave={(e) =>
+                e.target.querySelector(".nav-icon").classList.remove("hovered")
+              }
+              className="menu-mobile cursor-pointer bg-[#E8F5ED] text-[#159947] nav-item-container flex px-[16px] items-center py-[10px] rounded-[8px]"
             >
               <img className="nav-icon" src={propertyIcon}></img>
+              <img className="nav-icon light" src={propertyLightIcon}></img>
               Chuty Property
             </a>
           </li>
           <li>
-            <a className="nav-item cursor-pointer bg-[#E8F5ED] text-[#159947] flex items-center p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
+            <a
+              onMouseEnter={(e) =>
+                e.target.querySelector(".nav-icon").classList.add("hovered")
+              }
+              onMouseLeave={(e) =>
+                e.target.querySelector(".nav-icon").classList.remove("hovered")
+              }
+              className="nav-item-container cursor-pointer bg-[#E8F5ED] text-[#159947] flex items-center p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
+            >
               <img className="nav-icon" src={memberIcon}></img>
+              <img className="nav-icon light" src={memberLightIcon}></img>
               Deal Membership
             </a>
           </li>
@@ -105,7 +123,7 @@ const NavBar = () => {
           <li className="menu-mobile">
             <a
               onClick={() => handleNavigate("login")}
-              className="bg-[#159947] text-white px-[16px] py-[10px] rounded-[8px] border-0"
+              className="bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
             >
               Login
             </a>
@@ -133,7 +151,7 @@ const NavBar = () => {
           >
             <a
               onClick={() => handleNavigate("login")}
-              className="bg-[#159947] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
+              className="bg-[#159947] cursor-pointer text-[14px] md:text-[16px] lg:text-[16px] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
             >
               Login
             </a>
@@ -177,7 +195,7 @@ const NavBar = () => {
               menu ? " block" : "hidden"
             }`}
           >
-            <a className="bg-[#E8F5ED] w-44 text-[#159947] nav-item flex px-[16px] items-center py-[10px] rounded-[8px]">
+            <a className="bg-[#E8F5ED] cursor-pointer w-44 text-[#159947] nav-item-container flex items-center text-[14px] md:text-[16px] lg:text-[16px] p-[6px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]">
               <img className="nav-icon" src={propertyIcon}></img>
               Chuty Property
             </a>

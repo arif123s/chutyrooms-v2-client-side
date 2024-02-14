@@ -110,11 +110,14 @@ const navigate = useNavigate();
     {
       name: 'Software Setup', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
         { name: 'Country', path: '/dashboard/country' },
-        { name: 'City', path: '#' },
-        { name: 'Area', path: '#' },
-        { name: 'Location', path: '#' }
+        { name: 'Division', path: '/dashboard/division' },
+        { name: 'District', path: '/dashboard/district' },
+        { name: 'Area', path: '/dashboard/Area' },
+       
       ]
     },
+
+   
   ];
 
   return (

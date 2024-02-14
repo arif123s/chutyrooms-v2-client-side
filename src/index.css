@@ -21,6 +21,11 @@
   src: local('Gilroy'), url('./fonts/Gilroy-SemiBold.ttf') format('truetype');
   font-weight: 600;
 }
+
+@font-face {
+  font-family: 'KaushanScript-Regular';
+  src: local('Gilroy'), url('./fonts/KaushanScript-Regular.ttf') format('truetype');
+}
 /* @layer base {
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

@@ -8,7 +8,7 @@ const Main = () => {
   return (
     <div>
       <ScrollToTop />
-      <Outlet></Outlet>         
+      <Outlet></Outlet>        
     </div>
   );
 };

@@ -1,0 +1,27 @@
+.deal-membership-container {
+  width: 28%;
+  margin-top: 78px;
+}
+
+.membership-cards{
+    margin-top: 44px;
+    display: grid;
+    gap: 24px;
+}
+
+.membership-title{
+    font-family: 'KaushanScript-Regular';
+    font-size: 36px;
+    line-height: 1.3;
+}
+
+.membership-title-img {
+  width: 300px;
+  height: 78px;
+  margin: auto;
+  
+}
+
+.membership-card {
+  width: 440px;
+}

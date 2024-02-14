@@ -1,0 +1,40 @@
+.otp-container {
+     color: #0c1e25;
+  width: 700px;
+  margin: auto;
+  margin-top: 24px;
+  margin-bottom: 120px;
+  padding: 86px 149px 85px 150px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0px 4px 12px 0px rgba(35, 184, 85, 0.08);
+}
+
+
+@media (max-width: 575.98px) {
+.otp-container {
+  width: 335px;
+ margin-top: 18px;
+  margin-bottom: 24px;
+  padding: 44px 10px;
+}
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+.otp-container {
+  width: 436px;
+  margin-top: 18px;
+  margin-bottom: 24px;
+  padding: 54px 18px 53px 18px;
+} 
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+.otp-container {
+  width: 436px;
+  margin-top: 18px;
+  margin-bottom: 24px;
+  padding: 54px 18px 53px 18px;
+} 
+}
+
