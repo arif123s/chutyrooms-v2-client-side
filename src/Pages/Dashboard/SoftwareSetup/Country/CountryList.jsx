@@ -26,7 +26,7 @@ const CountryList = () => {
         return response.json();
       })
       .then(data => {
-        setCountry(data.data);
+        setCountry(data.data.data);
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
