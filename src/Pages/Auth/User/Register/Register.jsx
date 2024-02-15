@@ -199,7 +199,7 @@ const Register = () => {
 
   return (
     <div className="login-container">
-      <h2 className="login-title font-['Gilroy-semibold']">Registration</h2>
+      <h2 className="login-title font-['Gilroy-semibold']">Customer Details</h2>
 
       <div className="flex gap-[12px]">
         <button

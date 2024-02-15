@@ -7,11 +7,31 @@ import HomePage from "../Pages/Home/Home/HomePage/HomePage";
 import Login from "../Pages/Auth/Login/Login";
 import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
+import MembershipCards from "../Pages/Home/Home/MembershipCards/MembershipCards";
+import ForgetPassword from "../Pages/Auth/ForgetPassword/ForgetPassword";
+import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
+import Country from "../Pages/Dashboard/SoftwareSetup/Country/Country";
+import CountryList from "../Pages/Dashboard/SoftwareSetup/Country/countrylist";
+import CountryAdd from "../Pages/Dashboard/SoftwareSetup/Country/CountryAdd";
+
 import OtpVerification from "../Pages/Auth/Verification/OtpVerification/OtpVerification";
-import EmailVerification from "../Pages/Auth/Verification/EmailVerification/EmailVerification";
+import CountryEdit from "../Pages/Dashboard/SoftwareSetup/Country/CountryEdit";
+import Division from "../Pages/Dashboard/SoftwareSetup/City/Division";
+import DivisionList from "../Pages/Dashboard/SoftwareSetup/City/DivisionList";
+import DivisionAdd from "../Pages/Dashboard/SoftwareSetup/City/DivisionAdd";
+import DivisionEdit from "../Pages/Dashboard/SoftwareSetup/City/DivisionEdit";
+
+import Area from "../Pages/Dashboard/SoftwareSetup/Area/Area";
+import AreaList from "../Pages/Dashboard/SoftwareSetup/Area/AreaList";
+import AreaAdd from "../Pages/Dashboard/SoftwareSetup/Area/AreaAdd";
+
+import DistrictInfo from "../Pages/Dashboard/SoftwareSetup/District/DistrictInfo";
+
+import DistrictList from "../Pages/Dashboard/SoftwareSetup/District/DistrictList";
+import DistrictAdd from  "../Pages/Dashboard/SoftwareSetup/District/DistrictAdd";
 
 export const router = createBrowserRouter([
   {
@@ -43,9 +63,21 @@ export const router = createBrowserRouter([
             element: <OtpVerification></OtpVerification>,
           },
           {
-            path: "/email/verify/:user/:token",
-            element: <EmailVerification></EmailVerification>,
+            path: "forget-password",
+            element: <ForgetPassword></ForgetPassword>,
           },
+          {
+            path: "membership",
+            element: <MembershipCards></MembershipCards>,
+          },
+          {
+            path: "search-result-hotel",
+            element: <SearchResultHotel></SearchResultHotel>,
+          },
+          // {
+          //   path: "/email/verify/:user/:token",
+          //   element: <EmailVerification></EmailVerification>,
+          // },
           {
             path: "property-add",
             element: <PropertyAdd></PropertyAdd>,
@@ -64,10 +96,93 @@ export const router = createBrowserRouter([
             path: "/dashboard",
             element: <DashboardHome></DashboardHome>,
           },
-          // {
-          //   path: "/dashboard",
-          //   element: <DashboardHome></DashboardHome>,
-          // },
+          {
+            path: "/dashboard/country",
+            element: <Country></Country>,
+            children:[
+             { 
+              path:"/dashboard/country",
+              element:<CountryList></CountryList>,
+            },
+             { 
+              path:"/dashboard/country/countryAdd",
+              element:<CountryAdd></CountryAdd>,
+            },
+            {
+              path:"/dashboard/country/countryEdit/:id",
+              element:<CountryEdit></CountryEdit>
+            }
+            ]
+          },
+
+          {
+            path: "/dashboard/division",
+            element: <Division></Division>,
+            children:[
+              { 
+               path:"/dashboard/division",
+               element:<DivisionList></DivisionList>,
+             },
+
+             { 
+              path:"/dashboard/division/divisionAdd",
+              element:<DivisionAdd></DivisionAdd>,
+            },
+
+            { 
+              path:"/dashboard/division/divisionEdit/:id",
+              element:<DivisionEdit></DivisionEdit>,
+            },
+             
+             ]
+
+          },
+
+          {
+            path: "/dashboard/Area",
+            element: <Area></Area>,
+            children:[
+              { 
+               path:"/dashboard/Area",
+               element:<AreaList></AreaList>,
+             },
+
+             { 
+              path:"/dashboard/Area/AreaAdd",
+              element:<AreaAdd></AreaAdd>,
+            },
+
+            // { 
+            //   path:"/dashboard/division/divisionEdit/:id",
+            //   element:<DivisionEdit></DivisionEdit>,
+            // },
+             
+             ]
+
+          },
+
+        {
+            path: "/dashboard/district",
+            element: <DistrictInfo></DistrictInfo>,
+            children:[
+              { 
+               path:"/dashboard/district",
+               element:<DistrictList></DistrictList>,
+             },
+
+             { 
+              path:"/dashboard/district/districtAdd",
+              element:<DistrictAdd></DistrictAdd>,
+            },
+
+        
+             
+             ]
+
+          },  
+
+
+         
         ],
       },
       {

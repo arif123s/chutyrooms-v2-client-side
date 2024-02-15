@@ -29,7 +29,7 @@ const OtpVerification = () => {
 
   useEffect(() => {
     // const otpExpiresAt = userInfo?.data?.otp_expires_at;
-    const otpExpiresAt = user.otpExpiresAt;
+    const otpExpiresAt = user?.otpExpiresAt;
     // setOtpExpiresAt(user.otpExpiresAt);
     // console.log("otpExpiresAt", otpExpiresAt);
 

@@ -17,6 +17,7 @@ import Email from "../../../../assets/icons/Email.svg"
 import EmailGreen from "../../../../assets/icons/email-green.svg"
 // import { key } from "localforage";
 import CusNavLink from "./Includes/CusNavLink";
+import { Link, useNavigate } from "react-router-dom";
 
 const menuClicked = '';
 
@@ -27,7 +28,7 @@ const SideBar = ({open,setOpen}) => {
   const [handleclick, sethandleclick] = useState(menuClicked);
   const prevMenuClicked = useRef(menuClicked);
   const [toggleOpen , setToggleOpen] = useState(false);
-
+const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const SideBar = ({open,setOpen}) => {
 
   const lists = [
     {
-      name: 'Dashboard', path: '/', icon: Category, clickedicon: CategoryGreen, submenu: [
+      name: 'Dashboard', path: '/dashboard', icon: Category, clickedicon: CategoryGreen, submenu: [
 
       ]
     },
@@ -101,17 +102,29 @@ const SideBar = ({open,setOpen}) => {
     },
     {
       name: 'Email', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
-        { name: 'All Emails', path: '#' },
+        { name: 'All Emails', path: '/property-add' },
         { name: 'Edit Email', path: '#' }
       ]
     },
+
+    {
+      name: 'Software Setup', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
+        { name: 'Country', path: '/dashboard/country' },
+        { name: 'Division', path: '/dashboard/division' },
+        { name: 'District', path: '/dashboard/district' },
+        { name: 'Area', path: '/dashboard/Area' },
+       
+      ]
+    },
+
+   
   ];
 
   return (
     <div className={`${open ? "sidebar-width" : "sidebar-close-width"}  sidebar-small`}>
         <div className="chuty-logo-division">
-        <img src={open==true ? ChutyLogo: ChutySmallLogo}  className={`${open ? "h-[48px] " : "h-[40px]"}  px-5  chutylogo`}></img>
-        <img src={open==true ? ChutySmallLogo: ChutyLogo}  className={`${open ? "h-[48px] " : "h-[40px]"} px-5 chutysmall-logo hidden `}></img>
+        <img onClick={()=>navigate('/')} src={open==true ? ChutyLogo: ChutySmallLogo}  className={`${open ? "h-[48px] " : "h-[40px]"}  px-5  chutylogo`}></img>
+        <img onClick={()=>navigate('/')} src={open==true ? ChutySmallLogo: ChutyLogo}  className={`${open ? "h-[48px] " : "h-[40px]"} px-5 chutysmall-logo hidden `}></img>
         </div>
 
       <div className={`sidebar-content`}>
@@ -123,7 +136,7 @@ const SideBar = ({open,setOpen}) => {
           <div key={i}  className={`sidebar-content-section`} >
             <div  onClick={() => handleSlideUp(list.name)} className={` ${active == list.name   ? 'onclick-color' : 'onclickcancel-color'} duration-200 rounded-[0.5rem]  submenu-list-division h-10 cursor-pointer  ${!open ? "sm:p-[0rem]" : "sm:p-[0.65rem]"}`}>
 
-              <div className="sidebar-menu-division " >
+              <Link to={list.path} className="sidebar-menu-division " >
                 <img src={active === list.name ? list.clickedicon : list.icon} className={`cursor-pointer duration-500  ${open ? " rotate-[360deg]" : "sidebar-menu-image-cus"}`}></img>
                 <span className={`sidebar-menu-title ${!open && "sidebar-show-hide"
                   } `}>
@@ -131,10 +144,8 @@ const SideBar = ({open,setOpen}) => {
                   {list.name}</span>
                 {list.submenu.length > 0 && <img src={active == list.name ? ArrowGreen : Arrow} className={`sidebar-icons ${active === list.name && toggleOpen ? 'rotate-180' : ''} ${!open && "scale-0"
                   }`}></img>
-
                 }
-
-              </div>
+              </Link>
 
             </div>
             { handleclick == list.name && toggleOpen &&
@@ -142,11 +153,13 @@ const SideBar = ({open,setOpen}) => {
 
               {list.submenu.map((item, i) =>
 
-                <li key={i} onClick={() => ColorhandleClick(item.name)} className={`flex h-10  sm:pt-3 pb-3 sm:pl-10 pl-4 cursor-pointer hover:bg-light-white rounded-lg text-color text-sm items-center gap-x-4 ${active === item.name  ? 'onclick-color' : 'onclickcancel-color'} } duration-200`}>
+               <Link to={item.path} key={i}>
+                <li  onClick={() => ColorhandleClick(item.name)} className={`flex h-10  sm:pt-3 pb-3 sm:pl-10 pl-4 cursor-pointer hover:bg-light-white rounded-lg text-color text-sm items-center gap-x-4 ${active === item.name  ? 'onclick-color' : 'onclickcancel-color'} } duration-200`}>
                   <img src={active === item.name ? RectangleGreen : Rectangle}></img>
 
                   <span className={`${!open} cus-origin-transform  duration-200 `}> {item.name}</span>
                 </li>
+               </Link>
 
               )}
 
