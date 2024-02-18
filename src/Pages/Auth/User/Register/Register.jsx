@@ -132,7 +132,7 @@ const Register = () => {
         username: loginMethod === "phone" ? data.phone : data.email,
         role_code: 345,
         password,
-        countryCode: selectedCountry.code,
+        country_code: selectedCountry.code,
       };
       // console.log('user',user)
       // send user data to database
@@ -155,6 +155,7 @@ const Register = () => {
                 JSON.stringify({
                   id: data.data.id,
                   otpExpiresAt: data.data.otp_expires_at,
+                  registration_code: data.status,
                 })
               );
               dispatch(registerUser(data));
@@ -167,7 +168,8 @@ const Register = () => {
                 "user",
                 JSON.stringify({
                   id: data.data.id,
-                  otpExpiresAt: data.data.otp_expires_at,
+                  otpExpiresAt: data.data.email_verification_token_expires_at,
+                  registration_code: data.status,
                 })
               );
               dispatch(registerUser(data));
@@ -199,7 +201,7 @@ const Register = () => {
 
   return (
     <div className="login-container">
-      <h2 className="login-title font-['Gilroy-semibold']">Customer Details</h2>
+      <h2 className="login-title font-['Gilroy-semibold']">Register</h2>
 
       <div className="flex gap-[12px]">
         <button

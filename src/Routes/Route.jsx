@@ -9,6 +9,8 @@ import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
 import MembershipCards from "../Pages/Home/Home/MembershipCards/MembershipCards";
 import ForgetPassword from "../Pages/Auth/ForgetPassword/ForgetPassword";
+import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
+
 import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
@@ -65,6 +67,10 @@ export const router = createBrowserRouter([
           {
             path: "forget-password",
             element: <ForgetPassword></ForgetPassword>,
+          },
+          {
+            path: "reset-password",
+            element: <ResetPassword></ResetPassword>,
           },
           {
             path: "membership",

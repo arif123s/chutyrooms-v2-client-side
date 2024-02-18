@@ -109,6 +109,7 @@ const OwnerRegister = () => {
                JSON.stringify({
                  id: data.data.id,
                  otpExpiresAt: data.data.otp_expires_at,
+                 registration_code: data.status,
                })
              );
             dispatch(registerUser(data));
@@ -120,7 +121,8 @@ const OwnerRegister = () => {
                "user",
                JSON.stringify({
                  id: data.data.id,
-                 otpExpiresAt: data.data.otp_expires_at,
+                 otpExpiresAt: data.data.email_verification_token_expires_at,
+                 registration_code: data.status,
                })
              );
              dispatch(registerUser(data));
