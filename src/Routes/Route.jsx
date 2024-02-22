@@ -7,6 +7,11 @@ import HomePage from "../Pages/Home/Home/HomePage/HomePage";
 import Login from "../Pages/Auth/Login/Login";
 import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
+import MembershipCards from "../Pages/Home/Home/MembershipCards/MembershipCards";
+import ForgetPassword from "../Pages/Auth/ForgetPassword/ForgetPassword";
+import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
+
+import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
@@ -15,7 +20,6 @@ import CountryList from "../Pages/Dashboard/SoftwareSetup/Country/countrylist";
 import CountryAdd from "../Pages/Dashboard/SoftwareSetup/Country/CountryAdd";
 
 import OtpVerification from "../Pages/Auth/Verification/OtpVerification/OtpVerification";
-import EmailVerification from "../Pages/Auth/Verification/EmailVerification/EmailVerification";
 import CountryEdit from "../Pages/Dashboard/SoftwareSetup/Country/CountryEdit";
 import Division from "../Pages/Dashboard/SoftwareSetup/City/Division";
 import DivisionList from "../Pages/Dashboard/SoftwareSetup/City/DivisionList";
@@ -61,9 +65,25 @@ export const router = createBrowserRouter([
             element: <OtpVerification></OtpVerification>,
           },
           {
-            path: "/email/verify/:user/:token",
-            element: <EmailVerification></EmailVerification>,
+            path: "forget-password",
+            element: <ForgetPassword></ForgetPassword>,
           },
+          {
+            path: "reset-password",
+            element: <ResetPassword></ResetPassword>,
+          },
+          {
+            path: "membership",
+            element: <MembershipCards></MembershipCards>,
+          },
+          {
+            path: "search-result-hotel",
+            element: <SearchResultHotel></SearchResultHotel>,
+          },
+          // {
+          //   path: "/email/verify/:user/:token",
+          //   element: <EmailVerification></EmailVerification>,
+          // },
           {
             path: "property-add",
             element: <PropertyAdd></PropertyAdd>,

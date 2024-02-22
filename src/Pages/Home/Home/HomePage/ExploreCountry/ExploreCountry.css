@@ -1,3 +1,18 @@
+:root {
+    --swiper-navigation-size: 20px;
+    --swiper-theme-color: #159947;
+}
+
+.swiper-button-prev, .swiper-button-next {
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
+.swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
+  display: none;
+}
 
 @media (max-width: 575.98px) {
   .explore-country-container{

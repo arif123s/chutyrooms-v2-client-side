@@ -1,12 +1,3 @@
-/* .no-spinners-input {
-         -moz-appearance: textfield;
-      }
-      
-      .no-spinners-input::-webkit-outer-spin-button,
-      .no-spinners-input::-webkit-inner-spin-button {
-         -webkit-appearance: none;
-         margin: 0;
-      } */
 
 .custom-container {
   width: 1220px;
@@ -52,9 +43,9 @@
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   .custom-container {
     /* width: 1200px; */
-    width: 1184px;
-    padding-left: 4px;
-    padding-right: 4px;
+    width: 1181px;
+    padding-left: 8px;
+    padding-right: 8px;
     /* margin: auto; */
   }
 }

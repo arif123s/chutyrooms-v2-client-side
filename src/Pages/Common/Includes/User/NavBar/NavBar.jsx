@@ -47,12 +47,20 @@ const NavBar = () => {
     navigate(`/${route}`);
   };
 
-  const handleLogout = () =>{
-    
+  const handleLogout = (e) =>{
+    e.preventDefault()
+    console.log("logout")
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify(
+        null
+      )
+    );
+    window.location.reload();
   }
 
   return (
-    <div className="custom-container navbar-container  ">
+    <div className="custom-container navbar-container">
       <div className="flex w-full h-[64px] justify-between items-center">
         <a
           href="/"
@@ -94,6 +102,7 @@ const NavBar = () => {
             </li>
             <li>
               <a
+                onClick={(e) => handleNavigate(e, "membership")}
                 onMouseEnter={(e) =>
                   e.target.querySelector(".nav-icon").classList.add("hovered")
                 }
@@ -122,7 +131,7 @@ const NavBar = () => {
                 <img src={globalLogo} alt="Global logo"></img>
                 <div className="relative pr-[8px] ">
                   <select
-                    className="w-12 ml-1 p-[4px] bg-[#F8FEFF]"
+                    className="w-12 ml-1 p-[4px] bg-[#F8FEFF] "
                     name=""
                     id=""
                   >
@@ -162,7 +171,7 @@ const NavBar = () => {
                 alt="Profile"
               />
               {profile && (
-                <div className="w-[116px] absolute right-0 h-20 p-3 bg-white rounded border border-neutral-200 flex-col justify-center items-start gap-4 inline-flex">
+                <div className="w-[116px] absolute right-0 h-20 p-3 bg-white rounded border border-neutral-200 flex-col justify-center items-start gap-4 inline-flex z-20">
                   <div
                     onClick={(e) => handleNavigate(e, "dashboard")}
                     className="flex items-center gap-[8px]"
@@ -170,7 +179,10 @@ const NavBar = () => {
                     <img src={profileIcon} alt="Profile-icon" />
                     <a href="">Profile</a>
                   </div>
-                  <div className="flex items-center gap-[8px]">
+                  <div
+                    onClick={(e) => handleLogout(e)}
+                    className="flex items-center gap-[8px]"
+                  >
                     <img src={logoutIcon} alt="Profile-icon" />
                     <a href="">Logout</a>
                   </div>
@@ -282,13 +294,17 @@ const NavBar = () => {
               ></img>
               Chuty Property
             </a>
-            <hr className="my-3" />
-            <div className="flex items-center gap-[8px]">
-              <img src={logoutIcon} alt="Profile-icon" />
-              <a href="" onClick={handleLogout}>
-                Logout
-              </a>
-            </div>
+            {user && (
+              <div>
+                <hr className="my-3" />
+                <div className="flex items-center gap-[8px]">
+                  <img src={logoutIcon} alt="Profile-icon" />
+                  <a href="" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

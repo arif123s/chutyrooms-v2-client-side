@@ -87,7 +87,12 @@ const Login = () => {
             Phone/Email
           </label>
           <input
-            className="input-box"
+            // className="input-box"
+            className={` ${
+              errors.username?.type === "required"
+                ? "input-box input-error"
+                : "input-box"
+            }`}
             id="username"
             name="username"
             type="text"
@@ -113,7 +118,12 @@ const Login = () => {
             Password
           </label>
           <input
-            className="input-box"
+            // className="input-box"
+            className={` ${
+              errors.password?.type === "required"
+                ? "input-box input-error"
+                : "input-box"
+            }`}
             id="password"
             name="password"
             type="password"
@@ -156,7 +166,7 @@ const Login = () => {
             <span>Remember me?</span>
           </div>
 
-          <a href="" className="text-[#159947]">
+          <a href="" onClick={e=>(e.preventDefault(),navigate('/forget-password'))} className="text-[#159947]">
             Forgot Password?
           </a>
         </div>
@@ -181,7 +191,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <a
             href="/register"
-            onClick={(e)=>navigateToRegister(e)}
+            onClick={(e) => navigateToRegister(e)}
             className="sign-up-btn"
           >
             Sign Up

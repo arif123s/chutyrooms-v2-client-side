@@ -8,7 +8,7 @@ import chat from "../../../../assets/icons/chat-bot.svg";
 const HomePage = () => {
   return (
     <div className="custom-container homepage-container">
-      <SearchField></SearchField>
+      {/* <SearchField></SearchField> */}
       <div className="hotels-membership-container">
         <PopularHotels></PopularHotels>
         <DealMembership></DealMembership>
@@ -16,7 +16,7 @@ const HomePage = () => {
       <ExploreCountry></ExploreCountry>
       <div className="chat-box">
         <img className="w-[18px] md:w-[22px] lg:w-[24px]" src={chat} alt="Chat" />
-      </div>
+      </div> 
     </div>
   );
 };

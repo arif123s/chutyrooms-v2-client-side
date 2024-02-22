@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "./SearchField.css";
 import Gps from './../../../../../assets/icons/gps.svg';
 import { Select, MenuItem } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 const {RangePicker} = DatePicker;
 const SearchField = () => {
@@ -128,6 +129,13 @@ const SearchField = () => {
   //   setDivClicked(false); 
   //   }
   // };
+
+  const navigate = useNavigate();
+
+  const handleSearch =  (e)=>{
+    e.preventDefault();
+    navigate("/search-result-hotel");
+  }
 
     return (
 
@@ -272,7 +280,7 @@ const SearchField = () => {
             </div>
 
             <div className='search-button-division'>
-                <button type='button' className='Search-button'>Search</button>
+                <button onClick={(e)=>handleSearch(e)} type='button' className='Search-button'>Search</button>
             </div>
            
             </div>

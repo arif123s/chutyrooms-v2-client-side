@@ -25,11 +25,11 @@ const OtpVerification = () => {
   // const [otpExpiresAt, setOtpExpiresAt] = useState("");
 
   const user = JSON.parse(sessionStorage.getItem("user"));
-  console.log(user);
+  // console.log(user);
 
   useEffect(() => {
     // const otpExpiresAt = userInfo?.data?.otp_expires_at;
-    const otpExpiresAt = user.otpExpiresAt;
+    const otpExpiresAt = user?.otpExpiresAt;
     // setOtpExpiresAt(user.otpExpiresAt);
     // console.log("otpExpiresAt", otpExpiresAt);
 
@@ -105,7 +105,7 @@ const OtpVerification = () => {
     }
   };
 
-  console.log(userInfo?.data);
+  // console.log(userInfo?.data);
 
   const handleResendCode = () => {
     setLoading(true);
@@ -138,17 +138,30 @@ const OtpVerification = () => {
 
     // get data
     fetch(
-      `http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`
+      user.registration_code == 102
+        ? `http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`
+        : `http://127.0.0.1:8000/api/user/email/verify?user=${user.id}&token=${concatOtp}`
     )
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
         if (data.status === true) {
           console.log("data", data);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              id: data.data.id,
+              accessToken: data.accessToken,
+              name: data.data.name,
+              img: data.data.image,
+              role: "",
+            })
+          );
           toast.success("Successfully registered!");
           navigate("/");
         } else {
           setOtpError({ status: true, message: data.message });
+          console.log(data);
         }
       });
 
