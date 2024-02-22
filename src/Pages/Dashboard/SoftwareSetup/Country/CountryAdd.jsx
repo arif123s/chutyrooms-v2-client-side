@@ -9,6 +9,8 @@ const CountryAdd = () => {
     view_order:"",
     is_active:""
 })
+
+const [validationErrors, setValidationErrors] = useState({});
 const navigate = useNavigate();
 
 const changeCountryFieldHandler = (e) =>{
@@ -39,16 +41,27 @@ const onSubmitChange = async (e) =>{
         }
       }
       
-      );
+      )
+
+      .then(response => {
+        // Successful response
+        console.log(response.data);
+        if(response.data.status == 1)
+        {
+            navigate('/dashboard/country');
+        }
+  
+    });
         
        
     }
 
     catch (err){
-            console.log("something went wrong");
+      console.log(err.response.data.errors);
+      setValidationErrors(err.response.data.errors)
     }
 
-    navigate('/dashboard/country');
+    
 }
 
 
@@ -56,7 +69,7 @@ const onSubmitChange = async (e) =>{
         <div className='country-add-division'>
       
             <form className='country-add-form' onSubmit={onSubmitChange}>
-
+            <div>
                 <label className="property-input-title" htmlFor="CountryName">
                   Country Name
                 </label>
@@ -64,10 +77,12 @@ const onSubmitChange = async (e) =>{
                   className="input-box"
                   id="name"
                   name="name"
-                  onChange={e => changeCountryFieldHandler(e)} required
+                  onChange={e => changeCountryFieldHandler(e)} 
                   
                 />
 
+            {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
+            </div>
                   <label className="property-input-title" htmlFor="view_order">
                     View Order
                   </label>
@@ -75,8 +90,12 @@ const onSubmitChange = async (e) =>{
                     className="input-box"
                     id="view_order"
                     name="view_order"
-                    onChange={e => changeCountryFieldHandler(e)} required
+                    onChange={e => changeCountryFieldHandler(e)} 
                   />
+
+                  
+            {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
+            <div>
             <div className="flex items-center gap-2">
                 <div>
                     <input type="radio" id="is_active" name="is_active" value="1" onChange={e => changeCountryFieldHandler(e)} ></input>
@@ -87,7 +106,11 @@ const onSubmitChange = async (e) =>{
                   <input type="radio" id="is_active" name="is_active" value="0" onChange={e => changeCountryFieldHandler(e)} ></input>
                   <label  className="cursor-pointer text-gray-700 ml-2">Inactive</label>
                 </div>
+               
             </div>
+            {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>}
+            </div>
+            
 
             <button className='country-save-btn'>Save</button>
 

@@ -107,9 +107,9 @@ const handleRestore = async (id) => {
                      <td>{division.view_order}</td>
                      <td><a className='active-inactive-btn'>{division.is_active == true ? 'Active' : 'Inactive'}</a></td>
                      <td className='country-action-div'>
-                                <Link className='edit-btn' to={`/dashboard/division/divisionEdit/${division.id}`}><img src={EditIcon}></img></Link>
+                                <Link className='edit-btn' to={`/dashboard/division/divisionEdit/${division.id}`}><img className='edit-delete-icon' src={EditIcon}></img></Link>
                         
-                               {division.deleted_at == null? <a className='delete-btn' onClick = {()=>handleDelete(division.id)}><img src={DeleteIcon}></img></a> : <a className='restore-btn' onClick={() => handleRestore(division.id)}><img src={RestoreIcon}></img></a>}
+                               {division.deleted_at == null? <a className='delete-btn' onClick = {()=>handleDelete(division.id)}><img className='edit-delete-icon' src={DeleteIcon}></img></a> : <a className='restore-btn' onClick={() => handleRestore(division.id)}><img className='edit-delete-icon' src={RestoreIcon}></img></a>}
                                 
 
                              

@@ -12,7 +12,7 @@ const Dashboard = () => {
 
     return (
       <div>
-        <div className="flex bg-[#F2F5FA] h-screen">
+        <div className="flex bg-[#F2F5FA] full-dashboard">
           <SideBar open={open} setOpen={setOpen}></SideBar>
           <div className={`${open ? "dashboard-content-open" : "dashboard-content-close"}`}>
             <NavBar open={open} setOpen={setOpen}></NavBar>

@@ -8,15 +8,14 @@ const DivisionAdd = () => {
 
     const [Countrylist, setCountryList] = useState([]);
     const navigate = useNavigate();
-    const [postData, setPostData] = useState(null);
-    const [status, setStatus] = useState(null);
-    const [message, setMessage] = useState(null);
     const [DivisionField, setDivisionField] = useState({
         name: "",
         country_id:"",
         view_order:"",
         is_active:""
     })
+
+    const [validationErrors, setValidationErrors] = useState({});
 
     const changeDivisionFieldHandler = (e) =>{
         setDivisionField({
@@ -36,8 +35,8 @@ const DivisionAdd = () => {
     })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                setCountryList(data.data)
+                
+                setCountryList(data.data.data)
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
@@ -79,7 +78,8 @@ const DivisionAdd = () => {
         }
     
         catch (err){
-                console.log("something went wrong");
+          console.log(err.response.data.errors);
+          setValidationErrors(err.response.data.errors)
         }
 
        
@@ -100,7 +100,7 @@ const DivisionAdd = () => {
                 id="country_id"
                 className="property-input"
                 name="country_id"
-                onChange={e => changeDivisionFieldHandler(e)} required
+                onChange={e => changeDivisionFieldHandler(e)} 
                
               >
                 {Countrylist.map(country => (
@@ -118,6 +118,8 @@ const DivisionAdd = () => {
               />
             </div>
 
+            {validationErrors.country_id && <span className='validation-message'>{validationErrors.country_id}</span>}
+
             <div>
             <label className="property-input-title" htmlFor="CountryName">
                   Division Name
@@ -126,9 +128,11 @@ const DivisionAdd = () => {
                   className="input-box"
                   id="name"
                   name="name"
-                  onChange={e => changeDivisionFieldHandler(e)} required
+                  onChange={e => changeDivisionFieldHandler(e)} 
                   
                 />
+
+            {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
             </div>
 
             <div>
@@ -139,21 +143,25 @@ const DivisionAdd = () => {
                   className="input-box"
                   id="view_order"
                   name="view_order"
-                  onChange={e => changeDivisionFieldHandler(e)} required
+                  onChange={e => changeDivisionFieldHandler(e)} 
                   
                 />
+                 {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
             </div>
-
+                <div>
             <div className="flex items-center gap-2">
                 <div>
-                    <input type="radio" id="is_active" name="is_active" value="1"   onChange={e => changeDivisionFieldHandler(e)} required ></input>
+                    <input type="radio" id="is_active" name="is_active" value="1"   onChange={e => changeDivisionFieldHandler(e)}  ></input>
                     <label className="cursor-pointer text-gray-700 ml-2">Active</label>
                 </div>
                     
                 <div>
-                  <input type="radio" id="is_active" name="is_active" value="0"   onChange={e => changeDivisionFieldHandler(e)} required ></input>
+                  <input type="radio" id="is_active" name="is_active" value="0"   onChange={e => changeDivisionFieldHandler(e)}  ></input>
                   <label  className="cursor-pointer text-gray-700 ml-2">Inactive</label>
                 </div>
+            </div>
+
+            {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>}
             </div>
 
             <button className='country-save-btn'>Save</button>

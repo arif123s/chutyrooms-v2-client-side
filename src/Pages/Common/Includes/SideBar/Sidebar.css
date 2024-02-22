@@ -210,7 +210,7 @@
 .sidebar-content
 {
     padding: 0px;
-    height: 100vh;
+    /* height: 100vh; */
     z-index: 1;
 }
 
@@ -293,7 +293,7 @@
 .sidebar-content
 {
     padding: 0px;
-    height: 100vh;
+    height: 100%;
     z-index: 1;
 }
 
@@ -358,6 +358,13 @@
     left: 70px;
 }
 
+.sidebar-content
+{
+    padding: 5px;
+    height: 100%;
+    
+}
+
 
 
 
@@ -376,17 +383,22 @@
  
 }
 
-/* @media (max-width: 1600px) {
+@media (max-width: 1600px) {
 
-    .sidebar-width
+    /* .sidebar-width
     {
         width: 13%;
     }
     .sidebar-close-width
     {
         width: 5%;
-    }
-} */
+    } */
+
+    .sidebar-menu-image-cus
+{
+    min-width: 20px;
+}
+}
 
 
 

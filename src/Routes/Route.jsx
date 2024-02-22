@@ -25,12 +25,12 @@ import DivisionEdit from "../Pages/Dashboard/SoftwareSetup/City/DivisionEdit";
 import Area from "../Pages/Dashboard/SoftwareSetup/Area/Area";
 import AreaList from "../Pages/Dashboard/SoftwareSetup/Area/AreaList";
 import AreaAdd from "../Pages/Dashboard/SoftwareSetup/Area/AreaAdd";
+import AreaEdit from "../Pages/Dashboard/SoftwareSetup/Area/AreaEdit";
 
 import DistrictInfo from "../Pages/Dashboard/SoftwareSetup/District/DistrictInfo";
-
 import DistrictList from "../Pages/Dashboard/SoftwareSetup/District/DistrictList";
 import DistrictAdd from  "../Pages/Dashboard/SoftwareSetup/District/DistrictAdd";
-
+import DistrictEdit from "../Pages/Dashboard/SoftwareSetup/District/DistrictEdit";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -124,28 +124,7 @@ export const router = createBrowserRouter([
 
           },
 
-          {
-            path: "/dashboard/Area",
-            element: <Area></Area>,
-            children:[
-              { 
-               path:"/dashboard/Area",
-               element:<AreaList></AreaList>,
-             },
-
-             { 
-              path:"/dashboard/Area/AreaAdd",
-              element:<AreaAdd></AreaAdd>,
-            },
-
-            // { 
-            //   path:"/dashboard/division/divisionEdit/:id",
-            //   element:<DivisionEdit></DivisionEdit>,
-            // },
-             
-             ]
-
-          },
+        
 
         {
             path: "/dashboard/district",
@@ -160,6 +139,45 @@ export const router = createBrowserRouter([
               path:"/dashboard/district/districtAdd",
               element:<DistrictAdd></DistrictAdd>,
             },
+
+            { 
+              path:"/dashboard/district/districtEdit/:id",
+              element:<DistrictEdit></DistrictEdit>,
+            },
+
+
+
+            
+
+        
+             
+             ]
+
+          },  
+
+
+          {
+            path: "/dashboard/Area",
+            element: <Area></Area>,
+            children:[
+              { 
+               path:"/dashboard/Area",
+               element:<AreaList></AreaList>,
+             },
+
+             { 
+              path:"/dashboard/Area/AreaAdd",
+              element:<AreaAdd></AreaAdd>,
+            },
+
+            { 
+              path:"/dashboard/Area/AreaEdit/:id",
+              element:<AreaEdit></AreaEdit>,
+            },
+
+
+
+            
 
         
              

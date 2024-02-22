@@ -11,6 +11,10 @@
 {
     width:95%;
 }
+.full-dashboard
+{
+    height: auto;
+}
 
 @media (max-width: 575.98px) 
 {
@@ -22,6 +26,10 @@
 .dashboard-content-close
 {
     width:100%;
+}
+.full-dashboard
+{
+    height: auto;
 }
 }
 
@@ -36,6 +44,10 @@
 {
     width:100%;
 }
+.full-dashboard
+{
+    height: auto;
+}
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -47,6 +59,10 @@
 .dashboard-content-close
 {
     width:100%;
+}
+.full-dashboard
+{
+    height: auto;
 }
 }
 
@@ -61,6 +77,11 @@
     {
         width:90%;
     }
+    .full-dashboard
+        {
+            height: auto;
+        }
+        
 }
 
 

@@ -101,9 +101,9 @@ const CountryList = () => {
                 <td>{country.view_order}</td>
                 <td><a className='active-inactive-btn'>{country.is_active == true ? 'Active' : 'Inactive'}</a></td>
                 <td className='country-action-div'>
-                  <Link className='edit-btn' to={`/dashboard/country/countryEdit/${country.id}`}><img src={EditIcon} alt='image'></img></Link>
+                  <Link className='edit-btn' to={`/dashboard/country/countryEdit/${country.id}`}><img className='edit-delete-icon' src={EditIcon} alt='image'></img></Link>
 
-                  {country.deleted_at == null ? <a className='delete-btn' onClick={() => handleDelete(country.id)}><img src={DeleteIcon} alt='image'></img></a> : <a className='restore-btn' onClick={() => handleRestore(country.id)}><img src={RestoreIcon} alt='image'></img></a>}
+                  {country.deleted_at == null ? <a className='delete-btn' onClick={() => handleDelete(country.id)}><img className='edit-delete-icon' src={DeleteIcon} alt='image'></img></a> : <a className='restore-btn' onClick={() => handleRestore(country.id)}><img className='edit-delete-icon' src={RestoreIcon} alt='image'></img></a>}
 
                 </td>
               </tr>

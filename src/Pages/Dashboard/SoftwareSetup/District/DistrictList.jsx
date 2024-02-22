@@ -37,6 +37,43 @@ const DistrictList = () => {
 });
 },
 []);
+
+const handleDelete = async (id) => {
+  // console.log(id);
+
+  await axios.delete("http://127.0.0.1:8000/api/district/" + id,
+    {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+      }
+
+    }
+  );
+
+  setDistrict(DistrictList.map(district => (district.id == id ? { ...district, deleted_at: !null } : district)));
+
+  navigate('/dashboard/district');
+}
+
+
+const handleRestore = async (id) => {
+  try {
+    // alert(id)
+    await axios.put(`http://127.0.0.1:8000/api/district/${id}/restore`,
+      null,
+      {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+
+      }
+    ); 
+    setDistrict(DistrictList.map(district => (district.id == id ? { ...district, deleted_at: null } : district)));
+    navigate('/dashboard/district');
+  } catch (error) {
+    console.error('Error restoring item:', error);
+  }
+};
     return (
         <div className='country-list'>
             
@@ -57,9 +94,9 @@ const DistrictList = () => {
                  <td>{district.view_order}</td>
                  <td><a className='active-inactive-btn'>{district.is_active == true ? 'Active' : 'Inactive'}</a></td>
                  <td className='country-action-div'>
-                            <Link className='edit-btn' to={`/dashboard/division/divisionEdit/${district.id}`}><img src={EditIcon}></img></Link>
+                            <Link className='edit-btn' to={`/dashboard/district/districtEdit/${district.id}`}><img className='edit-delete-icon' src={EditIcon}></img></Link>
                     
-                           {district.deleted_at == null? <a className='delete-btn' onClick = {()=>handleDelete(district.id)}><img src={DeleteIcon}></img></a> : <a className='restore-btn' onClick={() => handleRestore(district.id)}><img src={RestoreIcon}></img></a>}
+                           {district.deleted_at == null? <a className='delete-btn' onClick = {()=>handleDelete(district.id)}><img  className='edit-delete-icon' src={DeleteIcon}></img></a> : <a className='restore-btn' onClick={() => handleRestore(district.id)}><img className='edit-delete-icon' src={RestoreIcon}></img></a>}
                             
 
                          
