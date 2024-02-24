@@ -121,7 +121,7 @@ const navigate = useNavigate();
   ];
 
   return (
-    <div className={`${open ? "sidebar-width" : "sidebar-close-width"}  sidebar-small`}>
+    <div className={` ${open ? "sidebar-width" : "sidebar-close-width"}  sidebar-small`}>
         <div className="chuty-logo-division">
         <img onClick={()=>navigate('/')} src={open==true ? ChutyLogo: ChutySmallLogo}  className={`${open ? "h-[48px] " : "h-[40px]"}  px-5  chutylogo`}></img>
         <img onClick={()=>navigate('/')} src={open==true ? ChutySmallLogo: ChutyLogo}  className={`${open ? "h-[48px] " : "h-[40px]"} px-5 chutysmall-logo hidden `}></img>

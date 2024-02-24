@@ -47,6 +47,7 @@
 .booking-list
 {
     background-color: #ffff;     
+    overflow-x: auto;
 }
 
 .table-division
@@ -185,6 +186,13 @@
     }
   }
   
-  @media (min-width: 1400px) {
+  @media (max-width: 1600px) {
+
+    /* .booking-list
+{
+   
+    overflow-x: scroll;
+      
+} */
   }
   
