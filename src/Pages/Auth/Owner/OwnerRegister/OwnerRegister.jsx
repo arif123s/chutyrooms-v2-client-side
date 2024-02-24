@@ -103,31 +103,31 @@ const OwnerRegister = () => {
         .then((data) => {
           setLoading(false);
           if (data.status === 102) {
-            console.log("Successfully registered!", data.data.id);
+            console.log("Successfully registered!", data);
              sessionStorage.setItem(
                "user",
                JSON.stringify({
                  id: data.data.id,
                  otpExpiresAt: data.data.otp_expires_at,
-                 registration_code: data.status,
+                //  registration_code: data.status,
                })
              );
             dispatch(registerUser(data));
             dispatch(otpInfo(data));
-            navigate(`/otp`);
+            navigate(`/otp-phone`);
           } else if (data.status === 101) {
-             console.log("Successfully registered!", data.data.id);
+             console.log("Successfully registered!", data);
              sessionStorage.setItem(
                "user",
                JSON.stringify({
                  id: data.data.id,
                  otpExpiresAt: data.data.email_verification_token_expires_at,
-                 registration_code: data.status,
+                //  registration_code: data.status,
                })
              );
              dispatch(registerUser(data));
              dispatch(otpInfo(data));
-             navigate(`/otp`);
+             navigate(`/otp-email`);
           } else {
             console.log("Registration failed!", data)
           setErrorMessage({

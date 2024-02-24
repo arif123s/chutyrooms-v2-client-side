@@ -9,6 +9,7 @@ import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
 import MembershipCards from "../Pages/Home/Home/MembershipCards/MembershipCards";
 import ForgetPassword from "../Pages/Auth/ForgetPassword/ForgetPassword";
+import ForgetPasswordOtp from "../Pages/Auth/ForgetPassword/ForgetPasswordOtp";
 import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
 
 import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
@@ -19,7 +20,8 @@ import Country from "../Pages/Dashboard/SoftwareSetup/Country/Country";
 import CountryList from "../Pages/Dashboard/SoftwareSetup/Country/countrylist";
 import CountryAdd from "../Pages/Dashboard/SoftwareSetup/Country/CountryAdd";
 
-import OtpVerification from "../Pages/Auth/Verification/OtpVerification/OtpVerification";
+import OtpPhoneVerification from "../Pages/Auth/Verification/OtpVerification/OtpPhoneVerification";
+import OtpEmailVerification from "../Pages/Auth/Verification/OtpVerification/OtpEmailVerification";
 import CountryEdit from "../Pages/Dashboard/SoftwareSetup/Country/CountryEdit";
 import Division from "../Pages/Dashboard/SoftwareSetup/City/Division";
 import DivisionList from "../Pages/Dashboard/SoftwareSetup/City/DivisionList";
@@ -61,12 +63,20 @@ export const router = createBrowserRouter([
             element: <OwnerRegister></OwnerRegister>,
           },
           {
-            path: "otp",
-            element: <OtpVerification></OtpVerification>,
+            path: "otp-phone",
+            element: <OtpPhoneVerification></OtpPhoneVerification>,
+          },
+          {
+            path: "otp-email",
+            element: <OtpEmailVerification></OtpEmailVerification>,
           },
           {
             path: "forget-password",
             element: <ForgetPassword></ForgetPassword>,
+          },
+          {
+            path: "forget-password-otp",
+            element: <ForgetPasswordOtp></ForgetPasswordOtp>,
           },
           {
             path: "reset-password",

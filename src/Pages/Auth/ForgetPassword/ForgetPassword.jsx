@@ -47,7 +47,7 @@ fetch("http://127.0.0.1:8000/api/user/password/forget", {
           otpExpiresAt: data.data.code_expires_at,
         })
       );
-      // navigate(`/otp`);
+      navigate(`/forget-password-otp`);
     }
     // if (data.status == 101) {
     //   console.log("Successfully registered!", data);
@@ -76,6 +76,10 @@ fetch("http://127.0.0.1:8000/api/user/password/forget", {
   return (
     <div className="login-container">
       <h2 className="login-title font-['Gilroy-semibold']">Reset Password</h2>
+
+      {/* <div className="mb-[24px] bg-[#E8F5ED] rounded-[8px] h-[44px] md:h-[48px] lg:h-[48px] flex justify-center items-center">
+        <p className="text-[#159947] text-[16px]">OTP validation successful</p>
+      </div> */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-[14px]">

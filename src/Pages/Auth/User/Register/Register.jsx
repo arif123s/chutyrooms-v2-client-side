@@ -155,12 +155,12 @@ const Register = () => {
                 JSON.stringify({
                   id: data.data.id,
                   otpExpiresAt: data.data.otp_expires_at,
-                  registration_code: data.status,
+                  // registration_code: data.status,
                 })
               );
               dispatch(registerUser(data));
               dispatch(otpInfo(data));
-              navigate(`/otp`);
+              navigate(`/otp-phone`);
             }
             if (data.status == 101) {
               console.log("Successfully registered!", data);
@@ -169,12 +169,12 @@ const Register = () => {
                 JSON.stringify({
                   id: data.data.id,
                   otpExpiresAt: data.data.email_verification_token_expires_at,
-                  registration_code: data.status,
+                  // registration_code: data.status,
                 })
               );
               dispatch(registerUser(data));
               dispatch(otpInfo(data));
-              navigate(`/otp`);
+              navigate(`/otp-email`);
             } else {
               // console.log("Registration failed!", data?.errors?.username[0]);
               setErrorMessage({
@@ -246,6 +246,11 @@ const Register = () => {
           </label>
           <input
             className="input-box"
+            // className={` ${
+            //   errors.name?.type === "required"
+            //     ? "input-box input-error"
+            //     : "input-box"
+            // }`}
             id="name"
             name="name"
             type="text"
@@ -298,7 +303,14 @@ const Register = () => {
               Phone
             </label>
             <div className="relative w-full">
-              <div className="phone-input-box">
+              <div
+                className="phone-input-box"
+                // className={` ${
+                //   errors.phone?.type === "required"
+                //     ? "phone-input-box input-error"
+                //     : "phone-input-box"
+                // }`}
+              >
                 <div className="flex w-[104px]">
                   <div className="relative mr-[4px]">
                     <div className="custom-select-container">
@@ -374,7 +386,7 @@ const Register = () => {
                 </div>
               )}
             </div>
-            <label className="">
+            <label className="mt-[3px]">
               {errors.phone?.type === "required" && (
                 <span className="label-text-alt text-red-500 block ">
                   {errors.phone?.message}
@@ -389,6 +401,11 @@ const Register = () => {
             </label>
             <input
               className="input-box"
+              // className={` ${
+              //   errors.email?.type === "required"
+              //     ? "input-box input-error"
+              //     : "input-box"
+              // }`}
               id="email"
               name="email"
               type="email"
