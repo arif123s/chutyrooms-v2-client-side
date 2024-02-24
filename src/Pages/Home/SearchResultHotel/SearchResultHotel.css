@@ -38,6 +38,7 @@
   margin-left: 50px;
 }
 
+
 .hotels {
   margin-top: 24px;
   /* display: grid; */
@@ -94,6 +95,12 @@ margin-right: 4px;
 
 .filter-btn{
   display: none;
+}
+
+.map-view-container{
+  width: 100%;
+  border-radius: 8px;
+
 }
 
 /********   Map view toggole component customize   ********/
@@ -290,7 +297,7 @@ margin-right: 4px;
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   .filter-container {
-  width: 30%;
+  width: 28%;
   margin-right: 40px;
 }
 
@@ -302,4 +309,13 @@ margin-right: 4px;
 }
 
 @media (min-width: 1400px) {
+    .filter-container {
+  width: 28%;
+  margin-right: 40px;
+}
+
+.hotels-result-container {
+  width: 72%;
+  margin-left: 40px;
+}
 }

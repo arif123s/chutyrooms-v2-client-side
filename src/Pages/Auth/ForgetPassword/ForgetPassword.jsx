@@ -39,11 +39,11 @@ fetch("http://127.0.0.1:8000/api/user/password/forget", {
     console.log(data);
     if (data.status == 1029) {
       console.log("Otp sent!", data);
-      console.log("Otp sent!", data.data.code_expires_at);
+      console.log("Otp sent!", data.data.user, data.data.code_expires_at);
       sessionStorage.setItem(
         "user",
         JSON.stringify({
-          id: data.data.user.id,
+          id: data.data.user,
           otpExpiresAt: data.data.code_expires_at,
         })
       );
