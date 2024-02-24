@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./OtpVerification.css";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loading from "../../../Common/Includes/Loading/Loading";
 
-const OtpVerification = () => {
+const OtpPhoneVerification = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [seconds, setSeconds] = useState(119); // Initial seconds set to 1 minute and 59 seconds
@@ -16,7 +16,7 @@ const OtpVerification = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const userInfo = useSelector((state) => state.user.otpInfo);
+  // const userInfo = useSelector((state) => state.user.otpInfo);
   const [otpError, setOtpError] = useState({
     status: false,
     message: "",
@@ -137,11 +137,7 @@ const OtpVerification = () => {
     // setOtpError({ status: false, message: "" });
 
     // get data
-    fetch(
-      user.registration_code == 102
-        ? `http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`
-        : `http://127.0.0.1:8000/api/user/email/verify?user=${user.id}&token=${concatOtp}`
-    )
+    fetch(`http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`)
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
@@ -179,7 +175,7 @@ const OtpVerification = () => {
 
   return (
     <div className="otp-container">
-      <h2 className="text-[16px] lg:text-[18px] font-semibold text-center">
+      <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] text-center">
         A verification code send to your Phone or Email
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -237,4 +233,4 @@ const OtpVerification = () => {
   );
 };
 
-export default OtpVerification;
+export default OtpPhoneVerification;

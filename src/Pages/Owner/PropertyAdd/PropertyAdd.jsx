@@ -1,12 +1,12 @@
-import starFill from "../../../assets/icons/star-fill.svg";
-import starBlank from "../../../assets/icons/star-blank.svg";
+// import starFill from "../../../assets/icons/star-fill.svg";
+// import starBlank from "../../../assets/icons/star-blank.svg";
 import delteIcon from "../../../assets/icons/delete.svg";
 import imgIcon from "../../../assets/icons/img.svg";
 import videoIcon from "../../../assets/icons/frame.svg";
 import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
+// import Stack from "@mui/material/Stack";
 import "./PropertyAdd.css";
 import { useState } from "react";
 import {
@@ -22,7 +22,7 @@ import PlacesAutocomplete, {
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import CancellationPolicy from "./CancellationPolicy/CancellationPolicy";
-import { useMutation } from "react-query";
+// import { useMutation } from "react-query";
 import Loading from "../../Common/Includes/Loading/Loading";
 
 const libraries = ["places"];
@@ -1468,11 +1468,11 @@ const PropertyAdd = () => {
                       {...getInputProps({
                         placeholder: `Search Places`,
                         className:
-                          "z-10 opacity-70 flex p-[8px] pl-[28px] text-[14px] items-center w-full border-[1px] rounded-[8px] border-[#c6c6c6] mb-[12px]",
+                          "z-10 opacity-70 flex p-[8px] pl-[32px] text-[14px] items-center w-full border-[1px] rounded-[8px] border-[#c6c6c6] mb-[12px]",
                       })}
                     />
                     <img
-                      className="w-4 absolute top-[11px] left-2"
+                      className="w-4 absolute top-[11px] left-[12px]"
                       src={searchIcon}
                       alt=""
                     />

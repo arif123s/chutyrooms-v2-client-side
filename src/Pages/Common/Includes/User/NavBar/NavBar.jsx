@@ -25,13 +25,14 @@ const NavBar = () => {
   if (user) {
     console.log("user");
   }
+  
   if (!user) {
     console.log("not user");
   }
 
   useEffect(() => {
     // Set the duration in milliseconds (e.g., 3000 for 3 seconds)
-    const duration = 5000;
+    const duration = 0;
 
     // After the specified duration, hide the menu
     const timeoutId = setTimeout(() => {
@@ -44,6 +45,7 @@ const NavBar = () => {
 
   const handleNavigate = (event, route) => {
     event.preventDefault();
+    setMenu(false)
     navigate(`/${route}`);
   };
 
@@ -72,7 +74,7 @@ const NavBar = () => {
 
         <ul className="flex items-center menu-horizontal  gap-[18px] text-[14px]">
           <div className="flex items-center gap-[18px]">
-            <li>
+            <li className="menu-mobile">
               <a
                 href="/owner-register"
                 onClick={(e) => handleNavigate(e, "owner-register")}
@@ -213,9 +215,10 @@ const NavBar = () => {
       {/****************************
                 Moble menu
        ***************************/}
+
       <div
         className={` duration-500  ${
-          menu ? " menu-container py-3 px-2 mt-2 block" : "h-0"
+          menu ? " menu-container py-3 px-2 mt-2 block h-fit" : "h-0"
         }`}
       >
         <div>
