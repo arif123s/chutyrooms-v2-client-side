@@ -17,6 +17,7 @@ const Dashboard = () => {
           <div className={`${open ? "dashboard-content-open" : "dashboard-content-close"}`}>
             <NavBar open={open} setOpen={setOpen}></NavBar>
          <div className="h-full bg-[#F2F5FA]">
+          
          <Outlet></Outlet>
          </div>
           </div>
