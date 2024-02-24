@@ -36,7 +36,7 @@ const DivisionEdit = () => {
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                setCountryList(data.data)
+                setCountryList(data.data.data)
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);

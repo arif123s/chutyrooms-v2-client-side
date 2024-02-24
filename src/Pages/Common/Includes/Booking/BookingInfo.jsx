@@ -440,6 +440,133 @@ const BookingInfo = ({ name, content }) => {
                                 <td>01224444</td>
 
                             </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
+                            <tr>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+                                <td>ABc</td>
+                                <td>01224444</td>
+
+                            </tr>
                         </tbody>
                     </table>
                 </div>

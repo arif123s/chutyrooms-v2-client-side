@@ -5,11 +5,17 @@
 .dashboard-content-open
 {
     width: 85%;
+   
 }
 
 .dashboard-content-close
 {
     width:95%;
+}
+.full-dashboard
+{
+    /* height: auto; */
+    height: 100%;
 }
 
 @media (max-width: 575.98px) 
@@ -17,11 +23,16 @@
 .dashboard-content-open
 {
     width: 100%;
+    /* height: 100vh; */
 }
 
 .dashboard-content-close
 {
     width:100%;
+}
+.full-dashboard
+{
+    /* height: auto; */
 }
 }
 
@@ -30,11 +41,16 @@
     .dashboard-content-open
 {
     width: 100%;
+    /* height: 100vh; */
 }
 
 .dashboard-content-close
 {
     width:100%;
+}
+.full-dashboard
+{
+    /* height: auto; */
 }
 }
 
@@ -42,11 +58,16 @@
     .dashboard-content-open
 {
     width: 100%;
+    /* height: 100vh; */
 }
 
 .dashboard-content-close
 {
     width:100%;
+}
+.full-dashboard
+{
+    /* height: auto; */
 }
 }
 
@@ -55,12 +76,19 @@
     .dashboard-content-open
     {
         width:82%;
+       
     }
     
     .dashboard-content-close
     {
         width:90%;
+      
     }
+    /* .full-dashboard
+        {
+            height: auto;
+        } */
+        
 }
 
 
