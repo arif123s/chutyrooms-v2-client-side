@@ -112,6 +112,7 @@ const FilterContainer = () => {
                 name="lowest-price"
                 id="lowest-price"
                 value={700}
+                // onChange={}
               />
             </div>
 
@@ -127,6 +128,7 @@ const FilterContainer = () => {
                 name="lowest-price"
                 id="lowest-price"
                 value={150000}
+                // onChange={}
               />
             </div>
           </div>

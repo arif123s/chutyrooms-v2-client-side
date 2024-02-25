@@ -16,11 +16,11 @@ const ResetPassword = () => {
   //   status: false,
   //   message: "",
   // });
-//   const [errorMessage, setErrorMessage] = useState({
-//     status: false,
-//     message: "",
-//     errors: [],
-//   });
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+    errors: [],
+  });
     const [loading, setLoading] = useState(false);
 
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -61,11 +61,16 @@ const ResetPassword = () => {
             navigate("/login");
           } else {
             console.log("failed!", data);
-            // setErrorMessage({ status: true, message: data.errors.username[0] });
+              setErrorMessage({
+                status: true,
+                message: data.message,
+                errors: [data.errors],
+              });
             toast.error(data.message);
           }
         });
     } else {
+      setLoading(false)
       setPassErrorMessage(true);
     }
   };
@@ -146,6 +151,12 @@ const ResetPassword = () => {
             )}
           </label>
         </div>
+
+        {errorMessage.status && (
+          <p className="label-text-alt text-rose-500 text-center mb-[4px]">
+            {errorMessage.message}
+          </p>
+        )}
 
         <input type="submit" className="login-btn" value="Reset Password" />
       </form>

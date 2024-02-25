@@ -116,6 +116,17 @@ margin-right: 4px;
   color: #159947 !important;
 }
 
+:root {
+    --swiper-navigation-size: 18px;
+}
+
+.hotel-img-slider .swiper-button-prev, .swiper-button-next {
+  width: 34px;
+  height: 34px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
 
 /************************
      Responsive
