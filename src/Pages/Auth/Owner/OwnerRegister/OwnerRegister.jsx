@@ -334,14 +334,15 @@ const OwnerRegister = () => {
               type="email"
               placeholder="Enter your email"
               {...register("email", {
-                required: {
-                  value: true,
-                  message: "Email is Required",
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
                 },
               })}
             />
             <label className="">
-              {errors.email?.type === "required" && (
+              {errors.email && (
                 <span className="label-text-alt text-red-500">
                   {errors.email.message}
                 </span>
@@ -366,7 +367,8 @@ const OwnerRegister = () => {
           />
         </div> */}
 
-        <div className="mb-[14px]">
+        {/* password */}
+        {/* <div className="mb-[14px]">
           <label className="input-title" htmlFor="password">
             Password
           </label>
@@ -399,8 +401,38 @@ const OwnerRegister = () => {
               </span>
             )}
           </label>
+        </div> */}
+        <div className="mb-[14px]">
+          <label className="input-title" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="input-box"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter a password"
+            {...register("password", {
+              required: "Password is Required",
+              minLength: {
+                value: 8,
+                message: "Password must be 8 characters or longer",
+              },
+              pattern: {
+                value: /^(?=.*[!@#$%^&*])/,
+                message:
+                  "Password must contain at least one special character (!@#$%^&*)",
+              },
+            })}
+          />
+          {errors.password && (
+            <span className="label-text-alt text-red-500">
+              {errors.password.message}
+            </span>
+          )}
         </div>
 
+        {/* confirm password */}
         <div className="mb-[14px]">
           <label className="input-title" htmlFor="confirmPassword">
             Confirm Password

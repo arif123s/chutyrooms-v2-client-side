@@ -1,7 +1,6 @@
 import "./SearchResultHotel.css";
 // import SearchField from "../Home/HomePage/SearchField/SearchField";
 import filterIcon from "../../../assets/icons/filter.svg";
-
 import downloadApp from "../../../assets/download-app.png";
 import { useState } from "react";
 import FilterContainer from "./FilterContainer";
@@ -12,7 +11,7 @@ import Loading from "../../Common/Includes/Loading/Loading";
 const libraries = ["places"];
 const mapContainerStyle = {
   width: "100%",
-  height: "400px",
+  height: "630px",
   borderRadius: "8px",
 };
 

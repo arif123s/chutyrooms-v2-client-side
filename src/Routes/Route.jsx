@@ -13,6 +13,7 @@ import ForgetPasswordOtp from "../Pages/Auth/ForgetPassword/ForgetPasswordOtp";
 import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
 
 import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
+import BookingPreview from "../Pages/Home/BookingPreview/BookingPreview";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
           {
             path: "search-result-hotel",
             element: <SearchResultHotel></SearchResultHotel>,
+          },
+          {
+            path: "booking-preview",
+            element: <BookingPreview></BookingPreview>,
           },
           // {
           //   path: "/email/verify/:user/:token",

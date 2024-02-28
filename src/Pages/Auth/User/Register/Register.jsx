@@ -401,24 +401,20 @@ const Register = () => {
             </label>
             <input
               className="input-box"
-              // className={` ${
-              //   errors.email?.type === "required"
-              //     ? "input-box input-error"
-              //     : "input-box"
-              // }`}
               id="email"
               name="email"
               type="email"
               placeholder="Enter your email"
               {...register("email", {
-                required: {
-                  value: true,
-                  message: "Email is Required",
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
                 },
               })}
             />
             <label className="">
-              {errors.email?.type === "required" && (
+              {errors.email && (
                 <span className="label-text-alt text-red-500">
                   {errors.email.message}
                 </span>
