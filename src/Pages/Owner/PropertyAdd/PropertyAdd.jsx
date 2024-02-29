@@ -50,9 +50,26 @@ const PropertyAdd = () => {
     lng: 90.40080333547479,
   });
   const [mapCenter, setMapCenter] = useState(center);
-  const [mapError, setMapError] = useState(false);
+  // const [mapError, setMapError] = useState(false);
+  const [mapError, setMapError] = useState({
+    status: false,
+    message: "",
+    color: false,
+    count:0
+  });
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+   const { isLoaded, loadError } = useLoadScript({
+     googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
+     libraries,
+   });
+
+   const [allInputError, setAllInputError] = useState({
+    status:false,
+    message:'',
+   });
+   
 
   const [logo, setLogo] = useState(null);
   // const [logoError, setLogoError] = useState("");
@@ -74,28 +91,9 @@ const PropertyAdd = () => {
     name: "propertyTypes",
     defaultValue: [], // Provide a default value if needed
   });
-
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
-    libraries,
-  });
+ 
 
   const [loading, setLoading] = useState(false);
-
-  // const createPropertyMutation = useMutation((propertyData) => {
-  //   return fetch("http://127.0.0.1:8000/api/user/register", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(propertyData),
-  //   }).then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error("Registration failed");
-  //     }
-  //     return response.json();
-  //   });
-  // });
 
   let displayImageCount = 0;
 
@@ -104,8 +102,19 @@ const PropertyAdd = () => {
     const latitude = latLng.lat();
     const longitude = latLng.lng();
     setCenter({ lat: latitude, lng: longitude });
-    setMapError(false);
+    setMapCenter({ lat: latitude, lng: longitude });
+    setSelectedLocation({ lat: latitude, lng: longitude }); // Update selected location
+    // setMapError(false);
+    setMapError({
+      status:true,
+      message:'Location selected',
+      color:true,
+      count:1
+    });
   };
+
+  console.log('center',center)
+  console.log('mapcenter',mapCenter)
 
   const handleSelect = async (selectedAddress) => {
     setAddress(selectedAddress);
@@ -115,7 +124,12 @@ const PropertyAdd = () => {
       setMapCenter(latLng);
       setRectangleBounds(/* calculate your bounds if needed */);
 
-      // Optionally, you can update rectangleBounds or perform other actions based on the selected location
+      // Set the selected location
+      setSelectedLocation(latLng);
+      // setMapError(false);
+      setMapError({
+        status:false
+      }); // Reset map error if a valid location is selected
     } catch (error) {
       console.error("Error selecting address", error);
     }
@@ -137,7 +151,7 @@ const PropertyAdd = () => {
   const handleLogoSelect = (event) => {
     const fileInput = event.target;
 
-    if (fileInput.files[0].size > 100 * 1024) {
+    if (fileInput.files[0]?.size > 100 * 1024) {
       setLogo(null);
       setLogoError({
         status: true,
@@ -236,11 +250,28 @@ const PropertyAdd = () => {
       }
     });
 
+    //  if (
+    //    center.lat == 23.862725477930507 &&
+    //    center.lng == 90.40080333547479 &&
+    //    mapError.status == false
+    //  ) 
+    //  {
+    //    setMapError({
+    //      status: true,
+    //      message: "Please select hotel location",
+    //    });
+    //    return;
+    //  }
+
     if (!logo) {
-      // setLogoError("Logo is required");
+      // setLogoError("Logo is required"); 
       setLogoError({
         status: true,
         message: "Logo is required",
+      });
+      setAllInputError({
+        status: true,
+        message: "Please select all the required fields",
       });
       return;
     }
@@ -250,24 +281,31 @@ const PropertyAdd = () => {
         status: true,
         message: "Please select all four display images.",
       });
+         setAllInputError({
+           status: true,
+           message: "Please select all the required fields",
+         });
       return;
     }
 
-    if (
-      center.lat == 23.862725477930507 &&
-      center.lng == 90.40080333547479 &&
-      mapError === false
-    ) {
-      return setMapError(true);
+    if(!mapError.count){
+      console.log('Map error')
+      setMapError({
+         status: true,
+         message: "Please select hotel location",
+       });
+      return;
     }
 
-    setLoading(true);
+   
 
-    // console.log(center);
+    // setLoading(true);
+
+    console.log('map center',mapCenter);
 
     const propertyData = {
       data,
-      map: center,
+      map: mapCenter,
       cancellation: cancellationData,
       logo,
       displayImages,
@@ -279,11 +317,6 @@ const PropertyAdd = () => {
     setLoading(false);
     navigate("/room-add");
   };
-
-  //   const handleSave = (e)=>{
-  // e.preventDefault()
-  //     navigate("/room-add")
-  //   }
 
   return (
     <div className="custom-container ">
@@ -1164,7 +1197,7 @@ const PropertyAdd = () => {
                 ))}
               </div>
               {displayImageError?.status === true && (
-                <p className="label-text-alt text-red-500">
+                <p className="label-text-alt text-red-500 mt-[4px]">
                   {displayImageError.message}
                 </p>
               )}
@@ -1323,13 +1356,21 @@ const PropertyAdd = () => {
                   value: true,
                   message: "Check in time is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Check in time should be between 1 and 12",
+                },
+                max: {
+                  value: 12,
+                  message: "Check in time should be between 1 and 12",
+                },
               })}
             />
             <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
               AM
             </span>
             <label className="block">
-              {errors.checkin?.type === "required" && (
+              {errors.checkin && (
                 <span className="label-text-alt text-red-500">
                   {errors.checkin?.message}
                 </span>
@@ -1348,13 +1389,21 @@ const PropertyAdd = () => {
                   value: true,
                   message: "Check out time is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Check in time should be between 1 and 12",
+                },
+                max: {
+                  value: 12,
+                  message: "Check in time should be between 1 and 12",
+                },
               })}
             />
             <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
               AM
             </span>
             <label className="block">
-              {errors.checkout?.type === "required" && (
+              {errors.checkout && (
                 <span className="label-text-alt text-red-500">
                   {errors.checkout?.message}
                 </span>
@@ -1446,7 +1495,7 @@ const PropertyAdd = () => {
           </label>
         </div>
         {/* google map */}
-        <div className="mt-[18px]">
+        <div className="mt-[18px] mb-[20px]">
           <div className="flex justify-between relative z-10">
             <h2 className="property-input-title mt-[8px]">
               Locate Your Property
@@ -1523,35 +1572,58 @@ const PropertyAdd = () => {
               {/* <Marker position={center} /> */}
               <Marker position={mapCenter} />
               {/* Additional marker at the search location */}
-              {address && (
-                <Marker
-                  clickable={true}
-                  className="pointer-events-none"
-                  position={mapCenter}
-                  icon={{
-                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
-                    scaledSize: new window.google.maps.Size(30, 30),
-                  }}
-                />
-              )}
+              {
+                // address
+                selectedLocation && (
+                  <Marker
+                    // clickable={true}
+                    // className="pointer-events-none"
+                    // position={mapCenter}
+                    position={selectedLocation}
+                    icon={{
+                      url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
+                      scaledSize: new window.google.maps.Size(30, 30),
+                    }}
+                  />
+                )
+              }
             </GoogleMap>
+            {/* Error messages */}
             <label className="">
+              {/* Display message when location is selected */}
+              {/* {selectedLocation && (
+                <span className="label-text-alt text-green-500">
+                  Location selected
+                </span>
+              )} */}
+              {/* Display other errors */}
+
               {errors.map && (
                 <span className="label-text-alt text-red-500">
                   {errors.map.message}
                 </span>
               )}
             </label>
-            {mapError && (
-              <label className="">
-                <span className="label-text-alt text-red-500">
-                  Please select hotel location
+            {mapError.status && (
+              <label className="mt-[4px]">
+                <span
+                  className={`label-text-alt ${
+                    mapError.color ? "text-[#159947]" : "text-red-500"
+                  }`}
+                >
+                  {/* Please select hotel location */}
+                  {mapError.message}
                 </span>
               </label>
             )}
           </div>
         </div>
-        <div className="mt-[20px] flex justify-end gap-x-[12px]">
+        {allInputError.status && (
+          <p className="label-text-alt text-red-500 text-right mb-[6px]">
+            {allInputError.message}
+          </p>
+        )}
+        <div className=" flex justify-end gap-x-[12px]">
           <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
             Cancel
           </button>

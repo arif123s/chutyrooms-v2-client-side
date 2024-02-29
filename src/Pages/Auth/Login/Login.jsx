@@ -15,6 +15,11 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+   const [errorMessage, setErrorMessage] = useState({
+     status: false,
+     message: "",
+     errors: [],
+   });
 
   const [loading, setLoading] = useState(false);
 
@@ -25,6 +30,8 @@ const Login = () => {
   const onSubmit = (data) => {
     // You can implement your authentication logic here
     // console.log(data);
+
+     setErrorMessage({ status: false, message: "" });
 
     // If "Remember Me" is checked, you can save the user's information (e.g., token) to localStorage
     if (data.rememberMe) {
@@ -67,7 +74,12 @@ const Login = () => {
         } else {
           console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });
-          toast.error(data.message);
+          // toast.error(data.message);
+            setErrorMessage({
+              status: true,
+              message: data.message,
+              errors: [data.errors],
+            });
         }
       });
   };
@@ -153,7 +165,7 @@ const Login = () => {
           </label>
         </div>
 
-        <div className="flex justify-between mt-3 text-[12px] lg:text-[14px] mb-[20px]">
+        <div className="flex justify-between mt-3 text-[12px] lg:text-[14px] mb-[12px]">
           <div className="flex items-center">
             {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
             <input
@@ -174,6 +186,26 @@ const Login = () => {
             Forgot Password?
           </a>
         </div>
+
+        {errorMessage.status && (
+          <p className="label-text-alt text-red-500 text-center mb-[8px]">
+            {errorMessage.message}
+          </p>
+        )}
+
+        {/* {errorMessage.errors?.length > 0 &&
+          errorMessage?.errors?.map((err, index) => (
+            <div key={index}>
+              {Object.values(err).map((value, i) => (
+                <p
+                  className="label-text-alt text-rose-500 text-center mb-[2px]"
+                  key={i}
+                >
+                  {value}
+                </p>
+              ))}
+            </div>
+          ))} */}
 
         <input
           type="submit"
