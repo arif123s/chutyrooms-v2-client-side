@@ -40,10 +40,36 @@ import Bkash from "../../../assets/icons/bkash.svg";
 import Dbbl from "../../../assets/icons/dbbl.svg";
 import Visa from "../../..//assets/icons/visa.svg";
 import Nagad from "../../../assets/icons/nagad.svg";
+import Loading from "../../Common/Includes/Loading/Loading";
+import { useLoadScript } from "@react-google-maps/api";
+
+const libraries = ["places"];
+const mapContainerStyle = {
+  width: "100%",
+  height: "630px",
+  borderRadius: "8px",
+};
 
 const HotelDetails = () => {
 
     const [counter, setCounter] = useState(1);
+    const [mapView, setMapView] = useState(false);
+   const [center, setCenter] = useState({
+     lat: 23.862725477930507,
+     lng: 90.40080333547479,
+   });
+     const { isLoaded, loadError } = useLoadScript({
+       googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
+       libraries,
+     });
+
+      if (loadError) {
+        return <div className="text-center py-[60px]">Error loading maps!</div>;
+      }
+
+      if (!isLoaded) {
+        return <Loading></Loading>;
+      }
 
     // Function to handle increment
     const handleIncrement = () => {
@@ -609,7 +635,45 @@ const HotelDetails = () => {
 
 
         <div>
-            
+        <div className=" mt-[24px]">
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle }
+                // mapContainerStyle={"map-view-container"}
+                zoom={10}
+                // center={center}
+                center={center}
+                // onLoad={onMapLoad}
+                // onClick={(e) => {
+                //   setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                //   setValue("map", { lat: e.latLng.lat(), lng: e.latLng.lng() });
+                // }}
+                // onClick={onMapClick}
+                // onClick={handleMapClick}
+              >
+                {/* {rectangleBounds && (
+                <Rectangle bounds={rectangleBounds} onLoad={onRectangleLoad} />
+              )} */}
+                {/* <Marker position={center} /> */}
+                <Marker />
+                {/* Additional marker at the search location */}
+
+                <Marker
+                  clickable={true}
+                  className="pointer-events-none"
+                  // position={mapCenter}
+                  icon={{
+                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
+                    scaledSize: new window.google.maps.Size(30, 30),
+                  }}
+                />
+              </GoogleMap>
+            </div>
+        </div>
+
+
+
+        <div>
+
         </div>
 
         

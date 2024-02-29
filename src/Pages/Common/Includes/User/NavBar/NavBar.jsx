@@ -196,7 +196,7 @@ const NavBar = () => {
               <a
                 href="/login"
                 onClick={(e) => handleNavigate(e, "login")}
-                className="bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+                className="bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all"
               >
                 Login
               </a>

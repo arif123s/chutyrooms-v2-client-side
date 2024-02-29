@@ -52,13 +52,30 @@ select {
 
 select:focus {
   outline: none;
-  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);  */
+}
+
+input[type="radio"] {
+    border-color: #159947 !important;
+    background-color: #159947 !important;
+    color: #159947 !important;
 }
 
 input[type="radio"]:checked {
     border-color: #159947 !important;
     background-color: #159947 !important;
-    color: #159947;
+    color: #159947 !important;
+}
+
+input[type="radio"]:focus {
+    border-color: #159947 !important;
+    background-color: #159947 !important;
+    color: #159947 !important;
+}
+
+input[type="radio"]:hover {
+    border-color: #159947 !important;
+    background-color: #159947 !important;
+    color: #159947 !important;
 }
 
 input[type="checkbox"]:checked {

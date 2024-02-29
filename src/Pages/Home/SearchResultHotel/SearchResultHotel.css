@@ -38,6 +38,7 @@
   margin-left: 50px;
 }
 
+
 .hotels {
   margin-top: 24px;
   /* display: grid; */
@@ -96,6 +97,12 @@ margin-right: 4px;
   display: none;
 }
 
+.map-view-container{
+  width: 100%;
+  border-radius: 8px;
+
+}
+
 /********   Map view toggole component customize   ********/
 .toggle-success:checked, .toggle-success[checked="true"], .toggle-success[aria-checked="true"] {
   background-color: #159947;
@@ -107,6 +114,17 @@ margin-right: 4px;
 
 .css-187mznn-MuiSlider-root {
   color: #159947 !important;
+}
+
+:root {
+    --swiper-navigation-size: 18px;
+}
+
+.hotel-img-slider .swiper-button-prev, .swiper-button-next {
+  width: 34px;
+  height: 34px;
+  background: #FFFFFF;
+  border-radius: 50%;
 }
 
 
@@ -290,7 +308,7 @@ margin-right: 4px;
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   .filter-container {
-  width: 30%;
+  width: 28%;
   margin-right: 40px;
 }
 
@@ -302,4 +320,13 @@ margin-right: 4px;
 }
 
 @media (min-width: 1400px) {
+    .filter-container {
+  width: 28%;
+  margin-right: 40px;
+}
+
+.hotels-result-container {
+  width: 72%;
+  margin-left: 40px;
+}
 }

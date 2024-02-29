@@ -166,12 +166,20 @@ const Login = () => {
             <span>Remember me?</span>
           </div>
 
-          <a href="" onClick={e=>(e.preventDefault(),navigate('/forget-password'))} className="text-[#159947]">
+          <a
+            href=""
+            onClick={(e) => (e.preventDefault(), navigate("/forget-password"))}
+            className="text-[#159947]"
+          >
             Forgot Password?
           </a>
         </div>
 
-        <input type="submit" className="login-btn" value="Sign In" />
+        <input
+          type="submit"
+          className="login-btn hover:bg-[#016A29]"
+          value="Sign In"
+        />
         {/* <button className="login-btn">Sign In</button> */}
       </form>
 

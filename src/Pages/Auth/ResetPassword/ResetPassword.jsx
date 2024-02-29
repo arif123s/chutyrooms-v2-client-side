@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../Common/Includes/Loading/Loading";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -14,27 +16,61 @@ const ResetPassword = () => {
   //   status: false,
   //   message: "",
   // });
-//   const [errorMessage, setErrorMessage] = useState({
-//     status: false,
-//     message: "",
-//     errors: [],
-//   });
-  //   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+    errors: [],
+  });
+    const [loading, setLoading] = useState(false);
 
-  //   if (loading) {
-  //     return <Loading></Loading>;
-  //   }
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    console.log(user);
+
+    if (loading) {
+      return <Loading></Loading>;
+    }
 
   const onSubmit = (data) => {
-    console.log(data);
+     setLoading(true);
     const password = data.password;
     const confirmPassword = data.confirmPassword;
 
     if (password === confirmPassword) {
       // Passwords match, you can proceed with the registration logic
       setPassErrorMessage(false);
-      navigate("/login");
+
+      // send user data to database
+      fetch(`http://127.0.0.1:8000/api/user/password/reset?token=${user.id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          password: data.password,
+          password_confirmation: data.confirmPassword,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          console.log(data);
+          if (data.status == 1) {
+            console.log("Success!", data);
+
+            toast.success(data.message);
+            navigate("/login");
+          } else {
+            console.log("failed!", data);
+              setErrorMessage({
+                status: true,
+                message: data.message,
+                errors: [data.errors],
+              });
+            toast.error(data.message);
+          }
+        });
     } else {
+      setLoading(false)
       setPassErrorMessage(true);
     }
   };
@@ -115,6 +151,12 @@ const ResetPassword = () => {
             )}
           </label>
         </div>
+
+        {errorMessage.status && (
+          <p className="label-text-alt text-rose-500 text-center mb-[4px]">
+            {errorMessage.message}
+          </p>
+        )}
 
         <input type="submit" className="login-btn" value="Reset Password" />
       </form>
