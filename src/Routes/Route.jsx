@@ -37,6 +37,7 @@ import DistrictInfo from "../Pages/Dashboard/SoftwareSetup/District/DistrictInfo
 import DistrictList from "../Pages/Dashboard/SoftwareSetup/District/DistrictList";
 import DistrictAdd from  "../Pages/Dashboard/SoftwareSetup/District/DistrictAdd";
 import DistrictEdit from "../Pages/Dashboard/SoftwareSetup/District/DistrictEdit";
+import HotelDetails from "../Pages/Home/HotelDetails/HotelDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +90,11 @@ export const router = createBrowserRouter([
           {
             path: "search-result-hotel",
             element: <SearchResultHotel></SearchResultHotel>,
+          },
+
+          {
+            path: "hotel-details",
+            element: <HotelDetails></HotelDetails>,
           },
           // {
           //   path: "/email/verify/:user/:token",
