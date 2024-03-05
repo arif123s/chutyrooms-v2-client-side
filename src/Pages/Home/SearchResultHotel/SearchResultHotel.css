@@ -120,7 +120,13 @@ margin-right: 4px;
     --swiper-navigation-size: 18px;
 }
 
-.hotel-img-slider .swiper-button-prev, .swiper-button-next {
+.hotel-img-slider .swiper-button-prev {
+  width: 34px;
+  height: 34px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+.hotel-img-slider .swiper-button-next {
   width: 34px;
   height: 34px;
   background: #FFFFFF;

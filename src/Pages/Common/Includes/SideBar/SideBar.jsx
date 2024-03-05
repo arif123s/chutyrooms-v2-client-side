@@ -1,7 +1,8 @@
 
 import { useState, useRef, useEffect } from "react";
 // import Menu from "../../../../assets/icons/menu.svg"
-import ChutyLogo from "../../../../assets/icons/Chuty-logo.svg"
+// import ChutyLogo from "../../../../assets/icons/Chuty-logo.svg"
+import ChutyLogo from "../../../../assets/icons/chuty-logo.png"
 import ChutySmallLogo from "../../../../assets/icons/Chuty-logo-small.svg"
 import Category from "../../../../assets/icons/category.svg"
 import CategoryGreen from "../../../../assets/icons/category-green.svg"

@@ -3,6 +3,7 @@ import location from '../../../assets/icons/map-pin.svg'
 import editIcon from '../../../assets/icons/edit-icon.svg'
 import platinumCard from "../../../assets/membership/platinum-card.png";
 import goldCard from "../../../assets/membership/gold-card.png";
+import downloadApp from "../../../assets/download-app.png";
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
@@ -10,13 +11,17 @@ const Profile = () => {
 const navigate  = useNavigate();
 
     return (
-      <div className="p-[24px] lg:w-8/12">
+      <div className="p-[24px] pr-[40px]">
         <div className="flex justify-between">
           <div className="flex items-center">
             <img className="w-[70px] mr-[12px]" src={userImg} alt="Profile" />
             <div>
               <h2 className="text-[20px] font-[Gilroy-semibold]">
-                Anisur Rahman(Nasir bhai)
+                Anisur Rahman
+                <span className="font-[Gilroy-bold] text-primary">
+                  {" "}
+                  (Nasir bhai)
+                </span>
               </h2>
               <img src="" alt="" />
               <div className="flex items-center mt-[0px] gap-[6px]">
@@ -28,15 +33,23 @@ const navigate  = useNavigate();
             </div>
           </div>
 
-          <img onClick={()=>navigate('/dashboard/edit-profile')} src={editIcon} alt="" />
+          <img
+            onClick={() => navigate("/dashboard/edit-profile")}
+            src={editIcon}
+            alt=""
+          />
         </div>
+
+        <div className="h-[1px] bg-[#E6E7E6] my-[24px]" />
+
+        <img className="h-[380px] w-full" src={downloadApp} alt="" />
 
         <div className="mt-[24px]">
           <h2 className="text-[20px] font-[Gilroy-semibold]">
             Purchased Membership
           </h2>
           <div className="mt-[14px] ">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-[14px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]">
               <div className="card">
                 <img
                   className="h-[240px]"

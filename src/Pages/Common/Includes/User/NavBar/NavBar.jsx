@@ -1,4 +1,4 @@
-import chutyLogo from "../../../../../assets/icons/Chuty-Logo.svg";
+import chutyLogo from "../../../../../assets/icons/chuty-logo.png";
 import propertyIcon from "../../../../../assets/icons/Property.svg";
 import propertyLightIcon from "../../../../../assets/icons/property-light.svg";
 import propertyDarkIcon from "../../../../../assets/icons/property-dark.svg";
