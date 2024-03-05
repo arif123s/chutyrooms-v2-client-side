@@ -7,7 +7,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import { useDispatch } from "react-redux";
-import { otpInfo, registerUser } from "../../../../features/user/userSlice";
+import { registerUser } from "../../../../redux/features/user/userSlice";
+
 
 const OwnerRegister = () => {
   //  const [inputValue, setInputValue] = useState("");
@@ -18,11 +19,11 @@ const OwnerRegister = () => {
     formState: { errors },
   } = useForm();
   const [passErrorMessage, setPassErrorMessage] = useState(false);
-   const [errorMessage, setErrorMessage] = useState({
-     status: false,
-     message: "",
-     errors: [],
-   });
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+    errors: [],
+  });
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [loginMethod, setLoginMethod] = useState("phone");
@@ -58,9 +59,9 @@ const OwnerRegister = () => {
     return <Loading></Loading>;
   }
 
-    const handleLoginMethod = (type) => {
-      setLoginMethod(type);
-    };
+  const handleLoginMethod = (type) => {
+    setLoginMethod(type);
+  };
 
   // const isPasswordMatch = (password, confirmPassword) => {
   //   return password === confirmPassword;
@@ -76,8 +77,6 @@ const OwnerRegister = () => {
 
     const password = data.password;
     const confirmPassword = data.confirmPassword;
-
-   
 
     if (password === confirmPassword) {
       // Passwords match, you can proceed with the registration logic
@@ -104,41 +103,41 @@ const OwnerRegister = () => {
           setLoading(false);
           if (data.status === 102) {
             console.log("Successfully registered!", data);
-             sessionStorage.setItem(
-               "user",
-               JSON.stringify({
-                 id: data.data.id,
-                 otpExpiresAt: data.data.otp_expires_at,
+            sessionStorage.setItem(
+              "user",
+              JSON.stringify({
+                id: data.data.id,
+                otpExpiresAt: data.data.otp_expires_at,
                 //  registration_code: data.status,
-               })
-             );
+              })
+            );
             dispatch(registerUser(data));
-            dispatch(otpInfo(data));
+            // dispatch(otpInfo(data));
             navigate(`/otp-phone`);
           } else if (data.status === 101) {
-             console.log("Successfully registered!", data);
-             sessionStorage.setItem(
-               "user",
-               JSON.stringify({
-                 id: data.data.id,
-                 otpExpiresAt: data.data.email_verification_token_expires_at,
+            console.log("Successfully registered!", data);
+            sessionStorage.setItem(
+              "user",
+              JSON.stringify({
+                id: data.data.id,
+                otpExpiresAt: data.data.email_verification_token_expires_at,
                 //  registration_code: data.status,
-               })
-             );
-             dispatch(registerUser(data));
-             dispatch(otpInfo(data));
-             navigate(`/otp-email`);
+              })
+            );
+            dispatch(registerUser(data));
+            // dispatch(otpInfo(data));
+            navigate(`/otp-email`);
           } else {
-            console.log("Registration failed!", data)
-          setErrorMessage({
-            status: true,
-            message: data.message,
-            errors: [data.errors],
-          });
+            console.log("Registration failed!", data);
+            setErrorMessage({
+              status: true,
+              message: data.message,
+              errors: [data.errors],
+            });
           }
         });
     } else {
-      setLoading(false)
+      setLoading(false);
       // Passwords do not match
       setPassErrorMessage(true);
     }

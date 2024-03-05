@@ -1,7 +1,7 @@
 import "./MembershipCards.css";
-import platinumCard from "../../../../assets/membership/platinum-card.png";
-import goldCard from "../../../../assets/membership/gold-card.png";
-import silverCard from "../../../../assets/membership/silver-card.png";
+import platinumCard from "../../assets/membership/platinum-card.png";
+import goldCard from "../../assets/membership/gold-card.png";
+import silverCard from "../../assets/membership/silver-card.png";
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 // import { useState } from "react";

@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
+import { useLoginMutation } from "../../../redux/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../redux/features/auth/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,14 +23,18 @@ const Login = () => {
      message: "",
      errors: [],
    });
+   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+
+  const [login,{error}]=useLoginMutation();
+
 
   if (loading) {
     return <Loading></Loading>;
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     // You can implement your authentication logic here
     // console.log(data);
 
@@ -45,6 +52,23 @@ const Login = () => {
       password: data.password,
     };
 
+    const res = await login(user).unwrap();
+
+    const userInfo = {
+      user: {
+        id: res.data?.id,
+        name: res.data?.name,
+        img: res.data?.image,
+        role: "",
+      },
+      token: {
+        accessToken: res.accessToken,
+      },
+    };
+    console.log('info',userInfo)
+
+    dispatch(setUser(userInfo))
+ 
     // send user data to database
     fetch("http://127.0.0.1:8000/api/user/login", {
       method: "POST",
@@ -175,7 +199,7 @@ const Login = () => {
               id="rememberMe"
               {...register("rememberMe")}
             />
-            <span>Remember me?</span>
+            <label htmlFor="rememberMe">Remember me?</label>
           </div>
 
           <a

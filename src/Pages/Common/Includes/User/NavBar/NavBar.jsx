@@ -13,11 +13,14 @@ import userIcon from "../../../../../assets/icons/user.svg";
 import "./NavBar.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../../../redux/features/auth/authSlice";
 
 const NavBar = () => {
   const [menu, setMenu] = useState(true);
   const [profile, setProfile] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const user = JSON.parse(localStorage.getItem("userInfo"));
   console.log(user);
@@ -58,6 +61,9 @@ const NavBar = () => {
         null
       )
     );
+
+    dispatch(logout())
+
     window.location.reload();
   }
 
@@ -223,7 +229,7 @@ const NavBar = () => {
       >
         <div>
           <div
-            className={`transition-trnasform transform duration-200 ${
+            className={` transition-trnasform transform duration-200 ${
               menu ? " block" : "hidden"
             }`}
           >
@@ -233,14 +239,19 @@ const NavBar = () => {
                 className="flex items-center gap-[8px]"
               >
                 <img src={profileIcon} alt="Profile-icon" />
-                <a href="">Profile</a>
+                <a
+                  className="text-[14px] md:text-[16px] lg:text-[16px]"
+                  href=""
+                >
+                  Profile
+                </a>
               </div>
             ) : (
               <a
                 href="/login"
                 onClick={(e) => handleNavigate(e, "login")}
                 // onClick={() => handleNavigate("login")}
-                className="bg-[#159947] cursor-pointer text-[14px] md:text-[16px] lg:text-[16px] w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
+                className="text-[14px] md:text-[16px] lg:text-[16px] bg-[#159947] cursor-pointer w-full text-white px-[14px] py-[7px]  rounded-[8px] border-0"
               >
                 Login
               </a>
@@ -260,7 +271,11 @@ const NavBar = () => {
                 <option value="">BDT</option>
               </select> */}
               <div className="relative pr-[8px] ">
-                <select className="w-[55px] ml-1 mr-2 p-[5px] " name="" id="">
+                <select
+                  className="w-[55px] ml-1 mr-2 p-[5px] text-[14px] md:text-[16px] lg:text-[16px]"
+                  name=""
+                  id=""
+                >
                   <option className="bg-white " value="BDT">
                     BDT
                   </option>
@@ -302,7 +317,11 @@ const NavBar = () => {
                 <hr className="my-3" />
                 <div className="flex items-center gap-[8px]">
                   <img src={logoutIcon} alt="Profile-icon" />
-                  <a href="" onClick={handleLogout}>
+                  <a
+                    className="text-[14px] md:text-[16px] lg:text-[16px]"
+                    href=""
+                    onClick={handleLogout}
+                  >
                     Logout
                   </a>
                 </div>

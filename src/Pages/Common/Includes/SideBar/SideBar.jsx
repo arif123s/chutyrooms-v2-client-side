@@ -90,34 +90,53 @@ const navigate = useNavigate();
 
   const lists = [
     {
-      name: 'Dashboard', path: '/dashboard', icon: Category, clickedicon: CategoryGreen, submenu: [
-
-      ]
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: Category,
+      clickedicon: CategoryGreen,
+      submenu: [],
     },
     {
-      name: 'Rooms', path: '#', icon: Key, clickedicon: KeyGreen, submenu: [
-        { name: 'All Rooms', path: '#' },
-        { name: 'Edit Rooms', path: '#' }
-      ]
+      name: "Profile",
+      path: "/dashboard/profile",
+      icon: Key,
+      clickedicon: KeyGreen,
+      submenu: [],
     },
     {
-      name: 'Email', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
-        { name: 'All Emails', path: '/property-add' },
-        { name: 'Edit Email', path: '#' }
-      ]
+      name: "Rooms",
+      path: "#",
+      icon: Key,
+      clickedicon: KeyGreen,
+      submenu: [
+        { name: "All Rooms", path: "#" },
+        { name: "Edit Rooms", path: "#" },
+        { name: "Add Room", path: "/room-add" },
+      ],
+    },
+    {
+      name: "Email",
+      path: "#",
+      icon: Email,
+      clickedicon: EmailGreen,
+      submenu: [
+        { name: "All Emails", path: "/property-add" },
+        { name: "Edit Email", path: "#" },
+      ],
     },
 
     {
-      name: 'Software Setup', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
-        { name: 'Country', path: '/dashboard/country' },
-        { name: 'Division', path: '/dashboard/division' },
-        { name: 'District', path: '/dashboard/district' },
-        { name: 'Area', path: '/dashboard/Area' },
-       
-      ]
+      name: "Software Setup",
+      path: "#",
+      icon: Email,
+      clickedicon: EmailGreen,
+      submenu: [
+        { name: "Country", path: "/dashboard/country" },
+        { name: "Division", path: "/dashboard/division" },
+        { name: "District", path: "/dashboard/district" },
+        { name: "Area", path: "/dashboard/Area" },
+      ],
     },
-
-   
   ];
 
   return (
