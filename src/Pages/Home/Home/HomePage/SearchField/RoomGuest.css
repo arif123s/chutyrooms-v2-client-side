@@ -8,7 +8,8 @@
     position: absolute;
     padding: 22px;
     box-shadow: -4px 4px 12px 0px rgba(35, 184, 85, 0.10);
-    right: 125px;  
+    right: 125px;
+    z-index: 1;
 }
 
 .room-no-div
