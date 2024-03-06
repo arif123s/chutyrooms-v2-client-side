@@ -1,7 +1,7 @@
 import Menu from "../../../../../assets/icons/menu-large.svg"
 import SearchIcon from "../../../../../assets/icons/search-normal.svg"
 import BellIcon from "../../../../../assets/icons/Group-bell.svg"
-import UserIcon from "../../../../../assets/icons/user-icon/User-icon-default.png"
+import UserIcon from "../../../../../assets/icons/user.svg"
 
 // import ChutyLogo from "../../../../../assets/icons/Chuty-logo.svg"
 import ChutyLogo from "../../../../../assets/icons/chuty-logo.png"

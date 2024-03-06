@@ -2,6 +2,7 @@ import "./MembershipCards.css";
 import platinumCard from "../../assets/membership/platinum-card.png";
 import goldCard from "../../assets/membership/gold-card.png";
 import silverCard from "../../assets/membership/silver-card.png";
+import { useState } from "react";
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 // import { useState } from "react";
@@ -9,36 +10,60 @@ import silverCard from "../../assets/membership/silver-card.png";
 // import { useNavigate } from "react-router-dom";
 
 const MembershipCards = () => {
-  // const [purchase,setPurchase]=useState(false)
-  // const navigate = useNavigate();
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
 
-  //   const [showOptions, setShowOptions] = useState(false);
-  //   const [selectedCountry, setSelectedCountry] = useState({
-  //     code: "+880",
-  //     name: "Bangladesh",
-  //     image: countryIcon,
-  //   });
+  const [purchasedCards, setPurchasedCards] = useState([
+    {
+      id: 1,
+      img: platinumCard,
+      name: "Platinum",
+      title: "Flat 8% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1500 tk",
+    },
+    {
+      id: 2,
+      img: goldCard,
+      name: "Gold",
+      title: "Flat 4.5% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1000 tk",
+    },
+  ]);
 
-  //   const countryData = [
-  //     { code: "+880", name: "Bangladesh", image: countryIcon },
-  //     { code: "+990", name: "India", image: countryIcon },
-  //     { code: "+220", name: "USA", image: countryIcon },
-  //     { code: "+750", name: "Australia", image: countryIcon },
-  //     { code: "+320", name: "Germany", image: countryIcon },
-  //     { code: "+160", name: "UK", image: countryIcon },
-  //     { code: "+960", name: "Argentina", image: countryIcon },
-  //     { code: "+960", name: "Argentina", image: countryIcon },
-  //     { code: "+960", name: "Argentina", image: countryIcon },
-  //     { code: "+960", name: "Argentina", image: countryIcon },
-  //     { code: "+960", name: "Argentina", image: countryIcon },
-  //     { code: "+960", name: "Argentina", image: countryIcon },
-  //     // Add more countries as needed
-  //   ];
+  const membershipCards = [
+    {
+      id: 1,
+      img: platinumCard,
+      name: "Platinum",
+      title: "Flat 8% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1500 tk",
+    },
+    {
+      id: 2,
+      img: goldCard,
+      name: "Gold",
+      title: "Flat 4.5% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1000 tk",
+    },
+    {
+      id: 3,
+      img: silverCard,
+      name: "Silver",
+      title: " Flat 2% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 500 tk",
+    },
+  ];
+
+  const notPurchasedMembershipCards = membershipCards.filter(
+    (card) =>
+      !purchasedCards.some((purchasedCard) => purchasedCard.id === card.id)
+  );
+
+  console.log(notPurchasedMembershipCards)
+
 
   //    const handleOptionSelect = (option) => {
   //      setSelectedCountry(option);
@@ -55,10 +80,69 @@ const MembershipCards = () => {
         Select Your Membership Card
       </h2>
 
+      {purchasedCards?.length && (
+        <div className="cards-container">
+          <div className="cards">
+            {purchasedCards.map((card) => (
+              <div key={card.id} className="card">
+                <div className="flex justify-between items-center mb-[8px]">
+                  <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold']">
+                    {card.name}
+                  </h2>
+                 
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-success w-[44px] h-[20px] lg:w-[46px] lg:h-[23px]"
+                    />
+                </div>
+                <img className="card-img" src={card.img} alt="Platinum Card" />
+                <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
+                  {card.title}
+                </h2>
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
+                  {card.validation}
+                </p>
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                  {card.price}
+                </p>
+              </div>
+            ))}
+            <div></div>
+          </div>
+          {/* <div className="text-center">
+            <button
+              onClick={(e) => (e.preventDefault(), setPurchase(true))}
+              className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+            >
+              Purchase
+            </button>
+          </div> */}
+        </div>
+      )}
       <div className="cards-container">
         <div className="cards">
-          <div className="card">
-            <img className="card-img" src={platinumCard} alt="Platinum Card" />
+          {notPurchasedMembershipCards.map((card) => (
+            <div key={card.id} className="card">
+              <img className="card-img" src={card.img} alt="Platinum Card" />
+              <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
+                {card.title}
+              </h2>
+              <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
+                {card.validation}
+              </p>
+              <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                {card.price}
+              </p>
+              <button
+                // onClick={(e) => (e.preventDefault(), setPurchase(true))}
+                className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+              >
+                Purchase
+              </button>
+            </div>
+          ))}
+          <div>
+            {/* <img className="card-img" src={platinumCard} alt="Platinum Card" />
             <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
               Flat 8% discount on every purchase
             </h2>
@@ -73,67 +157,13 @@ const MembershipCards = () => {
               className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
             >
               Purchase
-            </button>
+            </button> */}
             {/* <div className="text-center ">
                 <input
                   className="inline-block"
                   type="radio"
                   name="card"
                   id="platinum"
-                />
-              </div> */}
-          </div>
-
-          <div className="card">
-            <img className="card-img" src={goldCard} alt="Gold Card" />
-            <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
-              Flat 4.5% discount on every purchase
-            </h2>
-            <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
-              Validation: 1 year
-            </p>
-            <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
-              Tk 1000 tk
-            </p>
-            <button
-              // onClick={(e) => (e.preventDefault(), setPurchase(true))}
-              className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
-            >
-              Purchase
-            </button>
-            {/* <div className="text-center ">
-                <input
-                  className="inline-block"
-                  type="radio"
-                  name="card"
-                  id="gold"
-                />
-              </div> */}
-          </div>
-
-          <div className="card">
-            <img className="card-img" src={silverCard} alt="Silver Card" />
-            <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
-              Flat 2% discount on every purchase
-            </h2>
-            <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
-              Validation: 1 year
-            </p>
-            <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
-              Tk 500 tk
-            </p>
-            <button
-              // onClick={(e) => (e.preventDefault(), setPurchase(true))}
-              className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
-            >
-              Purchase
-            </button>
-            {/* <div className="text-center ">
-                <input
-                  className="inline-block"
-                  type="radio"
-                  name="card"
-                  id="silver"
                 />
               </div> */}
           </div>

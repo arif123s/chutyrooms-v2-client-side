@@ -21,6 +21,15 @@ const NavBar = () => {
   const [profile, setProfile] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const countryList = [
+    { id: 1, name: "BD", flag: globalLogo },
+    { id: 2, name: "USA", flag: globalLogo },
+    { id: 3, name: "India", flag: globalLogo },
+  ];
+
+  const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
+  const [country, setCountry] = useState(false);
+
 
   const user = JSON.parse(localStorage.getItem("userInfo"));
   console.log(user);
@@ -28,7 +37,7 @@ const NavBar = () => {
   if (user) {
     console.log("user");
   }
-  
+
   if (!user) {
     console.log("not user");
   }
@@ -48,24 +57,19 @@ const NavBar = () => {
 
   const handleNavigate = (event, route) => {
     event.preventDefault();
-    setMenu(false)
+    setMenu(false);
     navigate(`/${route}`);
   };
 
-  const handleLogout = (e) =>{
-    e.preventDefault()
-    console.log("logout")
-    localStorage.setItem(
-      "userInfo",
-      JSON.stringify(
-        null
-      )
-    );
+  const handleLogout = (e) => {
+    e.preventDefault();
+    console.log("logout");
+    localStorage.setItem("userInfo", JSON.stringify(null));
 
-    dispatch(logout())
+    dispatch(logout());
 
     window.location.reload();
-  }
+  };
 
   return (
     <div className="custom-container navbar-container">
@@ -119,7 +123,7 @@ const NavBar = () => {
                     .querySelector(".nav-icon")
                     .classList.remove("hovered")
                 }
-                className="nav-item-container cursor-pointer bg-[#E8F5ED] text-[#159947] flex items-center p-[8px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
+                className="nav-item-container cursor-pointer bg-[#E8F5ED] text-[#159947] text-[14px] flex items-center p-[8px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
               >
                 <img
                   className="nav-icon"
@@ -136,15 +140,17 @@ const NavBar = () => {
             </li>
             <li className="menu-mobile">
               <div className="flex">
-                <img src={globalLogo} alt="Global logo"></img>
-                <div className="relative pr-[8px] ">
+                {/* <img src={globalLogo} alt="Global logo"></img> */}
+                {/* <div className="relative pr-[8px] ">
                   <select
                     className="w-12 ml-1 p-[4px] bg-[#F8FEFF] "
                     name=""
                     id=""
+                    value={selectedOption}
+                    onChange={handleSelectChange}
                   >
                     <option className="" value="BDT">
-                      BDT
+                      <img src={globalLogo} alt="Global logo"></img> BDT
                     </option>
                     <option className="" value="USD">
                       USD
@@ -156,17 +162,33 @@ const NavBar = () => {
                     src={arrowDownIcon}
                     alt="Aroow icon"
                   />
-                </div>
+                </div> */}
 
-                {/* <div className="bg-[#F8FEFF] flex items-center ml-2" name="" id="">
-                  <p className="bg-white " value="BDT">
-                    BDT
+                <div
+                  className="bg-[#F8FEFF] flex items-center gap-[4px] relative"
+                  name=""
+                  id=""
+                  onClick={() => setCountry(!country)}
+                >
+                  <img src={selectedCountry.flag} alt="" />
+                  <p className="bg-white cursor-default" value="BDT">
+                    {selectedCountry.name}
                   </p>
                   <img src={arrowDownIcon} alt="" />
-                  <div>
-                    <p>BDT</p>
-                  </div>
-                </div> */}
+                  {country && (
+                    <div className="absolute top-[20px] w-fit cursor-pointer flex flex-col z-10 rounded-[4px]  border-[1px] p-[4px]">
+                      {countryList.map((country) => (
+                        <div key={country.id} onClick={()=>setSelectedCountry(country)} className="p-[2px] flex gap-[4px]">
+                          <img
+                            src={country.flag}
+                            alt="Global logo"
+                          ></img>
+                          <p>{country.name}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </li>
           </div>
