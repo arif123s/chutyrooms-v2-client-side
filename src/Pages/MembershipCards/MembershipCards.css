@@ -37,6 +37,15 @@
   margin: auto;
 }
 
+ /* Material UI Toggle button customize */
+.css-j204z7-MuiFormControlLabel-root {
+  margin-right: 0px;
+}
+
+    /* left: 2px;
+    top: 0;
+    position: absolute; */
+
 @media (max-width: 575.98px) {
     .membership-card-container {
   margin-top: 20px;

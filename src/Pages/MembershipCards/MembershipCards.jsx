@@ -2,15 +2,15 @@ import "./MembershipCards.css";
 import platinumCard from "../../assets/membership/platinum-card.png";
 import goldCard from "../../assets/membership/gold-card.png";
 import silverCard from "../../assets/membership/silver-card.png";
+import alert from "../../assets/icons/alert-circle.svg";
 import { useState } from "react";
+import { styled } from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
-// import { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
 
 const MembershipCards = () => {
-
   const [purchasedCards, setPurchasedCards] = useState([
     {
       id: 1,
@@ -19,6 +19,7 @@ const MembershipCards = () => {
       title: "Flat 8% discount on every purchase",
       validation: "Validation: 1 year",
       price: " Tk 1500 tk",
+      isActive: true,
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ const MembershipCards = () => {
       title: "Flat 4.5% discount on every purchase",
       validation: "Validation: 1 year",
       price: " Tk 1000 tk",
+      isActive: false,
     },
   ]);
 
@@ -57,13 +59,124 @@ const MembershipCards = () => {
     },
   ];
 
+  const [activatedCardId, setActivatedCardId] = useState(null);
+
+  const [checked, setChecked] = useState(false);
+  const [newActivatedCardId, setNewActivatedCardId] = useState(null);
+
   const notPurchasedMembershipCards = membershipCards.filter(
     (card) =>
       !purchasedCards.some((purchasedCard) => purchasedCard.id === card.id)
   );
 
-  console.log(notPurchasedMembershipCards)
+  // const IOSSwitch = styled((props) => (
+  //   <Switch
+  //     focusVisibleClassName=".Mui-focusVisible"
+  //     disableRipple
+  //     {...props}
+  //   />
+  // ))(({ theme }) => ({
+  //   width: 42,
+  //   height: 24,
+  //   padding: 0,
+  //   "& .MuiSwitch-switchBase": {
+  //     padding: 0,
+  //     margin: 2,
+  //     transitionDuration: "300ms",
+  //     "&.Mui-checked": {
+  //       transform: "translateX(16px)",
+  //       color: "#fff",
+  //       "& + .MuiSwitch-track": {
+  //         backgroundColor:
+  //           theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+  //         opacity: 1,
+  //         border: 0,
+  //       },
+  //       "&.Mui-disabled + .MuiSwitch-track": {
+  //         opacity: 0.5,
+  //       },
+  //     },
+  //     "&.Mui-focusVisible .MuiSwitch-thumb": {
+  //       color: "#33cf4d",
+  //       border: "6px solid #fff",
+  //     },
+  //     "&.Mui-disabled .MuiSwitch-thumb": {
+  //       color:
+  //         theme.palette.mode === "light"
+  //           ? theme.palette.grey[100]
+  //           : theme.palette.grey[600],
+  //     },
+  //     "&.Mui-disabled + .MuiSwitch-track": {
+  //       opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+  //     },
+  //   },
+  //   "& .MuiSwitch-thumb": {
+  //     boxSizing: "border-box",
+  //     width: 19,
+  //     height: 19,
+  //   },
+  //   "& .MuiSwitch-track": {
+  //     borderRadius: 26 / 2,
+  //     backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+  //     opacity: 1,
+  //     transition: theme.transitions.create(["background-color"], {
+  //       duration: 1000,
+  //     }),
+  //   },
+  // }));
 
+  // console.log(checked);
+  // console.log(purchasedCards);
+
+  const handleActivateCard = (cardId) => {
+    const cardToActivate = purchasedCards.find((card) => card.id === cardId);
+
+    //  if (!cardToActivate.isActive) {
+    const updatedCards = purchasedCards.map((card) =>
+      card.id === cardId ? { ...card, isActive: !card.isActive } : card
+    );
+    setNewActivatedCardId(cardId);
+    setPurchasedCards(updatedCards);
+    setChecked(true);
+    // setActivatedCardId(cardId)
+    //  }
+    // setPurchasedCards(updatedCards);
+    // setNewActivatedCardId(cardId);
+    // setShowModal(true);
+    //  else {
+    //    setNewActivatedCardId(null);
+    //    setActivatedCardId(cardId);
+    //  }
+  };
+
+  const handleNotActivateCard = (id) => {
+    let count=0;
+    purchasedCards.map(card=>card.isActive===true?count++:count)
+    console.log(count)
+    if(count>0){
+      document.getElementById("activate-card-modal").showModal();
+      setActivatedCardId(id);
+    }
+    else{
+      const updatedCards = purchasedCards.map((card) =>
+        card.id === id
+          ? { ...card, isActive: true }
+          : { ...card, isActive: false }
+      );
+      setPurchasedCards(updatedCards);
+      // setActivatedCardId(id);
+    }
+  };
+
+  const handleConfirmActivationChange = () => {
+    const updatedCards = purchasedCards.map((card) =>
+      card.id === activatedCardId
+        ? { ...card, isActive: true }
+        : { ...card, isActive: false }
+    );
+    setPurchasedCards(updatedCards);
+    setChecked(true);
+  };
 
   //    const handleOptionSelect = (option) => {
   //      setSelectedCountry(option);
@@ -74,14 +187,26 @@ const MembershipCards = () => {
 
   //  }
 
+
+
   return (
     <div className="custom-container membership-card-container">
       <h2 className="text-center text-[18px] md:text-[24px] lg:text-[32px] font-['Gilroy-semibold']">
-        Select Your Membership Card
+        Membership Card
       </h2>
 
-      {purchasedCards?.length && (
+      {purchasedCards?.length > 0 && (
         <div className="cards-container">
+          {/* <FormControlLabel
+            onChange={(e) => handleTogggole(e)}
+            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+            label="iOS style"
+          /> */}
+          {purchasedCards?.length > 0 && (
+            <h2 className="text-[16px] md:text-[18px] lg:text-[24px] font-['Gilroy-semibold'] mb-[12px]">
+              Purchased Membership Card
+            </h2>
+          )}
           <div className="cards">
             {purchasedCards.map((card) => (
               <div key={card.id} className="card">
@@ -89,11 +214,27 @@ const MembershipCards = () => {
                   <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold']">
                     {card.name}
                   </h2>
-                 
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-success w-[44px] h-[20px] lg:w-[46px] lg:h-[23px]"
-                    />
+                  {/* <FormControlLabel
+                    onChange={() => {
+                      !card.isActive
+                        ? handleNotActivateCard(card.id)
+                        : handleActivateCard(card.id);
+                    }}
+                    control={
+                      <IOSSwitch sx={{ m: 1 }} defaultChecked={card.isActive} />
+                    }
+                  /> */}
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-success w-[44px] h-[20px] lg:w-[46px] lg:h-[23px]"
+                    checked={card.isActive}
+                    onClick={() => setChecked(!checked)}
+                    onChange={() => {
+                      !card.isActive
+                        ? handleNotActivateCard(card.id)
+                        : handleActivateCard(card.id);
+                    }}
+                  />
                 </div>
                 <img className="card-img" src={card.img} alt="Platinum Card" />
                 <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
@@ -107,19 +248,57 @@ const MembershipCards = () => {
                 </p>
               </div>
             ))}
-            <div></div>
           </div>
-          {/* <div className="text-center">
-            <button
-              onClick={(e) => (e.preventDefault(), setPurchase(true))}
-              className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
-            >
-              Purchase
-            </button>
-          </div> */}
         </div>
       )}
+
+      <dialog id="activate-card-modal" className="modal">
+        <div className="modal-box ">
+          <h2>Confirmation Card</h2>
+          <div className="h-[1px] bg-[#C0C3C1] my-[18px]" />
+          <form method="dialog">
+            <div className="modal-content">
+              <div className="flex items-start gap-[18px]">
+                <img className="mt-[8px]" src={alert} alt="" />
+                <div className="text-[#159947]">
+                  <p className="">
+                    The previous card will become inactive if it is being
+                    activated.
+                  </p>
+                  <span className="font-[Gilroy-semibold] text-[14px]">
+                    If you agree, then press yes.
+                  </span>
+                </div>
+              </div>
+              
+              <div className="h-[1px] bg-[#C0C3C1] my-[18px]" />
+
+              <div className="modal-buttons flex justify-end gap-[8px]">
+                <button className="h-[36px] w-[70px] text-[14px] bg-red-500 rounded-[8px] text-white">
+                  Cancel
+                </button>
+                <button
+                  className="h-[36px] text-[14px] w-[70px] bg-[#159947] rounded-[8px] text-white"
+                  onClick={() => handleConfirmActivationChange()}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+            <div>
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </div>
+          </form>
+        </div>
+      </dialog>
+
       <div className="cards-container">
+        <h2 className="text-[16px] md:text-[18px] lg:text-[24px] font-['Gilroy-semibold'] mb-[12px]">
+          Add Another Membership Plan?
+        </h2>
+
         <div className="cards">
           {notPurchasedMembershipCards.map((card) => (
             <div key={card.id} className="card">
