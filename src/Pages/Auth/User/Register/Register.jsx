@@ -7,9 +7,10 @@ import countryIcon from "../../../../assets/bd.svg";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { otpInfo, registerUser } from "../../../../features/user/userSlice";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import "./Register.css";
+import { registerUser } from "../../../../redux/features/user/userSlice";
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -159,7 +160,7 @@ const Register = () => {
                 })
               );
               dispatch(registerUser(data));
-              dispatch(otpInfo(data));
+              // dispatch(otpInfo(data));
               navigate(`/otp-phone`);
             }
             if (data.status == 101) {
@@ -173,7 +174,7 @@ const Register = () => {
                 })
               );
               dispatch(registerUser(data));
-              dispatch(otpInfo(data));
+              // dispatch(otpInfo(data));
               navigate(`/otp-email`);
             } else {
               // console.log("Registration failed!", data?.errors?.username[0]);

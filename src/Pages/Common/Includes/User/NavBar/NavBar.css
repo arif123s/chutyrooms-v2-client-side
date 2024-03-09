@@ -1,5 +1,5 @@
 .navbar-container {
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 .nav-chuty-logo {
@@ -67,7 +67,7 @@ a:hover .nav-icon.light {
 
 @media (max-width: 575.98px) {
   .navbar-container {
-    padding-top: 20px;
+    padding-top: 8px;
   }
 
   .nav-chuty-logo {

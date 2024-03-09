@@ -264,7 +264,19 @@ const BookingPreview = () => {
           <div className="booking-details-container">
             <div>
               <div className="flex gap-[12px] lg:gap-[18px]">
-                <img className="booked-hotel-img" src={hotel1} alt="" />
+                <div className="booked-hotel-img relative">
+                  <img className="booked-hotel-img" src={hotel1} alt="" />
+                  <div className="absolute top-[6px] md:top-[10px] lg:top-[10px] z-10 px-[6px] md:px-[10px] lg:px-[10px]">
+                    <div className="flex h-6 md:h-8 lg:h-8 p-1.5 md:p-2 lg:p-2 bg-zinc-500 rounded-[5px] border border-white justify-center items-center gap-[4px]">
+                      <div className="">
+                        <img className="w-[12px]" src={starFill} alt="" />
+                      </div>
+                      <p className="text-white text-[10px] md:text-[12px] lg:text-[12px]">
+                        <span className="mr-[2px]">4</span>Star
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="">
                   <p className="flex justify-center items-center text-[14px] lg:text-[16px] h-[28px] lg:h-[32px] p-[10px] border-[1px] border-[#808783] w-fit rounded-[4px]">
@@ -307,7 +319,9 @@ const BookingPreview = () => {
                           />
                           <img className="" src={starBlank} alt="rating" />
                         </div>
-                        <p className="text-[14px]">4.8 (21 Reviews) </p>
+                        <p className="text-[12px] md:text-[14px] lg:text-[14px]">
+                          4.8 (21 Reviews){" "}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -349,12 +363,13 @@ const BookingPreview = () => {
                       <span className="text-[12px]">(2 Adults 0 Child)</span>
                     </p>
                     <p className="text-center">1X</p>
-                    <p className="text-right">2300</p>
+                    <p className="text-right">BDT 2300</p>
                   </div>
                   <div className="flex justify-between mt-[18px]">
                     <p>ChutyRooms Offer</p>
                     <p className="flex items-center ml-auto gap-[4px]">
-                      <img src={minus} alt="" /> 0
+                      <img src={minus} alt="" />
+                      BDT 0
                     </p>
                   </div>
                 </div>
@@ -365,20 +380,21 @@ const BookingPreview = () => {
                   <div className="grid grid-cols-3 justify-between">
                     <p className=" text-left">Room Rate</p>
                     <p className="text-center">1X</p>
-                    <p className="text-right">2300</p>
+                    <p className="text-right">BDT 2300</p>
                   </div>
                   <div className="grid grid-cols-3 justify-between mt-[18px]">
                     <p className=" text-left">Extra Bed</p>
                     <p className="text-center">0X</p>
                     <p className="flex items-center ml-auto gap-[4px]">
-                      <img src={plus} alt="" /> 0
+                      <img src={plus} alt="" />
+                      BDT 0
                     </p>
                   </div>
 
                   <div className="flex justify-between mt-[18px]">
-                    <div className="flex gap-[24px]">
+                    <div className="flex gap-[8px] md:gap-[24px] lg:gap-[24px]">
                       <p>Promo Code</p>
-                      <div className="flex gap-[12px]">
+                      <div className="flex gap-[8px] md:gap-[12px] lg:gap-[12px]">
                         <input
                           className="w-[70px] border-[1px] rounded-[4px] py-[2px] px-[4px]"
                           type="text"

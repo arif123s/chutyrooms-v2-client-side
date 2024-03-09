@@ -7,7 +7,7 @@ import HomePage from "../Pages/Home/Home/HomePage/HomePage";
 import Login from "../Pages/Auth/Login/Login";
 import OwnerRegister from "../Pages/Auth/Owner/OwnerRegister/OwnerRegister";
 import Register from "../Pages/Auth/User/Register/Register";
-import MembershipCards from "../Pages/Home/Home/MembershipCards/MembershipCards";
+import MembershipCards from "../Pages/MembershipCards/MembershipCards";
 import ForgetPassword from "../Pages/Auth/ForgetPassword/ForgetPassword";
 import ForgetPasswordOtp from "../Pages/Auth/ForgetPassword/ForgetPasswordOtp";
 import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
@@ -39,6 +39,12 @@ import DistrictList from "../Pages/Dashboard/SoftwareSetup/District/DistrictList
 import DistrictAdd from  "../Pages/Dashboard/SoftwareSetup/District/DistrictAdd";
 import DistrictEdit from "../Pages/Dashboard/SoftwareSetup/District/DistrictEdit";
 import HotelDetails from "../Pages/Home/HotelDetails/HotelDetails";
+
+import Profile from "../Pages/Dashboard/Profile/Profile";
+import EditProfile from "../Pages/Dashboard/Profile/EditProfile";
+
+import ProtectedRoute from "../Layout/ProtectedRoute";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -118,117 +124,105 @@ export const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <Dashboard></Dashboard>,
+        element: (
+          <ProtectedRoute>
+            <Dashboard></Dashboard>
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: "/dashboard",
             element: <DashboardHome></DashboardHome>,
           },
           {
+            path: "/dashboard/profile",
+            element: <Profile></Profile>,
+          },
+          {
+            path: "/dashboard/edit-profile",
+            element: <EditProfile></EditProfile>,
+          },
+          {
             path: "/dashboard/country",
             element: <Country></Country>,
-            children:[
-             { 
-              path:"/dashboard/country",
-              element:<CountryList></CountryList>,
-            },
-             { 
-              path:"/dashboard/country/countryAdd",
-              element:<CountryAdd></CountryAdd>,
-            },
-            {
-              path:"/dashboard/country/countryEdit/:id",
-              element:<CountryEdit></CountryEdit>
-            }
-            ]
+            children: [
+              {
+                path: "/dashboard/country",
+                element: <CountryList></CountryList>,
+              },
+              {
+                path: "/dashboard/country/countryAdd",
+                element: <CountryAdd></CountryAdd>,
+              },
+              {
+                path: "/dashboard/country/countryEdit/:id",
+                element: <CountryEdit></CountryEdit>,
+              },
+            ],
           },
 
           {
             path: "/dashboard/division",
             element: <Division></Division>,
-            children:[
-              { 
-               path:"/dashboard/division",
-               element:<DivisionList></DivisionList>,
-             },
+            children: [
+              {
+                path: "/dashboard/division",
+                element: <DivisionList></DivisionList>,
+              },
 
-             { 
-              path:"/dashboard/division/divisionAdd",
-              element:<DivisionAdd></DivisionAdd>,
-            },
+              {
+                path: "/dashboard/division/divisionAdd",
+                element: <DivisionAdd></DivisionAdd>,
+              },
 
-            { 
-              path:"/dashboard/division/divisionEdit/:id",
-              element:<DivisionEdit></DivisionEdit>,
-            },
-             
-             ]
-
+              {
+                path: "/dashboard/division/divisionEdit/:id",
+                element: <DivisionEdit></DivisionEdit>,
+              },
+            ],
           },
 
-        
-
-        {
+          {
             path: "/dashboard/district",
             element: <DistrictInfo></DistrictInfo>,
-            children:[
-              { 
-               path:"/dashboard/district",
-               element:<DistrictList></DistrictList>,
-             },
+            children: [
+              {
+                path: "/dashboard/district",
+                element: <DistrictList></DistrictList>,
+              },
 
-             { 
-              path:"/dashboard/district/districtAdd",
-              element:<DistrictAdd></DistrictAdd>,
-            },
+              {
+                path: "/dashboard/district/districtAdd",
+                element: <DistrictAdd></DistrictAdd>,
+              },
 
-            { 
-              path:"/dashboard/district/districtEdit/:id",
-              element:<DistrictEdit></DistrictEdit>,
-            },
-
-
-
-            
-
-        
-             
-             ]
-
-          },  
-
+              {
+                path: "/dashboard/district/districtEdit/:id",
+                element: <DistrictEdit></DistrictEdit>,
+              },
+            ],
+          },
 
           {
             path: "/dashboard/Area",
             element: <Area></Area>,
-            children:[
-              { 
-               path:"/dashboard/Area",
-               element:<AreaList></AreaList>,
-             },
+            children: [
+              {
+                path: "/dashboard/Area",
+                element: <AreaList></AreaList>,
+              },
 
-             { 
-              path:"/dashboard/Area/AreaAdd",
-              element:<AreaAdd></AreaAdd>,
-            },
+              {
+                path: "/dashboard/Area/AreaAdd",
+                element: <AreaAdd></AreaAdd>,
+              },
 
-            { 
-              path:"/dashboard/Area/AreaEdit/:id",
-              element:<AreaEdit></AreaEdit>,
-            },
-
-
-
-            
-
-        
-             
-             ]
-
-          },  
-
-
-         
+              {
+                path: "/dashboard/Area/AreaEdit/:id",
+                element: <AreaEdit></AreaEdit>,
+              },
+            ],
+          },
         ],
       },
       {

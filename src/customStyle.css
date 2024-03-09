@@ -31,6 +31,14 @@ body {
   font-family: "Gilroy";
 }
 
+input {
+  background-color: transparent !important;
+}
+
+input:-internal-autofill-selected {
+  background: white !important;
+}
+
 /* @layer base { */
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button,

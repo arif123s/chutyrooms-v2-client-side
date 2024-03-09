@@ -1,7 +1,8 @@
 
 import { useState, useRef, useEffect } from "react";
 // import Menu from "../../../../assets/icons/menu.svg"
-import ChutyLogo from "../../../../assets/icons/Chuty-logo.svg"
+// import ChutyLogo from "../../../../assets/icons/Chuty-logo.svg"
+import ChutyLogo from "../../../../assets/icons/chuty-logo.png"
 import ChutySmallLogo from "../../../../assets/icons/Chuty-logo-small.svg"
 import Category from "../../../../assets/icons/category.svg"
 import CategoryGreen from "../../../../assets/icons/category-green.svg"
@@ -22,9 +23,8 @@ import { Link, useNavigate } from "react-router-dom";
 const menuClicked = '';
 
 const SideBar = ({open,setOpen}) => {
+  const [active, setActive] = useState(false);
 
-  // const [open, setOpen] = useState(true);
-  const [clickedMenu, setClickedMenu] = useState(false);
   const [handleclick, sethandleclick] = useState(menuClicked);
   const prevMenuClicked = useRef(menuClicked);
   const [toggleOpen , setToggleOpen] = useState(false);
@@ -38,7 +38,7 @@ const navigate = useNavigate();
 
   const handleSlideUp = (link) => {
   
-    // console.log(prevMenuClicked.current, link, toggleOpen);
+  
     
 
     if(prevMenuClicked.current != link){
@@ -53,12 +53,11 @@ const navigate = useNavigate();
     setActive(link);
     sethandleclick(link);
  
-    // console.log(prevMenuClicked.current, handleclick);
   };
 
-  const ishandleclick = (link) => handleclick === link;
+ 
 
-  const [active, setActive] = useState(false);
+ 
 
   // alert(clickedMenu)
 
@@ -66,58 +65,57 @@ const navigate = useNavigate();
     setActive(color)
   };
 
-  const iscolorClick = (color) => active === color;
 
-  // const [handleNavLink, setHandleNavLink] = useState(true);
-
-
-  // const handleSlideUp = (link) => {
-
-  //   sethandleclick(link);
-
-
-  // };
-
-  // // const ishandleclick = (link)=>handleclick === link;
-
-
-  // const [active, setActive] = useState(null);
-  // const ColorhandleClick = (color) => {
-
-  //   setActive(color)
-  // };
-  // const iscolorClick = (color) => active === color;
 
   const lists = [
     {
-      name: 'Dashboard', path: '/dashboard', icon: Category, clickedicon: CategoryGreen, submenu: [
-
-      ]
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: Category,
+      clickedicon: CategoryGreen,
+      submenu: [],
     },
     {
-      name: 'Rooms', path: '#', icon: Key, clickedicon: KeyGreen, submenu: [
-        { name: 'All Rooms', path: '#' },
-        { name: 'Edit Rooms', path: '#' }
-      ]
+      name: "Profile",
+      path: "/dashboard/profile",
+      icon: Key,
+      clickedicon: KeyGreen,
+      submenu: [],
     },
     {
-      name: 'Email', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
-        { name: 'All Emails', path: '/property-add' },
-        { name: 'Edit Email', path: '#' }
-      ]
+      name: "Rooms",
+      path: "#",
+      icon: Key,
+      clickedicon: KeyGreen,
+      submenu: [
+        { name: "All Rooms", path: "#" },
+        { name: "Edit Rooms", path: "#" },
+        { name: "Add Room", path: "/room-add" },
+      ],
+    },
+    {
+      name: "Email",
+      path: "#",
+      icon: Email,
+      clickedicon: EmailGreen,
+      submenu: [
+        { name: "All Emails", path: "/property-add" },
+        { name: "Edit Email", path: "#" },
+      ],
     },
 
     {
-      name: 'Software Setup', path: '#', icon: Email, clickedicon: EmailGreen, submenu: [
-        { name: 'Country', path: '/dashboard/country' },
-        { name: 'Division', path: '/dashboard/division' },
-        { name: 'District', path: '/dashboard/district' },
-        { name: 'Area', path: '/dashboard/Area' },
-       
-      ]
+      name: "Software Setup",
+      path: "#",
+      icon: Email,
+      clickedicon: EmailGreen,
+      submenu: [
+        { name: "Country", path: "/dashboard/country" },
+        { name: "Division", path: "/dashboard/division" },
+        { name: "District", path: "/dashboard/district" },
+        { name: "Area", path: "/dashboard/Area" },
+      ],
     },
-
-   
   ];
 
   return (

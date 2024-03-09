@@ -120,7 +120,13 @@ margin-right: 4px;
     --swiper-navigation-size: 18px;
 }
 
-.hotel-img-slider .swiper-button-prev, .swiper-button-next {
+.hotel-img-slider .swiper-button-prev {
+  width: 34px;
+  height: 34px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+.hotel-img-slider .swiper-button-next {
   width: 34px;
   height: 34px;
   background: #FFFFFF;
@@ -184,7 +190,7 @@ margin-right: 4px;
   bottom: 36px;
   left: 44%; */
   display: flex;
-  height: 32px;
+  height: 40px;
   padding: 0 16px;
   background: #1D6BE5;
   box-shadow: 0px 8px 25px rgba(15.65, 90.17, 234.81, 0.25);

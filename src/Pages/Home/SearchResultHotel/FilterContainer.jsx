@@ -72,7 +72,7 @@ const FilterContainer = () => {
           <div className="property-input-div">
             <select
               id="popularity"
-              className="property-input text-[14px] md:text-[16px] lg:text-[16px]"
+              className="bg-[#F8FEFF] property-input text-[14px] md:text-[16px] lg:text-[16px] "
               name="popularity"
             >
               <option value="">Popularity</option>
@@ -107,7 +107,7 @@ const FilterContainer = () => {
                 BDT
               </label>
               <input
-                className="w-[48px] outline-none"
+                className="w-[48px] outline-none bg-[#F8FEFF]"
                 type="number"
                 name="lowest-price"
                 id="lowest-price"
@@ -123,7 +123,7 @@ const FilterContainer = () => {
                 BDT
               </label>
               <input
-                className="w-[48px] md:w-[60px] lg:w-[60px] outline-none"
+                className="w-[48px] md:w-[60px] lg:w-[60px] outline-none bg-[#F8FEFF]"
                 type="number"
                 name="lowest-price"
                 id="lowest-price"

@@ -137,6 +137,25 @@ const SearchField = () => {
     navigate("/search-result-hotel");
   }
 
+
+
+
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
     return (
 
 
@@ -144,7 +163,7 @@ const SearchField = () => {
 
         
 
-        <div className='main-container'>
+      
 
 
 
@@ -168,7 +187,7 @@ const SearchField = () => {
         monthsShown={2}
       /> */}
        
-        <div className='searchBox '>
+        <div  className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>
         
         
         
@@ -287,7 +306,7 @@ const SearchField = () => {
 
           
 
-            </div>
+            
             
         </div>
     );

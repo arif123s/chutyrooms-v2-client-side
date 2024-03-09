@@ -48,6 +48,49 @@
   }
 }
 
+.scroll-show-sticky {
+  /* position: sticky;
+  top: 0;
+  height: fit-content;
+  z-index: 2; */
+  background-color: #ffff;
+  display: flex;
+  padding-left: 200px;
+
+  /* justify-content: space-between; */
+}
+
+.stickyLogo
+{
+  height: 50px;
+  margin-top: 20px;
+}
+
+.scroll-show-sticky.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffff;
+  padding: 0px 40px;
+  z-index: 1000;
+}
+
+
+.scroll-show-sticky {
+  transition: opacity 0.3s ease, position 0.3s ease; /* Add transitions for smooth appearance */
+  opacity: 1; /* Initial opacity */
+}
+
+.scroll-show-sticky.hide {
+  display: none; /* Set opacity to 0 to hide the element when the 'hide' class is present */
+}
+
+.scroll-show-sticky.custom-container.searchBox 
+{
+  border: none;
+}
+
 @media (max-width: 575.98px) {
   .homepage-title {
     font-size: 18px;
@@ -69,6 +112,11 @@
     bottom: 60px;
     width: 40px;
     height: 40px;
+  }
+
+  .scroll-show-sticky
+  {
+    display: none;
   }
 }
 
@@ -95,6 +143,11 @@
     width: 48px;
     height: 48px;
   }
+
+  .scroll-show-sticky
+  {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -114,6 +167,10 @@
     bottom: 60px;
     width: 52px;
     height: 52px;
+  }
+  .scroll-show-sticky
+  {
+    display: none;
   }
 }
 
@@ -135,6 +192,11 @@
     width: 56px;
     height: 56px;
   }
+
+  .stickyLogo
+  {
+    margin-top: 40px;
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
@@ -149,5 +211,14 @@
     bottom: 60px;
     width: 60px;
     height: 60px;
+  }
+
+  .scroll-show-sticky.sticky {
+    padding: 0 10px;
+  }
+
+  .Room-Guest-quantity
+  {
+    font-size: 15px;
   }
 }
