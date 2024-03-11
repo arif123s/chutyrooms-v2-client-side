@@ -56,7 +56,7 @@
   }
 
    .membership-card {
-    height: 180px;
+    height: 172px;
   }
 }
 
@@ -80,7 +80,7 @@
   }
 
    .membership-card {
-    height: 160px;
+    height: 186px;
   }
 }
 
@@ -99,7 +99,7 @@
   }
 
    .membership-card {
-    height: 170px;
+    height: 190px;
   }
 }
 
@@ -121,7 +121,7 @@
 
    .membership-card {
     /* width: 440px; */
-    height: 230px;
+    height: 250px;
   }
 }
 
@@ -130,4 +130,8 @@
     width: 28%;
     margin-top: 78px;
   }
+
+  .membership-card {
+  height: 184px;
+}
 }

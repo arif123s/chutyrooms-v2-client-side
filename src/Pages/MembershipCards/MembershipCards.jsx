@@ -30,6 +30,14 @@ const MembershipCards = () => {
       price: " Tk 1000 tk",
       isActive: false,
     },
+    // {
+    //   id: 3,
+    //   img: silverCard,
+    //   name: "Silver",
+    //   title: " Flat 2% discount on every purchase",
+    //   validation: "Validation: 1 year",
+    //   price: " Tk 500 tk",
+    // },
   ]);
 
   const membershipCards = [
@@ -150,14 +158,13 @@ const MembershipCards = () => {
   };
 
   const handleNotActivateCard = (id) => {
-    let count=0;
-    purchasedCards.map(card=>card.isActive===true?count++:count)
-    console.log(count)
-    if(count>0){
+    let count = 0;
+    purchasedCards.map((card) => (card.isActive === true ? count++ : count));
+    console.log(count);
+    if (count > 0) {
       document.getElementById("activate-card-modal").showModal();
       setActivatedCardId(id);
-    }
-    else{
+    } else {
       const updatedCards = purchasedCards.map((card) =>
         card.id === id
           ? { ...card, isActive: true }
@@ -187,8 +194,6 @@ const MembershipCards = () => {
 
   //  }
 
-
-
   return (
     <div className="custom-container membership-card-container">
       <h2 className="text-center text-[18px] md:text-[24px] lg:text-[32px] font-['Gilroy-semibold']">
@@ -208,8 +213,8 @@ const MembershipCards = () => {
             </h2>
           )}
           <div className="cards">
-            {purchasedCards.map((card) => (
-              <div key={card.id} className="card">
+            {purchasedCards?.map((card) => (
+              <div key={card.id} className="card-container">
                 <div className="flex justify-between items-center mb-[8px]">
                   <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold']">
                     {card.name}
@@ -243,7 +248,7 @@ const MembershipCards = () => {
                 <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   {card.validation}
                 </p>
-                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] ">
                   {card.price}
                 </p>
               </div>
@@ -252,6 +257,7 @@ const MembershipCards = () => {
         </div>
       )}
 
+      {/* card confirmation modal */}
       <dialog id="activate-card-modal" className="modal">
         <div className="modal-box ">
           <h2>Confirmation Card</h2>
@@ -270,7 +276,7 @@ const MembershipCards = () => {
                   </span>
                 </div>
               </div>
-              
+
               <div className="h-[1px] bg-[#C0C3C1] my-[18px]" />
 
               <div className="modal-buttons flex justify-end gap-[8px]">
@@ -295,13 +301,15 @@ const MembershipCards = () => {
       </dialog>
 
       <div className="cards-container">
-        <h2 className="text-[16px] md:text-[18px] lg:text-[24px] font-['Gilroy-semibold'] mb-[12px]">
-          Add Another Membership Plan?
-        </h2>
+        {purchasedCards?.length > 0 && purchasedCards?.length<3 && (
+          <h2 className="text-[16px] md:text-[18px] lg:text-[24px] font-['Gilroy-semibold'] mb-[12px]">
+            Add Another Membership Plan?
+          </h2>
+        )}
 
         <div className="cards">
-          {notPurchasedMembershipCards.map((card) => (
-            <div key={card.id} className="card">
+          {notPurchasedMembershipCards?.map((card) => (
+            <div key={card.id} className="card-container">
               <img className="card-img" src={card.img} alt="Platinum Card" />
               <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
                 {card.title}
@@ -314,7 +322,7 @@ const MembershipCards = () => {
               </p>
               <button
                 // onClick={(e) => (e.preventDefault(), setPurchase(true))}
-                className="font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+                className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
               >
                 Purchase
               </button>
@@ -341,7 +349,7 @@ const MembershipCards = () => {
                 <input
                   className="inline-block"
                   type="radio"
-                  name="card"
+                  name="card-container"
                   id="platinum"
                 />
               </div> */}

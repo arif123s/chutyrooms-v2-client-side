@@ -4,12 +4,13 @@ import googleIcon from "../../../assets/icons/google-login.svg";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
 import { useLoginMutation } from "../../../redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/features/auth/authSlice";
+import { BASE_API } from "../../../BaseApi/BaseApi";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,59 +19,90 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-   const [errorMessage, setErrorMessage] = useState({
-     status: false,
-     message: "",
-     errors: [],
-   });
-   const dispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+    errors: [],
+  });
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
 
-  const [login,{error}]=useLoginMutation();
+  // const [login, { error }] = useLoginMutation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    const storedPassword = localStorage.getItem("password");
+    const storedRememberMe = localStorage.getItem("rememberMe");
+
+    if (storedUsername && storedRememberMe === "true") {
+      setUsername(storedUsername);
+      setPassword(storedPassword);
+      setRememberMe(true);
+    }
+  }, []);
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+    const handlePasswordChange = (e) => {
+      setPassword(e.target.value);
+    };
+
+    const handleRememberMeChange = (e) => {
+      setRememberMe(e.target.checked);
+    };
 
 
   if (loading) {
     return <Loading></Loading>;
   }
 
-  const onSubmit = async(data) => {
-    // You can implement your authentication logic here
+  const onSubmit = async (data) => {
     // console.log(data);
-
-     setErrorMessage({ status: false, message: "" });
-
-    // If "Remember Me" is checked, you can save the user's information (e.g., token) to localStorage
-    if (data.rememberMe) {
-      localStorage.setItem("userToken", "yourUserToken"); // Replace with the actual user token
-    }
-
     setLoading(true);
+    setErrorMessage({ status: false, message: "" });
+
+    // If "Remember me" is checked, store username and password
+    if (rememberMe) {
+      localStorage.setItem("username", username);
+      localStorage.setItem("password", password);
+      localStorage.setItem("rememberMe", rememberMe);
+    } else {
+      // Clear stored username and password if "Remember me" is unchecked
+      localStorage.removeItem("username");
+      localStorage.removeItem("password");
+      localStorage.removeItem("rememberMe");
+    }
 
     const user = {
       login: data.username,
       password: data.password,
     };
 
-    const res = await login(user).unwrap();
+    // const res = await login(user).unwrap();
 
-    const userInfo = {
-      user: {
-        id: res.data?.id,
-        name: res.data?.name,
-        img: res.data?.image,
-        role: "",
-      },
-      token: {
-        accessToken: res.accessToken,
-      },
-    };
-    console.log('info',userInfo)
+    // const userInfo = {
+    //   user: {
+    //     id: res.data?.id,
+    //     name: res.data?.name,
+    //     img: res.data?.image,
+    //     role: "",
+    //   },
+    //   token: {
+    //     accessToken: res.accessToken,
+    //   },
+    // };
+    // console.log("info", userInfo);
 
-    dispatch(setUser(userInfo))
- 
+    // dispatch(setUser(userInfo));
+
     // send user data to database
-    fetch("http://127.0.0.1:8000/api/user/login", {
+    fetch(`${BASE_API}/user/login`, {
+    // fetch("http://127.0.0.1:8000/api/user/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -80,30 +112,30 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
-        if (data.status===true) {
+        if (data.status === true) {
           console.log("Successfully logged in!", data);
-           localStorage.setItem("accessToken", data.accessToken);
-           localStorage.setItem(
-             "userInfo",
-             JSON.stringify({
-               id: data.data.id,
-               accessToken: data.accessToken,
-               name:data.data.name,
-               img:data.data.image,
-               role:""
-             })
-           );
+          localStorage.setItem("accessToken", data.accessToken);
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              id: data.data.id,
+              accessToken: data.accessToken,
+              name: data.data.name,
+              img: data.data.image,
+              role: "",
+            })
+          );
           toast.success(data.message);
           navigate("/");
         } else {
           console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });
           // toast.error(data.message);
-            setErrorMessage({
-              status: true,
-              message: data.message,
-              errors: [data.errors],
-            });
+          setErrorMessage({
+            status: true,
+            message: data.message,
+            errors: [data.errors],
+          });
         }
       });
   };
@@ -132,6 +164,8 @@ const Login = () => {
             id="username"
             name="username"
             type="text"
+            // value={username || ""}
+            onChange={handleUsernameChange}
             placeholder="Enter your phone number or email"
             {...register("username", {
               required: {
@@ -163,6 +197,8 @@ const Login = () => {
             id="password"
             name="password"
             type="password"
+            // value={password || ""}
+            onChange={handlePasswordChange}
             placeholder="Enter a password"
             {...register("password", {
               required: {
@@ -193,10 +229,12 @@ const Login = () => {
           <div className="flex items-center">
             {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
             <input
-              className="w-[12px] mr-2 text-[]"
+              className="w-[12px] mr-2"
               type="checkbox"
               name="rememberMe"
               id="rememberMe"
+              // checked={rememberMe}
+              onChange={handleRememberMeChange}
               {...register("rememberMe")}
             />
             <label htmlFor="rememberMe">Remember me?</label>

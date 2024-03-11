@@ -5,6 +5,7 @@ import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
 
 import './District.css'; 
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const DistrictAdd = () => {
 
@@ -31,18 +32,18 @@ const DistrictAdd = () => {
       }
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-                
-                setCountryList(data.data.data)
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        fetch(`${BASE_API}/country`, {
+          // fetch('http://127.0.0.1:8000/api/country', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setCountryList(data.data.data);
+          })
+          .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
 
@@ -54,7 +55,8 @@ const DistrictAdd = () => {
         setSelectedCountry(selectedCountryId);
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
+        fetch(`${BASE_API}/division/${selectedCountryId}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -76,29 +78,24 @@ const DistrictAdd = () => {
    
        try{
          
-        await axios.post('http://127.0.0.1:8000/api/district',
-       
-        DistrictField, 
-         {
-         
-           headers: {
-             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-           }
-         }
+        await axios.post(`${BASE_API}/district`,
+            // await axios.post('http://127.0.0.1:8000/api/district',
 
-         
-         
-         )
+            DistrictField,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
 
-         .then(response => {
-           // Successful response
-           console.log(response.data);
-           if(response.data.status == 1)
-           {
-               navigate('/dashboard/district');
-           }
-     
-       });
+          .then((response) => {
+            // Successful response
+            console.log(response.data);
+            if (response.data.status == 1) {
+              navigate("/dashboard/district");
+            }
+          });
 
         
        //   

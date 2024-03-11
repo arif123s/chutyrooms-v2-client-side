@@ -3,6 +3,7 @@ import './Division.css';
 import arrowDownIcon from './../../../../assets/icons/arrow-down.svg';
 import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const DivisionAdd = () => {
 
@@ -27,18 +28,18 @@ const DivisionAdd = () => {
       }
     
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-                
-                setCountryList(data.data.data)
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        fetch(`${BASE_API}/country`, {
+          // fetch('http://127.0.0.1:8000/api/country', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setCountryList(data.data.data);
+          })
+          .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
     const onSubmitChange = async (e) =>{
@@ -47,29 +48,24 @@ const DivisionAdd = () => {
     
         try{
           
-         await axios.post('http://127.0.0.1:8000/api/division',
-        
-         DivisionField, 
-          {
-          
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-          }
+         await axios.post(`${BASE_API}/division`,
+             //  await axios.post('http://127.0.0.1:8000/api/division',
 
-          
-          
-          )
+             DivisionField,
+             {
+               headers: {
+                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+               },
+             }
+           )
 
-          .then(response => {
-            // Successful response
-            console.log(response.data);
-            if(response.data.status == 1)
-            {
-                navigate('/dashboard/division');
-            }
-      
-        });
+           .then((response) => {
+             // Successful response
+             console.log(response.data);
+             if (response.data.status == 1) {
+               navigate("/dashboard/division");
+             }
+           });
 
          
         //   

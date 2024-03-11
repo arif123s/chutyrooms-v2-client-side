@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
+import { BASE_API } from "../../../../BaseApi/BaseApi";
 
 const OtpEmailVerification = () => {
 
@@ -111,7 +112,8 @@ const OtpEmailVerification = () => {
        setLoading(true);
 
        // get data
-       fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
+       fetch(`${BASE_API}/user/otp/verify/resend?user=${user.id}`)
+      //  fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
          .then((res) => res.json())
          .then((data) => {
            setLoading(false);
@@ -137,7 +139,8 @@ const OtpEmailVerification = () => {
        // setOtpError({ status: false, message: "" });
 
        // get data
-       fetch( `http://127.0.0.1:8000/api/user/email/verify?user=${user.id}&token=${concatOtp}`)
+       fetch( `${BASE_API}/user/email/verify?user=${user.id}&token=${concatOtp}`)
+      //  fetch( `http://127.0.0.1:8000/api/user/email/verify?user=${user.id}&token=${concatOtp}`)
          .then((res) => res.json())
          .then((data) => {
            setLoading(false);

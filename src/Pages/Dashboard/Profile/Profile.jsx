@@ -53,7 +53,7 @@ const navigate  = useNavigate();
           </h2>
           <div className="mt-[14px] ">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]">
-              <div className="card">
+              <div className="card-container">
                 <img
                   className="card-img"
                   src={platinumCard}
@@ -65,12 +65,12 @@ const navigate  = useNavigate();
                 <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Validation: 1 year
                 </p>
-                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Tk 1500 tk
                 </p>
               </div>
 
-              <div className="card">
+              <div className="card-container">
                 <img className="card-img" src={goldCard} alt="Gold Card" />
                 <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
                   Flat 4.5% discount on every purchase
@@ -78,7 +78,7 @@ const navigate  = useNavigate();
                 <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Validation: 1 year
                 </p>
-                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Tk 1000 tk
                 </p>
               </div>

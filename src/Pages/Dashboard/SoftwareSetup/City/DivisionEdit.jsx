@@ -3,6 +3,7 @@ import React ,{ useEffect, useState } from 'react';
 import { useParams , useNavigate} from 'react-router';
 import arrowDownIcon from './../../../../assets/icons/arrow-down.svg'
 import { toast } from 'react-toastify';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const DivisionEdit = () => {
 
@@ -27,18 +28,19 @@ const DivisionEdit = () => {
       }
     
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                setCountryList(data.data.data)
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        fetch(`${BASE_API}/country`, {
+          // fetch('http://127.0.0.1:8000/api/country', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setCountryList(data.data.data);
+          })
+          .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
 
@@ -48,7 +50,8 @@ const DivisionEdit = () => {
     },[id])
 
     const fetchUser = async()=>{
-        const result = await axios.get(`http://127.0.0.1:8000/api/division/${id}/edit`,
+        const result = await axios.get(`${BASE_API}/division/${id}/edit`,
+        // const result = await axios.get(`http://127.0.0.1:8000/api/division/${id}/edit`,
         {
       
             headers: {
@@ -70,7 +73,8 @@ const DivisionEdit = () => {
 
       const onSubmitChange = async (e) =>{
         e.preventDefault();
-        await axios.put(`http://127.0.0.1:8000/api/division/${id}`, DivisionField,
+        await axios.put(`${BASE_API}/division/${id}`, DivisionField,
+        // await axios.put(`http://127.0.0.1:8000/api/division/${id}`, DivisionField,
         {
       
           headers: {

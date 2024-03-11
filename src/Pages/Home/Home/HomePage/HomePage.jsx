@@ -1,5 +1,5 @@
 import PopularHotels from "./PopularHotels/PopularHotels";
-import SearchField from "./SearchField/SearchField";
+// import SearchField from "./SearchField/SearchField";
 import "./HomePage.css";
 import DealMembership from "./DealMembership/DealMembership";
 import ExploreCountry from "./ExploreCountry/ExploreCountry";

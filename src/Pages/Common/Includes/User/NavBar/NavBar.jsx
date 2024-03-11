@@ -165,7 +165,7 @@ const NavBar = () => {
                 </div> */}
 
                 <div
-                  className="bg-[#F8FEFF] flex items-center gap-[4px] relative"
+                  className="bg-[#F8FEFF] w-[80px] flex items-center gap-[4px] relative"
                   name=""
                   id=""
                   onClick={() => setCountry(!country)}
@@ -174,15 +174,16 @@ const NavBar = () => {
                   <p className="bg-white cursor-default" value="BDT">
                     {selectedCountry.name}
                   </p>
-                  <img src={arrowDownIcon} alt="" />
+                  <img className="absolute right-0" src={arrowDownIcon} alt="" />
                   {country && (
-                    <div className="absolute top-[20px] w-fit cursor-pointer flex flex-col z-10 rounded-[4px]  border-[1px] p-[4px]">
+                    <div className="bg-white absolute top-[22px] w-full cursor-pointer flex flex-col z-10 rounded-[4px]  border-[1px] ">
                       {countryList.map((country) => (
-                        <div key={country.id} onClick={()=>setSelectedCountry(country)} className="p-[2px] flex gap-[4px]">
-                          <img
-                            src={country.flag}
-                            alt="Global logo"
-                          ></img>
+                        <div
+                          key={country.id}
+                          onClick={() => setSelectedCountry(country)}
+                          className="px-[6px] py-[2.5px] flex gap-[4px] hover:bg-[#159947] hover:text-white"
+                        >
+                          <img src={country.flag} alt="Global logo"></img>
                           <p>{country.name}</p>
                         </div>
                       ))}

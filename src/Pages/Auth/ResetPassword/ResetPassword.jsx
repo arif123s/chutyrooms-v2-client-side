@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
+import { BASE_API } from "../../../BaseApi/BaseApi";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -40,7 +41,8 @@ const ResetPassword = () => {
       setPassErrorMessage(false);
 
       // send user data to database
-      fetch(`http://127.0.0.1:8000/api/user/password/reset?token=${user.id}`, {
+      fetch(`${BASE_API}/user/password/reset?token=${user.id}`, {
+      // fetch(`http://127.0.0.1:8000/api/user/password/reset?token=${user.id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
