@@ -114,6 +114,7 @@ const navigate = useNavigate();
         { name: "Division", path: "/dashboard/division" },
         { name: "District", path: "/dashboard/district" },
         { name: "Area", path: "/dashboard/Area" },
+        { name: "Membership", path: "/dashboard/Membership" },
       ],
     },
   ];

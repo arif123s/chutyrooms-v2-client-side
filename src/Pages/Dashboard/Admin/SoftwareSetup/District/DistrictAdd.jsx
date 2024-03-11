@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import arrowDownIcon from './../../../../assets/icons/arrow-down.svg';
+import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg';
 import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
 

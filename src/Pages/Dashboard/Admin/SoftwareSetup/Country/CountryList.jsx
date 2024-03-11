@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import "./Country.css";
-import EditIcon from './../../../../assets/icons/edit-icon.svg';
-import DeleteIcon from './../../../../assets/icons/delete-icon.svg';
-import RestoreIcon from './../../../../assets/icons/restore_icon_green.svg';
-import { Link, json } from 'react-router-dom';
-import { useParams, useNavigate } from 'react-router';
+import EditIcon from '../../../../../assets/icons/edit-icon.svg';
+import DeleteIcon from '../../../../../assets/icons/delete-icon.svg';
+import RestoreIcon from '../../../../../assets/icons/restore_icon_green.svg';
+import { Link } from 'react-router-dom';
+// import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
-import Loading from '../../../Common/Includes/Loading/Loading';
+
 const CountryList = () => {
 
   const [Countrylist, setCountry] = useState([]);
