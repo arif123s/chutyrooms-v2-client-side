@@ -31,9 +31,9 @@ const PopularHotels = () => {
     dispatch(getPopularHotels())
   },[])
 
-   if (isLoading) {
-     return <Loading></Loading>;
-   }
+  //  if (isLoading) {
+  //    return <Loading></Loading>;
+  //  }
 
   return (
     <div className="popular-hotels-container">

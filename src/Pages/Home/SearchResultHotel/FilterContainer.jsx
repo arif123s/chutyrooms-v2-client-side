@@ -6,9 +6,13 @@ import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 import { useState } from "react";
 
-const FilterContainer = () => {
+const  FilterContainer = () => {
   const [rating, setRating] = useState(0);
-  const [value, setValue] = useState([0, 15000]);
+  const [value, setValue] = useState([0, 200000]);
+  const [priceRange,setPriceRange]=useState({
+    lowestPrice:500,
+    highestPrice:200000,
+  })
   const initialState = ["Hotel", "Resort", "Cottage"];
   const [checkboxes, setCheckboxes] = useState(
     initialState.map((label) => ({ label, isChecked: false }))
@@ -19,6 +23,8 @@ const FilterContainer = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log('value',priceRange)
 
   const toggleCheckbox = (index) => {
     setCheckboxes((prevCheckboxes) => {
@@ -94,10 +100,11 @@ const FilterContainer = () => {
 
         <div className="mt-[8px]">
           <Slider
-            getAriaLabel={() => "Temperature range"}
             value={value}
             onChange={handleChange}
             valueLabelDisplay="auto"
+            min={0}
+            max={200000}
             // getAriaValueText={valuetext}
           />
 
@@ -111,7 +118,10 @@ const FilterContainer = () => {
                 type="number"
                 name="lowest-price"
                 id="lowest-price"
-                value={700}
+                value={priceRange.lowestPrice}
+                onChange={(e) =>
+                  setPriceRange({ ...priceRange, lowestPrice: e.target.value })
+                }
                 // onChange={}
               />
             </div>
@@ -127,8 +137,10 @@ const FilterContainer = () => {
                 type="number"
                 name="lowest-price"
                 id="lowest-price"
-                value={150000}
-                // onChange={}
+                value={priceRange.highestPrice}
+                onChange={(e) =>
+                  setPriceRange({ ...priceRange, highestPrice: e.target.value })
+                }
               />
             </div>
           </div>

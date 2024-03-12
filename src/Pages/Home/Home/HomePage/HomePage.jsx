@@ -6,6 +6,7 @@ import ExploreCountry from "./ExploreCountry/ExploreCountry";
 import chat from "../../../../assets/icons/chat-bot.svg";
 
 const HomePage = () => {
+
   return (
     <div className="custom-container homepage-container">
       {/* <SearchField></SearchField> */}
