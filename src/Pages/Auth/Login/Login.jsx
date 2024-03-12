@@ -28,7 +28,7 @@ const Login = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // const [login, { error }] = useLoginMutation();
+  const [login, { error }] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -83,22 +83,22 @@ const Login = () => {
       password: data.password,
     };
 
-    // const res = await login(user).unwrap();
+    const res = await login(user).unwrap();
 
-    // const userInfo = {
-    //   user: {
-    //     id: res.data?.id,
-    //     name: res.data?.name,
-    //     img: res.data?.image,
-    //     role: "",
-    //   },
-    //   token: {
-    //     accessToken: res.accessToken,
-    //   },
-    // };
-    // console.log("info", userInfo);
+    const userInfo = {
+      user: {
+        id: res.data?.id,
+        name: res.data?.name,
+        img: res.data?.image,
+        role: "",
+      },
+      token: {
+        accessToken: res.accessToken,
+      },
+    };
+    console.log("info", userInfo);
 
-    // dispatch(setUser(userInfo));
+    dispatch(setUser(userInfo));
 
     // send user data to database
     fetch(`${BASE_API}/user/login`, {
