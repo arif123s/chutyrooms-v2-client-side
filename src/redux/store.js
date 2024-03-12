@@ -14,6 +14,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import popularHotelReducer from "./features/popularHotels/popularHotelSlice";
 
 const persistConfig = {
   key: "auth",
@@ -29,6 +30,8 @@ const store = configureStore({
     auth: persistedAuthReducer,
     user: userReducer,
     property: propertyReducer,
+    popularHotel: popularHotelReducer,
+    
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React ,{ useEffect, useState } from 'react';
 import { useParams , useNavigate} from 'react-router';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const CountryEdit = () => {
     const {id}=useParams();
@@ -19,7 +20,8 @@ const CountryEdit = () => {
     },[id])
 
     const fetchUser = async()=>{
-        const result = await axios.get(`http://127.0.0.1:8000/api/country/${id}/edit`,
+        const result = await axios.get(`${BASE_API}/country/${id}/edit`,
+        // const result = await axios.get(`http://127.0.0.1:8000/api/country/${id}/edit`,
         {
       
             headers: {
@@ -47,9 +49,9 @@ const CountryEdit = () => {
 
     const onSubmitChange = async (e) =>{
         e.preventDefault();
-        await axios.put(`http://127.0.0.1:8000/api/country/${id}`, CountryField,
-        {
-      
+        await axios.put(`${BASE_API}/country/${id}`, CountryField,
+        // await axios.put(`http://127.0.0.1:8000/api/country/${id}`, CountryField,
+        {     
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }

@@ -9,8 +9,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
 
 const ExploreCountry = () => {
+const navigate = useNavigate();
+
   return (
     <div className="explore-country-container">
       <h2 className="homepage-title">Explore Bangladesh</h2>
@@ -49,22 +52,22 @@ const ExploreCountry = () => {
         }}
       >
         {/* <Swiper {...swiperSettings}> */}
-        <SwiperSlide>
+        <SwiperSlide onClick={() => navigate("/search-result-hotel")}>
           <img className="" src={place1} alt="Place" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide onClick={() => navigate("/search-result-hotel")}>
           <img className="" src={place2} alt="Place" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide onClick={() => navigate("/search-result-hotel")}>
           <img className="" src={place3} alt="Place" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide onClick={() => navigate("/search-result-hotel")}>
           <img className="" src={place1} alt="Place" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide onClick={() => navigate("/search-result-hotel")}>
           <img className="" src={place2} alt="Place" />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide onClick={() => navigate("/search-result-hotel")}>
           <img className="" src={place3} alt="Place" />
         </SwiperSlide>
       </Swiper>

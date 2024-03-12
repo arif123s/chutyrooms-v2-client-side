@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Common/Includes/Loading/Loading";
+import { BASE_API } from "../../../BaseApi/BaseApi";
 // import { toast } from "react-toastify";
 
 const ForgetPasswordOtp = () => {
@@ -30,7 +31,8 @@ const ForgetPasswordOtp = () => {
   const handleResendCode = () => {
     setLoading(true);
 
-    fetch("http://127.0.0.1:8000/api/user/password/forget", {
+    fetch(`${BASE_API}/user/password/forget`, {
+      // fetch("http://127.0.0.1:8000/api/user/password/forget", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -73,7 +75,8 @@ const ForgetPasswordOtp = () => {
     setLoading(true);
 
     // send user data to database
-    fetch("http://127.0.0.1:8000/api/user/password/change/pass/", {
+    fetch(`${BASE_API}/user/password/change/pass/`, {
+      // fetch("http://127.0.0.1:8000/api/user/password/change/pass/", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -90,11 +93,11 @@ const ForgetPasswordOtp = () => {
           navigate("/reset-password");
         } else {
           console.log("failed!", data);
-            setErrorMessage({
-              status: true,
-              message: data.message,
-              errors: [data.errors],
-            });
+          setErrorMessage({
+            status: true,
+            message: data.message,
+            errors: [data.errors],
+          });
         }
       });
   };

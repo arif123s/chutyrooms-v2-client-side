@@ -11,12 +11,16 @@ const Profile = () => {
 const navigate  = useNavigate();
 
     return (
-      <div className="p-[24px] pr-[40px]">
-        <div className="flex justify-between">
-          <div className="flex items-center">
-            <img className="w-[70px] mr-[12px]" src={userImg} alt="Profile" />
+      <div className="p-[12px] md:p-[24px] lg:p-[24px] lg:pr-[40px]">
+        <div className="flex justify-between items-start ">
+          <div className="flex items-start md:items-center lg:items-center">
+            <img
+              className="w-[44px] md:w-[60px] lg:w-[70px] mr-[4px] md:mr-[8px] lg:mr-[12px]"
+              src={userImg}
+              alt="Profile"
+            />
             <div>
-              <h2 className="text-[20px] font-[Gilroy-semibold]">
+              <h2 className="text-[16px] md:text-[16px] lg:text-[20px] font-[Gilroy-semibold]">
                 Anisur Rahman
                 <span className="font-[Gilroy-bold] text-primary">
                   {" "}
@@ -24,9 +28,9 @@ const navigate  = useNavigate();
                 </span>
               </h2>
               <img src="" alt="" />
-              <div className="flex items-center mt-[0px] gap-[6px]">
-                <img src={location} alt="" />
-                <span className="hotel-info opacity-90">
+              <div className="flex items-start gap-[2px] lg:gap-[6px] mt-[2px]">
+                <img className="mt-[2px]" src={location} alt="" />
+                <span className="w-[140px] md:w-full lg:w-full hotel-info opacity-90">
                   Halishahar, Chittagong, Bangladesh
                 </span>
               </div>
@@ -34,6 +38,7 @@ const navigate  = useNavigate();
           </div>
 
           <img
+            className=" lg:mt-[10px]"
             onClick={() => navigate("/dashboard/edit-profile")}
             src={editIcon}
             alt=""
@@ -42,17 +47,15 @@ const navigate  = useNavigate();
 
         <div className="h-[1px] bg-[#E6E7E6] my-[24px]" />
 
-        <img className="h-[380px] w-full" src={downloadApp} alt="" />
-
-        <div className="mt-[24px]">
-          <h2 className="text-[20px] font-[Gilroy-semibold]">
+        <div className="my-[24px]">
+          <h2 className="text-[16px] md:text-[16px] lg:text-[20px] font-[Gilroy-semibold]">
             Purchased Membership
           </h2>
           <div className="mt-[14px] ">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[24px]">
-              <div className="card">
+              <div className="card-container">
                 <img
-                  className="h-[240px]"
+                  className="card-img"
                   src={platinumCard}
                   alt="Platinum Card"
                 />
@@ -62,26 +65,28 @@ const navigate  = useNavigate();
                 <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Validation: 1 year
                 </p>
-                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Tk 1500 tk
                 </p>
               </div>
 
-              <div className="card">
-                <img className="h-[240px]" src={goldCard} alt="Gold Card" />
+              <div className="card-container">
+                <img className="card-img" src={goldCard} alt="Gold Card" />
                 <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
                   Flat 4.5% discount on every purchase
                 </h2>
                 <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Validation: 1 year
                 </p>
-                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
                   Tk 1000 tk
                 </p>
               </div>
             </div>
           </div>
         </div>
+
+        <img className=" w-full" src={downloadApp} alt="" />
       </div>
     );
 };

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { useState } from "react";
+import { BASE_API } from "../../../BaseApi/BaseApi";
 
 const ForgetPassword = () => {
 const navigate = useNavigate();
@@ -26,7 +27,8 @@ const navigate = useNavigate();
     const username = data.username;
     setLoading(true)
 console.log(data)
-fetch("http://127.0.0.1:8000/api/user/password/forget", {
+fetch(`${BASE_API}/user/password/forget`, {
+  // fetch("http://127.0.0.1:8000/api/user/password/forget", {
   method: "POST",
   headers: {
     "content-type": "application/json",
@@ -46,13 +48,11 @@ fetch("http://127.0.0.1:8000/api/user/password/forget", {
         JSON.stringify({
           id: data.data.user,
           otpExpiresAt: data.data.code_expires_at,
-          username:username,
+          username: username,
         })
       );
       navigate(`/forget-password-otp`);
-    }
-   
-    else {
+    } else {
       console.log("Registration failed!", data);
       setErrorMessage({
         status: true,

@@ -116,19 +116,19 @@ margin-right: 4px;
   color: #159947 !important;
 }
 
-:root {
-    --swiper-navigation-size: 18px;
+.hotel-img-slider :root {
+    --swiper-navigation-size: 14px;
 }
 
 .hotel-img-slider .swiper-button-prev {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   background: #FFFFFF;
   border-radius: 50%;
 }
 .hotel-img-slider .swiper-button-next {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   background: #FFFFFF;
   border-radius: 50%;
 }

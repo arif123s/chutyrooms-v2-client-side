@@ -5,6 +5,7 @@ import DeleteIcon from './../../../../../assets/icons/delete-icon.svg';
 import RestoreIcon from './../../../../../assets/icons/restore_icon_green.svg';
 import axios from 'axios';
 import { useParams , useNavigate} from 'react-router';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const DistrictList = () => {
 
@@ -15,38 +16,42 @@ const DistrictList = () => {
 
     useEffect(() => {
        
-        fetch('http://127.0.0.1:8000/api/district', {
-  method: 'GET',
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-  }
-})
-.then(response => {
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  
-  return response.json();
-})
-.then(data => {
-    console.log(data)
-    setDistrict(data.data.data);
-})
-.catch(error => {
-  console.error('There was a problem with the fetch operation:', error);
-});
+        fetch(`${BASE_API}/district`, {
+          // fetch('http://127.0.0.1:8000/api/district', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setDistrict(data.data.data);
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
 },
 []);
 
 const handleDelete = async (id) => {
   // console.log(id);
 
-  await axios.delete("http://127.0.0.1:8000/api/district/" + id,
+  await axios.delete(`${BASE_API}/district/` + id,
+    // await axios.delete("http://127.0.0.1:8000/api/district/" + id,
     {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     }
   );
 
@@ -59,7 +64,8 @@ const handleDelete = async (id) => {
 const handleRestore = async (id) => {
   try {
     // alert(id)
-    await axios.put(`http://127.0.0.1:8000/api/district/${id}/restore`,
+    await axios.put(`${BASE_API}/district/${id}/restore`,
+    // await axios.put(`http://127.0.0.1:8000/api/district/${id}/restore`,
       null,
       {
         headers: {

@@ -6,30 +6,32 @@ import RestoreIcon from '../../../../../assets/icons/restore_icon_green.svg';
 import { Link } from 'react-router-dom';
 // import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
-
+import Loading from '../../../Common/Includes/Loading/Loading';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 const CountryList = () => {
 
   const [Countrylist, setCountry] = useState([]);
 
   useEffect(() => {
 
-    fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
+    fetch(`${BASE_API}/country`, {
+      // fetch('http://127.0.0.1:8000/api/country', {
+      method: "GET",
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setCountry(data.data.data);
       })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
       });
   },
     [Countrylist]);
@@ -38,12 +40,12 @@ const CountryList = () => {
   const handleDelete = async (id) => {
     console.log(id);
 
-    await axios.delete("http://127.0.0.1:8000/api/country/" + id,
+    await axios.delete(`${BASE_API}/country/` + id,
+      // await axios.delete("http://127.0.0.1:8000/api/country/" + id,
       {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-        }
-
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       }
     );
 
@@ -63,7 +65,8 @@ const CountryList = () => {
   const handleRestore = async (id) => {
     try {
       // alert(id)
-      await axios.put(`http://127.0.0.1:8000/api/country/${id}/restore`,
+      await axios.put(`${BASE_API}/country/${id}/restore`,
+      // await axios.put(`http://127.0.0.1:8000/api/country/${id}/restore`,
         null,
         {
           headers: {

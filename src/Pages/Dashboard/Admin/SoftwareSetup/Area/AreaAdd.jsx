@@ -4,6 +4,7 @@ import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg';
 import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const AreaAdd = () => {
 
@@ -41,7 +42,8 @@ const AreaAdd = () => {
       }
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/country', {
+        fetch(`${BASE_API}/country`, {
+        // fetch('http://127.0.0.1:8000/api/country', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -64,7 +66,8 @@ const AreaAdd = () => {
         setSelectedCountry(selectedCountryId);
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
+        fetch(`${BASE_API}/division/${selectedCountryId}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -88,7 +91,8 @@ const AreaAdd = () => {
         setSelectedDivision(selectedDivisionId);
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/district/${selectedDivisionId}/fetch` ,
+        fetch(`${BASE_API}/district/${selectedDivisionId}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/district/${selectedDivisionId}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -101,44 +105,32 @@ const AreaAdd = () => {
           
       };
 
-
-      
-
-
-
-
-
-
-
       const onSubmit= async (e) =>{
         e.preventDefault();
       
    
        try{
          
-        await axios.post('http://127.0.0.1:8000/api/area',
-       
-        AreaField, 
-         {
-         
-           headers: {
-             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-           }
-         }
+        await axios
+          .post(
+            `${BASE_API}/area`,
+            // await axios.post('http://127.0.0.1:8000/api/area',
 
-         
-         
-         )
+            AreaField,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          )
 
-         .then(response => {
-           // Successful response
-           console.log(response.data);
-           if(response.data.status == 1)
-           {
-               navigate('/dashboard/area');
-           }
-     
-       });
+          .then((response) => {
+            // Successful response
+            console.log(response.data);
+            if (response.data.status == 1) {
+              navigate("/dashboard/area");
+            }
+          });
            
           
        }

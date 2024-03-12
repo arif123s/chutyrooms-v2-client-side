@@ -3,6 +3,7 @@ import React ,{ useEffect, useState } from 'react';
 import { useParams , useNavigate} from 'react-router';
 import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg'
 import { toast } from 'react-toastify';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const AreaEdit = () => {
 
@@ -44,7 +45,8 @@ const AreaEdit = () => {
     },[id])
 
     const fetchArea = async()=>{
-        const result = await axios.get(`http://127.0.0.1:8000/api/area/${id}/edit`,
+        const result = await axios.get(`${BASE_API}/area/${id}/edit`,
+        // const result = await axios.get(`http://127.0.0.1:8000/api/area/${id}/edit`,
         {
       
             headers: {
@@ -73,22 +75,22 @@ const AreaEdit = () => {
  
     
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-                // console.log(data)
-                setCountryList(data.data.data)
-               
-                // alert(selectedCountryId)
-                // const selectedCountryId = selectedCountry;
-               
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        fetch(`${BASE_API}/country`, {
+          // fetch('http://127.0.0.1:8000/api/country', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // console.log(data)
+            setCountryList(data.data.data);
+
+            // alert(selectedCountryId)
+            // const selectedCountryId = selectedCountry;
+          })
+          .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
 
@@ -96,7 +98,8 @@ const AreaEdit = () => {
         const fetchDivision = async(country)=>{
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/division/${country}/fetch` ,
+        fetch(`${BASE_API}/division/${country}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/division/${country}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -111,7 +114,8 @@ const AreaEdit = () => {
 
         const fetchDistrict = async(division)=>{
 
-            fetch(`http://127.0.0.1:8000/api/district/${division}/fetch` ,
+            fetch(`${BASE_API}/district/${division}/fetch` ,
+            // fetch(`http://127.0.0.1:8000/api/district/${division}/fetch` ,
             {
                 method: 'GET',
                 headers: {
@@ -135,7 +139,8 @@ const AreaEdit = () => {
         setSelectedCountry(selectedCountryId);
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
+        fetch(`${BASE_API}/division/${selectedCountryId}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -157,7 +162,8 @@ const AreaEdit = () => {
         setSelectedDivision(selectedDivisionId);
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/district/${selectedDivisionId}/fetch` ,
+        fetch(`${BASE_API}/district/${selectedDivisionId}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/district/${selectedDivisionId}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -176,16 +182,14 @@ const AreaEdit = () => {
 
       const onSubmitChange = async (e) =>{
         e.preventDefault();
-        await axios.put(`http://127.0.0.1:8000/api/area/${id}`, AreaField,
-        {
-      
+        await axios.put(`${BASE_API}/area/${id}`, AreaField,
+        // await axios.put(`http://127.0.0.1:8000/api/area/${id}`, AreaField,
+        {     
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }
-        })
-        
-        
-        
+        })       
+                
         .then(response => {
             // Successful response
             // console.log(response.data);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams , useNavigate} from 'react-router';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const CountryAdd = () => {
 
@@ -31,27 +32,24 @@ const onSubmitChange = async (e) =>{
 
     try{
       
-     await axios.post('http://127.0.0.1:8000/api/country',
-    
-      CountryField, 
-      {
-      
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      }
-      
-      )
+     await axios.post(`${BASE_API}/country`,
+         //  await axios.post('http://127.0.0.1:8000/api/country',
 
-      .then(response => {
-        // Successful response
-        console.log(response.data);
-        if(response.data.status == 1)
-        {
-            navigate('/dashboard/country');
-        }
-  
-    });
+         CountryField,
+         {
+           headers: {
+             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+           },
+         }
+       )
+
+       .then((response) => {
+         // Successful response
+         console.log(response.data);
+         if (response.data.status == 1) {
+           navigate("/dashboard/country");
+         }
+       });
         
        
     }

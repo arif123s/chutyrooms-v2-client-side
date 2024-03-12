@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../../redux/features/user/userSlice";
+import { BASE_API } from "../../../../BaseApi/BaseApi";
 
 
 const OwnerRegister = () => {
@@ -91,7 +92,8 @@ const OwnerRegister = () => {
       };
 
       // send user data to database
-      fetch("http://127.0.0.1:8000/api/user/register", {
+      fetch(`${BASE_API}/user/register`, {
+      // fetch("http://127.0.0.1:8000/api/user/register", {
         method: "POST",
         headers: {
           "content-type": "application/json",

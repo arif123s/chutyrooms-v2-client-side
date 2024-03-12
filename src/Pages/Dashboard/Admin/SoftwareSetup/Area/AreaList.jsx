@@ -5,6 +5,7 @@ import DeleteIcon from './../../../../../assets/icons/delete-icon.svg';
 import RestoreIcon from './../../../../../assets/icons/restore_icon_green.svg';
 import axios from 'axios';
 import { useParams , useNavigate} from 'react-router';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const AreaList = () => {
 
@@ -13,7 +14,8 @@ const AreaList = () => {
 
     useEffect(() => {
        
-        fetch('http://127.0.0.1:8000/api/area', {
+        fetch(`${BASE_API}/area`, {
+        // fetch('http://127.0.0.1:8000/api/area', {
   method: 'GET',
   headers: {
     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -41,12 +43,12 @@ const AreaList = () => {
 const handleDelete = async (id) => {
   // console.log(id);
 
-  await axios.delete("http://127.0.0.1:8000/api/area/" + id,
+  await axios.delete(`${BASE_API}/area/` + id,
+    // await axios.delete("http://127.0.0.1:8000/api/area/" + id,
     {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     }
   );
 
@@ -59,7 +61,8 @@ const handleDelete = async (id) => {
 const handleRestore = async (id) => {
   try {
     // alert(id)
-    await axios.put(`http://127.0.0.1:8000/api/area/${id}/restore`,
+    await axios.put(`${BASE_API}/area/${id}/restore`,
+    // await axios.put(`http://127.0.0.1:8000/api/area/${id}/restore`,
       null,
       {
         headers: {

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import "./Register.css";
 import { registerUser } from "../../../../redux/features/user/userSlice";
-
+import { BASE_API } from "../../../../BaseApi/BaseApi";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -138,7 +138,8 @@ const Register = () => {
       // console.log('user',user)
       // send user data to database
       try {
-        fetch("http://127.0.0.1:8000/api/user/register", {
+        fetch(`${BASE_API}/user/register`, {
+          // fetch("http://127.0.0.1:8000/api/user/register", {
           method: "POST",
           headers: {
             "content-type": "application/json",

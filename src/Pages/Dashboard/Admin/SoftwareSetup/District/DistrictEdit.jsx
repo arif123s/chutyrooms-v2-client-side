@@ -3,6 +3,7 @@ import React ,{ useEffect, useState } from 'react';
 import { useParams , useNavigate} from 'react-router';
 import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg'
 import { toast } from 'react-toastify';
+import { BASE_API } from '../../../../BaseApi/BaseApi';
 
 const DistrictEdit = () => {
 
@@ -39,7 +40,8 @@ const DistrictEdit = () => {
     },[id])
 
     const fetchUser = async()=>{
-        const result = await axios.get(`http://127.0.0.1:8000/api/district/${id}/edit`,
+        const result = await axios.get(`${BASE_API}/district/${id}/edit`,
+        // const result = await axios.get(`http://127.0.0.1:8000/api/district/${id}/edit`,
         {
       
             headers: {
@@ -66,22 +68,22 @@ const DistrictEdit = () => {
     // alert(selectedCountry);
     
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                setCountryList(data.data.data)
-               
-                // alert(selectedCountryId)
-                // const selectedCountryId = selectedCountry;
-               
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        fetch(`${BASE_API}/country`, {
+          // fetch('http://127.0.0.1:8000/api/country', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setCountryList(data.data.data);
+
+            // alert(selectedCountryId)
+            // const selectedCountryId = selectedCountry;
+          })
+          .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
 
@@ -89,7 +91,8 @@ const DistrictEdit = () => {
         const fetchDivision = async(country)=>{
     // alert(selectedCountry);
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/division/${country}/fetch` ,
+        fetch(`${BASE_API}/division/${country}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/division/${country}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -113,7 +116,8 @@ const DistrictEdit = () => {
         setSelectedCountry(selectedCountryId);
     
         // Fetch data for the second dropdown based on the selected country
-        fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
+        fetch(`${BASE_API}/division/${selectedCountryId}/fetch` ,
+        // fetch(`http://127.0.0.1:8000/api/division/${selectedCountryId}/fetch` ,
         {
             method: 'GET',
             headers: {
@@ -132,7 +136,8 @@ const DistrictEdit = () => {
 
       const onSubmitChange = async (e) =>{
         e.preventDefault();
-        await axios.put(`http://127.0.0.1:8000/api/district/${id}`, DistrictField,
+        await axios.put(`${BASE_API}/district/${id}`, DistrictField,
+        // await axios.put(`http://127.0.0.1:8000/api/district/${id}`, DistrictField,
         {
       
           headers: {

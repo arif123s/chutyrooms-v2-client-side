@@ -62,7 +62,6 @@ const BookingInfo = ({ name, content }) => {
     const handleDateChange = (date) => {
         setSelectedDate(date);
         setCalendarVisible(false);
-
     };
 
 

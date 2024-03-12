@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loading from "../../../Common/Includes/Loading/Loading";
+import { BASE_API } from "../../../../BaseApi/BaseApi";
 
 const OtpPhoneVerification = () => {
   const navigate = useNavigate();
@@ -111,7 +112,8 @@ const OtpPhoneVerification = () => {
     setLoading(true);
 
     // get data
-    fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
+    fetch(`${BASE_API}/user/otp/verify/resend?user=${user.id}`)
+    // fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
@@ -137,7 +139,8 @@ const OtpPhoneVerification = () => {
     // setOtpError({ status: false, message: "" });
 
     // get data
-    fetch(`http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`)
+    fetch(`${BASE_API}/user/otp/verify?user=${user.id}&token=${concatOtp}`)
+    // fetch(`http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`)
       .then((res) => res.json())
       .then((data) => {
         setLoading(false);
