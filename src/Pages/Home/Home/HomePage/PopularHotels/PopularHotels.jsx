@@ -21,9 +21,11 @@ import Loading from "../../../../Common/Includes/Loading/Loading";
 const PopularHotels = () => {
   const [favourite,setFavourite]=useState(false);
   const  dispatch = useDispatch();
+  // const {hotels,isLoading} = useSelector((state) => state.popularHotel);
   const {hotels,isLoading} = useSelector((state) => state.popularHotel);
 
-  console.log('hotels',hotels)
+  // console.log('hotels',hotels)
+  console.log(hotels)
 
   useEffect(()=>{
     dispatch(getPopularHotels())

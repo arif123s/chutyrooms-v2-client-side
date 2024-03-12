@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { baseApi } from "../../api/baseApi";
+// import { baseApi } from "../../api/baseApi";
 import { BASE_API } from "../../../BaseApi/BaseApi";
 
 const initialState = {

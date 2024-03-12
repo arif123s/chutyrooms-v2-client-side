@@ -12,7 +12,6 @@ import "./Register.css";
 import { registerUser } from "../../../../redux/features/user/userSlice";
 import { BASE_API } from "../../../../BaseApi/BaseApi";
 
-
 const Register = () => {
   const navigate = useNavigate();
   const {
