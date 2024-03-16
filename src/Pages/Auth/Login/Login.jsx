@@ -4,8 +4,8 @@ import googleIcon from "../../../assets/icons/google-login.svg";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import Loading from "../../Common/Includes/Loading/Loading";
+import { useEffect, useRef, useState } from "react";
+// import Loading from "../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
 import { useLoginMutation } from "../../../redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import { setUser } from "../../../redux/features/auth/authSlice";
 import { BASE_API } from "../../../BaseApi/BaseApi";
 
 const Login = () => {
+  const toastId = useRef(null);
   const navigate = useNavigate();
   const {
     register,
@@ -25,8 +26,9 @@ const Login = () => {
     errors: [],
   });
   const dispatch = useDispatch();
+  const [disableButton, setDisableButton] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const [login, { error }] = useLoginMutation();
   const [username, setUsername] = useState("");
@@ -48,22 +50,22 @@ const Login = () => {
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
-    const handlePasswordChange = (e) => {
-      setPassword(e.target.value);
-    };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
-    const handleRememberMeChange = (e) => {
-      setRememberMe(e.target.checked);
-    };
+  const handleRememberMeChange = (e) => {
+    setRememberMe(e.target.checked);
+  };
 
-
-  if (loading) {
-    return <Loading></Loading>;
-  }
+  // if (loading) {
+  //   return <Loading></Loading>;
+  // }
 
   const onSubmit = async (data) => {
-    // console.log(data);
-    setLoading(true);
+    // setLoading(true);
+    setDisableButton(true);
+    toast.loading("Loading...");
     setErrorMessage({ status: false, message: "" });
 
     // If "Remember me" is checked, store username and password
@@ -102,7 +104,7 @@ const Login = () => {
 
     // send user data to database
     fetch(`${BASE_API}/user/login`, {
-    // fetch("http://127.0.0.1:8000/api/user/login", {
+      // fetch("http://127.0.0.1:8000/api/user/login", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -111,9 +113,12 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
+        // setLoading(false);
+        setDisableButton(false);
+        toast.dismiss(toastId.current);
         if (data.status === true) {
           console.log("Successfully logged in!", data);
+          console.log(data.data.roles[0].role_code);
           localStorage.setItem("accessToken", data.accessToken);
           localStorage.setItem(
             "userInfo",
@@ -122,11 +127,15 @@ const Login = () => {
               accessToken: data.accessToken,
               name: data.data.name,
               img: data.data.image,
-              role: "",
+              role: data.data.roles[0],
             })
           );
+
           toast.success(data.message);
-          navigate("/");
+
+          if (data.data.roles[0].role_code == 345) {
+            navigate("/");
+          } else navigate("/dashboard");
         } else {
           console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });
@@ -243,7 +252,7 @@ const Login = () => {
           <a
             href=""
             onClick={(e) => (e.preventDefault(), navigate("/forget-password"))}
-            className="text-[#159947]"
+            className="text-[#159947] hover:text-[#016A29] transition-all"
           >
             Forgot Password?
           </a>
@@ -271,7 +280,9 @@ const Login = () => {
 
         <input
           type="submit"
-          className="login-btn hover:bg-[#016A29]"
+          className={`login-btn hover:bg-[#016A29] ${
+            disableButton ? "opacity-50" : "opacity-100"
+          }`}
           value="Sign In"
         />
         {/* <button className="login-btn">Sign In</button> */}

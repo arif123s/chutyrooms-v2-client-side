@@ -75,7 +75,7 @@ const  FilterContainer = () => {
         <h2 className="search-page-title">Sort By</h2>
 
         <div className="mt-[8px]">
-          <div className="property-input-div">
+          <div className="property-input-div h-[40]">
             <select
               id="popularity"
               className="bg-[#F8FEFF] property-input text-[14px] md:text-[16px] lg:text-[16px] "
@@ -109,7 +109,7 @@ const  FilterContainer = () => {
           />
 
           <div className="flex justify-between items-center gap-[12px] text-[14px] md:text-[16px] lg:text-[16px]">
-            <div className="h-[40px] md:h-[44px] lg:h-[48px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
+            <div className="h-[40px]  border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="lowest-price" className="mr-[4px]">
                 BDT
               </label>
@@ -128,12 +128,12 @@ const  FilterContainer = () => {
 
             {/* <p>To</p> */}
 
-            <div className="h-[40px] md:h-[44px] lg:h-[48px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
+            <div className="h-[40px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="lowest-price" className="mr-[4px]">
                 BDT
               </label>
               <input
-                className="w-[48px] md:w-[60px] lg:w-[60px] outline-none bg-[#F8FEFF]"
+                className="w-[48px] md:w-[60px] lg:w-[64px] outline-none bg-[#F8FEFF]"
                 type="number"
                 name="lowest-price"
                 id="lowest-price"

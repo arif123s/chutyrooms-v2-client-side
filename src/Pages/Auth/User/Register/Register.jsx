@@ -4,15 +4,17 @@ import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
 import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 import countryIcon from "../../../../assets/bd.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import "./Register.css";
 import { registerUser } from "../../../../redux/features/user/userSlice";
 import { BASE_API } from "../../../../BaseApi/BaseApi";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const toastId = useRef(null);
   const navigate = useNavigate();
   const {
     register,
@@ -92,9 +94,9 @@ const Register = () => {
   //   return phoneRegex.test(phone);
   // };
 
-  if (loading) {
-    return <Loading></Loading>;
-  }
+  // if (loading) {
+  //   return <Loading></Loading>;
+  // }
 
   // const isPasswordMatch = (password, confirmPassword) => {
   //   return password === confirmPassword;
@@ -119,8 +121,9 @@ const Register = () => {
     //   console.log("Invalid input:", data.phone);
     //   setErrorMessage(true);
     // }
+    toast.loading("Loading...");
     setErrorMessage({ status: false, message: "" });
-    setLoading(true);
+    // setLoading(true);
 
     const password = data.password;
     const confirmPassword = data.confirmPassword;
@@ -149,7 +152,8 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            setLoading(false);
+            // setLoading(false);
+             toast.dismiss(toastId.current);
             if (data.status == 102) {
               console.log("Successfully registered!", data);
               sessionStorage.setItem(
@@ -192,7 +196,7 @@ const Register = () => {
       }
     } else {
       // Passwords do not match
-      setLoading(false);
+      // setLoading(false);
       setPassErrorMessage(true);
     }
   };

@@ -31,6 +31,7 @@ const store = configureStore({
     user: userReducer,
     property: propertyReducer,
     popularHotel: popularHotelReducer,
+    
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

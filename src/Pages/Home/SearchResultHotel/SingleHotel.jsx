@@ -89,8 +89,8 @@ const SingleHotel = () => {
               </div>
               <p className="text-[#159947]">20+ More</p>
             </div>
-            <button className="bg-[#159947] h-[40px] lg:h-[44px] flex items-center cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 mt-[10px]">
-              Book Now
+            <button className="bg-[#159947] h-[40px] flex items-center cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 mt-[10px] hover:bg-[#016A29] transition-all">
+              View Details
             </button>
           </div>
           <div>

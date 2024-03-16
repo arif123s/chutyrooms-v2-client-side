@@ -16,24 +16,23 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPopularHotels } from "../../../../../redux/features/popularHotels/popularHotelSlice";
 import Loading from "../../../../Common/Includes/Loading/Loading";
+import { useGetAllPopularHotelsQuery } from "../../../../../redux/features/popularHotels/popularHotelsApi";
 // import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
 
 const PopularHotels = () => {
-  const [favourite,setFavourite]=useState(false);
-  const  dispatch = useDispatch();
+  const [favourite, setFavourite] = useState(false);
+  const dispatch = useDispatch();
   // const {hotels,isLoading} = useSelector((state) => state.popularHotel);
-  const {hotels,isLoading} = useSelector((state) => state.popularHotel);
+  const { hotels, isLoading } = useSelector((state) => state.popularHotel);
+  const [loading,setLoading]= useState(true)
 
-  // console.log('hotels',hotels)
-  console.log(hotels)
+  const { data } = useGetAllPopularHotelsQuery();
+  console.log(data);
 
-  useEffect(()=>{
-    dispatch(getPopularHotels())
-  },[])
+  useEffect(() => {
+    dispatch(getPopularHotels());
+  }, []);
 
-  //  if (isLoading) {
-  //    return <Loading></Loading>;
-  //  }
 
   return (
     <div className="popular-hotels-container">
