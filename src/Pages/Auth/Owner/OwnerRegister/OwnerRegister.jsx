@@ -420,9 +420,9 @@ const OwnerRegister = () => {
                 message: "Password must be 8 characters or longer",
               },
               pattern: {
-                value: /^(?=.*[!@#$%^&*])/,
+                value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
                 message:
-                  "Password must contain at least one special character (!@#$%^&*)",
+                  "Password must contain at least one uppercase letter, one lowercase letter, and one special character (!@#$%^&*)",
               },
             })}
           />

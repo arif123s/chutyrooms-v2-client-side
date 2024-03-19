@@ -6,9 +6,13 @@ import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 import { useState } from "react";
 
-const FilterContainer = () => {
+const  FilterContainer = () => {
   const [rating, setRating] = useState(0);
-  const [value, setValue] = useState([0, 15000]);
+  const [value, setValue] = useState([0, 200000]);
+  const [priceRange,setPriceRange]=useState({
+    lowestPrice:500,
+    highestPrice:200000,
+  })
   const initialState = ["Hotel", "Resort", "Cottage"];
   const [checkboxes, setCheckboxes] = useState(
     initialState.map((label) => ({ label, isChecked: false }))
@@ -19,6 +23,8 @@ const FilterContainer = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log('value',priceRange)
 
   const toggleCheckbox = (index) => {
     setCheckboxes((prevCheckboxes) => {
@@ -69,7 +75,7 @@ const FilterContainer = () => {
         <h2 className="search-page-title">Sort By</h2>
 
         <div className="mt-[8px]">
-          <div className="property-input-div">
+          <div className="property-input-div h-[40]">
             <select
               id="popularity"
               className="bg-[#F8FEFF] property-input text-[14px] md:text-[16px] lg:text-[16px] "
@@ -94,15 +100,16 @@ const FilterContainer = () => {
 
         <div className="mt-[8px]">
           <Slider
-            getAriaLabel={() => "Temperature range"}
             value={value}
             onChange={handleChange}
             valueLabelDisplay="auto"
+            min={0}
+            max={200000}
             // getAriaValueText={valuetext}
           />
 
           <div className="flex justify-between items-center gap-[12px] text-[14px] md:text-[16px] lg:text-[16px]">
-            <div className="h-[40px] md:h-[44px] lg:h-[48px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
+            <div className="h-[40px]  border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="lowest-price" className="mr-[4px]">
                 BDT
               </label>
@@ -111,24 +118,29 @@ const FilterContainer = () => {
                 type="number"
                 name="lowest-price"
                 id="lowest-price"
-                value={700}
+                value={priceRange.lowestPrice}
+                onChange={(e) =>
+                  setPriceRange({ ...priceRange, lowestPrice: e.target.value })
+                }
                 // onChange={}
               />
             </div>
 
             {/* <p>To</p> */}
 
-            <div className="h-[40px] md:h-[44px] lg:h-[48px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
+            <div className="h-[40px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="lowest-price" className="mr-[4px]">
                 BDT
               </label>
               <input
-                className="w-[48px] md:w-[60px] lg:w-[60px] outline-none bg-[#F8FEFF]"
+                className="w-[48px] md:w-[60px] lg:w-[64px] outline-none bg-[#F8FEFF]"
                 type="number"
                 name="lowest-price"
                 id="lowest-price"
-                value={150000}
-                // onChange={}
+                value={priceRange.highestPrice}
+                onChange={(e) =>
+                  setPriceRange({ ...priceRange, highestPrice: e.target.value })
+                }
               />
             </div>
           </div>
