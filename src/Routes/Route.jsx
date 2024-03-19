@@ -244,7 +244,7 @@ export const router = createBrowserRouter([
               },
 
               {
-                path: "/dashboard/Membership/MembershipEdit",
+                path: "/dashboard/Membership/MembershipEdit/:id",
                 element: <MembershipEdit></MembershipEdit>,
               },
             ],

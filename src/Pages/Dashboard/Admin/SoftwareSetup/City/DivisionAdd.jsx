@@ -3,7 +3,7 @@ import './Division.css';
 import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg';
 import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
-import { BASE_API } from '../../../../BaseApi/BaseApi';
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
 
 const DivisionAdd = () => {
 

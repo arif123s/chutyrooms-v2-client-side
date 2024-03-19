@@ -3,6 +3,7 @@ import propertyReducer from "./features/property/propertySlice";
 import userReducer from "./features/user/userSlice";
 import authReducer from "./features/auth/authSlice";
 import { baseApi } from "./api/baseApi";
+import membershipCardReducer from "./features/membershipCard/membershipCardSlice";
 import {
   persistReducer,
   persistStore,
@@ -15,6 +16,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import popularHotelReducer from "./features/popularHotels/popularHotelSlice";
+
 
 const persistConfig = {
   key: "auth",
@@ -31,6 +33,7 @@ const store = configureStore({
     user: userReducer,
     property: propertyReducer,
     popularHotel: popularHotelReducer,
+    membershipCard : membershipCardReducer,
     
   },
   middleware: (getDefaultMiddlewares) =>

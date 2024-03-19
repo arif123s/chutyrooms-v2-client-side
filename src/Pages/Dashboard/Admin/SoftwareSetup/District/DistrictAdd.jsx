@@ -5,7 +5,7 @@ import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
 
 import './District.css'; 
-import { BASE_API } from '../../../../BaseApi/BaseApi';
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
 
 const DistrictAdd = () => {
 
@@ -74,14 +74,8 @@ const DistrictAdd = () => {
 
       const onSubmitChange = async (e) =>{
         e.preventDefault();
-      
-   
-       try{
-         
-        await axios.post(`${BASE_API}/district`,
-            // await axios.post('http://127.0.0.1:8000/api/district',
-
-            DistrictField,
+        try{
+         await axios.post(`${BASE_API}/district`, DistrictField,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -90,28 +84,18 @@ const DistrictAdd = () => {
           )
 
           .then((response) => {
-            // Successful response
             console.log(response.data);
             if (response.data.status == 1) {
               navigate("/dashboard/district");
             }
           });
-
-        
-       //   
-           
-          
-       }
+        }
    
        catch (err){
         // console.log(err.response.data.errors);
         setValidationErrors(err.response.data.errors)
        }
-
-      
-
-       // 
-   }
+      }
     return (
         <div className='country-add-division'>
 

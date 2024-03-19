@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React ,{ useEffect, useState } from 'react';
 import { useParams , useNavigate} from 'react-router';
-import { BASE_API } from '../../../../BaseApi/BaseApi';
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
 
 const CountryEdit = () => {
     const {id}=useParams();
@@ -39,13 +39,7 @@ const CountryEdit = () => {
         });
       }
 
-    // const handleRadioChange = (event) => {
-    //     // Update the state when the radio button is changed
-    //     // alert(1)
-    //     setIsChecked(event.target.checked);
-
-    //   };
-      // alert(isChecked);
+  
 
     const onSubmitChange = async (e) =>{
         e.preventDefault();
@@ -89,7 +83,7 @@ const CountryEdit = () => {
                   />
             <div className="flex items-center gap-2">
                 <div>
-                    <input type="radio" id="is_active" name="is_active" value="1"  checked={CountryField.is_active == 1  } onChange={e => changeCountryFieldHandler(e)}
+                    <input type="radio" id="is_active" name="is_active" value="1"  checked={CountryField.is_active == 1 } onChange={e => changeCountryFieldHandler(e)}
                   ></input>
                     <label className="cursor-pointer text-gray-700 ml-2">Active</label>
                 </div>

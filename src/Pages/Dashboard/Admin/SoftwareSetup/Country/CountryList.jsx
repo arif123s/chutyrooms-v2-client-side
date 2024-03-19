@@ -6,8 +6,8 @@ import RestoreIcon from '../../../../../assets/icons/restore_icon_green.svg';
 import { Link } from 'react-router-dom';
 // import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
-import Loading from '../../../Common/Includes/Loading/Loading';
-import { BASE_API } from '../../../../BaseApi/BaseApi';
+import Loading from '../../../../Common/Includes/Loading/Loading';
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
 const CountryList = () => {
 
   const [Countrylist, setCountry] = useState([]);

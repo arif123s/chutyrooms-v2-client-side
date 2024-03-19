@@ -3,7 +3,7 @@ import React ,{ useEffect, useState } from 'react';
 import { useParams , useNavigate} from 'react-router';
 import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg'
 import { toast } from 'react-toastify';
-import { BASE_API } from '../../../../BaseApi/BaseApi';
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
 
 const DivisionEdit = () => {
 

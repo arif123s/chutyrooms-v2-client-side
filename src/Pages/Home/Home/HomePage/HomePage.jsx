@@ -40,12 +40,10 @@ const HomePage = () => {
     </div>
    
     <div className="custom-container homepage-container">
-      <div className="mt-[40px]">
-      <SearchField></SearchField>
+      {/* <SearchField></SearchField> */}
+      <div className='mt-[40px]'>
+      <SearchField></SearchField> 
       </div>
-      
-    
-   
       <div className="hotels-membership-container">
         <PopularHotels></PopularHotels>
         <DealMembership></DealMembership>
