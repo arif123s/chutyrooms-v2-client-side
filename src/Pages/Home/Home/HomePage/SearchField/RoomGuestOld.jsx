@@ -26,7 +26,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
   // };
 
   const addDiv = () => {
-    if (divCount < 4) {
+    if (divCount < 4 && divCount < 4) {
       setDivCount(prevCount => prevCount + 1);
       setInputValue(prevValues => {
         // alert(prevValues)

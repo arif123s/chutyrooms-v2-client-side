@@ -1,0 +1,42 @@
+
+.membership-list-content {
+    padding: 20px;
+  }
+  
+.membership-option {
+  display: flex;
+  gap: 8px;
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.membership-list {
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.membership-tbl-head {
+  border-bottom: 1px solid #E6E7E6;
+  text-align: left;
+}
+
+.membership-add-division
+{
+    background-color: #ffff;
+    padding: 20px;
+}
+
+.membership-add-form
+{
+    width: 50%;
+}
+
+.membership-save-btn
+{
+    padding: 10px 15px;
+    background-color: #159947;
+    margin-top: 10px;
+    color: #ffff;
+    border-radius: 5px;
+}

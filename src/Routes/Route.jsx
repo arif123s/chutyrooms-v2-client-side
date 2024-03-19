@@ -15,34 +15,40 @@ import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
 import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
 import BookingPreview from "../Pages/Home/BookingPreview/BookingPreview";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
-import NotFound from "../Pages/NotFound/NotFound";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
-import Country from "../Pages/Dashboard/SoftwareSetup/Country/Country";
-import CountryList from "../Pages/Dashboard/SoftwareSetup/Country/countrylist";
-import CountryAdd from "../Pages/Dashboard/SoftwareSetup/Country/CountryAdd";
+import Country from "../Pages/Dashboard/Admin/SoftwareSetup/Country/Country";
+import CountryList from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryList"
+import CountryAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryAdd"
 
 import OtpPhoneVerification from "../Pages/Auth/Verification/OtpVerification/OtpPhoneVerification";
 import OtpEmailVerification from "../Pages/Auth/Verification/OtpVerification/OtpEmailVerification";
-import CountryEdit from "../Pages/Dashboard/SoftwareSetup/Country/CountryEdit";
-import Division from "../Pages/Dashboard/SoftwareSetup/City/Division";
-import DivisionList from "../Pages/Dashboard/SoftwareSetup/City/DivisionList";
-import DivisionAdd from "../Pages/Dashboard/SoftwareSetup/City/DivisionAdd";
-import DivisionEdit from "../Pages/Dashboard/SoftwareSetup/City/DivisionEdit";
+import CountryEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryEdit";
+import Division from "../Pages/Dashboard/Admin/SoftwareSetup/City/Division";
+import DivisionList from "../Pages/Dashboard/Admin/SoftwareSetup/City/DivisionList";
+import DivisionAdd from "../Pages/Dashboard/Admin/SoftwareSetup/City/DivisionAdd";
+import DivisionEdit from "../Pages/Dashboard/Admin/SoftwareSetup/City/DivisionEdit";
 
-import Area from "../Pages/Dashboard/SoftwareSetup/Area/Area";
-import AreaList from "../Pages/Dashboard/SoftwareSetup/Area/AreaList";
-import AreaAdd from "../Pages/Dashboard/SoftwareSetup/Area/AreaAdd";
-import AreaEdit from "../Pages/Dashboard/SoftwareSetup/Area/AreaEdit";
+import Area from "../Pages/Dashboard/Admin/SoftwareSetup/Area/Area";
+import AreaList from "../Pages/Dashboard/Admin/SoftwareSetup/Area/AreaList";
+import AreaAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Area/AreaAdd";
+import AreaEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Area/AreaEdit";
 
-import DistrictInfo from "../Pages/Dashboard/SoftwareSetup/District/DistrictInfo";
-import DistrictList from "../Pages/Dashboard/SoftwareSetup/District/DistrictList";
-import DistrictAdd from  "../Pages/Dashboard/SoftwareSetup/District/DistrictAdd";
-import DistrictEdit from "../Pages/Dashboard/SoftwareSetup/District/DistrictEdit";
+import DistrictInfo from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictInfo";
+import DistrictList from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictList";
+import DistrictAdd from  "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictAdd";
+import DistrictEdit from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictEdit";
+import HotelDetails from "../Pages/Home/HotelDetails/HotelDetails";
 
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import EditProfile from "../Pages/Dashboard/Profile/EditProfile";
 
 import ProtectedRoute from "../Layout/ProtectedRoute";
+
+import NotFound from "../Pages/NotFound/NotFound";
+import Membership from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/Membership";
+import MembershipList from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipList";
+import MembershipAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipAdd";
+import MembershipEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipEdit";
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +103,12 @@ export const router = createBrowserRouter([
             path: "search-result-hotel",
             element: <SearchResultHotel></SearchResultHotel>,
           },
+
+          {
+            path: "hotel-details",
+            element: <HotelDetails></HotelDetails>,
+          },
+
           {
             path: "booking-preview",
             element: <BookingPreview></BookingPreview>,
@@ -213,6 +225,27 @@ export const router = createBrowserRouter([
               {
                 path: "/dashboard/Area/AreaEdit/:id",
                 element: <AreaEdit></AreaEdit>,
+              },
+            ],
+          },
+
+          {
+            path: "/dashboard/Membership",
+            element: <Membership></Membership>,
+            children: [
+              {
+                path: "/dashboard/Membership",
+                element: <MembershipList></MembershipList>,
+              },
+
+              {
+                path: "/dashboard/Membership/MembershipAdd",
+                element: <MembershipAdd></MembershipAdd>,
+              },
+
+              {
+                path: "/dashboard/Membership/MembershipEdit/:id",
+                element: <MembershipEdit></MembershipEdit>,
               },
             ],
           },

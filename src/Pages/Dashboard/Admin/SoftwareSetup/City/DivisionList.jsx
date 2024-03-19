@@ -1,12 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, json } from 'react-router-dom';
-import EditIcon from './../../../../assets/icons/edit-icon.svg';
-import DeleteIcon from './../../../../assets/icons/delete-icon.svg';
-import RestoreIcon from './../../../../assets/icons/restore_icon_green.svg';
+import EditIcon from './../../../../../assets/icons/edit-icon.svg';
+import DeleteIcon from './../../../../../assets/icons/delete-icon.svg';
+import RestoreIcon from './../../../../../assets/icons/restore_icon_green.svg';
 import axios from 'axios';
 import { useParams , useNavigate} from 'react-router';
-import { BASE_API } from '../../../../BaseApi/BaseApi';
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
 
 const DivisionList = () => {
 

@@ -6,9 +6,10 @@
     border-radius: 8px;
     font-size: 14px;
     position: absolute;
-    padding: 22px;
+    padding: 15px;
     box-shadow: -4px 4px 12px 0px rgba(35, 184, 85, 0.10);
-    right: 125px;
+    /* right: 120px; */
+    left: 0;
     z-index: 1;
 }
 
@@ -62,6 +63,7 @@
     border-radius: 5px;
     white-space: nowrap;
     cursor: pointer;
+    column-gap: 4px;
 
 }
 
@@ -93,8 +95,8 @@
 
 .childage
 {
-    padding: 8px 16px;
-    position: relative;
+    padding: 8px 20px;
+    /* position: relative; */
     margin-bottom: 10px;
     border: 1px solid #C0C3C1;
     border-radius: 5px;
@@ -103,8 +105,10 @@
 .arrow-icon-down
 {
     position: absolute;
-    top: calc(50% - 8px);
-    right: 20px;
+    top: calc(50% - 12px);
+   left: 30px;
+   pointer-events: none;
+    /* left: 45px; */
 }
 
 .childage-select-box
@@ -113,3 +117,14 @@
     background-color: #ffff;
   
 }
+
+
+@media (max-width: 575.98px) {
+
+.room-guest-content
+{
+    right: 60px;
+
+}
+}
+

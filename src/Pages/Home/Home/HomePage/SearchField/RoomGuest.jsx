@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Select from "@mui/material/Select";
 import "./RoomGuest.css";
 import Plus from "./../../../../../assets/icons/plus.svg";
@@ -15,40 +15,51 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
   }
   const [rooms, setRooms] = useState([
     {
-      adults: 2,
+      adults: 1,
       children: 1,
       child_age: {
-        0: 5,
+        0: 1,
       },
     },
-    {
-      adults: 2,
-      children: 2,
-      child_age: {
-        0: 2,
-        1: 1,
-      },
-    },
-    {
-      adults: 2,
-      children: 2,
-      child_age: {
-        0: 3,
-        1: 6,
-      },
-    },
+    // {
+    //   adults: 2,
+    //   children: 2,
+    //   child_age: {
+    //     0: 2,
+    //     1: 1,
+    //   },
+    // },
+    // {
+    //   adults: 2,
+    //   children: 2,
+    //   child_age: {
+    //     0: 3,
+    //     1: 6,
+    //   },
+    // },
   ]);
+ 
+  const [divVisibility, setDivVisibility] = useState('0');
+
+  useEffect(() => {
+    setDivVisibility(rooms.length-1);
+  }, [rooms]);
 
   const removeRoom = (event, index) => {
     // Create a copy of the rooms array
     event.preventDefault();
     const updatedRooms = [...rooms];
     if(updatedRooms.length > 1){
+      
       // Remove the room at the specified index
       updatedRooms.splice(index, 1);
   
       // Update state with the new rooms array
       setRooms(updatedRooms);
+
+      // setDivVisibility( updatedRooms.length-1);
+
+      console.log(updatedRooms, updatedRooms.length-1);
     }
   };
 
@@ -66,21 +77,30 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
   };
 
   const addDiv = (event) => {
+    
     event.preventDefault();
+    const updatedRooms = [...rooms];
+    if (updatedRooms.length < 4) {
     const newRoom = {
       adults: 1,  // You can set default values for adults and children as needed
       children: 0,
       child_age: {},  // Assuming no children initially
     };
-  
+    
     // Create a copy of the current rooms array
-    const updatedRooms = [...rooms];
   
     // Add the new room to the array
     updatedRooms.push(newRoom);
   
     // Update state with the new rooms array
     setRooms(updatedRooms);
+
+    // setDivVisibility(updatedRooms.length);
+
+    // setDivVisibility((prevdivVisibility) => (prevdivVisibility === updatedRooms.length-1 ? null : updatedRooms.length-1))
+    
+  }
+  
   };
 
   const addAdultGuest = (event, index) => {
@@ -143,24 +163,33 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
     setRooms(updatedRooms);
   };
 
-  const [isContentVisible, setIsContentVisible] = useState(false);
+  
 
-  const toggleContent = () => {
-    setIsContentVisible(!isContentVisible);
-  };
+  // Function to toggle the visibility of a specific div
+  const toggleVisibility = (divId) => {
+    // setDivVisibility((prevVisibility) => ({
+    //   ...prevVisibility,
+    //   [divId]: !prevVisibility[divId] || false,
+    // }));
+
+    setDivVisibility((prevdivVisibility) => (prevdivVisibility === divId ? null : divId))
+  }
 
   return (
     <div className="room-guest-content">
       {rooms.map((room, index) => (
-        <div key={index} onClick={toggleContent}>
-          <div className="room-no-div ">
+        <div key={index}  >
+          <div className="room-no-div" 
+        onClick={() => toggleVisibility(index)}>
             <div className="room-no">Room {index + 1}</div>
             <a href="#" type="button" onClick={(e) => removeRoom(e, index)} className={`remove-btn ${index === 0 ? 'invisible' : ''}`}>
               Remove
             </a>
           </div>
 
-          <div>
+        
+
+          <div className={divVisibility == index ? 'visible' : 'hidden'}>
             <div className="adult-div">
               <div>Adults</div>
               <div className="guest-quantity-div">
@@ -215,9 +244,9 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
                   <div key={Childindex}>
                     {/* {(index == Childindex) ?
                   ( */}
-                    <div key={Childindex} className="childage">
+                    <div key={Childindex} className="relative">
                       <select
-                        className="childage-select-box"
+                        className="childage-select-box childage"
                         onChange={(e) =>
                           updateGuests(
                             index,
@@ -263,8 +292,9 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
                         >
                           6
                         </option>
+                       
                       </select>
-
+                     
                       <img className="arrow-icon-down" src={ArrowDown}></img>
                     </div>
                     {/* ) : (<div></div>)}*/}
@@ -273,6 +303,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
             </div>
             {/* ))} */}
           </div>
+      
         </div>
       ))}
 

@@ -1,40 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
-import arrowDownIcon from './../../../../assets/icons/arrow-down.svg';
+import arrowDownIcon from './../../../../../assets/icons/arrow-down.svg';
 import { useParams , useNavigate} from 'react-router';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import { BASE_API } from '../../../../BaseApi/BaseApi';
 
-const AreaAdd = () => {
+import './District.css'; 
+import { BASE_API } from '../../../../../BaseApi/BaseApi';
+
+const DistrictAdd = () => {
 
     const [Countrylist, setCountryList] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState('');
-    const[selectedDivision,setSelectedDivision] = useState('');
     const[DivisionList, setDivisionList] = useState([]);
-    const[DistrictList,setDistrictList] = useState([]);
-    // const {
-   
-    //   register,
-    //   handleSubmit,
-      
-    //   formState: { errors },
-    // } = useForm();
-  
     const navigate = useNavigate();
-    const [AreaField, setAreaField] = useState({
+    const [DistrictField, setDistrictField] = useState({
         name: "",
-        district_id:"",
+        division_id:"",
         view_order:"",
         is_active:""
     })
-
     const [validationErrors, setValidationErrors] = useState({});
 
 
-    const changeAreaFieldHandler = (e) =>{
-      setAreaField({
-              ...AreaField,
+    const changeDistrictFieldHandler = (e) =>{
+        setDistrictField({
+              ...DistrictField,
               [e.target.name]: e.target.value
           });
       
@@ -43,18 +33,17 @@ const AreaAdd = () => {
 
     useEffect(() => {
         fetch(`${BASE_API}/country`, {
-        // fetch('http://127.0.0.1:8000/api/country', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-            .then(response => response.json())
-            .then(data => {
-                
-                setCountryList(data.data.data)
-            })
-            .catch(error => console.error('Error fetching data:', error));
+          // fetch('http://127.0.0.1:8000/api/country', {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setCountryList(data.data.data);
+          })
+          .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
 
@@ -77,46 +66,16 @@ const AreaAdd = () => {
           .then((response) => response.json())
           .then((data) =>  setDivisionList(data.data));
 
-          setDistrictList([]);
-
           
       };
 
 
-    const handleDivisionChange = (e) => {
 
-       
-        const selectedDivisionId = e.target.value;
-       
-        setSelectedDivision(selectedDivisionId);
-    
-        // Fetch data for the second dropdown based on the selected country
-        fetch(`${BASE_API}/district/${selectedDivisionId}/fetch` ,
-        // fetch(`http://127.0.0.1:8000/api/district/${selectedDivisionId}/fetch` ,
-        {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-          })
-          .then((response) => response.json())
-          .then((data) =>  setDistrictList(data.data));
 
-          
-      };
-
-      const onSubmit= async (e) =>{
+      const onSubmitChange = async (e) =>{
         e.preventDefault();
-      
-   
-       try{
-         
-        await axios
-          .post(
-            `${BASE_API}/area`,
-            // await axios.post('http://127.0.0.1:8000/api/area',
-
-            AreaField,
+        try{
+         await axios.post(`${BASE_API}/district`, DistrictField,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -125,26 +84,22 @@ const AreaAdd = () => {
           )
 
           .then((response) => {
-            // Successful response
             console.log(response.data);
             if (response.data.status == 1) {
-              navigate("/dashboard/area");
+              navigate("/dashboard/district");
             }
           });
-           
-          
-       }
+        }
    
        catch (err){
-        console.log(err.response.data.errors);
+        // console.log(err.response.data.errors);
         setValidationErrors(err.response.data.errors)
-              
        }
-   }
+      }
     return (
         <div className='country-add-division'>
 
-        <form className='country-add-form' onSubmit={onSubmit}>
+        <form className='country-add-form' onSubmit={onSubmitChange} >
         <div className="">
             <label className="property-input-title block" htmlFor="country">
               Country
@@ -154,7 +109,7 @@ const AreaAdd = () => {
                 id="country_id"
                 className="property-input"
                 name="country_id"
-                onChange={handleCountryChange}
+                onChange={handleCountryChange} 
                
               >
                  <option>Select Country</option>
@@ -180,7 +135,7 @@ const AreaAdd = () => {
                 id="division_id"
                 className="property-input"
                 name="division_id"
-                onChange={handleDivisionChange}
+                onChange={e => changeDistrictFieldHandler(e)} 
                
               >
                
@@ -197,55 +152,23 @@ const AreaAdd = () => {
                 src={arrowDownIcon}
                 alt=""
               />
+
+              {validationErrors.division_id && <span className='validation-message'>{validationErrors.division_id}</span>}
             </div>
-
-            
-
-
-            <label className="property-input-title block" htmlFor="country">
-              District
-            </label>
-            <div className="property-input-div">
-              <select
-                id="district_id"
-                className="property-input"
-                name="district_id"
-                onChange={e => changeAreaFieldHandler(e)}
-               
-              >
-               
-                {DistrictList.map(district => (
-                    <option key={district.id} value={district.id}>
-                        {district.name}
-                    </option>
-                ))}
-              </select>
-            
-              <img
-                // className="absolute top-[14px] right-[12px] arrow-icon"
-                className="arrow-icon"
-                src={arrowDownIcon}
-                alt=""
-              />
-            </div>
-            {validationErrors.district_id && <span className='validation-message'>{validationErrors.district_id}</span>}
 
             <div>
             <label className="property-input-title" htmlFor="CountryName">
-                 Area Name
+                  District Name
                 </label>
                 <input
                   className="input-box"
                   id="name"
                   name="name"
-                  onChange={e => changeAreaFieldHandler(e)} 
-                 
+                  onChange={e => changeDistrictFieldHandler(e)}
                   
                 />
 
-              {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
-
-        
+            {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
             </div>
 
             <div>
@@ -256,42 +179,32 @@ const AreaAdd = () => {
                   className="input-box"
                   id="view_order"
                   name="view_order"
-                  onChange={e => changeAreaFieldHandler(e)} 
-
-               
-                  // {...register("view_order", {
-                  //   required: {
-                  //     value: true,
-                  //     message: "View  Order is required",
-                  //   },
-                  // })}
+                  onChange={e => changeDistrictFieldHandler(e)}
+                  
                 />
 
-          {/* <label className="">
-                {errors.view_order?.type === "required" && (
-                  <span className="label-text-alt text-red-500">
-                    {errors.view_order?.message}
-                  </span>
-                )}
-            </label> */}
+{validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
             </div>
 
-            {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
-            <div>
+
+        <div>
             <div className="flex items-center gap-2">
                 <div>
-                    <input type="radio" id="is_active" name="is_active" value="1"   onChange={e => changeAreaFieldHandler(e)}  ></input>
+                    <input type="radio" id="is_active" name="is_active" value="1"   onChange={e => changeDistrictFieldHandler(e)} ></input>
                     <label className="cursor-pointer text-gray-700 ml-2">Active</label>
                 </div>
                     
                 <div>
-                  <input type="radio" id="is_active" name="is_active" value="0"   onChange={e => changeAreaFieldHandler(e)}  ></input>
+                  <input type="radio" id="is_active" name="is_active" value="0"   onChange={e => changeDistrictFieldHandler(e)}  ></input>
                   <label  className="cursor-pointer text-gray-700 ml-2">Inactive</label>
                 </div>
             </div>
 
-            {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>}
+            {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
+
             </div>
+
+            
 
             <button className='country-save-btn'>Save</button>
 
@@ -304,4 +217,4 @@ const AreaAdd = () => {
     );
 };
 
-export default AreaAdd;
+export default DistrictAdd;

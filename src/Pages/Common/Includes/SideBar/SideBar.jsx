@@ -23,9 +23,8 @@ import { Link, useNavigate } from "react-router-dom";
 const menuClicked = '';
 
 const SideBar = ({open,setOpen}) => {
+  const [active, setActive] = useState(false);
 
-  // const [open, setOpen] = useState(true);
-  const [clickedMenu, setClickedMenu] = useState(false);
   const [handleclick, sethandleclick] = useState(menuClicked);
   const prevMenuClicked = useRef(menuClicked);
   const [toggleOpen , setToggleOpen] = useState(false);
@@ -39,7 +38,7 @@ const navigate = useNavigate();
 
   const handleSlideUp = (link) => {
   
-    // console.log(prevMenuClicked.current, link, toggleOpen);
+  
     
 
     if(prevMenuClicked.current != link){
@@ -54,12 +53,11 @@ const navigate = useNavigate();
     setActive(link);
     sethandleclick(link);
  
-    // console.log(prevMenuClicked.current, handleclick);
   };
 
-  const ishandleclick = (link) => handleclick === link;
+ 
 
-  const [active, setActive] = useState(false);
+ 
 
   // alert(clickedMenu)
 
@@ -67,27 +65,7 @@ const navigate = useNavigate();
     setActive(color)
   };
 
-  const iscolorClick = (color) => active === color;
 
-  // const [handleNavLink, setHandleNavLink] = useState(true);
-
-
-  // const handleSlideUp = (link) => {
-
-  //   sethandleclick(link);
-
-
-  // };
-
-  // // const ishandleclick = (link)=>handleclick === link;
-
-
-  // const [active, setActive] = useState(null);
-  // const ColorhandleClick = (color) => {
-
-  //   setActive(color)
-  // };
-  // const iscolorClick = (color) => active === color;
 
   const lists = [
     {
@@ -136,6 +114,7 @@ const navigate = useNavigate();
         { name: "Division", path: "/dashboard/division" },
         { name: "District", path: "/dashboard/district" },
         { name: "Area", path: "/dashboard/Area" },
+        { name: "Membership", path: "/dashboard/Membership" },
       ],
     },
   ];
