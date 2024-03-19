@@ -1,5 +1,5 @@
 import PopularHotels from "./PopularHotels/PopularHotels";
-// import SearchField from "./SearchField/SearchField";
+import SearchField from "./SearchField/SearchField";
 import "./HomePage.css";
 import DealMembership from "./DealMembership/DealMembership";
 import ExploreCountry from "./ExploreCountry/ExploreCountry";
@@ -9,7 +9,7 @@ const HomePage = () => {
 
   return (
     <div className="custom-container homepage-container">
-      {/* <SearchField></SearchField> */}
+      <SearchField></SearchField>
       <div className="hotels-membership-container">
         <PopularHotels></PopularHotels>
         <DealMembership></DealMembership>
