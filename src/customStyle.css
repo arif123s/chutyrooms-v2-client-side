@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "Gilroy";
   src: local("Gilroy"), url("./fonts/Gilroy-Regular.ttf") format("truetype");
@@ -32,7 +31,8 @@ body {
 }
 
 input {
-  background-color: transparent !important;
+  background-color: white !important;
+  fill: white !important;
 }
 
 input:-internal-autofill-selected {
@@ -40,13 +40,13 @@ input:-internal-autofill-selected {
 }
 
 /* @layer base { */
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"] {
-    -webkit-appearance: none;
-    margin: 0;
-    -moz-appearance: textfield !important;
-  }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"] {
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield !important;
+}
 /* } */
 
 select {
@@ -63,31 +63,31 @@ select:focus {
 }
 
 input[type="radio"] {
-    border-color: #159947 !important;
-    background-color: #159947 !important;
-    color: #159947 !important;
+  border-color: #159947 !important;
+  background-color: #159947 !important;
+  color: #159947 !important;
 }
 
 input[type="radio"]:checked {
-    border-color: #159947 !important;
-    background-color: #159947 !important;
-    color: #159947 !important;
+  border-color: #159947 !important;
+  background-color: #159947 !important;
+  color: #159947 !important;
 }
 
 input[type="radio"]:focus {
-    border-color: #159947 !important;
-    background-color: #159947 !important;
-    color: #159947 !important;
+  border-color: #159947 !important;
+  background-color: #159947 !important;
+  color: #159947 !important;
 }
 
 input[type="radio"]:hover {
-    border-color: #159947 !important;
-    background-color: #159947 !important;
-    color: #159947 !important;
+  border-color: #159947 !important;
+  background-color: #159947 !important;
+  color: #159947 !important;
 }
 
 input[type="checkbox"]:checked {
-    border-color: #159947 !important;
-    background-color: #159947 !important;
-    color: #159947 !important;
+  border-color: #159947 !important;
+  background-color: #159947 !important;
+  color: #159947 !important;
 }

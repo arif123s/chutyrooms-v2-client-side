@@ -7,7 +7,7 @@ import countryIcon from "../../../../assets/bd.svg";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import Loading from "../../../Common/Includes/Loading/Loading";
+// import Loading from "../../../Common/Includes/Loading/Loading";
 import "./Register.css";
 import { registerUser } from "../../../../redux/features/user/userSlice";
 import { BASE_API } from "../../../../BaseApi/BaseApi";
@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 
 const Register = () => {
   const toastId = useRef(null);
+  const [disableButton, setDisableButton] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -31,7 +32,7 @@ const Register = () => {
     message: "",
     errors: [],
   });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [loginMethod, setLoginMethod] = useState("phone");
 
@@ -122,6 +123,7 @@ const Register = () => {
     //   setErrorMessage(true);
     // }
     toast.loading("Loading...");
+    setDisableButton(true)
     setErrorMessage({ status: false, message: "" });
     // setLoading(true);
 
@@ -154,6 +156,7 @@ const Register = () => {
           .then((data) => {
             // setLoading(false);
              toast.dismiss(toastId.current);
+             setDisableButton(false)
             if (data.status == 102) {
               console.log("Successfully registered!", data);
               sessionStorage.setItem(
@@ -196,6 +199,8 @@ const Register = () => {
       }
     } else {
       // Passwords do not match
+       toast.dismiss(toastId.current);
+        setDisableButton(false);
       // setLoading(false);
       setPassErrorMessage(true);
     }
@@ -440,13 +445,15 @@ const Register = () => {
             type="password"
             placeholder="Enter a password"
             {...register("password", {
-              required: {
-                value: true,
-                message: "Password is Required",
-              },
+              required: "Password is Required",
               minLength: {
                 value: 8,
                 message: "Password must be 8 characters or longer",
+              },
+              pattern: {
+                value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
+                message:
+                  "Password must contain at least one uppercase letter, one lowercase letter, and one special character (!@#$%^&*)",
               },
             })}
           />
@@ -457,6 +464,11 @@ const Register = () => {
               </span>
             )}
             {errors.password?.type === "minLength" && (
+              <span className="label-text-alt text-red-500">
+                {errors.password.message}
+              </span>
+            )}
+            {errors.password?.type === "pattern" && (
               <span className="label-text-alt text-red-500">
                 {errors.password.message}
               </span>
@@ -545,7 +557,13 @@ const Register = () => {
             </div>
           ))}
 
-        <input type="submit" className="login-btn mt-[8px]" value="Register" />
+        <input
+          type="submit"
+          className={`login-btn mt-[8px] hover:bg-[#016A29] ${
+            disableButton ? "opacity-50" : "opacity-100"
+          }`}
+          value="Register"
+        />
       </form>
 
       <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">

@@ -3,7 +3,8 @@ import { Navigate } from "react-router-dom";
 import { useCurrentToken } from "../redux/features/auth/authSlice";
 
 const ProtectedRoute = ({ children }) => {
-  const token = useSelector(useCurrentToken);
+  // const token = useSelector(useCurrentToken);
+  const token = (localStorage.getItem("accessToken"));
 
   if (!token) {
     return <Navigate to={"/login"} replace={true}></Navigate>;
