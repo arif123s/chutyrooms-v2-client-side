@@ -17,22 +17,22 @@ const mapContainerStyle = {
 
 const SearchResultHotel = () => {
   const [mapView, setMapView] = useState(false);
-   const [center, setCenter] = useState({
-     lat: 23.862725477930507,
-     lng: 90.40080333547479,
-   });
-     const { isLoaded, loadError } = useLoadScript({
-       googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
-       libraries,
-     });
+  const [center, setCenter] = useState({
+    lat: 23.862725477930507,
+    lng: 90.40080333547479,
+  });
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
+    libraries,
+  });
 
-      if (loadError) {
-        return <div className="text-center py-[60px]">Error loading maps!</div>;
-      }
+  if (loadError) {
+    return <div className="text-center py-[60px]">Error loading maps!</div>;
+  }
 
-      if (!isLoaded) {
-        return <Loading></Loading>;
-      }
+  if (!isLoaded) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="hotel-search-result-container">
@@ -54,7 +54,9 @@ const SearchResultHotel = () => {
               Cox’s Bazar: 25 Properties Found
             </h2>
             <div className="flex items-center w-[120px] lg:w-[130px]">
-              <p className="mr-[4px] text-[12px] md:text-[14px] lg:text-[16px]">Map View</p>
+              <p className="mr-[4px] text-[12px] md:text-[14px] lg:text-[16px]">
+                Map View
+              </p>
               <input
                 type="checkbox"
                 className="toggle toggle-success w-[44px] h-[20px] lg:w-[46px] lg:h-[23px]"
@@ -165,7 +167,7 @@ const SearchResultHotel = () => {
           {mapView && (
             <div className=" mt-[24px]">
               <GoogleMap
-                mapContainerStyle={mapContainerStyle }
+                mapContainerStyle={mapContainerStyle}
                 // mapContainerStyle={"map-view-container"}
                 zoom={10}
                 // center={center}

@@ -1,4 +1,4 @@
-import React, { useEffect , useRef } from 'react';
+import { useEffect  } from 'react';
 import { useState } from "react";
 import PopularHotels from "./PopularHotels/PopularHotels";
 import SearchField from "./SearchField/SearchField";
@@ -9,7 +9,6 @@ import chat from "../../../../assets/icons/chat-bot.svg";
 import ChutyLogo from "../../../../assets/icons/chuty-logo.png"
 
 const HomePage = () => {
-
 
   const [isSticky, setIsSticky] = useState(false);
   const [isHidden, setIsHidden] = useState(true);

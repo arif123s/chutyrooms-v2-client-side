@@ -151,6 +151,7 @@ const OtpPhoneVerification = () => {
          toast.dismiss(toastId.current);
         if (data.status === true) {
           console.log("data", data);
+          console.log("role code", data.data.roles);
           localStorage.setItem(
             "userInfo",
             JSON.stringify({
@@ -164,7 +165,8 @@ const OtpPhoneVerification = () => {
           toast.success("Successfully registered!");
           if (data.data.roles[0].role_code == 345) {
             navigate("/");
-          } else navigate("/dashboard");
+          }
+          else navigate("/dashboard");
         } else {
           setOtpError({ status: true, message: data.message });
           console.log(data);

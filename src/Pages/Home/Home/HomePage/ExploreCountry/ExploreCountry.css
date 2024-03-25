@@ -1,5 +1,5 @@
 :root {
-    --swiper-navigation-size: 18px;
+    --swiper-navigation-size: 18px !important;
     --swiper-theme-color: #000000;
 }
 
@@ -28,7 +28,7 @@ margin: 0 8px;
 }
 
 :root {
-    --swiper-navigation-size: 16px;
+        --swiper-navigation-size: 14px !important;
 }
 
 .swiper-button-prev, .swiper-button-next {

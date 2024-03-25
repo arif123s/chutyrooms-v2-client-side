@@ -17,17 +17,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPopularHotels } from "../../../../../redux/features/popularHotels/popularHotelSlice";
 import Loading from "../../../../Common/Includes/Loading/Loading";
 import { useGetAllPopularHotelsQuery } from "../../../../../redux/features/popularHotels/popularHotelsApi";
+import { useMembershipCardQuery } from "../../../../../redux/features/membershipCard/membershipCard.api";
 // import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
 
 const PopularHotels = () => {
   const [favourite, setFavourite] = useState(false);
   const dispatch = useDispatch();
   // const {hotels,isLoading} = useSelector((state) => state.popularHotel);
-  const { hotels, isLoading } = useSelector((state) => state.popularHotel);
-  const [loading,setLoading]= useState(true)
+  const { hotels } = useSelector((state) => state.popularHotel);
+  const [loading,setLoading]= useState(true);
 
   const { data } = useGetAllPopularHotelsQuery();
+  const {data:membership} = useMembershipCardQuery();
   console.log(data);
+  console.log("membership", membership);
 
   useEffect(() => {
     dispatch(getPopularHotels());

@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../../../redux/features/auth/authSlice";
 
 const NavBar = () => {
-  const [menu, setMenu] = useState(true);
+  const [menu, setMenu] = useState(false);
   const [profile, setProfile] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,15 +44,15 @@ const NavBar = () => {
 
   useEffect(() => {
     // Set the duration in milliseconds (e.g., 3000 for 3 seconds)
-    const duration = 0;
+    // const duration = 0;
 
     // After the specified duration, hide the menu
-    const timeoutId = setTimeout(() => {
-      setMenu(false);
-    }, duration);
+    // const timeoutId = setTimeout(() => {
+    //   setMenu(false);
+    // }, duration);
 
     // Clean up the timeout to avoid memory leaks
-    return () => clearTimeout(timeoutId);
+    // return () => clearTimeout(timeoutId);
   }, []);
 
   const handleNavigate = (event, route) => {
