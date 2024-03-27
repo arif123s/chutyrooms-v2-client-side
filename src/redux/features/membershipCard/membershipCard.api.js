@@ -4,7 +4,7 @@ const membershipCardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     membershipCard: builder.query({
       query: () => ({
-        url: "/memberships",
+        url: "/membershipcards",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

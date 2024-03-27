@@ -10,11 +10,11 @@ const popularHotelApi = baseApi.injectEndpoints({
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       }),
-    //   transformResponse: (response) => {
-    //     console.log("inside redux", response);
+      //   transformResponse: (response) => {
+      //     console.log("inside redux", response);
 
-    //     return response;
-    //   },
+      //     return response;
+      //   },
     }),
   }),
 });

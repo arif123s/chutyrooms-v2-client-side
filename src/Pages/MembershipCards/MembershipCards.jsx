@@ -4,9 +4,11 @@ import goldCard from "../../assets/membership/gold-card.png";
 import silverCard from "../../assets/membership/silver-card.png";
 import alert from "../../assets/icons/alert-circle.svg";
 import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+// import { styled } from "@mui/material/styles";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Switch from "@mui/material/Switch";
+import { useMembershipCardQuery } from "../../redux/features/membershipCard/membershipCard.api";
+import Loading from "../Common/Includes/Loading/Loading"
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 
@@ -71,6 +73,13 @@ const MembershipCards = () => {
 
   const [checked, setChecked] = useState(false);
   const [newActivatedCardId, setNewActivatedCardId] = useState(null);
+   const { data: membershipCard, isLoading } = useMembershipCardQuery();
+
+   console.log(membershipCard)
+
+   if(isLoading){
+    return <Loading></Loading>
+   }
 
   const notPurchasedMembershipCards = membershipCards.filter(
     (card) =>
@@ -160,7 +169,7 @@ const MembershipCards = () => {
   const handleNotActivateCard = (id) => {
     let count = 0;
     purchasedCards.map((card) => (card.isActive === true ? count++ : count));
-    console.log(count);
+  
     if (count > 0) {
       document.getElementById("activate-card-modal").showModal();
       setActivatedCardId(id);

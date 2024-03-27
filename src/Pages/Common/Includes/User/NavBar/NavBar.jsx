@@ -11,7 +11,7 @@ import profileIcon from "../../../../../assets/icons/profile.svg";
 import logoutIcon from "../../../../../assets/icons/logout.svg";
 import userIcon from "../../../../../assets/icons/user.svg";
 import "./NavBar.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../../../redux/features/auth/authSlice";
@@ -19,6 +19,7 @@ import { logout } from "../../../../../redux/features/auth/authSlice";
 const NavBar = () => {
   const [menu, setMenu] = useState(false);
   const [profile, setProfile] = useState(false);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const countryList = [
@@ -55,6 +56,30 @@ const NavBar = () => {
     // return () => clearTimeout(timeoutId);
   }, []);
 
+  useEffect(() => {
+    // Function to handle clicks outside the dropdowns
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Click is outside dropdowns, so hide both
+        // setCountry(false);
+        setProfile(false);
+      }
+    }
+
+    // Add event listener when either dropdown is shown
+    if (country || profile) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      // Cleanup: remove event listener when dropdowns are hidden
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [country, profile]);
+
   const handleNavigate = (event, route) => {
     event.preventDefault();
     setMenu(false);
@@ -90,12 +115,12 @@ const NavBar = () => {
                 onClick={(e) => handleNavigate(e, "owner-register")}
                 // onClick={() => handleNavigate("owner-register")}
                 onMouseEnter={(e) =>
-                  e.target.querySelector(".nav-icon").classList.add("hovered")
+                  e.target.querySelector(".nav-icon")?.classList.add("hovered")
                 }
                 onMouseLeave={(e) =>
                   e.target
                     .querySelector(".nav-icon")
-                    .classList.remove("hovered")
+                    ?.classList.remove("hovered")
                 }
                 className="menu-mobile cursor-pointer bg-[#E8F5ED] text-[#159947] nav-item-container flex px-[16px] items-center py-[10px] rounded-[8px]"
               >
@@ -139,7 +164,7 @@ const NavBar = () => {
               </a>
             </li>
             <li className="menu-mobile">
-              <div className="flex">
+              <div className="">
                 {/* <img src={globalLogo} alt="Global logo"></img> */}
                 {/* <div className="relative pr-[8px] ">
                   <select
@@ -168,13 +193,20 @@ const NavBar = () => {
                   className="bg-[#F8FEFF] w-[80px] flex items-center gap-[4px] relative"
                   name=""
                   id=""
-                  onClick={() => setCountry(!country)}
+                  onClick={() => {
+                    setCountry(!country);
+                    setProfile(false); // Hide profile dropdown when country is clicked
+                  }}
                 >
                   <img src={selectedCountry.flag} alt="" />
                   <p className="bg-white cursor-default" value="BDT">
                     {selectedCountry.name}
                   </p>
-                  <img className="absolute right-0" src={arrowDownIcon} alt="" />
+                  <img
+                    className="absolute right-0"
+                    src={arrowDownIcon}
+                    alt=""
+                  />
                   {country && (
                     <div className="bg-white absolute top-[22px] w-full cursor-pointer flex flex-col z-10 rounded-[4px]  border-[1px] ">
                       {countryList.map((country) => (
@@ -194,9 +226,16 @@ const NavBar = () => {
             </li>
           </div>
           {user ? (
-            <li className="menu-mobile user-icon-container relative">
+            <li
+              className="menu-mobile user-icon-container relative"
+              ref={dropdownRef}
+            >
               <img
-                onClick={() => setProfile(!profile)}
+                // onClick={() => setProfile(!profile)}
+                onClick={() => {
+                  setProfile(!profile);
+                  setCountry(false); // Hide country dropdown when profile is clicked
+                }}
                 className="w-[36px]"
                 src={userIcon}
                 alt="Profile"
