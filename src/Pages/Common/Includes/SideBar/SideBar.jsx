@@ -90,7 +90,7 @@ const navigate = useNavigate();
       submenu: [
         { name: "All Rooms", path: "#" },
         { name: "Edit Rooms", path: "#" },
-        { name: "Add Room", path: "/room-add" },
+        { name: "Add Room", path: "/dashboard/room-add" },
       ],
     },
     {
@@ -99,7 +99,7 @@ const navigate = useNavigate();
       icon: Email,
       clickedicon: EmailGreen,
       submenu: [
-        { name: "All Emails", path: "/property-add" },
+        { name: "All Emails", path: "#" },
         { name: "Edit Email", path: "#" },
       ],
     },

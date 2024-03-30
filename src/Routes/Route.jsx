@@ -122,7 +122,7 @@ export const router = createBrowserRouter([
             element: <PropertyAdd></PropertyAdd>,
           },
           {
-            path: "room-add",
+            path: "property-room-add",
             element: <RoomAdd></RoomAdd>,
           },
         ],
@@ -146,6 +146,10 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/edit-profile",
             element: <EditProfile></EditProfile>,
+          },
+          {
+            path: "/dashboard/room-add",
+            element: <RoomAdd></RoomAdd>,
           },
           {
             path: "/dashboard/country",

@@ -315,7 +315,7 @@ const PropertyAdd = () => {
     console.log(propertyData);
     // createPropertyMutation.mutate(propertyData);
     setLoading(false);
-    navigate("/room-add");
+    navigate("/property-room-add");
   };
 
   return (

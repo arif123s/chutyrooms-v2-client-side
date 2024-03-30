@@ -190,7 +190,7 @@ const NavBar = () => {
                 </div> */}
 
                 <div
-                  className="bg-[#F8FEFF] w-[80px] flex items-center gap-[4px] relative"
+                  className="bg-[#F8FEFF] w-[80px] flex items-center gap-[8px] relative"
                   name=""
                   id=""
                   onClick={() => {
@@ -213,7 +213,7 @@ const NavBar = () => {
                         <div
                           key={country.id}
                           onClick={() => setSelectedCountry(country)}
-                          className="px-[6px] py-[2.5px] flex gap-[4px] hover:bg-[#159947] hover:text-white"
+                          className="px-[8px] py-[4px] flex gap-[8px] hover:bg-[#159947] hover:text-white"
                         >
                           <img src={country.flag} alt="Global logo"></img>
                           <p>{country.name}</p>
