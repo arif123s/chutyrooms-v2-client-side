@@ -3,16 +3,19 @@ import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
 import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 import countryIcon from "../../../../assets/bd.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import Loading from "../../../Common/Includes/Loading/Loading";
+// import Loading from "../../../Common/Includes/Loading/Loading";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../../redux/features/user/userSlice";
 import { BASE_API } from "../../../../BaseApi/BaseApi";
+import { toast } from "react-toastify";
 
 
 const OwnerRegister = () => {
   //  const [inputValue, setInputValue] = useState("");
+   const toastId = useRef(null);
+   const [disableButton, setDisableButton] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -25,7 +28,7 @@ const OwnerRegister = () => {
     message: "",
     errors: [],
   });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [loginMethod, setLoginMethod] = useState("phone");
   const [showOptions, setShowOptions] = useState(false);
@@ -56,9 +59,9 @@ const OwnerRegister = () => {
     setShowOptions(false); // Close the dropdown after selecting an option
   };
 
-  if (loading) {
-    return <Loading></Loading>;
-  }
+  // if (loading) {
+  //   return <Loading></Loading>;
+  // }
 
   const handleLoginMethod = (type) => {
     setLoginMethod(type);
@@ -73,8 +76,11 @@ const OwnerRegister = () => {
   };
 
   const onSubmit = (data) => {
+    toast.loading("Loading...");
+     setDisableButton(true);
+   
     setErrorMessage({ status: false, message: "" });
-    setLoading(true);
+    // setLoading(true);
 
     const password = data.password;
     const confirmPassword = data.confirmPassword;
@@ -102,7 +108,9 @@ const OwnerRegister = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          setLoading(false);
+          // setLoading(false);
+           toast.dismiss(toastId.current);
+           setDisableButton(false)
           if (data.status === 102) {
             console.log("Successfully registered!", data);
             sessionStorage.setItem(
@@ -139,7 +147,9 @@ const OwnerRegister = () => {
           }
         });
     } else {
-      setLoading(false);
+      // setLoading(false);
+       toast.dismiss(toastId.current);
+       setDisableButton(false);
       // Passwords do not match
       setPassErrorMessage(true);
     }
@@ -516,7 +526,13 @@ const OwnerRegister = () => {
             </div>
           ))}
 
-        <input type="submit" className="login-btn mt-[8px]" value="Register" />
+        <input
+          type="submit"
+          className={`login-btn mt-[8px] hover:bg-[#016A29] ${
+            disableButton ? "opacity-50" : "opacity-100"
+          }`}
+          value="Register"
+        />
       </form>
 
       <div className="flex mt-[20px] items-center mx-0 md:mx-8 lg:mx-8">

@@ -70,8 +70,8 @@ const SingleHotel = () => {
               </div>
               <p className="text-[14px] lg:text-[16px]">4.8 (21 Reviews) </p>
             </div>
-            <div className="flex gap-[8px] text-[14px] lg:text-[16px]">
-              <div className="flex">
+            <div className="flex items-start gap-[8px] text-[14px] lg:text-[16px]">
+              <div className="flex items-center">
                 <img
                   className="w-[20px] mr-[3px]"
                   src={tickCircle}
@@ -79,7 +79,7 @@ const SingleHotel = () => {
                 />
                 <p>CCTV</p>
               </div>
-              <div className="flex">
+              <div className="flex items-center">
                 <img
                   className="w-[20px] mr-[3px]"
                   src={tickCircle}

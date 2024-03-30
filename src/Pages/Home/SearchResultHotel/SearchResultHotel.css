@@ -1,4 +1,4 @@
-.hotel-search-result-container{
+.hotel-search-result-container {
   margin-top: 50px;
   margin-bottom: 100px;
   position: relative;
@@ -20,16 +20,16 @@
   margin-right: 50px;
 }
 
-.suggested-place{
- height: 40px;
- color: #159947;
- padding-left: 10px;
- padding-right: 10px;
- background: #E8F5ED;
- border-radius: 5px;
- display: flex;
- justify-content: center;
- align-items: center;
+.suggested-place {
+  height: 40px;
+  color: #159947;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #e8f5ed;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hotels-result-container {
@@ -37,7 +37,6 @@
   /* display: flex; */
   margin-left: 50px;
 }
-
 
 .hotels {
   margin-top: 24px;
@@ -71,40 +70,41 @@
   width: 100%;
 }
 
-.ratings{
-display: flex;
-margin-right: 4px;
+.ratings {
+  display: flex;
+  margin-right: 4px;
 }
 
-.ratings img{
+.ratings img {
   width: 18px;
 }
 
-.custom-checkbox{
+.custom-checkbox {
   padding: 0 !important;
   /* width: ; */
 }
-.custom-checkbox .css-1m9pwf3{
+.custom-checkbox .css-1m9pwf3 {
   padding: 0 !important;
 }
 
-.download-app-img{
+.download-app-img {
   height: 240px;
   width: 100%;
 }
 
-.filter-btn{
+.filter-btn {
   display: none;
 }
 
-.map-view-container{
+.map-view-container {
   width: 100%;
   border-radius: 8px;
-
 }
 
 /********   Map view toggole component customize   ********/
-.toggle-success:checked, .toggle-success[checked="true"], .toggle-success[aria-checked="true"] {
+.toggle-success:checked,
+.toggle-success[checked="true"],
+.toggle-success[aria-checked="true"] {
   background-color: #159947;
 }
 
@@ -117,46 +117,44 @@ margin-right: 4px;
 }
 
 .hotel-img-slider :root {
-    --swiper-navigation-size: 14px;
+  --swiper-navigation-size: 14px !important;
 }
 
 .hotel-img-slider .swiper-button-prev {
   width: 30px;
   height: 30px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 50%;
 }
 .hotel-img-slider .swiper-button-next {
   width: 30px;
   height: 30px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 50%;
 }
-
 
 /************************
      Responsive
 ************************/
 
 @media (max-width: 575.98px) {
-.hotel-search-result-container{
-  margin-top: 24px;
+  .hotel-search-result-container {
+    margin-top: 24px;
     margin-bottom: 32px;
-}
+  }
 
+  .search-page-title {
+    font-size: 16px;
+  }
 
-   .search-page-title {
-  font-size: 16px;
-}
+  .filter-mobile {
+    display: none;
+  }
 
-.filter-mobile {
-  display: none;
-}
-
-.hotels-result-container {
-  width: 100%;
-  margin-left: 0px;
-}
+  .hotels-result-container {
+    width: 100%;
+    margin-left: 0px;
+  }
 
   .hotel {
     display: block;
@@ -176,38 +174,47 @@ margin-right: 4px;
     margin-top: 12px;
   }
 
-  .ratings img{
-  width: 16px;
-}
+  .ratings img {
+    width: 16px;
+  }
 
-   .download-app-img{
-  height: 114px;
-}
+  .download-app-img {
+    height: 114px;
+  }
 
-.filter-btn{
-  font-size: 14px;
-  /* position: sticky;
+  .filter-btn {
+    font-size: 14px;
+    /* position: sticky;
   bottom: 36px;
   left: 44%; */
-  display: flex;
-  height: 40px;
-  padding: 0 16px;
-  background: #1D6BE5;
-  box-shadow: 0px 8px 25px rgba(15.65, 90.17, 234.81, 0.25);
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-  color: #FFFFFF;
-  width: fit-content;
-  margin: auto;
-  z-index: 1;
-}
+    display: flex;
+    height: 40px;
+    padding: 0 16px;
+    background: #1d6be5;
+    box-shadow: 0px 8px 25px rgba(15.65, 90.17, 234.81, 0.25);
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    width: fit-content;
+    margin: auto;
+    z-index: 1;
+  }
+
+  .hotel-img-slider .swiper-button-prev {
+    width: 28px;
+    height: 28px;
+  }
+  .hotel-img-slider .swiper-button-next {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-   .search-page-title {
-  font-size: 16px;
-}
+  .search-page-title {
+    font-size: 16px;
+  }
 
   .filter-container {
     width: 35%;
@@ -215,7 +222,7 @@ margin-right: 4px;
   }
 
   .hotels-result-container {
-    width: 65%;
+    width: 62%;
     margin-left: 16px;
   }
 
@@ -235,15 +242,15 @@ margin-right: 4px;
     width: 100%;
   }
 
-  .download-app-img{
-  height: 120px;
-}
+  .download-app-img {
+    height: 120px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .search-page-title {
-  font-size: 18px;
-}
+  .search-page-title {
+    font-size: 18px;
+  }
 
   .filter-container {
     width: 40%;
@@ -271,34 +278,34 @@ margin-right: 4px;
     width: 100%;
   }
 
-    .download-app-img{
-  height: 140px;
-}
+  .download-app-img {
+    height: 140px;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .search-page-title {
-  font-size: 24px;
-}
+    font-size: 24px;
+  }
 
-.filter-container {
-  width: 40%;
-  margin-right: 40px;
-}
+  .filter-container {
+    width: 40%;
+    margin-right: 40px;
+  }
 
-.hotels-result-container {
-  width: 60%;
-  margin-left: 40px;
-}
+  .hotels-result-container {
+    width: 60%;
+    margin-left: 40px;
+  }
 
- .hotel {
-  display: block;
-   padding: 15px 24px 15px 18px;
+  .hotel {
+    display: block;
+    padding: 15px 24px 15px 18px;
     gap: 18px;
     margin-bottom: 24px;
   }
 
-    .hotel-img-slider {
+  .hotel-img-slider {
     width: 100%;
   }
 
@@ -307,32 +314,32 @@ margin-right: 4px;
     width: 100%;
   }
 
-    .download-app-img{
-  height: 170px;
-}
+  .download-app-img {
+    height: 170px;
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   .filter-container {
-  width: 28%;
-  margin-right: 40px;
-}
+    width: 28%;
+    margin-right: 40px;
+  }
 
-.hotels-result-container {
-  width: 72%;
-  /* display: flex; */
-  margin-left: 40px;
-}
+  .hotels-result-container {
+    width: 72%;
+    /* display: flex; */
+    margin-left: 40px;
+  }
 }
 
 @media (min-width: 1400px) {
-    .filter-container {
-  width: 28%;
-  margin-right: 40px;
-}
+  .filter-container {
+    width: 28%;
+    margin-right: 40px;
+  }
 
-.hotels-result-container {
-  width: 72%;
-  margin-left: 40px;
-}
+  .hotels-result-container {
+    width: 72%;
+    margin-left: 40px;
+  }
 }

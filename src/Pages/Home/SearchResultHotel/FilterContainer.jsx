@@ -6,13 +6,13 @@ import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 import { useState } from "react";
 
-const  FilterContainer = () => {
+const FilterContainer = () => {
   const [rating, setRating] = useState(0);
   const [value, setValue] = useState([0, 200000]);
-  const [priceRange,setPriceRange]=useState({
-    lowestPrice:500,
-    highestPrice:200000,
-  })
+  const [priceRange, setPriceRange] = useState({
+    lowestPrice: 500,
+    highestPrice: 200000,
+  });
   const initialState = ["Hotel", "Resort", "Cottage"];
   const [checkboxes, setCheckboxes] = useState(
     initialState.map((label) => ({ label, isChecked: false }))
@@ -24,7 +24,7 @@ const  FilterContainer = () => {
     setValue(newValue);
   };
 
-  console.log('value',priceRange)
+  console.log("value", priceRange);
 
   const toggleCheckbox = (index) => {
     setCheckboxes((prevCheckboxes) => {
@@ -48,7 +48,7 @@ const  FilterContainer = () => {
       <div className="relative  ">
         <input
           placeholder="Search"
-          className="z-10 opacity-70 flex p-[8px] pl-[32px] text-[14px] items-center w-full border-[1px] rounded-[8px] border-[#c6c6c6] mb-[12px]"
+          className="z-10 opacity-70 bg-[#F8FEFF] flex p-[8px] pl-[32px] text-[14px] items-center w-full border-[1px] rounded-[8px] border-[#c6c6c6] mb-[12px]"
         />
         <img
           className="w-4 absolute top-[11px] left-[12px]"
@@ -78,7 +78,7 @@ const  FilterContainer = () => {
           <div className="property-input-div h-[40]">
             <select
               id="popularity"
-              className="bg-[#F8FEFF] property-input text-[14px] md:text-[16px] lg:text-[16px] "
+              className="property-input bg-[#F8FEFF] text-[14px] md:text-[16px] lg:text-[16px] "
               name="popularity"
             >
               <option value="">Popularity</option>
@@ -108,13 +108,13 @@ const  FilterContainer = () => {
             // getAriaValueText={valuetext}
           />
 
-          <div className="flex justify-between items-center gap-[12px] text-[14px] md:text-[16px] lg:text-[16px]">
+          <div className="flex justify-between items-center gap-[12px] text-[12px] md:text-[12px] lg:text-[16px]">
             <div className="h-[40px]  border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="lowest-price" className="mr-[4px]">
                 BDT
               </label>
               <input
-                className="w-[48px] outline-none bg-[#F8FEFF]"
+                className="w-[48px] outline-none bg-[#F8FEFF] "
                 type="number"
                 name="lowest-price"
                 id="lowest-price"
@@ -129,14 +129,14 @@ const  FilterContainer = () => {
             {/* <p>To</p> */}
 
             <div className="h-[40px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
-              <label htmlFor="lowest-price" className="mr-[4px]">
+              <label htmlFor="highest-price" className="mr-[4px]">
                 BDT
               </label>
               <input
                 className="w-[48px] md:w-[60px] lg:w-[64px] outline-none bg-[#F8FEFF]"
                 type="number"
-                name="lowest-price"
-                id="lowest-price"
+                name="highest-price"
+                id="highest-price"
                 value={priceRange.highestPrice}
                 onChange={(e) =>
                   setPriceRange({ ...priceRange, highestPrice: e.target.value })

@@ -157,7 +157,9 @@ const OtpEmailVerification = () => {
                })
              );
              toast.success("Successfully registered!");
-             navigate("/");
+              if (data.data.roles[0].role_code == 345) {
+                navigate("/");
+              } else navigate("/dashboard");
            } else {
              setOtpError({ status: true, message: data.message });
              console.log(data);

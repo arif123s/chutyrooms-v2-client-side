@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./OtpVerification.css";
 import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { BASE_API } from "../../../../BaseApi/BaseApi";
 
 const OtpPhoneVerification = () => {
   const navigate = useNavigate();
+  const toastId = useRef(null);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [seconds, setSeconds] = useState(119); // Initial seconds set to 1 minute and 59 seconds
   const [expired, setExpired] = useState(false); // Initialize expired state
@@ -22,7 +23,7 @@ const OtpPhoneVerification = () => {
     status: false,
     message: "",
   });
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   // const [otpExpiresAt, setOtpExpiresAt] = useState("");
 
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -70,9 +71,9 @@ const OtpPhoneVerification = () => {
     }`;
   };
 
-  if (loading) {
-    return <Loading></Loading>;
-  }
+  // if (loading) {
+  //   return <Loading></Loading>;
+  // }
 
   // Helper function to format seconds as double digits
   // const formatSeconds = (sec) => (sec < 10 ? `0${sec}` : sec);
@@ -109,14 +110,16 @@ const OtpPhoneVerification = () => {
   // console.log(userInfo?.data);
 
   const handleResendCode = () => {
-    setLoading(true);
+    // setLoading(true);
+     toast.loading("Loading...");
 
     // get data
     fetch(`${BASE_API}/user/otp/verify/resend?user=${user.id}`)
     // fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
+        // setLoading(false);
+        toast.dismiss(toastId.current);
         reset();
         console.log("data", data.data);
         // setOtpExpiresAt(data.data.otp_expires_at);
@@ -134,7 +137,8 @@ const OtpPhoneVerification = () => {
 
   const onSubmit = () => {
     const concatOtp = parseInt(otp.join(""));    
-    setLoading(true);
+    // setLoading(true);
+    toast.loading("Loading...");
 
     // setOtpError({ status: false, message: "" });
 
@@ -143,9 +147,11 @@ const OtpPhoneVerification = () => {
     // fetch(`http://127.0.0.1:8000/api/user/otp/verify?user=${user.id}&token=${concatOtp}`)
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
+        // setLoading(false);
+         toast.dismiss(toastId.current);
         if (data.status === true) {
           console.log("data", data);
+          console.log("role code", data.data.roles);
           localStorage.setItem(
             "userInfo",
             JSON.stringify({
@@ -159,7 +165,8 @@ const OtpPhoneVerification = () => {
           toast.success("Successfully registered!");
           if (data.data.roles[0].role_code == 345) {
             navigate("/");
-          } else navigate("/dashboard");
+          }
+          else navigate("/dashboard");
         } else {
           setOtpError({ status: true, message: data.message });
           console.log(data);
