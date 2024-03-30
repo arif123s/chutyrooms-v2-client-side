@@ -95,7 +95,8 @@ const SearchField = () => {
 
 
     
-    <div className="custom-container ">
+    <div className=" ">
+    {/* <div className="custom-container "> */}
       <div className="main-container">
        <div  className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>
           <div className='search-input-container'>

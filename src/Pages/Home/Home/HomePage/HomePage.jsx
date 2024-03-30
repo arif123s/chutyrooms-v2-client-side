@@ -36,12 +36,14 @@ const HomePage = () => {
   
     <div className= {`scroll-show-sticky ${isHidden ? 'hide' : ''}  ${isSticky ? 'sticky' : ''}`}>
         <img src={ChutyLogo} className="stickyLogo"></img>
+        <div className='w-full'>
         <SearchField></SearchField>
+        </div>
     </div>
    
     <div className="custom-container homepage-container">
       {/* <SearchField></SearchField> */}
-      <div className='mt-[40px]'>
+      <div className='mt-[40px] custom-container'>
       <SearchField></SearchField> 
       </div>
       <div className="hotels-membership-container">

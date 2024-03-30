@@ -56,6 +56,7 @@
   background-color: #ffff;
   display: flex;
   padding-left: 200px;
+  gap: 70px;
 
   /* justify-content: space-between; */
 }
@@ -86,10 +87,16 @@
   display: none; /* Set opacity to 0 to hide the element when the 'hide' class is present */
 }
 
-.scroll-show-sticky.custom-container.searchBox 
+/* .scroll-show-sticky.custom-container.searchBox 
 {
   border: none;
+} */
+.scroll-show-sticky.custom-container
+{
+  background-color: red;
 }
+
+
 
 @media (max-width: 575.98px) {
   .homepage-title {

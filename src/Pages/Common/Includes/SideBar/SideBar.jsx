@@ -105,7 +105,7 @@ const navigate = useNavigate();
     },
 
     {
-      name: "Software Setup",
+      name: "Chuty Setup",
       path: "#",
       icon: Email,
       clickedicon: EmailGreen,
