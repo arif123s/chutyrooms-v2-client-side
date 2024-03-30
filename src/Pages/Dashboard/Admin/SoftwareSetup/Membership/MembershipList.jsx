@@ -1,17 +1,21 @@
 import React from 'react';
 import EditIcon from '../../../../../assets/icons/edit-icon.svg';
 import DeleteIcon from "../../../../../assets/icons/delete-icon.svg";
+import RestoreIcon from '../../../../../assets/icons/restore_icon_green.svg';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMembershipCards } from '../../../../../redux/features/membershipCard/membershipCardSlice';
 import { BASE_API } from "../../../../../BaseApi/BaseApi";
 import Loading from '../../../../Common/Includes/Loading/Loading';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router';
 
 
 const MembershipList = () => {
 
   const  dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const {membershipCard,isLoading} = useSelector((state) => state.membershipCard);
   const {membershipCards,isLoading} = useSelector((state) => state.membershipCard);
@@ -22,6 +26,47 @@ const MembershipList = () => {
   useEffect(()=>{
     dispatch(getMembershipCards())
   },[])
+
+
+  const handleDelete = async (id) => {
+    console.log(id);
+
+    await axios.delete(`${BASE_API}/memberships/`+ id,
+     
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
+
+
+    // navigate('/dashboard/Membership');
+    dispatch(getMembershipCards())
+  }
+
+
+  const handleRestore = async (id) => {
+    try {
+      // alert(id)
+      await axios.put(`${BASE_API}/memberships/${id}/restore`,
+     
+        null,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          }
+
+        }
+      ); // Replace with your actual API endpoint
+      // If successful, update the state to reflect the restoration
+      
+      dispatch(getMembershipCards())
+    } catch (error) {
+      console.error('Error restoring item:', error);
+    }
+  };
+
 
 
   if(isLoading)
@@ -55,7 +100,7 @@ const MembershipList = () => {
                 <td className='country-action-div'>
                   <Link className='edit-btn'  to={`/dashboard/Membership/MembershipEdit/${membershipcard.id}`}><img className='edit-delete-icon' src={EditIcon} alt='image'></img></Link>
 
-                  {membershipcard.deleted_at == null ? <a className='delete-btn' ><img className='edit-delete-icon' src={DeleteIcon} alt='image'></img></a> : <a className='restore-btn'><img className='edit-delete-icon' src={RestoreIcon} alt='image'></img></a>}
+                  {membershipcard.deleted_at == null ? <a className='delete-btn' onClick={() => handleDelete(membershipcard.id)} ><img className='edit-delete-icon' src={DeleteIcon} alt='image'></img></a> : <a className='restore-btn' onClick={() => handleRestore(membershipcard.id)}><img className='edit-delete-icon' src={RestoreIcon} alt='image'></img></a>}
 
                 </td>
               </tr>
