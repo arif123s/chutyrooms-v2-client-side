@@ -14,8 +14,12 @@ import ResetPassword from "../Pages/Auth/ResetPassword/ResetPassword";
 
 import SearchResultHotel from "../Pages/Home/SearchResultHotel/SearchResultHotel";
 import BookingPreview from "../Pages/Home/BookingPreview/BookingPreview";
-import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
-import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
+// import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
+import DashboardOwnerPropertyAdd from "../Pages/Dashboard/PropertyManagement/OwnerPropertyAdd";
+import OwnerPropertyAdd from "../Pages/Owner/PropertyAdd/OwnerPropertyAdd";
+// import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
+import PropertyRoomAdd from "../Pages/Owner/PropertyRoomAdd/PropertyRoomAdd";
+import OwnerRoomAdd from "../Pages/Dashboard/RoomManagement/OwnerRoomAdd";
 import Country from "../Pages/Dashboard/Admin/SoftwareSetup/Country/Country";
 import CountryList from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryList"
 import CountryAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryAdd"
@@ -119,11 +123,11 @@ export const router = createBrowserRouter([
           // },
           {
             path: "property-add",
-            element: <PropertyAdd></PropertyAdd>,
+            element: <OwnerPropertyAdd></OwnerPropertyAdd>,
           },
           {
-            path: "property-room-add",
-            element: <RoomAdd></RoomAdd>,
+            path: "room-add",
+            element: <PropertyRoomAdd></PropertyRoomAdd>,
           },
         ],
       },
@@ -148,8 +152,12 @@ export const router = createBrowserRouter([
             element: <EditProfile></EditProfile>,
           },
           {
+            path: "/dashboard/property-add",
+            element: <DashboardOwnerPropertyAdd></DashboardOwnerPropertyAdd>,
+          },
+          {
             path: "/dashboard/room-add",
-            element: <RoomAdd></RoomAdd>,
+            element: <OwnerRoomAdd></OwnerRoomAdd>,
           },
           {
             path: "/dashboard/country",

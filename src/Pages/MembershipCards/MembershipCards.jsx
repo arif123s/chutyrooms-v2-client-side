@@ -11,27 +11,28 @@ import { useMembershipCardQuery } from "../../redux/features/membershipCard/memb
 import Loading from "../Common/Includes/Loading/Loading";
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
+import { BASE_ASSET_API } from "../../BaseApi/AssetUrl";
 
 const MembershipCards = () => {
   const [purchasedCards, setPurchasedCards] = useState([
-    // {
-    //   id: 1,
-    //   img: platinumCard,
-    //   name: "Platinum",
-    //   title: "Flat 8% discount on every purchase",
-    //   validation: "Validation: 1 year",
-    //   price: " Tk 1500 tk",
-    //   isActive: true,
-    // },
-    // {
-    //   id: 2,
-    //   img: goldCard,
-    //   name: "Gold",
-    //   title: "Flat 4.5% discount on every purchase",
-    //   validation: "Validation: 1 year",
-    //   price: " Tk 1000 tk",
-    //   isActive: false,
-    // },
+    {
+      id: 1,
+      img: platinumCard,
+      name: "Platinum",
+      title: "Flat 8% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1500",
+      isActive: true,
+    },
+    {
+      id: 2,
+      img: goldCard,
+      name: "Gold",
+      title: "Flat 4.5% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1000 tk",
+      isActive: false,
+    },
     // {
     //   id: 3,
     //   img: silverCard,
@@ -42,32 +43,34 @@ const MembershipCards = () => {
     // },
   ]);
 
-  const membershipCards = [
-    {
-      id: 1,
-      img: platinumCard,
-      name: "Platinum",
-      title: "Flat 8% discount on every purchase",
-      validation: "Validation: 1 year",
-      price: " Tk 1500 tk",
-    },
-    {
-      id: 2,
-      img: goldCard,
-      name: "Gold",
-      title: "Flat 4.5% discount on every purchase",
-      validation: "Validation: 1 year",
-      price: " Tk 1000 tk",
-    },
-    {
-      id: 3,
-      img: silverCard,
-      name: "Silver",
-      title: " Flat 2% discount on every purchase",
-      validation: "Validation: 1 year",
-      price: " Tk 500 tk",
-    },
-  ];
+  // const membershipCards = [
+  //   {
+  //     id: 1,
+  //     img: platinumCard,
+  //     name: "Platinum",
+  //     title: "Flat 8% discount on every purchase",
+  //     validation: "Validation: 1 year",
+  //     price: " Tk 1500",
+  //   },
+  //   {
+  //     id: 2,
+  //     img: goldCard,
+  //     name: "Gold",
+  //     title: "Flat 4.5% discount on every purchase",
+  //     validation: "Validation: 1 year",
+  //     price: " Tk 1000",
+  //   },
+  //   {
+  //     id: 3,
+  //     img: silverCard,
+  //     name: "Silver",
+  //     title: "Flat 2% discount on every purchase",
+  //     validation: "Validation: 1 year",
+  //     price: " Tk 500",
+  //   },
+  // ];
+
+  const user = JSON.parse(localStorage.getItem("userInfo"));
 
   const [activatedCardId, setActivatedCardId] = useState(null);
 
@@ -75,13 +78,13 @@ const MembershipCards = () => {
   const [newActivatedCardId, setNewActivatedCardId] = useState(null);
   const { data: membershipCard, isLoading } = useMembershipCardQuery();
 
-  console.log(membershipCard.data);
+  console.log(membershipCard?.data);
 
   if (isLoading) {
     return <Loading></Loading>;
   }
 
-  const notPurchasedMembershipCards = membershipCards.filter(
+  const notPurchasedMembershipCards = membershipCard?.data?.filter(
     (card) =>
       !purchasedCards.some((purchasedCard) => purchasedCard.id === card.id)
   );
@@ -209,7 +212,7 @@ const MembershipCards = () => {
         Membership Card
       </h2>
 
-      {purchasedCards?.length > 0 && (
+      {user && purchasedCards?.length > 0 && (
         <div className="cards-container">
           {/* <FormControlLabel
             onChange={(e) => handleTogggole(e)}
@@ -310,14 +313,14 @@ const MembershipCards = () => {
       </dialog>
 
       <div className="cards-container">
-        {purchasedCards?.length > 0 && purchasedCards?.length < 3 && (
+        {purchasedCards?.length > 0 && purchasedCards?.length < 3 && user && (
           <h2 className="text-[16px] md:text-[18px] lg:text-[24px] font-['Gilroy-semibold'] mb-[12px]">
             Add Another Membership Plan?
           </h2>
         )}
 
         <div className="cards">
-          {notPurchasedMembershipCards?.map((card) => (
+          {/* {notPurchasedMembershipCards?.map((card) => (
             <div key={card.id} className="card-container">
               <img className="card-img" src={card.img} alt="Platinum Card" />
               <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
@@ -330,13 +333,68 @@ const MembershipCards = () => {
                 {card.price}
               </p>
               <button
-                // onClick={(e) => (e.preventDefault(), setPurchase(true))}
+                onClick={(e) => (e.preventDefault())}
                 className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
               >
                 Purchase
               </button>
             </div>
-          ))}
+          ))} */}
+          {user ? (
+            <>
+              {notPurchasedMembershipCards?.map((card) => (
+                <div key={card.id} className="card-container">
+                  <img
+                    className="card-img"
+                    src={`${BASE_ASSET_API}/storage/images/Membership/${card.image}`}
+                    alt="Platinum Card"
+                  />
+                  <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
+                    {card.description}
+                  </h2>
+                  <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
+                    {card.validation}
+                  </p>
+                  <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                    TK {card.price}
+                  </p>
+                  <button
+                    // onClick={(e) => (e.preventDefault(), setPurchase(true))}
+                    className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+                  >
+                    Purchase
+                  </button>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {membershipCard?.data?.map((card) => (
+                <div key={card.id} className="card-container">
+                  <img
+                    className="card-img"
+                    src={`${BASE_ASSET_API}/storage/images/Membership/${card.image}`}
+                    alt="Platinum Card"
+                  />
+                  <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
+                    {card.description}
+                  </h2>
+                  <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
+                    {card.validation}
+                  </p>
+                  <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
+                    TK {card.price}
+                  </p>
+                  <button
+                    // onClick={(e) => (e.preventDefault(), setPurchase(true))}
+                    className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+                  >
+                    Purchase
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
           <div>
             {/* <img className="card-img" src={platinumCard} alt="Platinum Card" />
             <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
@@ -372,34 +430,6 @@ const MembershipCards = () => {
               Purchase
             </button>
           </div> */}
-      </div>
-
-      <div className="cards">
-        {membershipCard.data?.map((card) => (
-          <div key={card.id} className="card-container">
-            <img
-              className="card-img"
-              src={`${BASE_ASSET_API}/storage/images/Membership/${card.image}`}
-              alt="Platinum Card"
-            />
-            <h2 className="text-[16px] lg:text-[18px] font-['Gilroy-semibold'] mt-[8px] lg:mt-[20px]">
-              {card.title}
-            </h2>
-            <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
-              {card.validation}
-            </p>
-            <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
-              {card.price}
-            </p>
-            <button
-              // onClick={(e) => (e.preventDefault(), setPurchase(true))}
-              className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
-            >
-              Purchase
-            </button>
-          </div>
-        ))}
-        <div></div>
       </div>
 
       {/* {purchase && (

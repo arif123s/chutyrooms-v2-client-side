@@ -280,6 +280,7 @@ const Login = () => {
 
         <input
           type="submit"
+          disabled={disableButton}
           className={`login-btn hover:bg-[#016A29] ${
             disableButton ? "opacity-50" : "opacity-100"
           }`}

@@ -429,6 +429,10 @@ const OwnerRegister = () => {
                 value: 8,
                 message: "Password must be 8 characters or longer",
               },
+              maxLength: {
+                value: 30,
+                message: "Password must be 30 characters or shorter",
+              },
               pattern: {
                 value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
                 message:
@@ -528,6 +532,7 @@ const OwnerRegister = () => {
 
         <input
           type="submit"
+          disabled={disableButton}
           className={`login-btn mt-[8px] hover:bg-[#016A29] ${
             disableButton ? "opacity-50" : "opacity-100"
           }`}

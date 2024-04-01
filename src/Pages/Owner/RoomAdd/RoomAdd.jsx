@@ -57,7 +57,7 @@ const RoomAdd = () => {
 
 
   return (
-    <div className="custom-container">
+    <div className="">
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}

@@ -31,27 +31,16 @@ const NavBar = () => {
   const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
   const [country, setCountry] = useState(false);
 
-
   const user = JSON.parse(localStorage.getItem("userInfo"));
   console.log(user);
-
-  if (user) {
-    console.log("user");
-  }
-
-  if (!user) {
-    console.log("not user");
-  }
 
   useEffect(() => {
     // Set the duration in milliseconds (e.g., 3000 for 3 seconds)
     // const duration = 0;
-
     // After the specified duration, hide the menu
     // const timeoutId = setTimeout(() => {
     //   setMenu(false);
     // }, duration);
-
     // Clean up the timeout to avoid memory leaks
     // return () => clearTimeout(timeoutId);
   }, []);
@@ -90,6 +79,7 @@ const NavBar = () => {
     e.preventDefault();
     console.log("logout");
     localStorage.setItem("userInfo", JSON.stringify(null));
+    localStorage.setItem("accessToken", JSON.stringify(null));
 
     dispatch(logout());
 
@@ -264,7 +254,7 @@ const NavBar = () => {
               <a
                 href="/login"
                 onClick={(e) => handleNavigate(e, "login")}
-                className="bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all"
+                className="bg-[#159947] cursor-pointer text-white px-[22px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all"
               >
                 Login
               </a>

@@ -4,7 +4,7 @@ const initialState = {
   property: [],
 };
 
-const propertySlice = createSlice({
+const propertyAddSlice = createSlice({
   name: "property",
   initialState,
   reducers: {
@@ -12,4 +12,4 @@ const propertySlice = createSlice({
   },
 });
 
-export default propertySlice.reducer;
+export default propertyAddSlice.reducer;

@@ -18,7 +18,7 @@ const Dashboard = () => {
           }`}
         >
           <NavBar open={open} setOpen={setOpen}></NavBar>
-          <div className="min-h-screen bg-[#F2F5FA]">
+          <div className="min-h-screen bg-[#F2F5FA] pb-[4px]">
             <Outlet></Outlet>
           </div>
         </div>

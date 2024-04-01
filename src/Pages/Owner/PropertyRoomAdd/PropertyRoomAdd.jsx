@@ -2,9 +2,9 @@ import RoomAdd from "../RoomAdd/RoomAdd";
 
 const PropertyRoomAdd = () => {
     return (
-        <div>
-            <RoomAdd></RoomAdd>
-        </div>
+      <div className="custom-container">
+        <RoomAdd></RoomAdd>
+      </div>
     );
 };
 

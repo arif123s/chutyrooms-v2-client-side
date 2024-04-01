@@ -1,10 +1,10 @@
-import { baseApi } from "../../api/baseApi";
+import { baseApi } from "../../../api/baseApi";
 
-const membershipCardApi = baseApi.injectEndpoints({
+const paymentMethodApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    membershipCard: builder.query({
+    paymentMethod: builder.query({
       query: () => ({
-        url: "/membershipcards",
+        url: "/payment_methods",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -12,11 +12,11 @@ const membershipCardApi = baseApi.injectEndpoints({
       }),
       // Define a onfulfilled handler to access the response data
       onFulfilled: (response) => {
-        console.log("Response data:", response.data); 
+        console.log("Response data:", response.data);
         return response; // Ensure the response continues as usual
       },
     }),
   }),
 });
 
-export const { useMembershipCardQuery } = membershipCardApi;
+export const {usePaymentMethodQuery} = paymentMethodApi;
