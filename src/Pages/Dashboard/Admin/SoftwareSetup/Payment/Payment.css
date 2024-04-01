@@ -1,0 +1,16 @@
+.payment-list-content {
+    padding: 20px;
+  }
+  
+.payment-option {
+  display: flex;
+  gap: 8px;
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.payment-list {
+  background-color: #ffff;
+  padding: 20px;
+}

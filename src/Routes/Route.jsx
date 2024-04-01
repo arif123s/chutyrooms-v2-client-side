@@ -17,6 +17,7 @@ import BookingPreview from "../Pages/Home/BookingPreview/BookingPreview";
 import PropertyAdd from "../Pages/Owner/PropertyAdd/PropertyAdd";
 import RoomAdd from "../Pages/Owner/RoomAdd/RoomAdd";
 import Country from "../Pages/Dashboard/Admin/SoftwareSetup/Country/Country";
+
 import CountryList from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryList"
 import CountryAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryAdd"
 
@@ -49,6 +50,11 @@ import Membership from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/Member
 import MembershipList from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipList";
 import MembershipAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipAdd";
 import MembershipEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipEdit";
+
+import PaymentSystems from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystems"
+import PaymentSystemsList from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystemsList";
+import PaymentAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentAdd";
+
 
 export const router = createBrowserRouter([
   {
@@ -247,6 +253,27 @@ export const router = createBrowserRouter([
                 path: "/dashboard/Membership/MembershipEdit/:id",
                 element: <MembershipEdit></MembershipEdit>,
               },
+            ],
+          },
+
+          {
+            path: "/dashboard/PaymentSystems",
+            element: <PaymentSystems></PaymentSystems>,
+            children: [
+              {
+                path: "/dashboard/PaymentSystems",
+                element: <PaymentSystemsList></PaymentSystemsList>,
+              },
+
+              {
+                path: "/dashboard/PaymentSystems/PaymentSystemAdd",
+                element: <PaymentAdd></PaymentAdd>,
+              },
+
+              // {
+              //   path: "/dashboard/Membership/MembershipEdit/:id",
+              //   element: <MembershipEdit></MembershipEdit>,
+              // },
             ],
           },
         ],
