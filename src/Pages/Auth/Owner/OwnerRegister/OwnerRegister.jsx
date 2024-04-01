@@ -172,7 +172,7 @@ const OwnerRegister = () => {
           onClick={() => handleLoginMethod("phone")}
           className={`login-method ${
             loginMethod === "phone"
-              ? "selected-login-method"
+              ? "selected-login-method font-['Gilroy-semibold']"
               : "login-method-btn"
           }`}
         >
@@ -182,7 +182,7 @@ const OwnerRegister = () => {
           onClick={() => handleLoginMethod("email")}
           className={`login-method ${
             loginMethod === "email"
-              ? "selected-login-method"
+              ? "selected-login-method font-['Gilroy-semibold']"
               : "login-method-btn"
           }`}
         >
