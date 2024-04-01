@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import propertyReducer from "./features/property/propertySlice";
 import userReducer from "./features/user/userSlice";
 import authReducer from "./features/auth/authSlice";
 import { baseApi } from "./api/baseApi";
@@ -31,7 +30,6 @@ const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
     user: userReducer,
-    property: propertyReducer,
     popularHotel: popularHotelReducer,
     membershipCard : membershipCardReducer,
     

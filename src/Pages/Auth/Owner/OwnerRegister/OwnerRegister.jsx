@@ -172,7 +172,7 @@ const OwnerRegister = () => {
           onClick={() => handleLoginMethod("phone")}
           className={`login-method ${
             loginMethod === "phone"
-              ? "selected-login-method"
+              ? "selected-login-method font-['Gilroy-semibold']"
               : "login-method-btn"
           }`}
         >
@@ -182,7 +182,7 @@ const OwnerRegister = () => {
           onClick={() => handleLoginMethod("email")}
           className={`login-method ${
             loginMethod === "email"
-              ? "selected-login-method"
+              ? "selected-login-method font-['Gilroy-semibold']"
               : "login-method-btn"
           }`}
         >
@@ -429,6 +429,10 @@ const OwnerRegister = () => {
                 value: 8,
                 message: "Password must be 8 characters or longer",
               },
+              maxLength: {
+                value: 30,
+                message: "Password must be 30 characters or shorter",
+              },
               pattern: {
                 value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
                 message:
@@ -528,6 +532,7 @@ const OwnerRegister = () => {
 
         <input
           type="submit"
+          disabled={disableButton}
           className={`login-btn mt-[8px] hover:bg-[#016A29] ${
             disableButton ? "opacity-50" : "opacity-100"
           }`}

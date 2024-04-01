@@ -55,21 +55,20 @@ const PropertyAdd = () => {
     status: false,
     message: "",
     color: false,
-    count:0
+    count: 0,
   });
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
-   const { isLoaded, loadError } = useLoadScript({
-     googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
-     libraries,
-   });
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
+    libraries,
+  });
 
-   const [allInputError, setAllInputError] = useState({
-    status:false,
-    message:'',
-   });
-   
+  const [allInputError, setAllInputError] = useState({
+    status: false,
+    message: "",
+  });
 
   const [logo, setLogo] = useState(null);
   // const [logoError, setLogoError] = useState("");
@@ -91,7 +90,6 @@ const PropertyAdd = () => {
     name: "propertyTypes",
     defaultValue: [], // Provide a default value if needed
   });
- 
 
   const [loading, setLoading] = useState(false);
 
@@ -106,15 +104,15 @@ const PropertyAdd = () => {
     setSelectedLocation({ lat: latitude, lng: longitude }); // Update selected location
     // setMapError(false);
     setMapError({
-      status:true,
-      message:'Location selected',
-      color:true,
-      count:1
+      status: true,
+      message: "Location selected",
+      color: true,
+      count: 1,
     });
   };
 
-  console.log('center',center)
-  console.log('mapcenter',mapCenter)
+  console.log("center", center);
+  console.log("mapcenter", mapCenter);
 
   const handleSelect = async (selectedAddress) => {
     setAddress(selectedAddress);
@@ -128,7 +126,7 @@ const PropertyAdd = () => {
       setSelectedLocation(latLng);
       // setMapError(false);
       setMapError({
-        status:false
+        status: false,
       }); // Reset map error if a valid location is selected
     } catch (error) {
       console.error("Error selecting address", error);
@@ -254,7 +252,7 @@ const PropertyAdd = () => {
     //    center.lat == 23.862725477930507 &&
     //    center.lng == 90.40080333547479 &&
     //    mapError.status == false
-    //  ) 
+    //  )
     //  {
     //    setMapError({
     //      status: true,
@@ -264,7 +262,7 @@ const PropertyAdd = () => {
     //  }
 
     if (!logo) {
-      // setLogoError("Logo is required"); 
+      // setLogoError("Logo is required");
       setLogoError({
         status: true,
         message: "Logo is required",
@@ -281,27 +279,25 @@ const PropertyAdd = () => {
         status: true,
         message: "Please select all four display images.",
       });
-         setAllInputError({
-           status: true,
-           message: "Please select all the required fields",
-         });
+      setAllInputError({
+        status: true,
+        message: "Please select all the required fields",
+      });
       return;
     }
 
-    if(!mapError.count){
-      console.log('Map error')
+    if (!mapError.count) {
+      console.log("Map error");
       setMapError({
-         status: true,
-         message: "Please select hotel location",
-       });
+        status: true,
+        message: "Please select hotel location",
+      });
       return;
     }
-
-   
 
     // setLoading(true);
 
-    console.log('map center',mapCenter);
+    console.log("map center", mapCenter);
 
     const propertyData = {
       data,
@@ -315,11 +311,11 @@ const PropertyAdd = () => {
     console.log(propertyData);
     // createPropertyMutation.mutate(propertyData);
     setLoading(false);
-    navigate("/room-add");
+    navigate("/property-room-add");
   };
 
   return (
-    <div className="custom-container ">
+    <div className=" ">
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}

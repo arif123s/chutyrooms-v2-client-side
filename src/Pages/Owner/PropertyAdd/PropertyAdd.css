@@ -99,7 +99,7 @@ display: flex;
   .property-add-container {
     margin-top: 36px;
     margin-bottom: 32px;
-    padding: 22px 10px 0px 10px;
+    padding: 22px 10px 22px 10px;
   }
 
   .property-images-container {
@@ -137,6 +137,6 @@ display: flex;
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .property-add-container {
     margin-top: 18px;
-    padding: 22px 17px 0px 19px;
+    padding: 22px 17px 22px 19px;
   }
 }

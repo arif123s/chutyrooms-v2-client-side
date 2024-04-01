@@ -203,7 +203,7 @@ const SearchResultHotel = () => {
       </div>
 
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
-      <div className="sticky bottom-[80px] z-10">
+      <div className="sticky bottom-[30px] z-10">
         <button
           className="filter-btn"
           onClick={(e) => {

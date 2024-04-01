@@ -83,14 +83,25 @@ const navigate = useNavigate();
       submenu: [],
     },
     {
-      name: "Rooms",
+      name: "Property Management",
+      path: "#",
+      icon: Key,
+      clickedicon: KeyGreen,
+      submenu: [
+        { name: "Property List", path: "#" },
+        { name: "Add Property", path: "/dashboard/property-add" },
+        { name: "Edit Property", path: "#" },
+      ],
+    },
+    {
+      name: "Room Management",
       path: "#",
       icon: Key,
       clickedicon: KeyGreen,
       submenu: [
         { name: "All Rooms", path: "#" },
+        { name: "Add Room", path: "/dashboard/room-add" },
         { name: "Edit Rooms", path: "#" },
-        { name: "Add Room", path: "/room-add" },
       ],
     },
     {
@@ -99,7 +110,7 @@ const navigate = useNavigate();
       icon: Email,
       clickedicon: EmailGreen,
       submenu: [
-        { name: "All Emails", path: "/property-add" },
+        { name: "All Emails", path: "#" },
         { name: "Edit Email", path: "#" },
       ],
     },
