@@ -5,13 +5,25 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 import { useParams , useNavigate} from 'react-router';
 import { BASE_API } from '../../../../../BaseApi/BaseApi';
+import { setYear, setMonth, setDate, setHours, setMinutes, setSeconds } from 'date-fns';
 const MembershipAdd = () => {
 
   const dispatch= useDispatch();
   const navigate= useNavigate();
 
+  const [validity, setValidity] = useState({
+    years: 1,
+    months: 11,
+    days: 2,
+    hours: 3,
+    minutes: 5,
+    seconds: 4
+  });
+
+
   // const { isSuccess } = useSelector( (state)=> state.membershipCards);
- const[inputValue, setInputValue]= useState({name:'', description:'', image:null,amount_type:'' , amount:'',price:'',is_active:'',view_order:''});
+ const[inputValue, setInputValue]= useState({name:'', description:'', image:null, amount_type:'' , amount:'',price:'', validity_year:'',validity_month:'',validity_day:'',validity_hour:'',validity_minute:'',validity_second:'',is_active:'',view_order:''});
+
  const [validationErrors, setValidationErrors] = useState({});
  
  const handleInput = (e)=>{
@@ -37,6 +49,9 @@ const handleSubmit = async (e) =>{
   
   e.preventDefault();
   console.log('Form Data:', inputValue);
+
+
+
   try{
     console.log(inputValue);
    await axios.post(`${BASE_API}/memberships`, inputValue,
@@ -58,7 +73,7 @@ const handleSubmit = async (e) =>{
 
  catch (err){
   // console.log(err.response.data.errors);
-  setValidationErrors(err)
+  setValidationErrors(err.response.data.errors)
  }
 }
     return (
@@ -81,7 +96,7 @@ const handleSubmit = async (e) =>{
                   
                 />
 
-            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+            {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
             </div>
 
             <div>
@@ -97,7 +112,7 @@ const handleSubmit = async (e) =>{
                   
                 />
 
-            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+            {validationErrors.description && <span className='validation-message'>{validationErrors.description}</span>}
             </div>
 
             <div>
@@ -112,7 +127,7 @@ const handleSubmit = async (e) =>{
                 value={inputValue.amount_type} onChange={ handleInput}
                 />
 
-            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+            {validationErrors.amount_type && <span className='validation-message'>{validationErrors.amount_type}</span>}
             </div>
 
             <div>
@@ -127,7 +142,7 @@ const handleSubmit = async (e) =>{
                 value={inputValue.amount} onChange={ handleInput}
                 />
 
-            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+            {validationErrors.amount && <span className='validation-message'>{validationErrors.amount}</span>}
             </div>
 
             <div>
@@ -142,7 +157,107 @@ const handleSubmit = async (e) =>{
                 value={inputValue.price} onChange={ handleInput}
                 />
 
-            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+            {validationErrors.price && <span className='validation-message'>{validationErrors.price}</span>}
+            </div>
+            <div className='flex space-x-[5px]'>
+            <div>
+                <label className="property-input-title" htmlFor="amount">
+                  Validation Year
+                </label>
+                <input
+                type='number'
+                  className="input-box"
+                  id="validity_year"
+                  name="validity_year"
+                  max = '10'
+                //   onChange={e => changeCountryFieldHandler(e)} 
+                value={inputValue.validity_year} onChange={ handleInput}
+                />
+
+            {validationErrors.validity_year && <span className='validation-message'>{validationErrors.validity_year}</span>}
+            </div>
+
+            <div>
+                <label className="property-input-title" htmlFor="amount">
+                  Validation Month
+                </label>
+                <input
+                type='number'
+                  className="input-box"
+                  id="validity_month"
+                  name="validity_month"
+                  max = '11'
+                //   onChange={e => changeCountryFieldHandler(e)} 
+                value={inputValue.validity_month} onChange={handleInput}
+                />
+
+            {validationErrors.validity_month && <span className='validation-message'>{validationErrors.validity_month}</span>}
+            </div>
+            <div>
+                <label className="property-input-title" htmlFor="amount">
+                  Validation Day
+                </label>
+                <input
+                type='number'
+                  className="input-box"
+                  id="validity_day"
+                  name="validity_day"
+                  max = '29'
+                //   onChange={e => changeCountryFieldHandler(e)} 
+                value={inputValue.validity_day} onChange={ handleInput}
+                />
+
+            {validationErrors.validity_day && <span className='validation-message'>{validationErrors.validity_day}</span>}
+            </div>
+            <div>
+                <label className="property-input-title" htmlFor="amount">
+                Hour
+                </label>
+                <input
+                type='number'
+                  className="input-box"
+                  id="validity_hour"
+                  name="validity_hour"
+                  max = '23'
+                //   onChange={e => changeCountryFieldHandler(e)} 
+                value={inputValue.validity_hour} onChange={ handleInput}
+                />
+
+            {validationErrors.validity_hour && <span className='validation-message'>{validationErrors.validity_hour}</span>}
+            </div>
+            <div>
+                <label className="property-input-title" htmlFor="amount">
+                 Minute
+                </label>
+                <input
+                type='number'
+                  className="input-box"
+                  id="validity_minute"
+                  name="validity_minute"
+                  max = '59'
+                //   onChange={e => changeCountryFieldHandler(e)} 
+                value={inputValue.validity_minute} onChange={ handleInput}
+                />
+
+            {validationErrors.validity_minute && <span className='validation-message'>{validationErrors.validity_minute}</span>}
+            </div>
+
+            <div>
+                <label className="property-input-title" htmlFor="amount">
+                  Second
+                </label>
+                <input
+                type='number'
+                  className="input-box"
+                  id="validity_second"
+                  name="validity_second"
+                  max = '59'
+                //   onChange={e => changeCountryFieldHandler(e)} 
+                value={inputValue.validity_second} onChange={ handleInput}
+                />
+
+            {validationErrors.validity_second && <span className='validation-message'>{validationErrors.validity_second}</span>}
+            </div>
             </div>
 
             <div class="mb-3">
@@ -157,9 +272,10 @@ const handleSubmit = async (e) =>{
                 // name="image"
                 accept="image/*"
                 // value={inputValue.image}
-                 onChange={ handleInputFile}
+                 onChange={handleInputFile}
                 />
             </div>
+              {validationErrors.image && <span className='validation-message'>{validationErrors.image}</span>}
 
             <div>
             <label className="property-input-title" htmlFor="view_order">
@@ -173,7 +289,7 @@ const handleSubmit = async (e) =>{
                   />
 
                   
-            {/* {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>} */}
+            {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
             </div>
 
 
@@ -190,7 +306,7 @@ const handleSubmit = async (e) =>{
                 </div>
                
             </div>
-            {/* {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>} */}
+            {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>}
             </div>
             
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { BASE_API } from '../../../../../BaseApi/BaseApi';
 import { BASE_ASSET_API } from '../../../../../BaseApi/AssetUrl';
+import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds } from 'date-fns';
 
 const MembershipEdit = () => {
 
@@ -11,18 +12,38 @@ const MembershipEdit = () => {
   const navigate = useNavigate();
   // const [isChecked, setIsChecked] = useState(false);
 
+
+
+  //   const calculateValidity = () => {
+  //     let expirationDate = new Date();
+  //     expirationDate = addYears(expirationDate, validity.years);
+  //     expirationDate = addMonths(expirationDate, validity.months);
+  //     expirationDate = addDays(expirationDate, validity.days);
+  //     expirationDate = addHours(expirationDate, validity.hours);
+  //     expirationDate = addMinutes(expirationDate, validity.minutes);
+  //     expirationDate = addSeconds(expirationDate, validity.seconds);
+  //     return expirationDate;
+  // };
   const [Membership, setMembership] = useState({
     name: "",
     description: "",
-    // image: null,
+    image: null,
     amount_type: "",
     amount: "",
     price: "",
+    validity_year: 0,
+    validity_month: 0,
+    validity_day: 0,
+    validity_hour: 0,
+    validity_minute: 0,
+    validity_second: 0,
+    // validity_time: calculateValidity(),
     view_order: "",
     is_active: ""
   })
 
-  const [imageFile, setImageFile] = useState('');
+
+  // const [imageFile, setImageFile] = useState('');
 
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -47,15 +68,17 @@ const MembershipEdit = () => {
   }
 
   const changeMembershipFieldHandler = (e) => {
+    // alert(e.target.type === 'file');
+    // console.log(e.target.type === 'file' ? e.target.files[0] : e.target.value);
     setMembership({
       ...Membership,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.type === 'file' ? e.target.files[0] : e.target.value
     });
   }
-  const handleInputFile = (e) => {
-    // alert(1);
-    setImageFile(e.target.files[0]);
-  }
+  // const handleInputFile = (e) => {
+  //   // alert(1);
+  //   setImageFile(e.target.files[0]);
+  // }
 
 
   // const onSubmitChange = async (e) =>{
@@ -73,42 +96,35 @@ const MembershipEdit = () => {
 
   const onSubmitChange = async (e) => {
 
+
     e.preventDefault();
-    // console.log('Form Data:', Membership);
     try {
       // console.log(Membership);
       // alert(id);
       const formData = new FormData();
 
+      formData.append('_method', 'PUT');
+      // formData.append('va', calculateValidity());
+
       // Append each field of membershipData to the formData
       Object.keys(Membership).forEach(key => {
-        if (key !== 'image') {
+        if (key != 'image') {
           formData.append(key, Membership[key]);
         }
-        
       });
-      formData.append('image', imageFile);
+      if ((Membership['image'] instanceof File)) {
+        formData.append('image', Membership['image']);
+      }
+      console.log('Form Data:', formData);
 
-      // if (imageFile instanceof File) {
-      //   // Check if the file type is jpg, jpeg, or png
-      //   const fileType = Membership.image.type.split('/')[1];
-      //   if (['jpg', 'jpeg', 'png'].includes(fileType)) {
-      //   } else {
-      //     console.error('Invalid file type. The image must be jpg, jpeg, or png.');
-      //     return; // Don't proceed further if the file type is invalid
-      //   }
-      // } else {
-      //   console.error('Invalid image file.');
-      //   return; // Don't proceed further if 'image' is not a file
-      // }
-      console.log(formData);
-      await axios.put(
+      axios.post(
         `${BASE_API}/memberships/${id}`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+            // 'Content-Type': 'application/json',
           },
         }
       )
@@ -194,20 +210,138 @@ const MembershipEdit = () => {
           {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
         </div>
 
+        <div>
+          <label className="property-input-title" htmlFor="CountryName">
+            Price
+          </label>
+          <input
+            className="input-box"
+            id="price"
+            name="price"
+            value={Membership.price}
+            onChange={e => changeMembershipFieldHandler(e)}
+
+          />
+
+          {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+        </div>
+
+        <div className='flex space-x-[5px]'>
+          <div>
+            <label className="property-input-title" htmlFor="amount">
+              Validation Year
+            </label>
+            <input
+              type='number'
+              className="input-box"
+              id="validity_year"
+              name="validity_year"
+              max='10'
+              //   onChange={e => changeCountryFieldHandler(e)} 
+              value={Membership.validity_year} onChange={e => changeMembershipFieldHandler(e)}
+            />
+
+            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+          </div>
+
+          <div>
+            <label className="property-input-title" htmlFor="amount">
+              Validation Month
+            </label>
+            <input
+              type='number'
+              className="input-box"
+              id="validity_month"
+              name="validity_month"
+              max='11'
+              //   onChange={e => changeCountryFieldHandler(e)} 
+              value={Membership.validity_month} onChange={e => changeMembershipFieldHandler(e)}
+            />
+
+            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+          </div>
+          <div>
+            <label className="property-input-title" htmlFor="amount">
+              Validation Day
+            </label>
+            <input
+              type='number'
+              className="input-box"
+              id="validity_day"
+              name="validity_day"
+              max='29'
+              //   onChange={e => changeCountryFieldHandler(e)} 
+              value={Membership.validity_day} onChange={e => changeMembershipFieldHandler(e)}
+            />
+
+            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+          </div>
+          <div>
+            <label className="property-input-title" htmlFor="amount">
+              Hour
+            </label>
+            <input
+              type='number'
+              className="input-box"
+              id="validity_hour"
+              name="validity_hour"
+              max='23'
+              //   onChange={e => changeCountryFieldHandler(e)} 
+              value={Membership.validity_hour} onChange={e => changeMembershipFieldHandler(e)}
+            />
+
+            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+          </div>
+          <div>
+            <label className="property-input-title" htmlFor="amount">
+              Minute
+            </label>
+            <input
+              type='number'
+              className="input-box"
+              id="validity_minute"
+              name="validity_minute"
+              max='59'
+              //   onChange={e => changeCountryFieldHandler(e)} 
+              value={Membership.validity_minute} onChange={e => changeMembershipFieldHandler(e)}
+            />
+
+            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+          </div>
+
+          <div>
+            <label className="property-input-title" htmlFor="amount">
+              Second
+            </label>
+            <input
+              type='number'
+              className="input-box"
+              id="validity_second"
+              name="validity_second"
+              max='59'
+              //   onChange={e => changeCountryFieldHandler(e)} 
+              value={Membership.validity_second} onChange={e => changeMembershipFieldHandler(e)}
+            />
+
+            {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
+          </div>
+        </div>
+
         <div class="mb-3">
           <label
             for="image">
             Membership Card Image
           </label>
-          <img src={`${BASE_ASSET_API}/storage/images/Membership/${Membership.image}`}></img>
+          {Membership && Membership.image &&<img src={`${BASE_ASSET_API}/storage/images/Membership/${Membership.image}`}></img>}
           <input
             className="input-box"
             type="file"
             // id="image"
-            // name="image"
-            accept="image/*"
+            name="image"
+            // accept="image/*"
 
-            onChange={handleInputFile}
+            // onChange={handleInputFile}
+            onChange={e => changeMembershipFieldHandler(e)}
           />
         </div>
 

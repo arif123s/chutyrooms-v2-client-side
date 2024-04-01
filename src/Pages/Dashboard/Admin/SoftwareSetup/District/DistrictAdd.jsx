@@ -183,7 +183,7 @@ const DistrictAdd = () => {
                   
                 />
 
-{validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
+        {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
             </div>
 
 
