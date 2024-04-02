@@ -10,7 +10,7 @@ const Home = () => {
         <NavBar></NavBar>
       </div>
 
-      <div className="">
+      <div className="main-section-container">
         <Outlet></Outlet>
       </div>
 

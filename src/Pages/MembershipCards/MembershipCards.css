@@ -1,6 +1,7 @@
 .membership-card-container {
   margin-top: 50px;
   margin-bottom: 80px;
+  min-height: 734px;
 }
 
 .cards-container {
