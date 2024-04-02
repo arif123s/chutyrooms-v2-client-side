@@ -5,12 +5,12 @@ import "./Home.css";
 
 const Home = () => {
   return (
-    <div className=" home-container relative">
+    <div className="home-container relative">
       <div>
         <NavBar></NavBar>
       </div>
 
-      <div>
+      <div className="">
         <Outlet></Outlet>
       </div>
 

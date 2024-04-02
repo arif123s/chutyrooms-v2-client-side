@@ -2,7 +2,7 @@ import { baseApi } from "../../../api/baseApi";
 
 const paymentMethodApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    paymentMethod: builder.query({
+    getAllPaymentMethods: builder.query({
       query: () => ({
         url: "/payment_methods",
         method: "GET",
@@ -16,7 +16,29 @@ const paymentMethodApi = baseApi.injectEndpoints({
         return response; // Ensure the response continues as usual
       },
     }),
+
+    addPaymentMethod: builder.mutation({
+      query: (data) => ({
+        url: "/payment_methods",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: data,
+      }),
+    }),
+
+    updatePaymentMethod: builder.mutation({
+      query: ({ paymentMethodId, data }) => ({
+        url: `/payment_methods/${paymentMethodId}`,
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const {usePaymentMethodQuery} = paymentMethodApi;
+export const { useGetAllPaymentMethodsQuery,useAddPaymentMethodMutation,useUpdatePaymentMethodMutation } = paymentMethodApi;
