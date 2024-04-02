@@ -23,6 +23,7 @@ const paymentMethodApi = baseApi.injectEndpoints({
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          'Content-Type': 'multipart/form-data'
         },
         body: data,
       }),
