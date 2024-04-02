@@ -1,3 +1,7 @@
 .home-container{
     background: #F8FEFF;
 }
+
+.main-section-container{
+    min-height: 53.7vh;
+}
