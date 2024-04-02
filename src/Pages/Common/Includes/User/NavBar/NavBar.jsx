@@ -79,7 +79,7 @@ const NavBar = () => {
     e.preventDefault();
     console.log("logout");
     localStorage.setItem("userInfo", JSON.stringify(null));
-    localStorage.setItem("accessToken", JSON.stringify(null));
+    localStorage.removeItem("accessToken", JSON.stringify(''));
 
     dispatch(logout());
 

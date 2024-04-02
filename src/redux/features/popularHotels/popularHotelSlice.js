@@ -23,12 +23,6 @@ const initialState = {
 
 export const getPopularHotels = createAsyncThunk(
   "hotels/getPopularHotels",
-//   async () => {
-//     const res = await popularHotelApi();
-//     const data = res.json();
-// console.log('popular',data)
-//     return data;
-//   }
   async () => {
     const res = await fetch(`${BASE_API}/country`, {
     // const res = await fetch("http://127.0.0.1:8000/api/country", {
