@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAddPaymentMethodMutation } from "../../../../../redux/features/admin/paymentMethod/paymentMethod.api";
 import Loading from "../../../../Common/Includes/Loading/Loading";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const PaymentAdd = () => {
   // const dispatch = useDispatch();
@@ -14,25 +15,22 @@ const PaymentAdd = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
-
-  // const [validationErrors, setValidationErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+    errors: [],
+  });
 
   if (isLoading) {
     return <Loading></Loading>;
   }
 
-  // const handleInput = (e) => {
-  //   setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  // }
-  // const handleInputFile = (e) => {
-  //   // alert(1);
-  //   setInputValue({ ...inputValue, 'image': e.target.files[0] });
-  // }
-
-  // const handleSubmit = async (e) => {
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
+
+    setErrorMessage({ status: false, message: "",errors:[] });
 
     const paymentMethodInfo = {
       name:data.name,
@@ -41,11 +39,7 @@ const PaymentAdd = () => {
       is_active:parseInt(data.is_active)
     }
 
-    console.log('payment',paymentMethodInfo);
-
     const formData = new FormData();
-
-    // formData.append('data',JSON.stringify(data));
 
     // Append non-file fields to FormData
     // Object.entries(paymentMethodInfo).forEach(([key, value]) => {
@@ -69,40 +63,33 @@ const PaymentAdd = () => {
     }
 
     // Logging FormData to check its content
-
     console.log('formdata',Object.fromEntries(formData));
 
     // addPaymentMethod(formData)
     try {
       const result = await addPaymentMethod(formData);
       // Handle successful mutation
-      console.log("Payment method", result);
+      if (result?.data?.status){
+        console.log("Payment method", result);
+        toast.success("Payment method added successfully");
+        reset()
+      }
+      else{
+        // console.log("Failed", result);
+        console.log("Failed", result.error.data.errors);
+        setErrorMessage({
+          status: true,
+          message: data.message,
+          errors: [result.error.data.errors],
+        });
+        console.log("errormessage", errorMessage?.errors?.length);
+      } 
     } catch (error) {
       // Handle error
       console.error("Error adding payment method:", error);
     }
 
-    // console.log(inputValue);
-
-    // const isValidImageFile = (file) => {
-    //   const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
-    //   return file && acceptedTypes.includes(file.type);
-    // };
-    // try {
-    //   // Call the mutation function with the form data
-    //   if (!isValidImageFile(inputValue.image)) {
-    //     throw new Error("The image file must be of type: jpg, jpeg, png.");
-    //   }
-    //   const result = await addPaymentMethod({
-    //     data: inputValue,
-    //     iamge: inputValue.image,
-    //   });
-    //   // Handle successful mutation
-    //   console.log("Payment method", result);
-    // } catch (error) {
-    //   // Handle error
-    //   console.error("Error adding payment method:", error);
-    // }
+    
   };
   return (
     <div className="paymentmethod-add-division">
@@ -111,7 +98,7 @@ const PaymentAdd = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         {/* Property name */}
-        <div>
+        <div className="mb-3">
           <label className="property-input-title" htmlFor="name">
             PaymentType Name
           </label>
@@ -136,7 +123,6 @@ const PaymentAdd = () => {
             )}
           </label>
         </div>
-
         {/* Image */}
         <div className="mb-3">
           <Controller
@@ -145,7 +131,9 @@ const PaymentAdd = () => {
             rules={{ required: "Image is required" }}
             render={({ field: { onChange, onBlur, value, ref } }) => (
               <>
-                <label htmlFor="image">PaymentType Image</label>
+                <label className="property-input-title" htmlFor="image">
+                  PaymentType Image
+                </label>
                 <input
                   className="input-box"
                   type="file"
@@ -165,13 +153,17 @@ const PaymentAdd = () => {
                   onBlur={onBlur}
                   ref={ref}
                 />
-                {errors.image && <span>{errors.image.message}</span>}
+                {errors.image && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.image.message}
+                  </span>
+                )}
               </>
             )}
           />
         </div>
-
-        <div>
+        {/* View Order */}
+        <div className="mb-3">
           <label className="property-input-title" htmlFor="view_order">
             View Order
           </label>
@@ -196,47 +188,8 @@ const PaymentAdd = () => {
             )}
           </label>
         </div>
-
-        {/* <div>
-          <div className="flex items-center gap-2">
-            <Controller
-              control={control}
-              name="is_active"
-              defaultValue="1" // Providing a default value
-              render={({ field }) => (
-                <>
-                  <input type="radio" id="active" value="1" {...field} />
-                  <label
-                    className="cursor-pointer text-gray-700 ml-2"
-                    htmlFor="active"
-                  >
-                    Active
-                  </label>
-                </>
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="is_active"
-              defaultValue="0" // Providing a default value
-              render={({ field }) => (
-                <>
-                  <input type="radio" id="inactive" value="0" {...field} />
-                  <label
-                    className="cursor-pointer text-gray-700 ml-2"
-                    htmlFor="inactive"
-                  >
-                    Inactive
-                  </label>
-                </>
-              )}
-            />
-          </div>
-          {errors.is_active && <span>{errors.is_active.message}</span>}
-        </div> */}
-
-        <div>
+        {/* isActive */}
+        <div className="mb-3 property-input-title">
           <div className="flex gap-3">
             <div className="flex items-center gap-[6px]">
               <input
@@ -267,6 +220,17 @@ const PaymentAdd = () => {
             )}
           </label>
         </div>
+
+        {errorMessage.errors?.length > 0 &&
+          errorMessage?.errors?.map((err, index) => (
+            <div key={index}>
+              {Object.values(err).map((value, i) => (
+                <p className="label-text-alt text-rose-500 mb-[2px]" key={i}>
+                  {value}
+                </p>
+              ))}
+            </div>
+          ))}
 
         <button type="submit" className="country-save-btn">
           Save
