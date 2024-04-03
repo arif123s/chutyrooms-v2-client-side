@@ -23,10 +23,17 @@ const paymentMethodApi = baseApi.injectEndpoints({
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
         body: data,
       }),
+
+      // Define a onfulfilled handler to access the response data
+      onFulfilled: (response) => {
+        console.log("Response data:", response.data);
+        return response; // Ensure the response continues as usual
+      },
     }),
 
     updatePaymentMethod: builder.mutation({
