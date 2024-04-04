@@ -9,21 +9,48 @@ import Loading from '../../../../Common/Includes/Loading/Loading';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router';
-import { useGetAllPaymentMethodsQuery } from '../../../../../redux/features/admin/paymentMethod/paymentMethod.api';
+import { useDeletePaymentMethodMutation, useGetAllPaymentMethodsQuery, useRestorePaymentMethodMutation } from '../../../../../redux/features/admin/paymentMethod/paymentMethod.api';
 
 const PaymentSystemsList = () => {
 
-  const  dispatch = useDispatch();
   const navigate = useNavigate();
+  const [deletePaymentMethod, { isLoading:deleteLoading, isError }] = useDeletePaymentMethodMutation();
+  const [restorePaymentMethod, { isLoading:restoreLoading, isRestoreError }] = useRestorePaymentMethodMutation();
 
-  const {data,isLoading} = useGetAllPaymentMethodsQuery();
+  const {data,isLoading,refetch} = useGetAllPaymentMethodsQuery();
+  // console.log(data?.data.data)
   const PaymentMethods = data?.data.data;
-  console.log(data?.data.data);
+  // console.log(data?.data.data);
 
-  if(isLoading){
+  if(isLoading || deleteLoading || restoreLoading){
     return <Loading></Loading>
   }
 
+  const handleDelete = async (id) => {
+    try {
+      // Call the deletePaymentMethod mutation
+      const result = await deletePaymentMethod(id);
+      console.log('Payment method deleted:', result);
+      if(result?.data?.status==1){
+        refetch()
+      }
+    } catch (error) {
+      console.error('Error deleting payment method:', error);
+    }
+  };
+
+  const handleRestore = async (id) => {
+    try {
+    const result = await restorePaymentMethod(id);
+      console.log('Payment method restored:', result);
+      if(result?.data?.status==1){
+        refetch()
+      }
+    } catch (error) {
+      console.error('Error restore payment method:', error);
+    }
+   
+  }
   // console.log('membershipcards',membershipCards)
   // console.log(state)
 
@@ -46,7 +73,7 @@ return (
                 <td>{PaymentMethods.view_order}</td>
                 <td><a className='active-inactive-btn'>{PaymentMethods.is_active == true ? 'Active' : 'Inactive'}</a></td>
                 <td className='country-action-div'>
-                  <Link className='edit-btn'  to={`/dashboard/Membership/MembershipEdit/${PaymentMethods.id}`}><img className='edit-delete-icon' src={EditIcon} alt='image'></img></Link>
+                  <Link className='edit-btn'  to={`/dashboard/PaymentSystems/PaymentEdit/${PaymentMethods.id}`}><img className='edit-delete-icon' src={EditIcon} alt='image'></img></Link>
 
                   {PaymentMethods.deleted_at == null ? <a className='delete-btn' onClick={() => handleDelete(PaymentMethods.id)} ><img className='edit-delete-icon' src={DeleteIcon} alt='image'></img></a> : <a className='restore-btn' onClick={() => handleRestore(PaymentMethods.id)}><img className='edit-delete-icon' src={RestoreIcon} alt='image'></img></a>}
 

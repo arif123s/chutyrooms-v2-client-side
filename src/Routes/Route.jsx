@@ -58,6 +58,7 @@ import MembershipEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/Me
 import PaymentSystems from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystems"
 import PaymentSystemsList from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystemsList";
 import PaymentAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentAdd";
+import PaymentEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentEdit";
 
 
 export const router = createBrowserRouter([
@@ -282,10 +283,10 @@ export const router = createBrowserRouter([
                 element: <PaymentAdd></PaymentAdd>,
               },
 
-              // {
-              //   path: "/dashboard/Membership/MembershipEdit/:id",
-              //   element: <MembershipEdit></MembershipEdit>,
-              // },
+              {
+                path: "/dashboard/PaymentSystems/PaymentEdit/:id",
+                element: <PaymentEdit></PaymentEdit>,
+              },
             ],
           },
         ],
