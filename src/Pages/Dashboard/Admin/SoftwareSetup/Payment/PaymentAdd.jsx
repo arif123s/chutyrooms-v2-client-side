@@ -15,7 +15,7 @@ const PaymentAdd = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
   const [errorMessage, setErrorMessage] = useState({
     status: false,
@@ -30,14 +30,14 @@ const PaymentAdd = () => {
   const onSubmit = async (data) => {
     // console.log(data);
 
-    setErrorMessage({ status: false, message: "",errors:[] });
+    setErrorMessage({ status: false, message: "", errors: [] });
 
     const paymentMethodInfo = {
-      name:data.name,
-      image:data.image,
-      view_order:data.view_order,
-      is_active:parseInt(data.is_active)
-    }
+      name: data.name,
+      image: data.image,
+      view_order: data.view_order,
+      is_active: parseInt(data.is_active),
+    };
 
     const formData = new FormData();
 
@@ -63,18 +63,17 @@ const PaymentAdd = () => {
     }
 
     // Logging FormData to check its content
-    console.log('formdata',Object.fromEntries(formData));
+    console.log("formdata", Object.fromEntries(formData));
 
     // addPaymentMethod(formData)
     try {
       const result = await addPaymentMethod(formData);
       // Handle successful mutation
-      if (result?.data?.status){
+      if (result?.data?.status) {
         console.log("Payment method", result);
         toast.success("Payment method added successfully");
-        reset()
-      }
-      else{
+        reset();
+      } else {
         // console.log("Failed", result);
         console.log("Failed", result.error.data.errors);
         setErrorMessage({
@@ -83,13 +82,11 @@ const PaymentAdd = () => {
           errors: [result.error.data.errors],
         });
         console.log("errormessage", errorMessage?.errors?.length);
-      } 
+      }
     } catch (error) {
       // Handle error
       console.error("Error adding payment method:", error);
     }
-
-    
   };
   return (
     <div className="paymentmethod-add-division">
