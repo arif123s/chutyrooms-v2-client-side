@@ -33,34 +33,42 @@ const paymentMethodApi = baseApi.injectEndpoints({
     }),
 
     addPaymentMethod: builder.mutation({
-      query: ({data, image}) =>{
-        const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('image', image); // Assuming image is a File object
-        formData.append('view_order', data.view_order);
-        formData.append('is_active', data.is_active);
-        // return formData;
-       return {
-        url: "/payment_methods",
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          
-        },
-        body: formData,
-      };
+      query: (data) => {
+       
+        return {
+          url: "/payment_methods",
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: data,
+        };
       },
     }),
 
+    // updatePaymentMethod: builder.mutation({
+    //   query: ( {paymentMethodId, data }) => ({
+    //     url: `/payment_methods/${paymentMethodId}`,
+    //     method: "PUT",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //     },
+    //     body: data,
+    //   }),
+    // }),
+
     updatePaymentMethod: builder.mutation({
-      query: ({ paymentMethodId, data }) => ({
-        url: `/payment_methods/${paymentMethodId}`,
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: data,
-      }),
+      query: (paymentInfo) => {
+        console.log("Payment Method ID:",paymentInfo.formData);
+        return {
+          url: `/payment_methods/${paymentInfo.id}`,
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: paymentInfo.formData,
+        };
+      },
     }),
 
   deletePaymentMethod: builder.mutation({

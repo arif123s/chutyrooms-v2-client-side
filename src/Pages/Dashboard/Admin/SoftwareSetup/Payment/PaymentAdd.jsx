@@ -1,63 +1,104 @@
-import React, { useEffect, useState } from 'react';
-import { addMembershipCard } from "../../../../../redux/features/membershipCard/membershipCardSlice"
-import { useSelector, useDispatch } from "react-redux";
-
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router';
-import { BASE_API } from '../../../../../BaseApi/BaseApi';
-import { setYear, setMonth, setDate, setHours, setMinutes, setSeconds } from 'date-fns';
-import { useAddPaymentMethodMutation } from '../../../../../redux/features/admin/paymentMethod/paymentMethod.api';
-import Loading from '../../../../Common/Includes/Loading/Loading';
+import { useState } from "react";
+import { useAddPaymentMethodMutation } from "../../../../../redux/features/admin/paymentMethod/paymentMethod.api";
+import Loading from "../../../../Common/Includes/Loading/Loading";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const PaymentAdd = () => {
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [addPaymentMethod, { isLoading, isError, error }] = useAddPaymentMethodMutation();
-  const [inputValue, setInputValue] = useState({ name: '', view_order: '', is_active: null });
-
-  const [validationErrors, setValidationErrors] = useState({});
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const [addPaymentMethod, { isLoading, isError, error }] =
+    useAddPaymentMethodMutation();
+  // const [inputValue, setInputValue] = useState({ name: '', view_order: '', is_active: null });
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm();
+  const [errorMessage, setErrorMessage] = useState({
+    status: false,
+    message: "",
+    errors: [],
+  });
 
   if (isLoading) {
-    return <Loading></Loading>
+    return <Loading></Loading>;
   }
 
-  const handleInput = (e) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
-  }
-  const handleInputFile = (e) => {
-    // alert(1);
-    setInputValue({ ...inputValue, 'image': e.target.files[0] });
-  }
+  const onSubmit = async (data) => {
+    // console.log(data);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(inputValue);
+    setErrorMessage({ status: false, message: "",errors:[] });
 
-
-    const isValidImageFile = (file) => {
-      const acceptedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-      return file && acceptedTypes.includes(file.type);
-    };
-    try {
-      // Call the mutation function with the form data
-      if (!isValidImageFile(inputValue.image)) {
-        throw new Error('The image file must be of type: jpg, jpeg, png.');
-      }
-      const result = await addPaymentMethod({ data: inputValue, iamge: inputValue.image });
-      // Handle successful mutation
-      console.log('Payment method', result);
-    } catch (error) {
-      // Handle error
-      console.error('Error adding payment method:', error);
+    const paymentMethodInfo = {
+      name:data.name,
+      image:data.image,
+      view_order:data.view_order,
+      is_active:parseInt(data.is_active)
     }
 
+    const formData = new FormData();
 
-  }
+    // Append non-file fields to FormData
+    // Object.entries(paymentMethodInfo).forEach(([key, value]) => {
+    //   if (key !== "image") {
+    //     formData.append(key, value);
+    //   }
+    // });
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (key !== "image") {
+        // Convert is_active to integer if it's present
+        const formattedValue =
+          key === "is_active" ? parseInt(value, 10) : value;
+        formData.append(key, formattedValue);
+      }
+    });
+
+    // Append image file to FormData
+    if (paymentMethodInfo.image) {
+      formData.append("image", paymentMethodInfo.image);
+    }
+
+    // Logging FormData to check its content
+    console.log('formdata',Object.fromEntries(formData));
+
+    // addPaymentMethod(formData)
+    try {
+      const result = await addPaymentMethod(formData);
+      // Handle successful mutation
+      if (result?.data?.status){
+        console.log("Payment method", result);
+        toast.success("Payment method added successfully");
+        reset()
+      }
+      else{
+        // console.log("Failed", result);
+        console.log("Failed", result.error.data.errors);
+        setErrorMessage({
+          status: true,
+          message: data.message,
+          errors: [result.error.data.errors],
+        });
+        console.log("errormessage", errorMessage?.errors?.length);
+      } 
+    } catch (error) {
+      // Handle error
+      console.error("Error adding payment method:", error);
+    }
+
+    
+  };
   return (
-    <div className='paymentmethod-add-division'>
-      <form className='paymentmethod-add-form' onSubmit={handleSubmit}>
-        <div>
+    <div className="paymentmethod-add-division">
+      <form
+        className="paymentmethod-add-form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* Property name */}
+        <div className="mb-3">
           <label className="property-input-title" htmlFor="name">
             PaymentType Name
           </label>
@@ -65,30 +106,64 @@ const PaymentAdd = () => {
             className="input-box"
             id="name"
             name="name"
-            //   onChange={e => changeCountryFieldHandler(e)} 
-            value={inputValue.name} onChange={handleInput}
-
+            // value={inputValue.name}
+            // onChange={handleInput}
+            {...register("name", {
+              required: {
+                value: true,
+                message: "Payment Type is required",
+              },
+            })}
           />
-
-          {/* {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>} */}
-        </div>
-        <div className="mb-3">
-          <label
-            htmlFor="image">
-            PaymentType Image
+          <label className="">
+            {errors.name?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.name?.message}
+              </span>
+            )}
           </label>
-          <input
-            className="input-box"
-            type="file"
-            // id="image"
-            // name="image"
-            accept="image/*"
-            // value={inputValue.image}
-            onChange={handleInputFile}
+        </div>
+        {/* Image */}
+        <div className="mb-3">
+          <Controller
+            name="image"
+            control={control}
+            rules={{ required: "Image is required" }}
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <>
+                <label className="property-input-title" htmlFor="image">
+                  PaymentType Image
+                </label>
+                <input
+                  className="input-box"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const acceptedTypes = ["image/jpeg", "image/png"]; // Accepted image types
+                      if (acceptedTypes.includes(file.type)) {
+                        onChange(file);
+                      } else {
+                        // Reset file input if the file type is not accepted
+                        e.target.value = null;
+                      }
+                    }
+                  }}
+                  onBlur={onBlur}
+                  ref={ref}
+                />
+                {errors.image && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.image.message}
+                  </span>
+                )}
+              </>
+            )}
           />
         </div>
-
-        <div>
+        {/* View Order */}
+        <div className="mb-3">
           <label className="property-input-title" htmlFor="view_order">
             View Order
           </label>
@@ -96,30 +171,70 @@ const PaymentAdd = () => {
             className="input-box"
             id="view_order"
             name="view_order"
-            value={inputValue.view_order} onChange={handleInput}
+            // value={inputValue.view_order}
+            // onChange={handleInput}
+            {...register("view_order", {
+              required: {
+                value: true,
+                message: "View order is required",
+              },
+            })}
           />
-
-
-          {/* {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>} */}
+          <label className="">
+            {errors.view_order?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.view_order?.message}
+              </span>
+            )}
+          </label>
         </div>
-
-        <div>
-          <div className="flex items-center gap-2">
-            <div>
-              <input type="radio" id="is_active" name="is_active" value="1" onChange={handleInput} ></input>
-              <label className="cursor-pointer text-gray-700 ml-2">Active</label>
+        {/* isActive */}
+        <div className="mb-3 property-input-title">
+          <div className="flex gap-3">
+            <div className="flex items-center gap-[6px]">
+              <input
+                type="radio"
+                name="is_active"
+                id="active"
+                value={1}
+                {...register("is_active", { required: true })}
+              />
+              <label htmlFor="active">Active</label>
             </div>
-
-            <div>
-              <input type="radio" id="is_active" name="is_active" value="0" onChange={handleInput} ></input>
-              <label className="cursor-pointer text-gray-700 ml-2">Inactive</label>
+            <div className="flex items-center gap-[6px]">
+              <input
+                type="radio"
+                name="is_active"
+                id="inactive"
+                value={0}
+                {...register("is_active", { required: true })}
+              />
+              <label htmlFor="inactive">Inactive</label>
             </div>
-
           </div>
-          {/* {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>} */}
+          <label className=" mb-0 pb-0">
+            {errors.is_active?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                Please select one option.
+              </span>
+            )}
+          </label>
         </div>
 
-        <button className='country-save-btn'>Save</button>
+        {errorMessage.errors?.length > 0 &&
+          errorMessage?.errors?.map((err, index) => (
+            <div key={index}>
+              {Object.values(err).map((value, i) => (
+                <p className="label-text-alt text-rose-500 mb-[2px]" key={i}>
+                  {value}
+                </p>
+              ))}
+            </div>
+          ))}
+
+        <button type="submit" className="country-save-btn">
+          Save
+        </button>
       </form>
     </div>
   );
