@@ -52,13 +52,13 @@ const HomePage = () => {
           <DealMembership></DealMembership>
         </div>
         <ExploreCountry></ExploreCountry>
-        <div className="chat-box">
+        {/* <div className="chat-box">
           <img
             className="w-[18px] md:w-[22px] lg:w-[24px]"
             src={chat}
             alt="Chat"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

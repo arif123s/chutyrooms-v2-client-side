@@ -149,7 +149,7 @@ const PropertyAdd = () => {
   const handleLogoSelect = (event) => {
     const fileInput = event.target;
 
-    if (fileInput.files[0]?.size > 100 * 1024) {
+    if (fileInput?.files[0]?.size > 100 * 1024) {
       setLogo(null);
       setLogoError({
         status: true,
@@ -158,7 +158,7 @@ const PropertyAdd = () => {
       return;
     }
 
-    if (fileInput.files.length > 0) {
+    if (fileInput?.files?.length > 0) {
       setLogo({
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
@@ -180,7 +180,7 @@ const PropertyAdd = () => {
 
   const handleDisplayImageSelect = (index, event) => {
     const fileInput = event.target;
-    if (fileInput.files.length > 0) {
+    if (fileInput?.files?.length > 0) {
       const newImages = [...displayImages];
       newImages[index] = {
         name: fileInput.files[0].name,
@@ -225,7 +225,7 @@ const PropertyAdd = () => {
 
   const handleVideoSelect = (event) => {
     const fileInput = event.target;
-    if (fileInput.files.length > 0) {
+    if (fileInput?.files?.length > 0) {
       setVideo({
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
@@ -311,7 +311,7 @@ const PropertyAdd = () => {
     console.log(propertyData);
     // createPropertyMutation.mutate(propertyData);
     setLoading(false);
-    navigate("/property-room-add");
+    navigate("/room-add");
   };
 
   return (
@@ -1086,9 +1086,9 @@ const PropertyAdd = () => {
                                 />
                               </div>
                               <span className="text-[12px] text-center block">
-                                {logo.name.length > 16
-                                  ? logo.name.slice(0, 15) + "..."
-                                  : logo.name}
+                                {logo?.name?.length > 16
+                                  ? logo?.name.slice(0, 15) + "..."
+                                  : logo?.name}
                               </span>
                             </div>
                             <p className="property-input-title text-center">
@@ -1149,9 +1149,9 @@ const PropertyAdd = () => {
                                   />
                                 </div>
                                 <span className="text-[12px] block text-center">
-                                  {image.name.length > 16
-                                    ? image.name.slice(0, 15) + "..."
-                                    : image.name}
+                                  {image?.name?.length > 16
+                                    ? image?.name?.slice(0, 15) + "..."
+                                    : image?.name}
                                 </span>
                               </div>
                               <p className="property-input-title text-center">

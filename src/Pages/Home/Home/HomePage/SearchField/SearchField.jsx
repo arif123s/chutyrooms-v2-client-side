@@ -102,7 +102,7 @@ const SearchField = () => {
           <div className='search-input-container'>
                   <input type='text' className='search-input' placeholder='Search by city,hotel,resort,area'></input>
                   <div className='nearme'>
-                      <img className='gps-image' src={Gps}></img>
+                      <img className='gps-image' src={Gps} alt="Near-me"></img>
                       Near Me
                   </div>
           </div>

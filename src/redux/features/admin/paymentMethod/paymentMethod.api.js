@@ -62,7 +62,8 @@ const paymentMethodApi = baseApi.injectEndpoints({
         console.log("Payment Method ID:",paymentInfo.formData);
         return {
           url: `/payment_methods/${paymentInfo.id}`,
-          method: "PUT",
+          // method: "PUT",
+          method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },

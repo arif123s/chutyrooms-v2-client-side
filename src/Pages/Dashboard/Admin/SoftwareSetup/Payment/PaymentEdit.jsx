@@ -1,13 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
-import { BASE_API } from '../../../../../BaseApi/BaseApi';
-import { BASE_ASSET_API } from '../../../../../BaseApi/AssetUrl';
-import Loading from '../../../../Common/Includes/Loading/Loading';
-import { useGetSinglePaymentMethodQuery, useUpdatePaymentMethodMutation } from '../../../../../redux/features/admin/paymentMethod/paymentMethod.api';
-import { Controller, useForm } from 'react-hook-form';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
+import { BASE_API } from "../../../../../BaseApi/BaseApi";
+import { BASE_ASSET_API } from "../../../../../BaseApi/AssetUrl";
+import Loading from "../../../../Common/Includes/Loading/Loading";
+import {
+  useGetSinglePaymentMethodQuery,
+  useUpdatePaymentMethodMutation,
+} from "../../../../../redux/features/admin/paymentMethod/paymentMethod.api";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 const PaymentEdit = () => {
-
   const { id } = useParams();
   const {
     control,
@@ -15,17 +18,17 @@ const PaymentEdit = () => {
     handleSubmit,
     setValue,
     formState: { errors },
-    reset
+    reset,
   } = useForm();
 
   const [paymentMethodData, setPaymentMethodData] = useState({
-    name: '',
+    name: "",
     image: null,
-    view_order: '',
-    is_active: null 
+    view_order: "",
+    is_active: null,
   });
 
-  console.log(paymentMethodData)
+  console.log(paymentMethodData);
 
   const [errorMessage, setErrorMessage] = useState({
     status: false,
@@ -33,46 +36,38 @@ const PaymentEdit = () => {
     errors: [],
   });
 
-
   const { data, isLoading } = useGetSinglePaymentMethodQuery(id);
   const paymentMethod = data?.data;
-  const [updatePaymentMethod, { isLoading: updateLoading, isError, error }] = useUpdatePaymentMethodMutation();
-  const [paymentMethodImage, setPaymentMethodImage] = useState('');
+  const [updatePaymentMethod, { isLoading: updateLoading, isError, error }] =
+    useUpdatePaymentMethodMutation();
+  const [paymentMethodImage, setPaymentMethodImage] = useState("");
 
   useEffect(() => {
     if (paymentMethod?.image) {
-      setPaymentMethodImage(`${BASE_ASSET_API}/storage/images/payment/payment_methods/${paymentMethod.image}`);
+      setPaymentMethodImage(
+        `${BASE_ASSET_API}/storage/images/payment/payment_methods/${paymentMethod.image}`
+      );
       setPaymentMethodData({
         name: paymentMethod.name,
-        // image: null,
+        image: null,
         view_order: paymentMethod.view_order,
-        is_active: paymentMethod.is_active 
-      })
+        is_active: paymentMethod.is_active,
+      });
     }
   }, [paymentMethod]);
 
   if (isLoading || updateLoading) {
-    return <Loading></Loading>
+    return <Loading></Loading>;
   }
 
-  const changeMembershipFieldHandler = (e) => {
-    // alert(e.target.type === 'file');
-    // console.log(e.target.type === 'file' ? e.target.files[0] : e.target.value);
-    setPaymentMethodData({
-      ...paymentMethodData,
-      [e.target.name]: e.target.value
-    });
-  }
- 
 
   const onSubmit = async (data) => {
-
     const paymentMethodInfo = {
-      name: data.name,
+      name: paymentMethodData.name,
       image: data.image,
-      view_order: data.view_order,
-      is_active: parseInt(data.is_active)
-    }
+      view_order: paymentMethodData.view_order,
+      is_active: parseInt(paymentMethodData.is_active),
+    };
 
     if (paymentMethodInfo.image === undefined) {
       delete paymentMethodInfo.image;
@@ -96,68 +91,68 @@ const PaymentEdit = () => {
       formData.append("image", data.image);
     }
 
+    formData.append("_method", "PUT");
+
     // Logging FormData to check its content
-    console.log('formdata', Object.fromEntries(formData));
+    console.log("formdata", Object.fromEntries(formData));
 
     const paymentInfo = {
       id,
-      formData
-    }
-
+      formData,
+    };
 
     try {
       const result = await updatePaymentMethod(paymentInfo);
-      // console.log(result)
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Payment method", result);
         toast.success("Payment method added successfully");
         reset();
       } else {
-        // console.log("Failed", result);
         console.log("Failed", result.error.data.errors);
       }
-    }
-    catch (error) {
+    } catch (error) {
       // Handle error
       console.error("Error adding payment method:", error);
     }
-
-  }
+  };
 
   return (
-
-
     <div>
-      <div className='paymentmethod-add-division'>
-        <form className='paymentmethod-add-form' onSubmit={handleSubmit(onSubmit)}>
+      <div className="paymentmethod-add-division">
+        <form
+          className="paymentmethod-add-form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div>
             <label className="property-input-title" htmlFor="name">
               PaymentType Name
             </label>
             <input
-            className="input-box"
-            id="name"
-            name="name"
-            value={paymentMethodData.name}
-            onChange={e => changeMembershipFieldHandler(e)}
-              {...register("name", {
-                required: {
-                  value: true,
-                  message: "Payment Type is required",
-                },
-              })}
+              className="input-box"
+              id="name"
+              name="name"
+              value={paymentMethodData.name}
+              onChange={(e) =>
+                setPaymentMethodData({
+                  ...paymentMethodData,
+                  name: e.target.value,
+                })
+              }
+              // {...register("name", {
+              //   required: {
+              //     value: true,
+              //     message: "Payment Type is required",
+              //   },
+              // })}
             />
-
-
           </div>
 
           <div className="mb-3">
-            <label
-              htmlFor="image">
-              Membership Card Image
-            </label>
-            {paymentMethod && paymentMethod.image && <img src={paymentMethodImage} alt='Payment Method'></img>}
+            <label htmlFor="image">Payment Method Image</label>
+            {paymentMethod && paymentMethod.image && (
+              <img src={paymentMethodImage} alt="Payment Method"></img>
+            )}
 
             <Controller
               name="image"
@@ -192,26 +187,9 @@ const PaymentEdit = () => {
                 </>
               )}
             />
-
           </div>
-          {/* <div className="mb-3">
-          <label
-            htmlFor="image">
-            PaymentType Image
-          </label>
-          <input
-            className="input-box"
-            type="file"
-            // id="image"
-            // name="image"
-            accept="image/*"
-            // value={inputValue.image}
-            // onChange={handleInputFile}
-            onChange={e => changePaymentFieldHandler(e)}
-          />
-        </div> */}
 
-          <div>
+          <div className="mb-3">
             <label className="property-input-title" htmlFor="view_order">
               View Order
             </label>
@@ -219,23 +197,23 @@ const PaymentEdit = () => {
               className="input-box"
               id="view_order"
               name="view_order"
-              value={paymentMethod.view_order}
-              // onChange={e => changePaymentFieldHandler(e)}
-              // onChange={(e) => setValue("view_order", e.target.value)}
-              onChange={(e) => setPaymentMethodData({ ...paymentMethodData, view_order: e.target.value })}
-              {...register("view_order", {
-                required: {
-                  value: true,
-                  message: "View order is required",
-                },
-              })}
+              value={paymentMethodData.view_order}
+              onChange={(e) =>
+                setPaymentMethodData({
+                  ...paymentMethodData,
+                  view_order: e.target.value,
+                })
+              }
+              // {...register("view_order", {
+              //   required: {
+              //     value: true,
+              //     message: "View order is required",
+              //   },
+              // })}
             />
-
 
             {/* {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>} */}
           </div>
-
-
 
           <div className="mb-3 property-input-title">
             <div className="flex gap-3">
@@ -245,11 +223,14 @@ const PaymentEdit = () => {
                   name="is_active"
                   id="active"
                   value={1}
-                  checked={paymentMethod.is_active == 1}
-                  // onChange={e => changePaymentFieldHandler(e)}
-                  // onChange={() => setValue("is_active", 1)}
-                  onChange={() => setPaymentMethodData({ ...paymentMethodData, is_active: 1 })}
-                  {...register("is_active", { required: true })}
+                  checked={paymentMethodData.is_active == 1}
+                  onChange={(e) =>
+                    setPaymentMethodData({
+                      ...paymentMethodData,
+                      is_active: e.target.value,
+                    })
+                  }
+                  // {...register("is_active", { required: true })}
                 />
                 <label htmlFor="active">Active</label>
               </div>
@@ -259,11 +240,14 @@ const PaymentEdit = () => {
                   name="is_active"
                   id="inactive"
                   value={0}
-                  checked={paymentMethod.is_active == 0}
-                  // onChange={e => changePaymentFieldHandler(e)}
-                  // onChange={() => setValue("is_active", 0)}
-                  onChange={() => setPaymentMethodData({ ...paymentMethodData, is_active: 0 })}
-                  {...register("is_active", { required: true })}
+                  checked={paymentMethodData.is_active == 0}
+                  onChange={(e) =>
+                    setPaymentMethodData({
+                      ...paymentMethodData,
+                      is_active: e.target.value,
+                    })
+                  }
+                  // {...register("is_active", { required: true })}
                 />
                 <label htmlFor="inactive">Inactive</label>
               </div>
@@ -277,10 +261,11 @@ const PaymentEdit = () => {
             </label>
           </div>
 
-          <button type="submit" className='country-save-btn'>Save</button>
+          <button type="submit" className="country-save-btn">
+            Save
+          </button>
         </form>
       </div>
-
     </div>
   );
 };

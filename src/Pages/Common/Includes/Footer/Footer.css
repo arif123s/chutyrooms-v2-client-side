@@ -1,7 +1,8 @@
 .footer-container {
   padding-top: 24px;
   padding-bottom: 26px;
-  background: #159947;
+  /* background: #159947; */
+  background: #008942;
   color: #ffffff;
 }
 
@@ -135,7 +136,8 @@
   width: 170px;
   padding-left: 10px;
   gap: 10px;
-  background: #159947;
+  /* background: #159947; */
+  background: #008942;
   color: #ffffff;
   border: 1px solid #ffffff;
   border-radius: 5px 0px 0px 5px;
@@ -156,7 +158,8 @@
   padding: 10px;
   border-radius: 0px 5px 5px 0px;
   background: #ffffff;
-  color: #159947;
+  /* color: #159947; */
+  color: #008942;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.54px;
@@ -873,7 +876,6 @@
     width: 160px;
     padding-left: 10px;
     gap: 10px;
-    background: #159947;
     color: #ffffff;
     border: 1px solid #ffffff;
     border-radius: 5px 0px 0px 5px;

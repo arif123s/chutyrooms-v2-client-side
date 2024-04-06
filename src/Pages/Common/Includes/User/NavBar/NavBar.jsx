@@ -112,7 +112,7 @@ const NavBar = () => {
                     .querySelector(".nav-icon")
                     ?.classList.remove("hovered")
                 }
-                className="menu-mobile cursor-pointer bg-[#E8F5ED] text-[#159947] nav-item-container flex px-[16px] items-center py-[10px] rounded-[8px]"
+                className="menu-mobile cursor-pointer bg-[#E8F5ED] text-[#008942] nav-item-container flex px-[16px] items-center py-[10px] rounded-[8px]"
               >
                 <img
                   className="nav-icon"
@@ -138,7 +138,7 @@ const NavBar = () => {
                     .querySelector(".nav-icon")
                     .classList.remove("hovered")
                 }
-                className="nav-item-container cursor-pointer bg-[#E8F5ED] text-[#159947] text-[14px] flex items-center p-[8px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
+                className="nav-item-container cursor-pointer bg-[#E8F5ED] text-[#008942] text-[14px] flex items-center p-[8px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
               >
                 <img
                   className="nav-icon"
@@ -254,7 +254,7 @@ const NavBar = () => {
               <a
                 href="/login"
                 onClick={(e) => handleNavigate(e, "login")}
-                className="bg-[#159947] cursor-pointer text-white px-[22px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all"
+                className=" bg-[#008942] 008942 cursor-pointer text-white px-[22px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all"
               >
                 Login
               </a>

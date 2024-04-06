@@ -1,11 +1,10 @@
-import {  useState } from "react";
 import minusIcon from "../../../../assets/icons/minus.svg";
 import plusIcon from "../../../../assets/icons/plus.svg";
 import starIcon from "../../../../assets/icons/star.svg";
 
 const CancellationPolicy = (props) => {
 
-  const {cancellationData,setCancellationData}=props
+  const {cancellationData,setCancellationData}=props;
 
   const handleAddCancellation = (e) => {
     e.preventDefault();
@@ -18,7 +17,7 @@ const CancellationPolicy = (props) => {
 
   const handleRemoveCancellation = (e) => {
     e.preventDefault();
-  if(cancellationData.length>1){
+  if(cancellationData?.length>1){
       setCancellationData(cancellationData.slice(0, -1));
   }
     // const newData = [...cancellationData];
