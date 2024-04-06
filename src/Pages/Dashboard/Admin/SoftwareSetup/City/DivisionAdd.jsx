@@ -97,8 +97,8 @@ const DivisionAdd = () => {
                 className="property-input"
                 name="country_id"
                 onChange={e => changeDivisionFieldHandler(e)} 
-               
               >
+                <option>Select Country</option>
                 {Countrylist.map(country => (
                     <option key={country.id} value={country.id}>
                         {country.name}

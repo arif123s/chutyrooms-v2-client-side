@@ -97,10 +97,9 @@ const DistrictAdd = () => {
        }
       }
     return (
-        <div className='country-add-division'>
-
-        <form className='country-add-form' onSubmit={onSubmitChange} >
-        <div className="">
+      <div className="country-add-division">
+        <form className="country-add-form" onSubmit={onSubmitChange}>
+          <div className="">
             <label className="property-input-title block" htmlFor="country">
               Country
             </label>
@@ -109,17 +108,16 @@ const DistrictAdd = () => {
                 id="country_id"
                 className="property-input"
                 name="country_id"
-                onChange={handleCountryChange} 
-               
+                onChange={handleCountryChange}
               >
-                 <option>Select Country</option>
-                {Countrylist.map(country => (
-                    <option key={country.id} value={country.id}>
-                        {country.name}
-                    </option>
+                <option>Select Country</option>
+                {Countrylist.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
                 ))}
               </select>
-            
+
               <img
                 // className="absolute top-[14px] right-[12px] arrow-icon"
                 className="arrow-icon"
@@ -135,17 +133,17 @@ const DistrictAdd = () => {
                 id="division_id"
                 className="property-input"
                 name="division_id"
-                onChange={e => changeDistrictFieldHandler(e)} 
-               
+                onChange={(e) => changeDistrictFieldHandler(e)}
+                disabled={DivisionList?.length<=0}
               >
-               
-                {DivisionList.map(division => (
-                    <option key={division.id} value={division.id}>
-                        {division.name}
-                    </option>
+                <option>Select Division</option>
+                {DivisionList.map((division) => (
+                  <option key={division.id} value={division.id}>
+                    {division.name}
+                  </option>
                 ))}
               </select>
-            
+
               <img
                 // className="absolute top-[14px] right-[12px] arrow-icon"
                 className="arrow-icon"
@@ -153,67 +151,89 @@ const DistrictAdd = () => {
                 alt=""
               />
 
-              {validationErrors.division_id && <span className='validation-message'>{validationErrors.division_id}</span>}
+              {validationErrors.division_id && (
+                <span className="validation-message">
+                  {validationErrors.division_id}
+                </span>
+              )}
             </div>
 
             <div>
-            <label className="property-input-title" htmlFor="CountryName">
-                  District Name
-                </label>
-                <input
-                  className="input-box"
-                  id="name"
-                  name="name"
-                  onChange={e => changeDistrictFieldHandler(e)}
-                  
-                />
+              <label className="property-input-title" htmlFor="CountryName">
+                District Name
+              </label>
+              <input
+                className="input-box"
+                id="name"
+                name="name"
+                onChange={(e) => changeDistrictFieldHandler(e)}
+              />
 
-            {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
+              {validationErrors.name && (
+                <span className="validation-message">
+                  {validationErrors.name}
+                </span>
+              )}
             </div>
 
             <div>
-            <label className="property-input-title" htmlFor="CountryName">
-                 View Order
-                </label>
-                <input
-                  className="input-box"
-                  id="view_order"
-                  name="view_order"
-                  onChange={e => changeDistrictFieldHandler(e)}
-                  
-                />
+              <label className="property-input-title" htmlFor="CountryName">
+                View Order
+              </label>
+              <input
+                className="input-box"
+                id="view_order"
+                name="view_order"
+                onChange={(e) => changeDistrictFieldHandler(e)}
+              />
 
-        {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
+              {validationErrors.view_order && (
+                <span className="validation-message">
+                  {validationErrors.view_order}
+                </span>
+              )}
             </div>
 
-
-        <div>
-            <div className="flex items-center gap-2">
+            <div>
+              <div className="flex items-center gap-2">
                 <div>
-                    <input type="radio" id="is_active" name="is_active" value="1"   onChange={e => changeDistrictFieldHandler(e)} ></input>
-                    <label className="cursor-pointer text-gray-700 ml-2">Active</label>
+                  <input
+                    type="radio"
+                    id="is_active"
+                    name="is_active"
+                    value="1"
+                    onChange={(e) => changeDistrictFieldHandler(e)}
+                  ></input>
+                  <label className="cursor-pointer text-gray-700 ml-2">
+                    Active
+                  </label>
                 </div>
-                    
+
                 <div>
-                  <input type="radio" id="is_active" name="is_active" value="0"   onChange={e => changeDistrictFieldHandler(e)}  ></input>
-                  <label  className="cursor-pointer text-gray-700 ml-2">Inactive</label>
+                  <input
+                    type="radio"
+                    id="is_active"
+                    name="is_active"
+                    value="0"
+                    onChange={(e) => changeDistrictFieldHandler(e)}
+                  ></input>
+                  <label className="cursor-pointer text-gray-700 ml-2">
+                    Inactive
+                  </label>
                 </div>
+              </div>
+
+              {validationErrors.view_order && (
+                <span className="validation-message">
+                  {validationErrors.view_order}
+                </span>
+              )}
             </div>
 
-            {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
-
-            </div>
-
-            
-
-            <button className='country-save-btn'>Save</button>
-
-            
+            <button className="country-save-btn">Save</button>
           </div>
-
-            </form>
-           
-        </div>
+        </form>
+      </div>
     );
 };
 

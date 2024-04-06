@@ -18,7 +18,7 @@ const DistrictEdit = () => {
         name: "",
         division_id:"",
         view_order:"",
-        is_active:""
+        is_active:"",
     })
 
     const changeDistrictFieldHandler = (e) =>{

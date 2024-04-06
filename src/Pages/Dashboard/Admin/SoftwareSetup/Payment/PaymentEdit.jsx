@@ -63,6 +63,7 @@ const PaymentEdit = () => {
 
   const onSubmit = async (data) => {
     const paymentMethodInfo = {
+      id: id,
       name: paymentMethodData.name,
       image: data.image,
       view_order: paymentMethodData.view_order,
@@ -106,7 +107,8 @@ const PaymentEdit = () => {
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Payment method", result);
-        toast.success("Payment method added successfully");
+        toast.success("Payment method edited successfully");
+        
         reset();
       } else {
         console.log("Failed", result.error.data.errors);
