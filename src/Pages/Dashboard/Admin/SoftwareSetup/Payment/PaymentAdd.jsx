@@ -3,21 +3,25 @@ import { useAddPaymentMethodMutation } from "../../../../../redux/features/admin
 import Loading from "../../../../Common/Includes/Loading/Loading";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const PaymentAdd = () => {
   // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  const [addPaymentMethod, { isLoading, 
-    // isError,
-    //  error
-     }] = useAddPaymentMethodMutation();
+  const navigate = useNavigate();
+  const [
+    addPaymentMethod,
+    {
+      isLoading,
+      // isError,
+      //  error
+    },
+  ] = useAddPaymentMethodMutation();
   // const [inputValue, setInputValue] = useState({ name: '', view_order: '', is_active: null });
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
   const [errorMessage, setErrorMessage] = useState({
     status: false,
@@ -74,7 +78,7 @@ const PaymentAdd = () => {
       if (result?.data?.status) {
         console.log("Payment method", result);
         toast.success("Payment method added successfully");
-        reset();
+        navigate("/dashboard/PaymentSystems");
       } else {
         // console.log("Failed", result);
         console.log("Failed", result.error.data.errors);
