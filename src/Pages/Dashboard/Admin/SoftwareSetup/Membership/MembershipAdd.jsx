@@ -260,9 +260,9 @@ const handleSubmit = async (e) =>{
             </div>
             </div>
 
-            <div class="mb-3">
+            <div className="mb-3">
               <label
-                for="image">
+                htmlFor="image">
                  Membership Card Image
                 </label>
               <input

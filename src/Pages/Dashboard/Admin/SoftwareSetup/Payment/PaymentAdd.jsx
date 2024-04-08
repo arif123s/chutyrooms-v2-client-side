@@ -7,8 +7,10 @@ import { toast } from "react-toastify";
 const PaymentAdd = () => {
   // const dispatch = useDispatch();
   // const navigate = useNavigate();
-  const [addPaymentMethod, { isLoading, isError, error }] =
-    useAddPaymentMethodMutation();
+  const [addPaymentMethod, { isLoading, 
+    // isError,
+    //  error
+     }] = useAddPaymentMethodMutation();
   // const [inputValue, setInputValue] = useState({ name: '', view_order: '', is_active: null });
   const {
     control,
@@ -103,8 +105,6 @@ const PaymentAdd = () => {
             className="input-box"
             id="name"
             name="name"
-            // value={inputValue.name}
-            // onChange={handleInput}
             {...register("name", {
               required: {
                 value: true,
