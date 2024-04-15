@@ -13,9 +13,9 @@
 }
 
 .property-input-title {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 145%;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .property-input-div {
@@ -39,7 +39,8 @@ border-radius: 8px;
 padding: 8px 12px;
 display: flex;
  justify-content: center;
- /* background: #FFFFFF; */
+ 
+  /* align-items: center; */
 }
 
 .select-box {

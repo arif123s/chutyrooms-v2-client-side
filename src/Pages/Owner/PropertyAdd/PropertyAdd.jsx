@@ -24,6 +24,8 @@ import { useForm, Controller, useWatch } from "react-hook-form";
 import CancellationPolicy from "./CancellationPolicy/CancellationPolicy";
 // import { useMutation } from "react-query";
 import Loading from "../../Common/Includes/Loading/Loading";
+import { useGetAllActiveActivepropertyTypeQuery, useGetAllActivePaymentMethodQuery } from "../../../redux/features/owner/propertyAdd/propertyAdd.api";
+import { BASE_ASSET_API } from "../../../BaseApi/AssetUrl";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -39,6 +41,20 @@ const mapContainerStyle = {
 const PropertyAdd = () => {
   // const MAX_VIDEO_SIZE_MB = 5;
   const navigate = useNavigate();
+
+  const {
+    data: propertyTypes,
+    isLoading: propertyTypesLoading,
+    // refetch,
+  } = useGetAllActiveActivepropertyTypeQuery();
+  const {
+    data: paymentMethods,
+    isLoading: paymentMethodsLoading,
+    // refetch,
+  } = useGetAllActivePaymentMethodQuery();
+
+  // console.log("propertyTypes", propertyTypes);
+  // console.log("paymentMethods", paymentMethods.paymentMethods);
 
   const [cancellationData, setCancellationData] = useState([
     { duration: { hours: 47, minutes: 59 }, refundPercentage: 100 },
@@ -142,7 +158,7 @@ const PropertyAdd = () => {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
 
-  if (!isLoaded || loading) {
+  if (!isLoaded || loading || propertyTypesLoading || paymentMethodsLoading) {
     return <Loading></Loading>;
   }
 
@@ -305,13 +321,13 @@ const PropertyAdd = () => {
       cancellation: cancellationData,
       logo,
       displayImages,
-      video,
+      // video,
     };
 
     console.log(propertyData);
     // createPropertyMutation.mutate(propertyData);
     setLoading(false);
-    navigate("/room-add");
+    // navigate("/room-add");
   };
 
   return (
@@ -673,28 +689,57 @@ const PropertyAdd = () => {
                 defaultValue={[]}
                 rules={{ required: "Please select at least one checkbox." }}
                 render={({ field }) => (
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="hotel-type1"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        setValue(
-                          "propertyTypes",
-                          e.target.checked
-                            ? [...field.value, "Hotel"]
-                            : field.value.filter((type) => type !== "Hotel")
-                        );
-                      }}
-                    />
-                    <label htmlFor="hotel-type1"> Hotel</label>
-                  </div>
+                  // <div>
+                  //   <input
+                  //     type="checkbox"
+                  //     id="hotel-type1"
+                  //     {...field}
+                  //     onChange={(e) => {
+                  //       field.onChange(e);
+                  //       setValue(
+                  //         "propertyTypes",
+                  //         e.target.checked
+                  //           ? [...field.value, "Hotel"]
+                  //           : field.value.filter((type) => type !== "Hotel")
+                  //       );
+                  //     }}
+                  //   />
+                  //   <label htmlFor="hotel-type1"> Hotel</label>
+                  // </div>
+
+                  <>
+                    {propertyTypes?.propertyTypes.map((propertyType) => (
+                      <div
+                        key={propertyType.id}
+                        className="flex items-center gap-[4px]"
+                      >
+                        <input
+                          type="checkbox"
+                          id={`hotel-type${propertyType.id}`}
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setValue(
+                              "propertyTypes",
+                              e.target.checked
+                                ? [...field.value, propertyType.name]
+                                : field.value.filter(
+                                    (type) => type !== propertyType.name
+                                  )
+                            );
+                          }}
+                        />
+                        <label htmlFor={`hotel-type${propertyType.id}`}>
+                          {propertyType.name}
+                        </label>
+                      </div>
+                    ))}
+                  </>
                 )}
               />
             </div>
 
-            <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
+            {/* <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
               <Controller
                 name="propertyTypes"
                 control={control}
@@ -720,9 +765,9 @@ const PropertyAdd = () => {
                   </div>
                 )}
               />
-            </div>
+            </div> */}
 
-            <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
+            {/* <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
               <Controller
                 name="propertyTypes"
                 control={control}
@@ -748,7 +793,7 @@ const PropertyAdd = () => {
                   </div>
                 )}
               />
-            </div>
+            </div> */}
           </div>
           {errors.propertyTypes && !selectedPropertyTypes?.length && (
             <span className="label-text-alt text-red-500">
@@ -858,7 +903,7 @@ const PropertyAdd = () => {
         </div> */}
 
         {/* Amenities */}
-        <div className="mt-[18px]">
+        <div className="mt-[18px] text-[14px]">
           <h2 className="text-[16px] font-semibold mb-[15px]" htmlFor="address">
             Amenities
           </h2>
@@ -874,7 +919,7 @@ const PropertyAdd = () => {
                   defaultValue={[]}
                   // rules={{ required: "Please select at least one checkbox." }}
                   render={({ field }) => (
-                    <div>
+                    <div className="flex items-center gap-[4px]">
                       <input
                         type="checkbox"
                         id="near-sea-beach"
@@ -906,7 +951,7 @@ const PropertyAdd = () => {
                   defaultValue={[]}
                   // rules={{ required: "Please select at least one checkbox." }}
                   render={({ field }) => (
-                    <div>
+                    <div className="flex items-center gap-[4px]">
                       <input
                         type="checkbox"
                         id="safety-lockers"
@@ -943,7 +988,7 @@ const PropertyAdd = () => {
                   defaultValue={[]}
                   // rules={{ required: "Please select at least one checkbox." }}
                   render={({ field }) => (
-                    <div>
+                    <div className="flex items-center gap-[4px]">
                       <input
                         type="checkbox"
                         id="toiletries"
@@ -972,7 +1017,7 @@ const PropertyAdd = () => {
                   defaultValue={[]}
                   // rules={{ required: "Please select at least one checkbox." }}
                   render={({ field }) => (
-                    <div>
+                    <div className="flex items-center gap-[4px]">
                       <input
                         type="checkbox"
                         id="bathtub"
@@ -1071,29 +1116,37 @@ const PropertyAdd = () => {
                   </div> */}
 
                 <label htmlFor="logo" className="input-label">
-                  <div className="w-full h-[148px]  flex justify-center items-center rounded-[8px] bg-[#F2F5F6] border-[1px] border-[#E6E7E6] mt-[12px]">
+                  <div className="w-full h-[148px]  flex justify-center items-center rounded-[8px] bg-[#F2F5F6] border-[1px] border-[#E6E7E6] mt-[0px]">
                     <div className="">
                       {logo ? (
                         <>
-                          <div className="grid justify-center w-full">
-                            <div className="flex items-center mb-[8px] md:block md:justify-center">
-                              <div className="flex md:justify-center">
+                          <div className="grid justify-center w-full relative">
+                            <div
+                            // className="flex items-center mb-[8px] md:block md:justify-center"
+                            >
+                              {/* <div className="flex md:justify-center">
                                 <img
-                                  // src={URL.createObjectURL(logoImage)}
                                   src={logo.url}
                                   alt="Selected File"
-                                  className="w-8 mr-1"
+                                  // className="w-8 mr-1"
+                                  className="w-full absolute"
                                 />
-                              </div>
-                              <span className="text-[12px] text-center block">
+                              </div> */}
+                              {/* <p className="text-[12px] text-center block z-10">
                                 {logo?.name?.length > 16
                                   ? logo?.name.slice(0, 15) + "..."
                                   : logo?.name}
-                              </span>
+                              </p> */}
                             </div>
-                            <p className="property-input-title text-center">
+                            <p className="text-[14px] text-center absolute -bottom-6 left-4 z-10">
                               Browse Photo
                             </p>
+                            <img
+                              src={logo.url}
+                              alt="Selected File"
+                              // className="w-8 mr-1"
+                              className=" w-full h-[110px] mt-[-30px] "
+                            />
                           </div>
                         </>
                       ) : (
@@ -1440,6 +1493,7 @@ const PropertyAdd = () => {
             )}
           </label>
         </div>
+
         {/* Instruction */}
         <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="instruction">
@@ -1465,8 +1519,9 @@ const PropertyAdd = () => {
             )}
           </label>
         </div>
+
         {/* Payment Method */}
-        <div className="mt-[18px]">
+        {/* <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="paymentMethod">
             Payment Method
           </label>
@@ -1489,7 +1544,64 @@ const PropertyAdd = () => {
               </span>
             )}
           </label>
+        </div> */}
+        <div className="mt-[18px]">
+          <h2 id="property-type-title" className="text-[14px]">
+            Payment Method
+          </h2>
+
+          <div className="text-[14px] flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
+            <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
+              <Controller
+                name="paymentMethods"
+                control={control}
+                defaultValue={[]}
+                rules={{ required: "Please select at least one checkbox." }}
+                render={({ field }) => (
+                  <>
+                    {paymentMethods?.paymentMethods.map((paymentMethod) => (
+                      <div
+                        key={paymentMethod.id}
+                        className="flex items-center "
+                      >
+                        <input
+                          type="checkbox"
+                          id={`hotel-type${paymentMethod.id}`}
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setValue(
+                              "paymentMethods",
+                              e.target.checked
+                                ? [...field.value, paymentMethod.name]
+                                : field.value.filter(
+                                    (type) => type !== paymentMethod.name
+                                  )
+                            );
+                          }}
+                        />
+                        {/* <label htmlFor={`hotel-type${paymentMethod.id}`}>
+                          {paymentMethod.name}
+                        </label> */}
+                        <img
+                          className="w-14 "
+                          src={`${BASE_ASSET_API}/storage/images/payment/payment_methods/${paymentMethod.image}`}
+                          alt="Payment-method"
+                        />
+                      </div>
+                    ))}
+                  </>
+                )}
+              />
+            </div>
+          </div>
+          {errors.propertyTypes && !selectedPropertyTypes?.length && (
+            <span className="label-text-alt text-red-500">
+              Please select at least one type
+            </span>
+          )}
         </div>
+
         {/* google map */}
         <div className="mt-[18px] mb-[20px]">
           <div className="flex justify-between relative z-10">
@@ -1614,11 +1726,13 @@ const PropertyAdd = () => {
             )}
           </div>
         </div>
+
         {allInputError.status && (
           <p className="label-text-alt text-red-500 text-right mb-[6px]">
             {allInputError.message}
           </p>
         )}
+
         <div className=" flex justify-end gap-x-[12px]">
           <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
             Cancel

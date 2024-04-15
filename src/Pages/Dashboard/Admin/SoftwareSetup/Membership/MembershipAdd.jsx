@@ -3,7 +3,7 @@ import { addMembershipCard } from "../../../../../redux/features/membershipCard/
 import { useSelector, useDispatch } from "react-redux";
 
 import axios from 'axios';
-import { useParams , useNavigate} from 'react-router';
+import {  useNavigate} from 'react-router';
 import { BASE_API } from '../../../../../BaseApi/BaseApi';
 import { setYear, setMonth, setDate, setHours, setMinutes, setSeconds } from 'date-fns';
 const MembershipAdd = () => {
@@ -260,9 +260,9 @@ const handleSubmit = async (e) =>{
             </div>
             </div>
 
-            <div class="mb-3">
+            <div className="mb-3">
               <label
-                for="image">
+                htmlFor="image">
                  Membership Card Image
                 </label>
               <input

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import "./Payment.css"
 
@@ -8,14 +8,15 @@ const PaymentSystems = () => {
     const handleButtonClick = (btntype) => {
       setIsClicked(btntype);
     };
+    
     return (
         <div className='payment-list-content'>
              <ul className='payment-option'>
              <Link to={'/dashboard/PaymentSystems'}>
-                    <li  onClick={(e)=>handleButtonClick("PaymentSystemsList")} className={isClicked=="PaymentSystemsList" ? 'btn-clicked' : 'btn-unclicked'}>PaymentSystems List</li>
+                    <li  onClick={()=>handleButtonClick("PaymentSystemsList")} className={isClicked=="PaymentSystemsList" ? 'btn-clicked' : 'btn-unclicked'}>PaymentSystems List</li>
              </Link>
             <Link to={'/dashboard/PaymentSystems/PaymentSystemAdd'}>
-                <li  onClick={(e)=>handleButtonClick("PaymentAdd")} className={isClicked=="PaymentAdd" ? 'btn-clicked' : 'btn-unclicked'}>PaymentSystems Add</li>
+                <li  onClick={()=>handleButtonClick("PaymentAdd")} className={isClicked=="PaymentAdd" ? 'btn-clicked' : 'btn-unclicked'}>PaymentSystems Add</li>
             </Link>
              </ul>
              <Outlet></Outlet>

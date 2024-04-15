@@ -142,10 +142,9 @@ const AreaAdd = () => {
        }
    }
     return (
-        <div className='country-add-division'>
-
-        <form className='country-add-form' onSubmit={onSubmit}>
-        <div className="">
+      <div className="country-add-division">
+        <form className="country-add-form" onSubmit={onSubmit}>
+          <div className="">
             <label className="property-input-title block" htmlFor="country">
               Country
             </label>
@@ -155,16 +154,15 @@ const AreaAdd = () => {
                 className="property-input"
                 name="country_id"
                 onChange={handleCountryChange}
-               
               >
-                 <option>Select Country</option>
-                {Countrylist.map(country => (
-                    <option key={country.id} value={country.id}>
-                        {country.name}
-                    </option>
+                <option>Select Country</option>
+                {Countrylist.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
                 ))}
               </select>
-            
+
               <img
                 // className="absolute top-[14px] right-[12px] arrow-icon"
                 className="arrow-icon"
@@ -181,16 +179,16 @@ const AreaAdd = () => {
                 className="property-input"
                 name="division_id"
                 onChange={handleDivisionChange}
-               
+                disabled={DivisionList?.length <= 0}
               >
-               
-                {DivisionList.map(division => (
-                    <option key={division.id} value={division.id}>
-                        {division.name}
-                    </option>
+                <option>Select Division</option>
+                {DivisionList.map((division) => (
+                  <option key={division.id} value={division.id}>
+                    {division.name}
+                  </option>
                 ))}
               </select>
-            
+
               <img
                 // className="absolute top-[14px] right-[12px] arrow-icon"
                 className="arrow-icon"
@@ -198,9 +196,6 @@ const AreaAdd = () => {
                 alt=""
               />
             </div>
-
-            
-
 
             <label className="property-input-title block" htmlFor="country">
               District
@@ -210,17 +205,17 @@ const AreaAdd = () => {
                 id="district_id"
                 className="property-input"
                 name="district_id"
-                onChange={e => changeAreaFieldHandler(e)}
-               
+                onChange={(e) => changeAreaFieldHandler(e)}
+                disabled={DistrictList?.length <= 0}
               >
-               
-                {DistrictList.map(district => (
-                    <option key={district.id} value={district.id}>
-                        {district.name}
-                    </option>
+                <option>Select District</option>
+                {DistrictList.map((district) => (
+                  <option key={district.id} value={district.id}>
+                    {district.name}
+                  </option>
                 ))}
               </select>
-            
+
               <img
                 // className="absolute top-[14px] right-[12px] arrow-icon"
                 className="arrow-icon"
@@ -228,46 +223,49 @@ const AreaAdd = () => {
                 alt=""
               />
             </div>
-            {validationErrors.district_id && <span className='validation-message'>{validationErrors.district_id}</span>}
+            {validationErrors.district_id && (
+              <span className="validation-message">
+                {validationErrors.district_id}
+              </span>
+            )}
 
             <div>
-            <label className="property-input-title" htmlFor="CountryName">
-                 Area Name
-                </label>
-                <input
-                  className="input-box"
-                  id="name"
-                  name="name"
-                  onChange={e => changeAreaFieldHandler(e)} 
-                 
-                  
-                />
+              <label className="property-input-title" htmlFor="CountryName">
+                Area Name
+              </label>
+              <input
+                className="input-box"
+                id="name"
+                name="name"
+                onChange={(e) => changeAreaFieldHandler(e)}
+              />
 
-              {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
-
-        
+              {validationErrors.name && (
+                <span className="validation-message">
+                  {validationErrors.name}
+                </span>
+              )}
             </div>
 
             <div>
-            <label className="property-input-title" htmlFor="CountryName">
-                 View Order
-                </label>
-                <input
-                  className="input-box"
-                  id="view_order"
-                  name="view_order"
-                  onChange={e => changeAreaFieldHandler(e)} 
+              <label className="property-input-title" htmlFor="CountryName">
+                View Order
+              </label>
+              <input
+                className="input-box"
+                id="view_order"
+                name="view_order"
+                onChange={(e) => changeAreaFieldHandler(e)}
 
-               
-                  // {...register("view_order", {
-                  //   required: {
-                  //     value: true,
-                  //     message: "View  Order is required",
-                  //   },
-                  // })}
-                />
+                // {...register("view_order", {
+                //   required: {
+                //     value: true,
+                //     message: "View  Order is required",
+                //   },
+                // })}
+              />
 
-          {/* <label className="">
+              {/* <label className="">
                 {errors.view_order?.type === "required" && (
                   <span className="label-text-alt text-red-500">
                     {errors.view_order?.message}
@@ -276,31 +274,51 @@ const AreaAdd = () => {
             </label> */}
             </div>
 
-            {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>}
+            {validationErrors.view_order && (
+              <span className="validation-message">
+                {validationErrors.view_order}
+              </span>
+            )}
             <div>
-            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <div>
-                    <input type="radio" id="is_active" name="is_active" value="1"   onChange={e => changeAreaFieldHandler(e)}  ></input>
-                    <label className="cursor-pointer text-gray-700 ml-2">Active</label>
+                  <input
+                    type="radio"
+                    id="is_active"
+                    name="is_active"
+                    value="1"
+                    onChange={(e) => changeAreaFieldHandler(e)}
+                  ></input>
+                  <label className="cursor-pointer text-gray-700 ml-2">
+                    Active
+                  </label>
                 </div>
-                    
+
                 <div>
-                  <input type="radio" id="is_active" name="is_active" value="0"   onChange={e => changeAreaFieldHandler(e)}  ></input>
-                  <label  className="cursor-pointer text-gray-700 ml-2">Inactive</label>
+                  <input
+                    type="radio"
+                    id="is_active"
+                    name="is_active"
+                    value="0"
+                    onChange={(e) => changeAreaFieldHandler(e)}
+                  ></input>
+                  <label className="cursor-pointer text-gray-700 ml-2">
+                    Inactive
+                  </label>
                 </div>
+              </div>
+
+              {validationErrors.is_active && (
+                <span className="validation-message">
+                  {validationErrors.is_active}
+                </span>
+              )}
             </div>
 
-            {validationErrors.is_active && <span className='validation-message'>{validationErrors.is_active}</span>}
-            </div>
-
-            <button className='country-save-btn'>Save</button>
-
-            
+            <button className="country-save-btn">Save</button>
           </div>
-
-            </form>
-           
-        </div>
+        </form>
+      </div>
     );
 };
 

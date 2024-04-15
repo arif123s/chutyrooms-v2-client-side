@@ -1,7 +1,6 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+
+import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { BASE_API } from "../../../../../BaseApi/BaseApi";
 import { BASE_ASSET_API } from "../../../../../BaseApi/AssetUrl";
 import Loading from "../../../../Common/Includes/Loading/Loading";
 import {
@@ -11,13 +10,14 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 const PaymentEdit = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const {
     control,
-    register,
+    // register,
     handleSubmit,
-    setValue,
-    formState: { errors },
+    // setValue,
+    // formState: { errors },
     reset,
   } = useForm();
 
@@ -30,16 +30,19 @@ const PaymentEdit = () => {
 
   console.log(paymentMethodData);
 
-  const [errorMessage, setErrorMessage] = useState({
-    status: false,
-    message: "",
-    errors: [],
-  });
+  // const [errorMessage, setErrorMessage] = useState({
+  //   status: false,
+  //   message: "",
+  //   errors: [],
+  // });
 
-  const { data, isLoading } = useGetSinglePaymentMethodQuery(id);
+   const [validationErrors, setValidationErrors] = useState({});
+
+  const { data, isLoading,refetch } = useGetSinglePaymentMethodQuery(id);
   const paymentMethod = data?.data;
-  const [updatePaymentMethod, { isLoading: updateLoading, isError, error }] =
-    useUpdatePaymentMethodMutation();
+  const [updatePaymentMethod, { isLoading: updateLoading,
+    //  isError, error 
+    }] =useUpdatePaymentMethodMutation();
   const [paymentMethodImage, setPaymentMethodImage] = useState("");
 
   useEffect(() => {
@@ -54,15 +57,16 @@ const PaymentEdit = () => {
         is_active: paymentMethod.is_active,
       });
     }
+        refetch();
   }, [paymentMethod]);
 
   if (isLoading || updateLoading) {
     return <Loading></Loading>;
   }
 
-
   const onSubmit = async (data) => {
     const paymentMethodInfo = {
+      id: id,
       name: paymentMethodData.name,
       image: data.image,
       view_order: paymentMethodData.view_order,
@@ -106,14 +110,19 @@ const PaymentEdit = () => {
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Payment method", result);
-        toast.success("Payment method added successfully");
+        toast.success("Payment method edited successfully");
+        navigate("/dashboard/PaymentSystems");
         reset();
-      } else {
-        console.log("Failed", result.error.data.errors);
+      }
+      else {
+        console.log("Failed", result?.error?.data?.errors);
+        setValidationErrors(result?.error?.data?.errors);
+        // console.log("Failed", result);
       }
     } catch (error) {
       // Handle error
       console.error("Error adding payment method:", error);
+      // setValidationErrors(err.response.data.errors);
     }
   };
 
@@ -146,6 +155,11 @@ const PaymentEdit = () => {
               //   },
               // })}
             />
+            {validationErrors.name && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.name}
+              </span>
+            )}
           </div>
 
           <div className="mb-3">
@@ -212,7 +226,11 @@ const PaymentEdit = () => {
               // })}
             />
 
-            {/* {validationErrors.view_order && <span className='validation-message'>{validationErrors.view_order}</span>} */}
+            {validationErrors.view_order && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.view_order}
+              </span>
+            )}
           </div>
 
           <div className="mb-3 property-input-title">
@@ -252,13 +270,13 @@ const PaymentEdit = () => {
                 <label htmlFor="inactive">Inactive</label>
               </div>
             </div>
-            <label className=" mb-0 pb-0">
+            {/* <label className=" mb-0 pb-0">
               {errors.is_active?.type === "required" && (
                 <span className="label-text-alt text-red-500">
                   Please select one option.
                 </span>
               )}
-            </label>
+            </label> */}
           </div>
 
           <button type="submit" className="country-save-btn">
