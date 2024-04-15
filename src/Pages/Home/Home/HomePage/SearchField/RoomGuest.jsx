@@ -41,9 +41,9 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
  
   const [divVisibility, setDivVisibility] = useState('0');
 
-  useEffect(() => {
-    setDivVisibility(rooms.length-1);
-  }, [rooms]);
+  // useEffect(() => {
+  //   setDivVisibility(rooms.length-1);
+  // }, []);
 
   const removeRoom = (event, index) => {
     // Create a copy of the rooms array
@@ -79,8 +79,8 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
   const addDiv = (event) => {
     
     event.preventDefault();
-    const updatedRooms = [...rooms];
-    if (updatedRooms.length < 4) {
+    const NumberofRooms = [...rooms];
+    if (NumberofRooms.length < 4) {
     const newRoom = {
       adults: 1,  // You can set default values for adults and children as needed
       children: 0,
@@ -90,10 +90,11 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
     // Create a copy of the current rooms array
   
     // Add the new room to the array
-    updatedRooms.push(newRoom);
+    NumberofRooms.push(newRoom);
   
     // Update state with the new rooms array
-    setRooms(updatedRooms);
+    setRooms(NumberofRooms);
+    setDivVisibility(rooms.length);
 
     // setDivVisibility(updatedRooms.length);
 
@@ -180,8 +181,8 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
       {rooms.map((room, index) => (
         <div key={index}  >
           <div className="room-no-div" 
-        onClick={() => toggleVisibility(index)}>
-            <div className="room-no">Room {index + 1}</div>
+           onClick={() => toggleVisibility(index)}>
+            <div className="room-no"  >Room {index + 1}</div>
             <a href="#" type="button" onClick={(e) => removeRoom(e, index)} className={`remove-btn ${index === 0 ? 'invisible' : ''}`}>
               Remove
             </a>
@@ -206,6 +207,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
                   onChange={(e) =>
                     updateGuests(e, index, "adults", parseInt(e.target.value))
                   }
+                  readOnly
                 ></input>
                 <a href="#" onClick={(e) =>
                     addAdultGuest(e, index)
@@ -230,6 +232,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
                     updateGuests(e, index, "children", parseInt(e.target.value))
                   }
                   value={room.children}
+                  readOnly
                 ></input>
                 <a href="#" onClick={(e) =>
                     addChildGuest(e, index)
