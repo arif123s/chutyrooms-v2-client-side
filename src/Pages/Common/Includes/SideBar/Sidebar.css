@@ -7,18 +7,18 @@
 .onclick-color{
     background-color:#E8F5ED ;
     color: #159947;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .onclickcancel-color{
     background-color:#ffff ;
     color: #414B45;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .submenu-list-division 
 {
-    padding: 8px 12px;
+    padding: 0px 8px;
 }
 
 .sidebar-width
@@ -75,6 +75,8 @@
     position: relative;
     align-items: center;
     gap: 15px;
+    height:35px;
+    padding: 3px;
    
    
 }
@@ -93,7 +95,7 @@
     overflow: hidden;
     margin-left: 20px;
     position: absolute;
-    top: 4px;
+    /* top: 4px; */
     right: 0px;
 
 }
@@ -389,6 +391,16 @@
         width: 7%;
     }
 
+    .onclick-color{
+       
+        font-size: 12px;
+    }
+    
+    .onclickcancel-color{
+      
+        font-size: 12px;
+    }
+
  
 }
 
@@ -407,6 +419,8 @@
 {
     min-width: 20px;
 }
+
+
 }
 
 

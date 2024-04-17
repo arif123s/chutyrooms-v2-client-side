@@ -113,6 +113,8 @@ const SearchField = () => {
                 selectsRange={true}
                 startDate={startDate}
                 endDate={endDate}
+                minDate={new Date()}
+               
                 ref={divToBeClickedRef}
                 onChange={(update) => {
                   setDateRange(update);

@@ -165,7 +165,7 @@ const BookingInfo = ({ name, content }) => {
 
                                 </th>
 
-                                <th  >
+                                <th>
                                     <div onClick={handleDivClick} className='booking-items-title' >
                                         <div className="relative">
                                             <span onClick={(e) => clearDiv(divcontent.Checkin)} id={divcontent.Checkin}>

@@ -160,7 +160,7 @@ const navigate = useNavigate();
 
             </div>
             { handleclick == list.name && toggleOpen &&
-            <ul className={`transition-transform transform duration-300 bg-white   ${!open && ' lg:absolute lg:left-[70px] md:absolute submenu-unorder-list navbar-list-menu sm:w-[200px] sm:top-0 sm:shadow-[0rem_0rem_2.5rem_0rem_rgba(82,63,105,0.1)] sm:rounded-lg'}`}>
+            <ul className={`transition-transform transform duration-300 bg-white   ${!open && ' lg:absolute lg:left-[70px] md:absolute submenu-unorder-list navbar-list-menu sm:w-[200px] sm:top-0 sm:shadow-[0rem_0rem_2.5rem_0rem_rgba(82,63,105,0.1)] sm:rounded-lg z-10'}`}>
 
               {list.submenu.map((item, i) =>
 

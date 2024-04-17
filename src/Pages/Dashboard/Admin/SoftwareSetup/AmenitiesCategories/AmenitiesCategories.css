@@ -1,0 +1,32 @@
+.AmenitiesCategory-list-content {
+    padding: 20px;
+  }
+  
+.AmenitiesCategory-option {
+  display: flex;
+  gap: 8px;
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.amaenities-tbl-head{
+  border-bottom: 1px solid #E6E7E6;
+  text-align: left;
+}
+
+.amenities-list {
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.amenities-add-division
+{
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.amenities-add-form
+{
+  width: 50%;
+}
