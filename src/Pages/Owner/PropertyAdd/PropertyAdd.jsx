@@ -8,7 +8,7 @@ import searchIcon from "../../../assets/icons/search-normal.svg";
 import Rating from "@mui/material/Rating";
 // import Stack from "@mui/material/Stack";
 import "./PropertyAdd.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -24,7 +24,14 @@ import { useForm, Controller, useWatch } from "react-hook-form";
 import CancellationPolicy from "./CancellationPolicy/CancellationPolicy";
 // import { useMutation } from "react-query";
 import Loading from "../../Common/Includes/Loading/Loading";
-import { useGetAllActiveActivepropertyTypeQuery, useGetAllActivePaymentMethodQuery } from "../../../redux/features/owner/propertyAdd/propertyAdd.api";
+import {
+  useGetAllActivePropertyTypeQuery,
+  useGetAllActiveCountriesQuery,
+  useGetAllActiveDivisionQuery,
+  useGetAllActivePaymentMethodQuery,
+  useGetAllActiveDistrictQuery,
+  useGetAllActiveAreaQuery,
+} from "../../../redux/features/owner/propertyAdd/propertyAdd.api";
 import { BASE_ASSET_API } from "../../../BaseApi/AssetUrl";
 
 const libraries = ["places"];
@@ -43,10 +50,17 @@ const PropertyAdd = () => {
   const navigate = useNavigate();
 
   const {
+    data: countries,
+    isLoading: countriesLoading,
+    // refetch,
+  } = useGetAllActiveCountriesQuery();
+
+  const {
     data: propertyTypes,
     isLoading: propertyTypesLoading,
     // refetch,
-  } = useGetAllActiveActivepropertyTypeQuery();
+  } = useGetAllActivePropertyTypeQuery();
+  
   const {
     data: paymentMethods,
     isLoading: paymentMethodsLoading,
@@ -65,6 +79,7 @@ const PropertyAdd = () => {
     lat: 23.862725477930507,
     lng: 90.40080333547479,
   });
+
   const [mapCenter, setMapCenter] = useState(center);
   // const [mapError, setMapError] = useState(false);
   const [mapError, setMapError] = useState({
@@ -73,6 +88,7 @@ const PropertyAdd = () => {
     color: false,
     count: 0,
   });
+
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -110,6 +126,44 @@ const PropertyAdd = () => {
   const [loading, setLoading] = useState(false);
 
   let displayImageCount = 0;
+  const [countryId, setCountryId] = useState(null);
+  const [divisionId, setDivisionId] = useState(null);
+  const [districtId, setDistrictId] = useState(null);
+
+  const {
+    data: divisionData,
+    refetch: refetchDivisions,
+  } = useGetAllActiveDivisionQuery(countryId);
+  
+  const {
+    data: districtData,
+    refetch: refetchDistricts,
+  } = useGetAllActiveDistrictQuery(divisionId);
+  
+  const {
+    data: areaData,
+    refetch: refetchAreas,
+  } = useGetAllActiveAreaQuery(districtId);
+
+  // console.log("area", areaData);
+
+  useEffect(() => {
+    // Fetch data only if Id is not null
+    if (countryId !== null) {
+      refetchDivisions();
+    }
+    if (divisionId !== null) {
+      refetchDistricts();
+    }
+    if (districtId !== null) {
+      refetchAreas();
+    }
+  }, [countryId, refetchDivisions,divisionId,refetchDistricts,districtId,refetchAreas]);
+
+  // const handleCountryChange = (e) => {
+  //   const selectedCountryId = e.target.value;
+  //   console.log(selectedCountryId);
+  // };
 
   const handleMapClick = (e) => {
     const { latLng } = e;
@@ -126,9 +180,6 @@ const PropertyAdd = () => {
       count: 1,
     });
   };
-
-  console.log("center", center);
-  console.log("mapcenter", mapCenter);
 
   const handleSelect = async (selectedAddress) => {
     setAddress(selectedAddress);
@@ -158,7 +209,13 @@ const PropertyAdd = () => {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
 
-  if (!isLoaded || loading || propertyTypesLoading || paymentMethodsLoading) {
+  if (
+    !isLoaded ||
+    loading ||
+    countriesLoading ||
+    propertyTypesLoading ||
+    paymentMethodsLoading
+  ) {
     return <Loading></Loading>;
   }
 
@@ -311,16 +368,30 @@ const PropertyAdd = () => {
       return;
     }
 
-    // setLoading(true);
-
-    console.log("map center", mapCenter);
+    console.log(data)
+    const displayImageFiles = displayImages.map((image) => image.displayImageFile);
 
     const propertyData = {
-      data,
-      map: mapCenter,
+      name: data.propertyName,
+      bin: data.bin,
+      tin: data.tin,
+      trade_license_number:'',
+      area_id: data.area,
+      address: data.address,
+      description: data.description,
+      hotel_class: data.rating,
+      property_types: data.propertyTypes,
+      amenities: data.amenities,
+      images: displayImageFiles,
+      check_in_time: data.checkin,
+      check_out_time: data.checkout,
+      latitude: mapCenter.lat,
+      longitude: mapCenter.lng,
       cancellation: cancellationData,
-      logo,
-      displayImages,
+      logo: logo.logoFile,
+      short_description: data.shortDescription,
+      instruction: data.instruction,
+      is_active: data.is_active,
       // video,
     };
 
@@ -427,6 +498,8 @@ const PropertyAdd = () => {
                 id="country"
                 className="property-input"
                 name="country"
+                onClick={(e) => setCountryId(e.target.value)}
+                disabled={countries?.length <= 0}
                 {...register("country", {
                   required: {
                     value: true,
@@ -434,9 +507,17 @@ const PropertyAdd = () => {
                   },
                 })}
               >
-                <option value="">Select Country</option>
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="India">India</option>
+                <option
+                  onClick={(e) => setCountryId(e.target.value)}
+                  value={null}
+                >
+                  Select Country
+                </option>
+                {countries?.countries?.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
+                ))}
               </select>
               <label className="">
                 {errors.country?.type === "required" && (
@@ -461,8 +542,10 @@ const PropertyAdd = () => {
             <div className="property-input-div">
               <select
                 className="property-input"
-                name=""
-                id=""
+                name="division"
+                id="division"
+                onClick={(e) => setDivisionId(e.target.value)}
+                disabled={divisionData?.divisions?.length <= 0}
                 {...register("division", {
                   required: {
                     value: true,
@@ -470,9 +553,17 @@ const PropertyAdd = () => {
                   },
                 })}
               >
-                <option value="">Select Division</option>
-                <option value="Chittagong">Chittagong</option>
-                <option value="Dhaka">Dhaka</option>
+                <option
+                  onClick={(e) => setDivisionId(e.target.value)}
+                  value={null}
+                >
+                  Select Division
+                </option>
+                {divisionData?.divisions?.map((division) => (
+                  <option key={division.id} value={division.id}>
+                    {division.name}
+                  </option>
+                ))}
               </select>
               <label className="">
                 {errors.division?.type === "required" && (
@@ -494,6 +585,8 @@ const PropertyAdd = () => {
                 className="property-input"
                 name="district"
                 id="district"
+                onClick={(e) => setDistrictId(e.target.value)}
+                disabled={districtData?.districts?.length <= 0}
                 {...register("district", {
                   required: {
                     value: true,
@@ -501,9 +594,17 @@ const PropertyAdd = () => {
                   },
                 })}
               >
-                <option value="">Select District</option>
-                <option value="Chittagong">Chittagong</option>
-                <option value="Cox's Bazar">Cox{`'`}s Bazar</option>
+                <option
+                  onClick={(e) => setDistrictId(e.target.value)}
+                  value={null}
+                >
+                  Select District
+                </option>
+                {districtData?.districts?.map((district) => (
+                  <option key={district.id} value={district.id}>
+                    {district.name}
+                  </option>
+                ))}
               </select>
               <label className="">
                 {errors.district?.type === "required" && (
@@ -525,6 +626,7 @@ const PropertyAdd = () => {
                 className="property-input"
                 name="area"
                 id="area"
+                disabled={areaData?.areas?.length <= 0}
                 {...register("area", {
                   required: {
                     value: true,
@@ -533,8 +635,11 @@ const PropertyAdd = () => {
                 })}
               >
                 <option value="">Select Area</option>
-                <option value="GEC">GEC</option>
-                <option value="Cox's Bazar">Muradpur</option>
+                {areaData?.areas?.map((area) => (
+                  <option key={area.id} value={area.id}>
+                    {area.name}
+                  </option>
+                ))}
               </select>
               <label className="">
                 {errors.area?.type === "required" && (
@@ -1393,31 +1498,120 @@ const PropertyAdd = () => {
 
         {/* Checkin */}
         <div className="mt-[18px]">
-          <p className="mb-[12px]">
-            Check In <span className="ml-[26px] mr-[12px]">:</span>{" "}
-            <input
-              className="rounded-[4px] h-[36px] w-[60px] p-[8px] border-[1px] border-[#E6E7E6]"
-              type="number"
-              name="checkin"
-              id="checkin"
-              {...register("checkin", {
-                required: {
-                  value: true,
-                  message: "Check in time is required",
-                },
-                min: {
-                  value: 1,
-                  message: "Check in time should be between 1 and 12",
-                },
-                max: {
-                  value: 12,
-                  message: "Check in time should be between 1 and 12",
-                },
-              })}
-            />
-            <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
+          <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
+            <p className="flex">
+              Check In{" "}
+              <span className="mx-[4px] md:mx-[8px] lg:mx-[12px]">:</span>{" "}
+            </p>
+
+            <div className="w-[66px]">
+              <div
+              // className="border-[1px] rounded-[4px] relative"
+              >
+                <input
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  type="number"
+                  name="checkin_hour"
+                  id="checkin_hour"
+                  placeholder="Hour"
+                  {...register("checkin_hour", {
+                    required: {
+                      value: true,
+                      message: "Check in time is required",
+                    },
+                    min: {
+                      value: 1,
+                      message: "Hour should be between 1 and 12",
+                    },
+                    max: {
+                      value: 12,
+                      message: "Hour should be between 1 and 12",
+                    },
+                  })}
+                />
+                <label className="">
+                  {errors.checkin_hour?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.checkin_hour?.message}
+                    </span>
+                  )}
+                </label>
+                {/* <img className="arrow-icon" src={arrowDownIcon} alt="" /> */}
+              </div>
+            </div>
+
+            <p>:</p>
+
+            <div className="w-[66px]">
+              {/* <p>Minute</p> */}
+              <div>
+                <input
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  type="number"
+                  name="checkin_minute"
+                  id="checkin_minute"
+                  placeholder="Minute"
+                  {...register("checkin_minute", {
+                    required: {
+                      value: true,
+                      message: "Check in time is required",
+                    },
+                    min: {
+                      value: 0,
+                      message: "Minute should be between 0 and 59",
+                    },
+                    max: {
+                      value: 59,
+                      message: "Minute should be between 0 and 59",
+                    },
+                  })}
+                />
+                <label className="">
+                  {errors.checkin_minute?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.checkin_minute?.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+            </div>
+
+            <div className="w-[64px]">
+              <div className="border-[1px] rounded-[4px] relative h-[36px]">
+                <select
+                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
+                  id="checkin_time_period"
+                  name="checkin_time_period"
+                  // onClick={(e) => setCountryId(e.target.value)}
+                  {...register("checkin_time_period", {
+                    // required: {
+                    //   value: true,
+                    //   message: "Please select an option",
+                    // },
+                  })}
+                >
+                  <option value="AM" >
+                    AM
+                  </option>
+                  <option value="PM">PM</option>
+                </select>
+                <label className="">
+                  {errors.division?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.division?.message}
+                    </span>
+                  )}
+                </label>
+                <img
+                  className="absolute top-2 right-1"
+                  src={arrowDownIcon}
+                  alt=""
+                />
+              </div>
+            </div>
+            {/* <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
               AM
-            </span>
+            </span> */}
             <label className="block">
               {errors.checkin && (
                 <span className="label-text-alt text-red-500">
@@ -1425,40 +1619,129 @@ const PropertyAdd = () => {
                 </span>
               )}
             </label>
-          </p>
-          <p>
-            Check Out <span className="ml-[12px] mr-[12px]">:</span>{" "}
-            <input
-              className="rounded-[4px] h-[36px] w-[60px] p-[8px] border-[1px] border-[#E6E7E6]"
-              type="number"
-              name="checkout"
-              id="checkout"
-              {...register("checkout", {
-                required: {
-                  value: true,
-                  message: "Check out time is required",
-                },
-                min: {
-                  value: 1,
-                  message: "Check in time should be between 1 and 12",
-                },
-                max: {
-                  value: 12,
-                  message: "Check in time should be between 1 and 12",
-                },
-              })}
-            />
-            <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
+          </div>
+          <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
+            <p className="flex">
+              Check Out{" "}
+              <span className="mx-[4px] md:mx-[8px] lg:mx-[12px]">:</span>{" "}
+            </p>
+
+            <div className="w-[66px]">
+              <div
+              // className="border-[1px] rounded-[4px] relative"
+              >
+                <input
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  type="number"
+                  name="checkout_hour"
+                  id="checkout_hour"
+                  placeholder="Hour"
+                  {...register("checkout_hour", {
+                    required: {
+                      value: true,
+                      message: "Check out time is required",
+                    },
+                    min: {
+                      value: 1,
+                      message: "Hour should be between 1 and 12",
+                    },
+                    max: {
+                      value: 12,
+                      message: "Hour should be between 1 and 12",
+                    },
+                  })}
+                />
+                <label className="">
+                  {errors.checkout_hour?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.checkout_hour?.message}
+                    </span>
+                  )}
+                </label>
+                {/* <img className="arrow-icon" src={arrowDownIcon} alt="" /> */}
+              </div>
+            </div>
+
+            <p>:</p>
+
+            <div className="w-[66px]">
+              {/* <p>Minute</p> */}
+              <div>
+                <input
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  type="number"
+                  name="checkout_minute"
+                  id="checkout_minute"
+                  placeholder="Minute"
+                  {...register("checkout_minute", {
+                    required: {
+                      value: true,
+                      message: "Check in time is required",
+                    },
+                    min: {
+                      value: 0,
+                      message: "Minute should be between 0 and 59",
+                    },
+                    max: {
+                      value: 59,
+                      message: "Minute should be between 0 and 59",
+                    },
+                  })}
+                />
+                <label className="">
+                  {errors.checkout_minute?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.checkout_minute?.message}
+                    </span>
+                  )}
+                </label>
+              </div>
+            </div>
+
+            <div className="w-[64px]">
+              <div className="border-[1px] rounded-[4px] relative h-[36px]">
+                <select
+                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
+                  id="checkin_time_period"
+                  name="checkin_time_period"
+                  // onClick={(e) => setCountryId(e.target.value)}
+                  {...register("checkin_time_period", {
+                    // required: {
+                    //   value: true,
+                    //   message: "Please select an option",
+                    // },
+                  })}
+                >
+                  <option value="AM" >
+                    AM
+                  </option>
+                  <option value="PM">PM</option>
+                </select>
+                <label className="">
+                  {errors.division?.type === "required" && (
+                    <span className="label-text-alt text-red-500">
+                      {errors.division?.message}
+                    </span>
+                  )}
+                </label>
+                <img
+                  className="absolute top-2 right-1"
+                  src={arrowDownIcon}
+                  alt=""
+                />
+              </div>
+            </div>
+            {/* <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
               AM
-            </span>
+            </span> */}
             <label className="block">
-              {errors.checkout && (
+              {errors.checkin && (
                 <span className="label-text-alt text-red-500">
-                  {errors.checkout?.message}
+                  {errors.checkin?.message}
                 </span>
               )}
             </label>
-          </p>
+          </div>
         </div>
         {/* Cancellation Policy */}
         <div className="mt-[18px]">
@@ -1515,6 +1798,32 @@ const PropertyAdd = () => {
             {errors.instruction && (
               <span className="label-text-alt text-red-500">
                 {errors.instruction.message}
+              </span>
+            )}
+          </label>
+        </div>
+
+        {/* Pet policy */}
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="instruction">
+            Pet Policy
+          </label>
+          <textarea
+            className="input-box"
+            name="pet_policy"
+            id="pet_policy"
+            placeholder=""
+            {...register("pet_policy", {
+              required: {
+                value: true,
+                message: "Pet policy is required",
+              },
+            })}
+          ></textarea>
+          <label className="">
+            {errors.pet_policy && (
+              <span className="label-text-alt text-red-500">
+                {errors.pet_policy.message}
               </span>
             )}
           </label>
@@ -1724,6 +2033,45 @@ const PropertyAdd = () => {
                 </span>
               </label>
             )}
+          </div>
+        </div>
+
+        {/* Is active */}
+        <div className="mt-[18px] mb-[20px]">
+          <label className="property-input-title" htmlFor="instruction">
+            Active Status
+          </label>
+          <div className="property-input-div">
+            <select
+              className="property-input"
+              id="is_active"
+              name="is_active"
+              // onClick={(e) => setCountryId(e.target.value)}
+              disabled={countries?.length <= 0}
+              {...register("is_active", {
+                required: {
+                  value: true,
+                  message: "Please select an option",
+                },
+              })}
+            >
+              <option>Select option</option>
+              <option value={1}>Active</option>
+              <option value={0}>Inactive</option>
+            </select>
+            <label className="">
+              {errors.is_active?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.is_active?.message}
+                </span>
+              )}
+            </label>
+            <img
+              // className="absolute top-[14px] right-[12px] arrow-icon"
+              className="arrow-icon"
+              src={arrowDownIcon}
+              alt=""
+            />
           </div>
         </div>
 
