@@ -59,6 +59,10 @@ import PaymentSystems from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/Payme
 import PaymentSystemsList from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystemsList";
 import PaymentAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentAdd";
 import PaymentEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentEdit";
+import AmenitiesCategories from "../Pages/Dashboard/Admin/SoftwareSetup/AmenitiesCategories/AmenitiesCategories";
+import AmenitiesCategoryList from "../Pages/Dashboard/Admin/SoftwareSetup/AmenitiesCategories/AmenitiesCategoryList";
+import AddAmenitiesCategory from "../Pages/Dashboard/Admin/SoftwareSetup/AmenitiesCategories/AddAmenitiesCategory";
+import EditAmenitiesCategory from "../Pages/Dashboard/Admin/SoftwareSetup/AmenitiesCategories/EditAmenitiesCategory";
 
 
 export const router = createBrowserRouter([
@@ -288,6 +292,27 @@ export const router = createBrowserRouter([
                 element: <PaymentEdit></PaymentEdit>,
               },
             ],
+          },
+
+          {
+              path: "/dashboard/AmenitiesCategories",
+              element: <AmenitiesCategories></AmenitiesCategories>,
+              children: [
+                {
+                path: "/dashboard/AmenitiesCategories",
+                element: <AmenitiesCategoryList></AmenitiesCategoryList>
+                },
+
+                {
+                  path: "/dashboard/AmenitiesCategories/AddAmenitityCategory",
+                  element: <AddAmenitiesCategory></AddAmenitiesCategory>
+                },
+
+                {
+                  path: "/dashboard/AmenitiesCategories/AmenitiesCategoryEdit/:id",
+                  element:<EditAmenitiesCategory></EditAmenitiesCategory>
+                }
+              ],
           },
         ],
       },
