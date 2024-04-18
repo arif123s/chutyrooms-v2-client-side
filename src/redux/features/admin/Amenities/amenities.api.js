@@ -1,6 +1,6 @@
 import { baseApi } from "../../../api/baseApi";
 
-const amenitiesCategoriesApi = baseApi.injectEndpoints({
+const amenitiesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllAmenitiesCategories: builder.query({
       query: () => ({
@@ -17,9 +17,24 @@ const amenitiesCategoriesApi = baseApi.injectEndpoints({
       },
     }),
 
-    getSingleAmenitiesCategory: builder.query({
+    getAllAmenities: builder.query({
+        query: () => ({
+          url: "/amenities",
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }),
+        // Define a onfulfilled handler to access the response data
+        onFulfilled: (response) => {
+          console.log("Response data:", response.data);
+          return response; // Ensure the response continues as usual
+        },
+      }),
+
+    getSingleAmenities: builder.query({
       query: (id) => ({
-        url:`/amenities_type/${id}/edit`,
+        url:`/amenities/${id}/edit`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -32,11 +47,11 @@ const amenitiesCategoriesApi = baseApi.injectEndpoints({
       },
     }),
 
-    addAmenitiesCategory: builder.mutation({
+    addAmenities: builder.mutation({
       query: (data) => {
        
         return {
-          url: "/amenities_type",
+          url: "/amenities",
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -48,24 +63,24 @@ const amenitiesCategoriesApi = baseApi.injectEndpoints({
 
    
 
-    updateAmenitiesCategory: builder.mutation({
-      query: (amenitiesCategoryInfo) => {
-        console.log("Amenities Category Id:",amenitiesCategoryInfo.formData);
+    updateAmenities: builder.mutation({
+      query: (amenitiesInfo) => {
+        console.log("Amenities  Id:",amenitiesInfo.formData);
         return {
-          url: `/amenities_type/${amenitiesCategoryInfo.id}`,
+          url: `/amenities/${amenitiesInfo.id}`,
           // method: "PUT",
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
-          body: amenitiesCategoryInfo.formData,
+          body: amenitiesInfo.formData,
         };
       },
     }),
 
-  deleteAmenitiesCategory: builder.mutation({
-    query: (amenitiesCategoryId) => ({
-      url: `/amenities_type/${amenitiesCategoryId}`,
+  deleteAmenities: builder.mutation({
+    query: (amenitiesId) => ({
+      url: `/amenities/${amenitiesId}`,
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -73,9 +88,9 @@ const amenitiesCategoriesApi = baseApi.injectEndpoints({
     }),
   }),
 
-  restoreAmenitiesCategory: builder.mutation({
-    query: (amenitiesCategoryId) => ({
-      url: `/amenities_type/${amenitiesCategoryId}/restore`,
+  restoreAmenities: builder.mutation({
+    query: (amenitiesId) => ({
+      url: `/amenities/${amenitiesId}/restore`,
       method: "PUT", // Assuming restore requires a PATCH request
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -92,5 +107,5 @@ const amenitiesCategoriesApi = baseApi.injectEndpoints({
 
 
 
-export const { useGetAllAmenitiesCategoriesQuery , useAddAmenitiesCategoryMutation , useUpdateAmenitiesCategoryMutation , useDeleteAmenitiesCategoryMutation, useRestoreAmenitiesCategoryMutation, useGetSingleAmenitiesCategoryQuery} = amenitiesCategoriesApi;
+export const { useGetAllAmenitiesCategoriesQuery , useGetAllAmenitiesQuery , useAddAmenitiesMutation ,  useDeleteAmenitiesMutation , useRestoreAmenitiesMutation} = amenitiesApi;
 

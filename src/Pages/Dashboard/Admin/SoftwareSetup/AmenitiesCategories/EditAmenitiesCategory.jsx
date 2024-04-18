@@ -154,12 +154,12 @@ const EditAmenitiesCategory = () => {
               id="name"
               name="name"
               value={amenitiesCategoryData.name}
-            //   onChange={(e) =>
-            //     setPaymentMethodData({
-            //       ...paymentMethodData,
-            //       name: e.target.value,
-            //     })
-            //   }
+              onChange={(e) =>
+                setamenitiesCategoryData({
+                  ...amenitiesCategoryData,
+                  name: e.target.value,
+                })
+              }
               // {...register("name", {
               //   required: {
               //     value: true,
@@ -167,11 +167,11 @@ const EditAmenitiesCategory = () => {
               //   },
               // })}
             />
-            {/* {validationErrors.name && (
+            {validationErrors.name && (
               <span className="label-text-alt text-red-500">
                 {validationErrors.name}
               </span>
-            )} */}
+            )}
           </div>
 
        
@@ -185,12 +185,12 @@ const EditAmenitiesCategory = () => {
               id="view_order"
               name="view_order"
               value={amenitiesCategoryData.view_order}
-            //   onChange={(e) =>
-            //     setPaymentMethodData({
-            //       ...paymentMethodData,
-            //       view_order: e.target.value,
-            //     })
-            //   }
+              onChange={(e) =>
+                setamenitiesCategoryData({
+                  ...amenitiesCategoryData,
+                  view_order: e.target.value,
+                })
+              }
               // {...register("view_order", {
               //   required: {
               //     value: true,
@@ -199,11 +199,11 @@ const EditAmenitiesCategory = () => {
               // })}
             />
 
-            {/* {validationErrors.view_order && (
+            {validationErrors.view_order && (
               <span className="label-text-alt text-red-500">
                 {validationErrors.view_order}
               </span>
-            )} */}
+            )}
           </div>
 
           <div className="mb-3 property-input-title">
@@ -215,12 +215,12 @@ const EditAmenitiesCategory = () => {
                   id="active"
                   value={1}
                   checked={amenitiesCategoryData.is_active == 1}
-                //   onChange={(e) =>
-                //     setPaymentMethodData({
-                //       ...paymentMethodData,
-                //       is_active: e.target.value,
-                //     })
-                //   }
+                  onChange={(e) =>
+                    setamenitiesCategoryData({
+                      ...amenitiesCategoryData,
+                      is_active: e.target.value,
+                    })
+                  }
                   // {...register("is_active", { required: true })}
                 />
                 <label htmlFor="active">Active</label>
@@ -232,24 +232,24 @@ const EditAmenitiesCategory = () => {
                   id="inactive"
                   value={0}
                   checked={amenitiesCategoryData.is_active == 0}
-                //   onChange={(e) =>
-                //     setPaymentMethodData({
-                //       ...paymentMethodData,
-                //       is_active: e.target.value,
-                //     })
-                //   }
+                  onChange={(e) =>
+                    setamenitiesCategoryData({
+                      ...amenitiesCategoryData,
+                      is_active: e.target.value,
+                    })
+                  }
                   // {...register("is_active", { required: true })}
                 />
                 <label htmlFor="inactive">Inactive</label>
               </div>
             </div>
-            {/* <label className=" mb-0 pb-0">
+            <label className=" mb-0 pb-0">
               {errors.is_active?.type === "required" && (
                 <span className="label-text-alt text-red-500">
                   Please select one option.
                 </span>
               )}
-            </label> */}
+            </label>
           </div>
 
           <button type="submit" className="country-save-btn">
