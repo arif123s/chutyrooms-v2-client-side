@@ -31,8 +31,11 @@ import {
   useGetAllActivePaymentMethodQuery,
   useGetAllActiveDistrictQuery,
   useGetAllActiveAreaQuery,
+  useAddPropertyAddMutation,
+  useGetAllActiveAmenitiesQuery,
 } from "../../../redux/features/owner/propertyAdd/propertyAdd.api";
 import { BASE_ASSET_API } from "../../../BaseApi/AssetUrl";
+import { toast } from "react-toastify";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -60,14 +63,20 @@ const PropertyAdd = () => {
     isLoading: propertyTypesLoading,
     // refetch,
   } = useGetAllActivePropertyTypeQuery();
-  
+
   const {
     data: paymentMethods,
     isLoading: paymentMethodsLoading,
     // refetch,
   } = useGetAllActivePaymentMethodQuery();
 
-  // console.log("propertyTypes", propertyTypes);
+  const {
+    data: amenities,
+    isLoading: amenitiesLoading,
+    // refetch,
+  } = useGetAllActiveAmenitiesQuery();
+
+  console.log("amenities", amenities);
   // console.log("paymentMethods", paymentMethods.paymentMethods);
 
   const [cancellationData, setCancellationData] = useState([
@@ -130,20 +139,23 @@ const PropertyAdd = () => {
   const [divisionId, setDivisionId] = useState(null);
   const [districtId, setDistrictId] = useState(null);
 
-  const {
-    data: divisionData,
-    refetch: refetchDivisions,
-  } = useGetAllActiveDivisionQuery(countryId);
-  
-  const {
-    data: districtData,
-    refetch: refetchDistricts,
-  } = useGetAllActiveDistrictQuery(divisionId);
-  
-  const {
-    data: areaData,
-    refetch: refetchAreas,
-  } = useGetAllActiveAreaQuery(districtId);
+  const { data: divisionData, refetch: refetchDivisions } =
+    useGetAllActiveDivisionQuery(countryId);
+
+  const { data: districtData, refetch: refetchDistricts } =
+    useGetAllActiveDistrictQuery(divisionId);
+
+  const { data: areaData, refetch: refetchAreas } =
+    useGetAllActiveAreaQuery(districtId);
+
+      const [
+    addPropertyAdd,
+    {
+      isLoading,
+      // isError,
+      //  error
+    },
+  ]= useAddPropertyAddMutation();
 
   // console.log("area", areaData);
 
@@ -158,7 +170,14 @@ const PropertyAdd = () => {
     if (districtId !== null) {
       refetchAreas();
     }
-  }, [countryId, refetchDivisions,divisionId,refetchDistricts,districtId,refetchAreas]);
+  }, [
+    countryId,
+    refetchDivisions,
+    divisionId,
+    refetchDistricts,
+    districtId,
+    refetchAreas,
+  ]);
 
   // const handleCountryChange = (e) => {
   //   const selectedCountryId = e.target.value;
@@ -314,7 +333,7 @@ const PropertyAdd = () => {
     setVideoError(false);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     displayImages.map((i) => {
       if (i === null) {
         displayImageCount++;
@@ -368,14 +387,16 @@ const PropertyAdd = () => {
       return;
     }
 
-    console.log(data)
-    const displayImageFiles = displayImages.map((image) => image.displayImageFile);
+    console.log(data);
+    const displayImageFiles = displayImages.map(
+      (image) => image.displayImageFile
+    );
 
     const propertyData = {
       name: data.propertyName,
       bin: data.bin,
       tin: data.tin,
-      trade_license_number:'',
+      trade_license_number: "aaaa",
       area_id: data.area,
       address: data.address,
       description: data.description,
@@ -383,22 +404,105 @@ const PropertyAdd = () => {
       property_types: data.propertyTypes,
       amenities: data.amenities,
       images: displayImageFiles,
-      check_in_time: data.checkin,
-      check_out_time: data.checkout,
+      check_in_time: `${data.checkin_hour}:${data.checkin_minute}`,
+      check_in_time_period: data.check_in_time_period,
+      check_out_time: `${data.checkout_hour}:${data.checkout_minute}`,
+      check_out_time_period: data.check_out_time_period,
       latitude: mapCenter.lat,
       longitude: mapCenter.lng,
       cancellation: cancellationData,
       logo: logo.logoFile,
       short_description: data.shortDescription,
       instruction: data.instruction,
+      payment_methods: data.paymentMethods,
+      pet_policy: data.pet_policy,
       is_active: data.is_active,
       // video,
     };
 
-    console.log(propertyData);
-    // createPropertyMutation.mutate(propertyData);
-    setLoading(false);
-    // navigate("/room-add");
+    const propertyFormData = new FormData();
+
+    // Iterate through the properties of the data object
+    Object.entries(propertyData).forEach(([key, value]) => {
+      if (key !== "images" && key !== "logo") {
+        // Handle specific properties
+        if (
+          key === "property_types" ||
+          key === "amenities" ||
+          key === "payment_methods"
+        ) {
+          value.forEach((item, index) => {
+            propertyFormData.append(`${key}[${index}]`, item);
+          });
+        } else if (key === "cancellation") {
+          // Handle cancellation data
+          value.forEach((cancelData, index) => {
+            Object.entries(cancelData).forEach(([cancelKey, cancelValue]) => {
+              if (cancelKey === "duration") {
+                // Handle duration object
+                Object.entries(cancelValue).forEach(
+                  ([durationKey, durationValue]) => {
+                    propertyFormData.append(
+                      `cancellation[${index}][duration][${durationKey}]`,
+                      durationValue
+                    );
+                  }
+                );
+              } else {
+                // Append other cancellation properties
+                propertyFormData.append(
+                  `cancellation[${index}][${cancelKey}]`,
+                  cancelValue
+                );
+              }
+            });
+          });
+        } else {
+          // Convert is_active to integer if it's present
+          const formattedValue = key === "is_active" ? (value ? 1 : 0) : value;
+          propertyFormData.append(key, formattedValue);
+        }
+      }
+    });
+
+    // Append image files to FormData
+    if (Array.isArray(propertyData.images)) {
+      propertyData.images.forEach((imageFile, index) => {
+        propertyFormData.append(`images[${index}]`, imageFile);
+      });
+    }
+
+    // Append logo file to FormData
+    if (propertyData.logo) {
+      propertyFormData.append("logo", propertyData.logo);
+    }
+
+    // Logging FormData to check its content
+    console.log("formdata", Object.fromEntries(propertyFormData));
+
+    try {
+      const result = await addPropertyAdd(propertyFormData);
+      setLoading(false);
+
+      // Handle successful mutation
+      if (result?.data?.status) {
+        console.log("Property", result);
+        toast.success("Payment method added successfully");
+        // navigate("/room-add");
+      } else {
+        // console.log("Failed", result);
+        console.log("Failed", result.error.data.errors);
+        // setErrorMessage({
+        //   status: true,
+        //   message: data.message,
+        //   errors: [result.error.data.errors],
+        // });
+        // console.log("errormessage", errorMessage?.errors?.length);
+      }
+    } catch (error) {
+      // Handle error
+      // console.error("Error adding payment method:", error);
+    }
   };
 
   return (
@@ -434,6 +538,31 @@ const PropertyAdd = () => {
               {errors.propertyName?.type === "required" && (
                 <span className="label-text-alt text-red-500">
                   {errors.propertyName?.message}
+                </span>
+              )}
+            </label>
+          </div>
+          {/* Subtitle */}
+          <div className="">
+            <label className="property-input-title" htmlFor="bin">
+              Subtitle
+            </label>
+            <input
+              className="input-box"
+              id="subtitle"
+              name="subtitle"
+              type="text"
+              {...register("subtitle", {
+                required: {
+                  value: true,
+                  message: "Subtitle is required",
+                },
+              })}
+            />
+            <label className="">
+              {errors.subtitle?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.subtitle?.message}
                 </span>
               )}
             </label>
@@ -651,31 +780,31 @@ const PropertyAdd = () => {
               <img className="arrow-icon" src={arrowDownIcon} alt="" />
             </div>
           </div>
-          {/* Address */}
-          <div className="">
-            <label className="property-input-title" htmlFor="address">
-              Address
-            </label>
-            <input
-              className="input-box"
-              id="address"
-              name="address"
-              type="text"
-              {...register("address", {
-                required: {
-                  value: true,
-                  message: "Address is required",
-                },
-              })}
-            />
-            <label className="">
-              {errors.address?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.address?.message}
-                </span>
-              )}
-            </label>
-          </div>
+        </div>
+        {/* Address */}
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="address">
+            Address
+          </label>
+          <input
+            className="input-box"
+            id="address"
+            name="address"
+            type="text"
+            {...register("address", {
+              required: {
+                value: true,
+                message: "Address is required",
+              },
+            })}
+          />
+          <label className="">
+            {errors.address?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.address?.message}
+              </span>
+            )}
+          </label>
         </div>
         {/* Description */}
         <div className="mt-[18px]">
@@ -827,11 +956,19 @@ const PropertyAdd = () => {
                             setValue(
                               "propertyTypes",
                               e.target.checked
-                                ? [...field.value, propertyType.name]
+                                ? [...field.value, propertyType.id]
                                 : field.value.filter(
-                                    (type) => type !== propertyType.name
+                                    (type) => type !== propertyType.id
                                   )
                             );
+                            // setValue(
+                            //   "propertyTypes",
+                            //   e.target.checked
+                            //     ? [...field.value, propertyType.name]
+                            //     : field.value.filter(
+                            //         (type) => type !== propertyType.name
+                            //       )
+                            // );
                           }}
                         />
                         <label htmlFor={`hotel-type${propertyType.id}`}>
@@ -906,6 +1043,7 @@ const PropertyAdd = () => {
             </span>
           )}
         </div>
+
         {/* <div className="mt-[18px]">
           <h2 id="property-type-title" className="property-input-title">
             Property Type
@@ -1529,14 +1667,13 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                <label className="">
+                {/* <label className="">
                   {errors.checkin_hour?.type === "required" && (
                     <span className="label-text-alt text-red-500">
                       {errors.checkin_hour?.message}
                     </span>
                   )}
-                </label>
-                {/* <img className="arrow-icon" src={arrowDownIcon} alt="" /> */}
+                </label> */}
               </div>
             </div>
 
@@ -1566,13 +1703,13 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                <label className="">
+                {/* <label className="">
                   {errors.checkin_minute?.type === "required" && (
                     <span className="label-text-alt text-red-500">
                       {errors.checkin_minute?.message}
                     </span>
                   )}
-                </label>
+                </label> */}
               </div>
             </div>
 
@@ -1590,18 +1727,16 @@ const PropertyAdd = () => {
                     // },
                   })}
                 >
-                  <option value="AM" >
-                    AM
-                  </option>
+                  <option defaultValue="AM">AM</option>
                   <option value="PM">PM</option>
                 </select>
-                <label className="">
+                {/* <label className="">
                   {errors.division?.type === "required" && (
                     <span className="label-text-alt text-red-500">
                       {errors.division?.message}
                     </span>
                   )}
-                </label>
+                </label> */}
                 <img
                   className="absolute top-2 right-1"
                   src={arrowDownIcon}
@@ -1612,13 +1747,13 @@ const PropertyAdd = () => {
             {/* <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
               AM
             </span> */}
-            <label className="block">
+            {/* <label className="block">
               {errors.checkin && (
                 <span className="label-text-alt text-red-500">
                   {errors.checkin?.message}
                 </span>
               )}
-            </label>
+            </label> */}
           </div>
           <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
             <p className="flex">
@@ -1651,14 +1786,13 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                <label className="">
+                {/* <label className="">
                   {errors.checkout_hour?.type === "required" && (
                     <span className="label-text-alt text-red-500">
                       {errors.checkout_hour?.message}
                     </span>
                   )}
-                </label>
-                {/* <img className="arrow-icon" src={arrowDownIcon} alt="" /> */}
+                </label> */}
               </div>
             </div>
 
@@ -1688,13 +1822,13 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                <label className="">
+                {/* <label className="">
                   {errors.checkout_minute?.type === "required" && (
                     <span className="label-text-alt text-red-500">
                       {errors.checkout_minute?.message}
                     </span>
                   )}
-                </label>
+                </label> */}
               </div>
             </div>
 
@@ -1702,25 +1836,23 @@ const PropertyAdd = () => {
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
                   className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
-                  id="checkin_time_period"
-                  name="checkin_time_period"
+                  id="checkout_time_period"
+                  name="checkout_time_period"
                   // onClick={(e) => setCountryId(e.target.value)}
-                  {...register("checkin_time_period", {
+                  {...register("checkout_time_period", {
                     // required: {
                     //   value: true,
                     //   message: "Please select an option",
                     // },
                   })}
                 >
-                  <option value="AM" >
-                    AM
-                  </option>
+                  <option defaultValue="AM">AM</option>
                   <option value="PM">PM</option>
                 </select>
                 <label className="">
-                  {errors.division?.type === "required" && (
+                  {errors.checkout_time_period?.type === "required" && (
                     <span className="label-text-alt text-red-500">
-                      {errors.division?.message}
+                      {errors.checkout_time_period?.message}
                     </span>
                   )}
                 </label>
@@ -2046,8 +2178,6 @@ const PropertyAdd = () => {
               className="property-input"
               id="is_active"
               name="is_active"
-              // onClick={(e) => setCountryId(e.target.value)}
-              disabled={countries?.length <= 0}
               {...register("is_active", {
                 required: {
                   value: true,

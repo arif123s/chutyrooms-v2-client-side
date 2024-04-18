@@ -62,10 +62,20 @@ const propertyAddApi = baseApi.injectEndpoints({
       }),
     }),
 
+    getAllActiveAmenities: builder.query({
+      query: (id) => ({
+        url: `/ActiveAmenities/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+
     addPropertyAdd: builder.mutation({
       query: (data) => {
         return {
-          url: "/payment_methods",
+          url: "/owner/property",
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -82,6 +92,7 @@ export const {
   useGetAllActiveDivisionQuery,
   useGetAllActiveDistrictQuery,
   useGetAllActiveAreaQuery,
+  useGetAllActiveAmenitiesQuery,
   useGetAllActivePaymentMethodQuery,
   useGetAllActivePropertyTypeQuery,
   useAddPropertyAddMutation
