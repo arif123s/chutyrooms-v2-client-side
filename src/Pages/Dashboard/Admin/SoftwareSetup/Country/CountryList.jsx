@@ -3,13 +3,14 @@ import "./Country.css";
 import EditIcon from '../../../../../assets/icons/edit-icon.svg';
 import DeleteIcon from '../../../../../assets/icons/delete-icon.svg';
 import RestoreIcon from '../../../../../assets/icons/restore_icon_green.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
 import Loading from '../../../../Common/Includes/Loading/Loading';
 import { BASE_API } from '../../../../../BaseApi/BaseApi';
 const CountryList = () => {
 
+  const navigate =useNavigate();
   const [Countrylist, setCountry] = useState([]);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const CountryList = () => {
       }
     );
 
-    setCountry(Countrylist.map(country => (country.id == id ? { ...country, deleted_at: !null } : country)));
+    setCountry(Countrylist?.map(country => (country.id == id ? { ...country, deleted_at: !null } : country)));
 
     // const newCountryData=Countrylist.filter((item)=>{
     //     return(
@@ -76,7 +77,7 @@ const CountryList = () => {
         }
       ); // Replace with your actual API endpoint
       // If successful, update the state to reflect the restoration
-      setCountry(Countrylist.map(country => (country.id == id ? { ...country, deleted_at: null } : country)));
+      setCountry(Countrylist?.map(country => (country.id == id ? { ...country, deleted_at: null } : country)));
       navigate('/dashboard/country');
     } catch (error) {
       console.error('Error restoring item:', error);
@@ -98,7 +99,7 @@ const CountryList = () => {
           </thead>
 
           <tbody className='gap-y-5'>
-            {Countrylist.map((country) => (
+            {Countrylist?.map((country) => (
               <tr key={country.id}>
                 <td>{country.name}</td>
                 <td>{country.view_order}</td>

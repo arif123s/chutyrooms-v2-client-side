@@ -32,14 +32,14 @@
   display: inline-block;
 }
 
-.property-input{
-width: 100%;
-height: 100%;
-border-radius: 8px;
-padding: 8px 12px;
-display: flex;
- justify-content: center;
- 
+.property-input {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: center;
+
   /* align-items: center; */
 }
 
@@ -49,12 +49,12 @@ display: flex;
   padding-right: 12px; */
 }
 
-.arrow-icon{
- position: absolute;
+.arrow-icon {
+  position: absolute;
   top: 50%;
-  right: 10px; 
+  right: 10px;
   transform: translateY(-50%);
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .property-description {
@@ -76,7 +76,7 @@ display: flex;
   column-gap: 18px;
 }
 
-.property-img-name{
+.property-img-name {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
