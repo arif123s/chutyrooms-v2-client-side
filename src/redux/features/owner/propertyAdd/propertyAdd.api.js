@@ -2,6 +2,16 @@ import { baseApi } from "../../../api/baseApi";
 
 const propertyAddApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllPropertycAddingProperties: builder.query({
+      query: () => ({
+        url: "/owner/property/create",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+
     getAllActiveCountries: builder.query({
       query: () => ({
         url: "/ActiveCountry",
@@ -14,7 +24,7 @@ const propertyAddApi = baseApi.injectEndpoints({
 
     getAllActiveDivision: builder.query({
       query: (id) => ({
-        url: `/ActiveDivision/${id}`,
+        url: `/countryWiseDivision/${id}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -24,7 +34,7 @@ const propertyAddApi = baseApi.injectEndpoints({
 
     getAllActiveDistrict: builder.query({
       query: (id) => ({
-        url: `/ActiveDistricts/${id}`,
+        url: `/divisionWiseDistricts/${id}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -34,7 +44,7 @@ const propertyAddApi = baseApi.injectEndpoints({
 
     getAllActiveArea: builder.query({
       query: (id) => ({
-        url: `/ActiveAreas/${id}`,
+        url: `/districtWiseAreas/${id}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -88,12 +98,10 @@ const propertyAddApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllActiveCountriesQuery,
+  useGetAllPropertycAddingPropertiesQuery,
+  // useGetAllActiveCountriesQuery,
   useGetAllActiveDivisionQuery,
   useGetAllActiveDistrictQuery,
   useGetAllActiveAreaQuery,
-  useGetAllActiveAmenitiesQuery,
-  useGetAllActivePaymentMethodQuery,
-  useGetAllActivePropertyTypeQuery,
   useAddPropertyAddMutation
 } = propertyAddApi;
