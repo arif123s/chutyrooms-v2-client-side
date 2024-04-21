@@ -38,9 +38,11 @@ const Login = () => {
     let from = location.state?.from?.pathname || "/";
     const token = localStorage.getItem("accessToken");
 
-    if (token) {
-      navigate(from, { replace: true });
-    }
+    useEffect(() => {
+      if (token) {
+        navigate(location.state?.from || "/", { replace: true });
+      }
+    }, [token, navigate, location]);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");

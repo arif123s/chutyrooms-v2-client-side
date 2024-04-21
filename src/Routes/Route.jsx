@@ -77,7 +77,6 @@ import GuestPolicy from "../Pages/CompanyInformation/GuestPolicy/GuestPolicy";
 import Legal from "../Pages/CompanyInformation/Legal/Legal";
 import EarnWithChutyrooms from "../Pages/CompanyInformation/EarnWithChutyrooms/EarnWithChutyrooms";
 
-
 export const router = createBrowserRouter([
   {
     path: "/",

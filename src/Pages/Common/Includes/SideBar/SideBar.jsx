@@ -120,19 +120,40 @@ const SideBar = ({ open, setOpen }) => {
   // ];
 
   // Define menu items based on user role
-  
+
   const getMenuItems = () => {
     switch (userRole) {
-      case "admin":
+      case "Super Admin":
         return [
           {
             name: "Dashboard",
             path: "/dashboard",
-            icon: Category,
-            clickedicon: CategoryGreen,
+            icon: Key,
+            clickedicon: KeyGreen,
             submenu: [],
           },
-          // Add other admin menu items here
+          {
+            name: "Property Management",
+            path: "#",
+            icon: Key,
+            clickedicon: KeyGreen,
+            submenu: [
+              { name: "Property List", path: "#" },
+              { name: "Add Property", path: "/dashboard/property-add" },
+              { name: "Edit Property", path: "#" },
+            ],
+          },
+          {
+            name: "Room Management",
+            path: "#",
+            icon: Key,
+            clickedicon: KeyGreen,
+            submenu: [
+              { name: "All Rooms", path: "#" },
+              { name: "Add Room", path: "/dashboard/room-add" },
+              { name: "Edit Rooms", path: "#" },
+            ],
+          },
         ];
       case "owner":
         return [

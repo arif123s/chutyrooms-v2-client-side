@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { useCurrentToken } from "../redux/features/auth/authSlice";
 
 const ProtectedRoute = ({ children }) => {
   // const token = useSelector(useCurrentToken);
