@@ -18,7 +18,7 @@ const HomePage = () => {
 
       // Set the state based on the scroll position
       setIsHidden(scrollY === 0);
-      setIsSticky(scrollY > 0);
+      setIsSticky(scrollY > 10);
     };
 
     // Add scroll event listener

@@ -13,10 +13,10 @@ const Amenities = () => {
     return (
         <div className='AmenitiesCategory-list-content'>
              <ul className='AmenitiesCategory-option'>
-             <Link to={'/dashboard/AmenitiesCategories'}>
+             <Link to={'/dashboard/Amenities'}>
                     <li  onClick={()=>handleButtonClick("AmenitiesList")} className={isClicked=="AmenitiesList" ? 'btn-clicked' : 'btn-unclicked'}>Amenities List</li>
              </Link>
-            <Link to={'/dashboard/AmenitiesCategories/AddAmenitityCategory'}>
+            <Link to={'/dashboard/Amenities/AddAmenities'}>
                 <li  onClick={()=>handleButtonClick("AmenitiesAdd")} className={isClicked=="AmenitiesAdd" ? 'btn-clicked' : 'btn-unclicked'}>Amenities Add</li>
             </Link>
              </ul>

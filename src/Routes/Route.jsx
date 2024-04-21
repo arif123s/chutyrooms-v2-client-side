@@ -65,6 +65,8 @@ import AddAmenitiesCategory from "../Pages/Dashboard/Admin/SoftwareSetup/Ameniti
 import EditAmenitiesCategory from "../Pages/Dashboard/Admin/SoftwareSetup/AmenitiesCategories/EditAmenitiesCategory";
 import Amenities from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/Amenities";
 import AmenitiesList from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/AmenitiesList";
+import AddAmenities from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/AddAmenities";
+import EditAmenities from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/EditAmenities";
 
 
 export const router = createBrowserRouter([
@@ -326,7 +328,20 @@ export const router = createBrowserRouter([
               {
                 path: "/dashboard/Amenities",
                 element: <AmenitiesList></AmenitiesList>
+              },
+              {
+                path: "/dashboard/Amenities/AddAmenities",
+                element: <AddAmenities></AddAmenities>
+              },
+
+              {
+                path: "dashboard/Amenities/EditAmenities/:id",
+                element: <EditAmenities></EditAmenities>
               }
+
+
+
+
             
 
             ],
