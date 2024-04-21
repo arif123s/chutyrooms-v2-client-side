@@ -68,6 +68,17 @@ import AmenitiesList from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/Amen
 import AddAmenities from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/AddAmenities";
 import EditAmenities from "../Pages/Dashboard/Admin/SoftwareSetup/Amenities/EditAmenities";
 
+import AboutUs from "../Pages/CompanyInformation/AboutUs/AboutUs";
+import Blog from "../Pages/CompanyInformation/Blog/Blog";
+import Team from "../Pages/CompanyInformation/Team/Team";
+import TermAndConditions from "../Pages/CompanyInformation/TermAndConditions/TermAndConditions";
+import PrivacyPolicy from "../Pages/CompanyInformation/PrivacyPolicy/PrivacyPolicy";
+import RefundPolicy from "../Pages/CompanyInformation/RefundPolicy/RefundPolicy";
+import FrequentlyAskedQuestions from "../Pages/CompanyInformation/FAQ/FrequentlyAskedQuestions";
+import GuestPolicy from "../Pages/CompanyInformation/GuestPolicy/GuestPolicy";
+import Legal from "../Pages/CompanyInformation/Legal/Legal";
+import EarnWithChutyrooms from "../Pages/CompanyInformation/EarnWithChutyrooms/EarnWithChutyrooms";
+
 
 export const router = createBrowserRouter([
   {
@@ -143,6 +154,47 @@ export const router = createBrowserRouter([
           {
             path: "room-add",
             element: <PropertyRoomAdd></PropertyRoomAdd>,
+          },
+
+          {
+            path: "about-us",
+            element: <AboutUs></AboutUs>,
+          },
+          {
+            path: "blog",
+            element: <Blog></Blog>,
+          },
+          {
+            path: "team",
+            element: <Team></Team>,
+          },
+          {
+            path: "term-and-conditions",
+            element: <TermAndConditions></TermAndConditions>,
+          },
+          {
+            path: "privacy-policy",
+            element: <PrivacyPolicy></PrivacyPolicy>,
+          },
+          {
+            path: "refund-policy",
+            element: <RefundPolicy></RefundPolicy>,
+          },
+          {
+            path: "faq",
+            element: <FrequentlyAskedQuestions></FrequentlyAskedQuestions>,
+          },
+          {
+            path: "guest-policy",
+            element: <GuestPolicy></GuestPolicy>,
+          },
+          {
+            path: "legal",
+            element: <Legal></Legal>,
+          },
+          {
+            path: "earn-with-chutyrooms",
+            element: <EarnWithChutyrooms></EarnWithChutyrooms>,
           },
         ],
       },
@@ -299,31 +351,29 @@ export const router = createBrowserRouter([
           },
 
           {
-              path: "/dashboard/AmenitiesCategories",
-              element: <AmenitiesCategories></AmenitiesCategories>,
-              children: [
-                {
+            path: "/dashboard/AmenitiesCategories",
+            element: <AmenitiesCategories></AmenitiesCategories>,
+            children: [
+              {
                 path: "/dashboard/AmenitiesCategories",
-                element: <AmenitiesCategoryList></AmenitiesCategoryList>
-                },
+                element: <AmenitiesCategoryList></AmenitiesCategoryList>,
+              },
 
-                {
-                  path: "/dashboard/AmenitiesCategories/AddAmenitityCategory",
-                  element: <AddAmenitiesCategory></AddAmenitiesCategory>
-                },
+              {
+                path: "/dashboard/AmenitiesCategories/AddAmenitityCategory",
+                element: <AddAmenitiesCategory></AddAmenitiesCategory>,
+              },
 
-                {
-                  path: "/dashboard/AmenitiesCategories/AmenitiesCategoryEdit/:id",
-                  element:<EditAmenitiesCategory></EditAmenitiesCategory>,
-                }
-              ],
+              {
+                path: "/dashboard/AmenitiesCategories/AmenitiesCategoryEdit/:id",
+                element: <EditAmenitiesCategory></EditAmenitiesCategory>,
+              },
+            ],
           },
-
-
 
           {
             path: "/dashboard/Amenities",
-            element : <Amenities></Amenities>,
+            element: <Amenities></Amenities>,
             children: [
               {
                 path: "/dashboard/Amenities",
@@ -338,12 +388,6 @@ export const router = createBrowserRouter([
                 path: "dashboard/Amenities/EditAmenities/:id",
                 element: <EditAmenities></EditAmenities>
               }
-
-
-
-
-            
-
             ],
           },
         ],

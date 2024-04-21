@@ -18,8 +18,12 @@ import facebookIcon from "../../../../assets/icons/facebook.svg";
 import instagramIcon from "../../../../assets/icons/instagram.svg";
 import linkedinIcon from "../../../../assets/icons/linkedin.svg";
 import youtubeIcon from "../../../../assets/icons/youtube.svg";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+
+const navigate = useNavigate();
+
   return (
     <div className="">
       <footer className="footer-container ">
@@ -98,36 +102,116 @@ const Footer = () => {
                   <div className="discover-items">
                     <div>
                       <p className="">
-                        <a className="link link-hover">About us</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/about-us");
+                          }}
+                          className="link link-hover"
+                        >
+                          About us
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Blog</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/blog");
+                          }}
+                          className="link link-hover"
+                        >
+                          Blog
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Team</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/team");
+                          }}
+                          className="link link-hover"
+                        >
+                          Team
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Terms & Condtions</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/term-and-conditions");
+                          }}
+                          className="link link-hover"
+                        >
+                          Terms & Condtions
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Privacy Policy</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/privacy-policy");
+                          }}
+                          className="link link-hover"
+                        >
+                          Privacy Policy
+                        </a>
                       </p>
                     </div>
                     <div>
                       <p>
-                        <a className="link link-hover">Refund Policy</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/refund-policy");
+                          }}
+                          className="link link-hover"
+                        >
+                          Refund Policy
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">FAQ</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/faq");
+                          }}
+                          className="link link-hover"
+                        >
+                          FAQ
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Guest Policy</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/guest-policy");
+                          }}
+                          className="link link-hover"
+                        >
+                          Guest Policy
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Legal</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/legal");
+                          }}
+                          className="link link-hover"
+                        >
+                          Legal
+                        </a>
                       </p>
                       <p>
-                        <a className="link link-hover">Earn with ChutyRooms</a>
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault(), navigate("/earn-with-chutyrooms");
+                          }}
+                          className="link link-hover"
+                        >
+                          Earn with ChutyRooms
+                        </a>
                       </p>
                     </div>
                   </div>
