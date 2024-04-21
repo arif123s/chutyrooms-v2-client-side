@@ -91,7 +91,7 @@ const amenitiesApi = baseApi.injectEndpoints({
   restoreAmenities: builder.mutation({
     query: (amenitiesId) => ({
       url: `/amenities/${amenitiesId}/restore`,
-      method: "PUT", // Assuming restore requires a PATCH request
+      method: "PUT", 
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -107,5 +107,5 @@ const amenitiesApi = baseApi.injectEndpoints({
 
 
 
-export const { useGetAllAmenitiesCategoriesQuery , useGetAllAmenitiesQuery , useAddAmenitiesMutation ,  useDeleteAmenitiesMutation , useRestoreAmenitiesMutation} = amenitiesApi;
+export const { useGetAllAmenitiesCategoriesQuery , useGetAllAmenitiesQuery , useAddAmenitiesMutation , useGetSingleAmenitiesQuery , useUpdateAmenitiesMutation ,  useDeleteAmenitiesMutation , useRestoreAmenitiesMutation} = amenitiesApi;
 

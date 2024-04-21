@@ -88,7 +88,7 @@ const AmenitiesCategoryList = () => {
                 <td className="country-action-div">
                   <Link
                     className="edit-btn"
-                    to={`/dashboard/Amenities/AmenitiesCategoryEdit/${Amenities.id}`}
+                    to={`dashboard/Amenities/EditAmenities/${Amenities.id}`}
                   >
                     <img
                       className="edit-delete-icon"

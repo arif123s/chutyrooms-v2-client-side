@@ -2,21 +2,18 @@ import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { BASE_ASSET_API } from "../../../../../BaseApi/AssetUrl";
 import Loading from "../../../../Common/Includes/Loading/Loading";
-import { useGetSingleAmenitiesCategoryQuery , useUpdateAmenitiesCategoryMutation } from "../../../../../redux/features/admin/Amenities/amenitiesCategory.api";
+import { useGetSingleAmenitiesCategoryQuery , useUpdateAmenitiesCategoryMutation  } from "../../../../../redux/features/admin/Amenities/amenitiesCategory.api";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const EditAmenitiesCategory = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
 //   alert(id)
   const {
     control,
-    // register,
     handleSubmit,
-    // setValue,
-    // formState: { errors },
     reset,
   } = useForm();
 
@@ -26,16 +23,6 @@ const EditAmenitiesCategory = () => {
     is_active: null,
   });
 
-
-
-
-
-
-  // const [errorMessage, setErrorMessage] = useState({
-  //   status: false,
-  //   message: "",
-  //   errors: [],
-  // });
 
    const [validationErrors, setValidationErrors] = useState({});
 
@@ -49,7 +36,7 @@ const EditAmenitiesCategory = () => {
   
 
   const [updateAmenititiesCategory, { isLoading: updateLoading,
-    //  isError, error 
+  
     }] =useUpdateAmenitiesCategoryMutation();
 
  useEffect(() => {
@@ -69,15 +56,11 @@ const EditAmenitiesCategory = () => {
   }, [amenitiesCategory]);
 
   
-  
-
 
   if (isLoading || updateLoading) {
     return <Loading></Loading>;
   }
 
-
- 
 
   const onSubmit = async (data) => {
     const amenitiesCategoryInfo = {
@@ -95,20 +78,13 @@ const EditAmenitiesCategory = () => {
     const formData = new FormData();
 
     Object.entries(amenitiesCategoryInfo).forEach(([key, value]) => {
-   
-        // Convert is_active to integer if it's present
-        const formattedValue =
+      const formattedValue =
           key === "is_active" ? parseInt(value, 10) : value;
         formData.append(key, formattedValue);
       
     });
-
-    // Append image file to FormData
-   
-
+    
     formData.append("_method", "PUT");
-
-    // Logging FormData to check its content
     console.log("formdata", Object.fromEntries(formData));
 
     const amenitiescategoryInfo = {
@@ -118,7 +94,6 @@ const EditAmenitiesCategory = () => {
 
     try {
       const result = await updateAmenititiesCategory(amenitiescategoryInfo);
-      // Handle successful mutation
       if (result?.data?.status) {
         console.log("Amenities Category", result);
         toast.success("Amenities Category edited successfully");
@@ -128,21 +103,18 @@ const EditAmenitiesCategory = () => {
       else {
         console.log("Failed", result?.error?.data?.errors);
         setValidationErrors(result?.error?.data?.errors);
-        // console.log("Failed", result);
       }
     } catch (error) {
-      // Handle error
       console.error("Error adding payment method:", error);
-      // setValidationErrors(err.response.data.errors);
     }
   };
   
   
   return (
 <div>
-<div className="paymentmethod-add-division">
+<div className="amenities-add-division">
         <form
-          className="paymentmethod-add-form"
+          className="amenities-add-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
@@ -256,7 +228,7 @@ const EditAmenitiesCategory = () => {
             Save
           </button>
         </form>
-      </div>
+</div>
             
 </div>
     );
