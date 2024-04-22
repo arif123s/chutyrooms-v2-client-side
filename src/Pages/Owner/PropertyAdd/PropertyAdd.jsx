@@ -29,7 +29,7 @@ import {
   useGetAllActiveDistrictQuery,
   useGetAllActiveAreaQuery,
   useAddPropertyAddMutation,
-  useGetAllPropertycAddingPropertiesQuery,
+  useGetAllPropertyAddingPropertiesQuery,
 } from "../../../redux/features/owner/propertyAdd/propertyAdd.api";
 import { BASE_ASSET_API } from "../../../BaseApi/AssetUrl";
 import { toast } from "react-toastify";
@@ -59,7 +59,7 @@ const PropertyAdd = () => {
     data: propertyAdding,
     isLoading: propertyLoading,
     // refetch,
-  } = useGetAllPropertycAddingPropertiesQuery();
+  } = useGetAllPropertyAddingPropertiesQuery();
 
   // console.log("property", propertyAdding?.data.amenitiesCategory);
 
@@ -135,7 +135,6 @@ const PropertyAdd = () => {
 
   const [loading, setLoading] = useState(false);
   const [rating,setRating]=useState(null)
-  console.log(rating)
 
   const [countryId, setCountryId] = useState(null);
   const [divisionId, setDivisionId] = useState(null);
@@ -412,8 +411,8 @@ const PropertyAdd = () => {
       check_out_time: `${data.checkout_hour}:${data.checkout_minute}`,
       check_out_time_period: data.checkout_time_period,
       // check_out_time_period: "AM",
-      latitude: mapCenter.lat,
-      longitude: mapCenter.lng,
+      latitude: parseFloat(mapCenter.lat),
+      longitude: parseFloat(mapCenter.lng),
       cancellation: cancellationData,
       logo: logo.logoFile,
       short_description: data.shortDescription,
@@ -429,7 +428,12 @@ const PropertyAdd = () => {
     const propertyFormData = new FormData();
 
     Object.entries(propertyData).forEach(([key, value]) => {
-      if (key !== "images" && key !== "logo") {
+      if (
+        key !== "images" &&
+        key !== "logo" &&
+        key !== "latitude" &&
+        key !== "longitude"
+      ) {
         // Handle specific properties
         if (
           key === "property_types" ||
@@ -494,14 +498,16 @@ const PropertyAdd = () => {
               }
             });
           });
-        }
-        else {
+        } else {
           // Convert is_active to integer if it's present
           const formattedValue = key === "is_active" ? (value ? 1 : 0) : value;
           propertyFormData.append(key, formattedValue);
         }
       }
     });
+
+    propertyFormData.append("latitude", parseFloat(mapCenter.lat));
+    propertyFormData.append("longitude", parseFloat(mapCenter.lng));
 
     // Append image files to FormData
     if (Array.isArray(propertyData.images)) {
@@ -525,7 +531,7 @@ const PropertyAdd = () => {
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Property", result);
-        toast.success("Property added successfully");
+        toast.success("Property registered successfully");
         navigate("/room-add");
       } else {
         // console.log("Failed", result);
@@ -847,7 +853,7 @@ const PropertyAdd = () => {
             Description
           </label>
           <textarea
-            className="property-description block input-box h-[120px]"
+            className="property-description"
             name="description"
             id="description"
             placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."

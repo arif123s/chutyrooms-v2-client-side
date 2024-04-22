@@ -13,7 +13,7 @@ const AboutUs = () => {
           </p>
 
           <p className="mb-[18px]">
-            Last updated:{" "}
+            Last updated :{" "}
             <span className="text-[#020F07] font-['Gilroy-semibold']">
               April 1, 2023
             </span>

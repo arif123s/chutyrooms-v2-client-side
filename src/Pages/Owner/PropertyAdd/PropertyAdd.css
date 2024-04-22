@@ -62,6 +62,9 @@ background-color: #ffffff;
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid #e6e7e6;
+  width: 100%;
+  margin-top: 6px;
+  background-color: #ffffff;
 }
 
 .property-images-container {

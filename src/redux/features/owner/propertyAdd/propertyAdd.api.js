@@ -2,7 +2,17 @@ import { baseApi } from "../../../api/baseApi";
 
 const propertyAddApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllPropertycAddingProperties: builder.query({
+    getAllProperty: builder.query({
+      query: () => ({
+        url: "/owner/property",
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+
+    getAllPropertyAddingProperties: builder.query({
       query: () => ({
         url: "/owner/property/create",
         method: "GET",
@@ -98,7 +108,8 @@ const propertyAddApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllPropertycAddingPropertiesQuery,
+  useGetAllPropertyQuery,
+  useGetAllPropertyAddingPropertiesQuery,
   // useGetAllActiveCountriesQuery,
   useGetAllActiveDivisionQuery,
   useGetAllActiveDistrictQuery,

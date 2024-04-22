@@ -138,7 +138,7 @@ const SideBar = ({ open, setOpen }) => {
             icon: Key,
             clickedicon: KeyGreen,
             submenu: [
-              { name: "Property List", path: "#" },
+              { name: "Property List", path: "/dashboard/property-list" },
               { name: "Add Property", path: "/dashboard/property-add" },
               { name: "Edit Property", path: "#" },
             ],
