@@ -29,15 +29,15 @@ const AboutUs = () => {
           <p>
             ChutyRooms is a trusted, largest, and fastest growing hospitality
             partner in Bangladesh. Investing in technology takes the country to
-            a higher status of travel. ChutyRooms the country's largest online
-            travel portal marketplaces for both established brands and
+            a higher status of travel. ChutyRooms the country{"'"}s largest
+            online travel portal marketplaces for both established brands and
             entrepreneurs of all sizes, ChutyRooms enables properties around the
             country to reach a huge audience and grow their businesses.
           </p>
 
           <p className="mb-[18px]">
-            ChutyRooms started its journey in 2018 from Chittagong, and it’s
-            grown from a small city start-up to one of the country’s leading
+            ChutyRooms started its journey in 2018 from Chittagong, and it{"'"}s
+            grown from a small city start-up to one of the country{"'"}s leading
             digital travel companies. ChutyRooms is a concern of H&H Group and
             its mission is to make it easier for everyone to experience a smooth
             and unprecedented travel experience. ChutyRooms is available in many

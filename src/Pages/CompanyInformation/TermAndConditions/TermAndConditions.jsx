@@ -1,6 +1,10 @@
 import square from "../../../assets/icons/square-fill.svg";
+import { useNavigate } from "react-router-dom";
 
 const TermAndConditions = () => {
+
+  const navigate = useNavigate()
+
   return (
     <div className="my-[20px] md:my-[36px] lg:my-[50px] text-[14px] md:text-[16px] lg:text-[16px] px-[8px]">
       <div className="custom-container p-[20px] bg-white mx-[8px] rounded-[8px]">
@@ -155,7 +159,7 @@ const TermAndConditions = () => {
           </h2>
           <p>
             ChutyRooms reserves the right, at its sole discretion, to block and
-            terminate User's access to this ChutyRooms Platform at any time,
+            terminate User{"'"}s access to this ChutyRooms Platform at any time,
             with or without notice.
           </p>
           <p>
@@ -182,7 +186,7 @@ const TermAndConditions = () => {
             are communicating with ChutyRooms through a call or email.
             ChutyRooms may communicate with customers by email or phone;
             customers may accept or decline the cookies when they access the
-            ChutyRooms Platform. It is the user’s responsibility to set his
+            ChutyRooms Platform. It is the user{"'"}s responsibility to set his
             browser to alert him to accept or reject cookies.
           </p>
         </div>
@@ -194,9 +198,15 @@ const TermAndConditions = () => {
           <p>
             Please refer to the privacy policy, which will also govern
             customers’ use of ChutyRooms services and can be accessed here:{" "}
-            <span className="text-[#008942]">
+            <a
+              href=""
+              onClick={(e) => {
+                e.preventDefault(), navigate("/privacy-policy");
+              }}
+              className="text-[#008942] cursor-pointer"
+            >
               https://chutyrooms.com/privacy-policy
-            </span>
+            </a>
           </p>
         </div>
 
@@ -259,7 +269,13 @@ const TermAndConditions = () => {
             In case of a refund, the customer must confirm cancellation 7 days
             prior to the booking date. After a successful cancellation, a refund
             will be returned within 15 working days. For more information, see{" "}
-            <span className="text-[#008942]">
+            <span
+              href=""
+              onClick={(e) => {
+                e.preventDefault(), navigate("/refund-policy");
+              }}
+              className="text-[#008942] cursor-pointer"
+            >
               https://www.ChutyRoomsRooms.com/refund-policy
             </span>
             . In cases of emergency political unrest, natural disasters, etc.
