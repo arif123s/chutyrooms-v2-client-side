@@ -120,29 +120,64 @@ const SideBar = ({ open, setOpen }) => {
   // ];
 
   // Define menu items based on user role
-  
+
   const getMenuItems = () => {
-    switch (userRole) {
-      case "admin":
+     switch (userRole) {
+      case "Super Admin":
         return [
           {
             name: "Dashboard",
             path: "/dashboard",
-            icon: Category,
-            clickedicon: CategoryGreen,
-            submenu: [],
-          },
-          // Add other admin menu items here
-        ];
-      case "owner":
-        return [
-          {
-            name: "Profile",
-            path: "/dashboard/profile",
             icon: Key,
             clickedicon: KeyGreen,
             submenu: [],
           },
+          {
+            name: "Property Management",
+            path: "#",
+            icon: Key,
+            clickedicon: KeyGreen,
+            submenu: [
+              { name: "Property List", path: "#" },
+              { name: "Add Property", path: "/dashboard/property-add" },
+              { name: "Edit Property", path: "#" },
+            ],
+          },
+          {
+            name: "Room Management",
+            path: "#",
+            icon: Key,
+            clickedicon: KeyGreen,
+            submenu: [
+              { name: "All Rooms", path: "#" },
+              { name: "Add Room", path: "/dashboard/room-add" },
+              { name: "Edit Rooms", path: "#" },
+            ],
+          },
+          {
+            name: "Chuty Setup",
+            path: "#",
+            icon: Key,
+            clickedicon: KeyGreen,
+            submenu: [
+              { name: "Country", path: "/dashboard/country" },
+              { name: "Division", path: "/dashboard/division" },
+              { name: "District", path: "/dashboard/district" },
+              { name: "Area", path: "/dashboard/area" },
+              { name: "Payment Method", path: "/dashboard/PaymentSystems" },
+              { name: "Property Types", path: "#" },
+              { name: "Membership Card", path: "/dashboard/Membership" },
+              {
+                name: "Amenities Type",
+                path: "/dashboard/AmenitiesCategories",
+              },
+              { name: "Amenities", path: "/dashboard/Amenities" },
+            ],
+          },
+        ];
+      case "owner":
+        return [
+         
           {
             name: "Property Management",
             path: "#",
@@ -173,7 +208,7 @@ const SideBar = ({ open, setOpen }) => {
             path: "/dashboard/profile",
             icon: Key,
             clickedicon: KeyGreen,
-            submenu: [],
+            submenu: [], 
           },
         ];
       default:

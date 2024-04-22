@@ -525,7 +525,7 @@ const PropertyAdd = () => {
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Property", result);
-        toast.success("Payment method added successfully");
+        toast.success("Property added successfully");
         navigate("/room-add");
       } else {
         // console.log("Failed", result);
@@ -1780,9 +1780,9 @@ const PropertyAdd = () => {
         {/* Checkin */}
         <div className="mt-[18px]">
           <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
-            <p className="flex w-[100px]">
+            <p className="flex w-[100px] justify-between">
               Check In{" "}
-              <span className="ml-[4px] md:mx-[8px] lg:mx-[12px]">:</span>{" "}
+              <span className="mr-[4px] md:mr-[8px] lg:mr-[12px]">:</span>{" "}
             </p>
 
             <div className="w-[66px]">
@@ -1822,7 +1822,7 @@ const PropertyAdd = () => {
 
             <p>:</p>
 
-            <div className="w-[66px]">
+            <div className="w-[76px]">
               {/* <p>Minute</p> */}
               <div>
                 <input
@@ -1856,7 +1856,7 @@ const PropertyAdd = () => {
               </div>
             </div>
 
-            <div className="w-[64px]">
+            <div className="w-[56px]">
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
                   className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
@@ -1900,9 +1900,9 @@ const PropertyAdd = () => {
             </label> */}
           </div>
           <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
-            <p className="flex w-[100px]">
+            <p className="flex w-[104px] justify-between">
               Check Out{" "}
-              <span className="mx-[4px] md:mx-[8px] lg:mx-[12px]">:</span>{" "}
+              <span className="mr-[4px] md:mr-[8px] lg:mr-[12px]">:</span>{" "}
             </p>
 
             <div className="w-[66px]">
@@ -1942,7 +1942,7 @@ const PropertyAdd = () => {
 
             <p>:</p>
 
-            <div className="w-[66px]">
+            <div className="w-[76px]">
               {/* <p>Minute</p> */}
               <div>
                 <input
@@ -1976,7 +1976,7 @@ const PropertyAdd = () => {
               </div>
             </div>
 
-            <div className="w-[64px]">
+            <div className="w-[56px]">
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
                   className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
@@ -2200,13 +2200,13 @@ const PropertyAdd = () => {
               onSelect={handleSelect}
             >
               {({
-                getInputProps,
+                getInputProps, 
                 suggestions,
                 getSuggestionItemProps,
                 loading,
               }) => (
                 <div className="absolute right-0 h-[200px] overflow-auto">
-                  <div className="relative w-[300px] ">
+                  <div className="relative w-[134px] md:w-[300px] lg:w-[300px] ">
                     <input
                       {...getInputProps({
                         placeholder: `Search Places`,

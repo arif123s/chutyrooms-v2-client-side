@@ -11,7 +11,7 @@ const CancellationPolicy = (props) => {
 
     setCancellationData([
       ...cancellationData,
-      { duration: { hours: 23, minutes: 59 }, refundPercentage: 50 },
+      { duration: { hours: 23, minutes: 59 }, refund_percentage: 50 },
     ]);
   };
 
@@ -36,7 +36,7 @@ const CancellationPolicy = (props) => {
 
     const newRefundValue = Math.max(0, Math.min(100, value)); // Ensure refund percentage is within the range [0, 100]
     const newData = [...cancellationData];
-    newData[index].refundPercentage = newRefundValue;
+    newData[index].refund_percentage = newRefundValue;
     setCancellationData(newData);
   };
 
@@ -178,7 +178,9 @@ const CancellationPolicy = (props) => {
                                 )
                               }
                             />
-                            <span className="inline-block ml-[3px]">minutes</span>
+                            <span className="inline-block ml-[3px]">
+                              minutes
+                            </span>
                           </p>
                         </div>
                       </div>
@@ -190,7 +192,7 @@ const CancellationPolicy = (props) => {
                             onClick={(e) =>
                               handleRefundChange(
                                 index,
-                                cancellation.refundPercentage - 1,
+                                cancellation.refund_percentage - 1,
                                 e
                               )
                             }
@@ -198,13 +200,13 @@ const CancellationPolicy = (props) => {
                             alt=""
                           />
                           <p className="text-[14px] md:text-[16px] lg:text-[16px] w-[34px]">
-                            <span>{cancellation.refundPercentage}%</span>
+                            <span>{cancellation.refund_percentage}%</span>
                           </p>
                           <img
                             onClick={(e) =>
                               handleRefundChange(
                                 index,
-                                cancellation.refundPercentage + 1,
+                                cancellation.refund_percentage + 1,
                                 e
                               )
                             }

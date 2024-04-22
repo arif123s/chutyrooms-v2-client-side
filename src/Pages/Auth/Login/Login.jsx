@@ -38,9 +38,11 @@ const Login = () => {
     let from = location.state?.from?.pathname || "/";
     const token = localStorage.getItem("accessToken");
 
-    if (token) {
-      navigate(from, { replace: true });
-    }
+    useEffect(() => {
+      if (token) {
+        navigate(location.state?.from || "/", { replace: true });
+      }
+    }, [token, navigate, location]);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -142,7 +144,10 @@ const Login = () => {
 
           if (data.data.roles[0].role_code == 345) {
             navigate("/");
-          } else navigate("/dashboard");
+          }
+           if (data.data.roles[0].role_code == 234) {
+             navigate("/dashboard/property-add");
+           } else navigate("/dashboard");
         } else {
           console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });
