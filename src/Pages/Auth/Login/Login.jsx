@@ -144,7 +144,10 @@ const Login = () => {
 
           if (data.data.roles[0].role_code == 345) {
             navigate("/");
-          } else navigate("/dashboard");
+          }
+           if (data.data.roles[0].role_code == 234) {
+             navigate("/dashboard/property-add");
+           } else navigate("/dashboard");
         } else {
           console.log("Login failed!", data);
           // setErrorMessage({ status: true, message: data.errors.username[0] });

@@ -122,7 +122,7 @@ const SideBar = ({ open, setOpen }) => {
   // Define menu items based on user role
 
   const getMenuItems = () => {
-    switch (userRole) {
+     switch (userRole) {
       case "Super Admin":
         return [
           {
@@ -154,16 +154,30 @@ const SideBar = ({ open, setOpen }) => {
               { name: "Edit Rooms", path: "#" },
             ],
           },
+          {
+            name: "Chuty Setup",
+            path: "#",
+            icon: Key,
+            clickedicon: KeyGreen,
+            submenu: [
+              { name: "Country", path: "/dashboard/country" },
+              { name: "Division", path: "/dashboard/division" },
+              { name: "District", path: "/dashboard/district" },
+              { name: "Area", path: "/dashboard/area" },
+              { name: "Payment Method", path: "/dashboard/PaymentSystems" },
+              { name: "Property Types", path: "#" },
+              { name: "Membership Card", path: "/dashboard/Membership" },
+              {
+                name: "Amenities Type",
+                path: "/dashboard/AmenitiesCategories",
+              },
+              { name: "Amenities", path: "/dashboard/Amenities" },
+            ],
+          },
         ];
       case "owner":
         return [
-          {
-            name: "Profile",
-            path: "/dashboard/profile",
-            icon: Key,
-            clickedicon: KeyGreen,
-            submenu: [],
-          },
+         
           {
             name: "Property Management",
             path: "#",
@@ -194,7 +208,7 @@ const SideBar = ({ open, setOpen }) => {
             path: "/dashboard/profile",
             icon: Key,
             clickedicon: KeyGreen,
-            submenu: [],
+            submenu: [], 
           },
         ];
       default:

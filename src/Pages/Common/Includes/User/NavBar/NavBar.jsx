@@ -22,6 +22,8 @@ const NavBar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userRole = userInfo?.role.name;
   const countryList = [
     { id: 1, name: "BD", flag: globalLogo },
     { id: 2, name: "USA", flag: globalLogo },
@@ -69,6 +71,21 @@ const NavBar = () => {
     };
   }, [country, profile]);
 
+  const navigateToDashboard = (e) => {
+    e.preventDefault();
+    // Determine the default page based on user role
+    switch (userRole) {
+      case "Super Admin":
+        return navigate(`/dashboard`);
+      case "owner":
+        return navigate(`/dashboard/property-add`);
+      case "user":
+        return navigate(`/dashboard/profile`);
+      default:
+        return null; // Render nothing if the role is not recognized
+    }
+  };
+
   const handleNavigate = (event, route) => {
     event.preventDefault();
     setMenu(false);
@@ -79,7 +96,7 @@ const NavBar = () => {
     e.preventDefault();
     console.log("logout");
     localStorage.setItem("userInfo", JSON.stringify(null));
-    localStorage.removeItem("accessToken", JSON.stringify(''));
+    localStorage.removeItem("accessToken", JSON.stringify(""));
 
     dispatch(logout());
 
@@ -233,7 +250,8 @@ const NavBar = () => {
               {profile && (
                 <div className="w-[116px] absolute right-0 h-20 p-3 bg-white rounded border border-neutral-200 flex-col justify-center items-start gap-4 inline-flex z-20">
                   <div
-                    onClick={(e) => handleNavigate(e, "dashboard")}
+                    onClick={(e) => navigateToDashboard(e)}
+                    // onClick={(e) => handleNavigate(e, "dashboard")}
                     className="flex items-center gap-[8px]"
                   >
                     <img src={profileIcon} alt="Profile-icon" />
