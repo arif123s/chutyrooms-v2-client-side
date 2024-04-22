@@ -99,7 +99,7 @@ const handleSubmit = async (e) =>{
             {validationErrors.name && <span className='validation-message'>{validationErrors.name}</span>}
             </div>
 
-            <div>
+            <div className='mt-[14px]'>
                 <label className="property-input-title" htmlFor="description">
                   Description
                 </label>
@@ -115,7 +115,7 @@ const handleSubmit = async (e) =>{
             {validationErrors.description && <span className='validation-message'>{validationErrors.description}</span>}
             </div>
 
-            <div>
+            <div className='mt-[14px]'>
                 <label className="property-input-title" htmlFor="amount_type">
                   Amount Type
                 </label>
@@ -130,7 +130,7 @@ const handleSubmit = async (e) =>{
             {validationErrors.amount_type && <span className='validation-message'>{validationErrors.amount_type}</span>}
             </div>
 
-            <div>
+            <div className='mt-[14px]'>
                 <label className="property-input-title" htmlFor="amount">
                   Amount
                 </label>
@@ -145,7 +145,7 @@ const handleSubmit = async (e) =>{
             {validationErrors.amount && <span className='validation-message'>{validationErrors.amount}</span>}
             </div>
 
-            <div>
+            <div className='mt-[14px]'>
                 <label className="property-input-title" htmlFor="amount">
                   Price
                 </label>
@@ -159,14 +159,14 @@ const handleSubmit = async (e) =>{
 
             {validationErrors.price && <span className='validation-message'>{validationErrors.price}</span>}
             </div>
-            <div className='flex space-x-[5px]'>
-            <div>
+            <div className='flex gap-[10px] mt-[14px]'>
+            <div className=''>
                 <label className="property-input-title" htmlFor="amount">
                   Validation Year
                 </label>
                 <input
                 type='number'
-                  className="input-box"
+                  className="input-box mt-10"
                   id="validity_year"
                   name="validity_year"
                   max = '10'
@@ -260,7 +260,7 @@ const handleSubmit = async (e) =>{
             </div>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 mt-[14px]">
               <label
                 htmlFor="image">
                  Membership Card Image
@@ -277,7 +277,7 @@ const handleSubmit = async (e) =>{
             </div>
               {validationErrors.image && <span className='validation-message'>{validationErrors.image}</span>}
 
-            <div>
+            <div className="mb-3 mt-[14px]">
             <label className="property-input-title" htmlFor="view_order">
                     View Order
                   </label>

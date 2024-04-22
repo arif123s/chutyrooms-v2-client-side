@@ -15,6 +15,7 @@ const EditAmenitiesCategory = () => {
     control,
     handleSubmit,
     reset,
+    formState: { errors },
   } = useForm();
 
   const [amenitiesCategoryData, setamenitiesCategoryData] = useState({

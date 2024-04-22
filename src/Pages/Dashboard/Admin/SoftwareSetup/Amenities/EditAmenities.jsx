@@ -6,6 +6,8 @@ import { useGetAllAmenitiesCategoriesQuery , useGetSingleAmenitiesQuery , useUpd
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
+
 const EditAmenities = () => {
 
     const navigate = useNavigate();
@@ -15,6 +17,7 @@ const EditAmenities = () => {
       control,
       handleSubmit,
       reset,
+      formState: { errors },
     } = useForm();
   
     const [amenitiesData, setamenitiesData] = useState({
@@ -29,15 +32,21 @@ const EditAmenities = () => {
      const [validationErrors, setValidationErrors] = useState({});
   
     const { data } = useGetAllAmenitiesCategoriesQuery();
-    const AmenitiesCategories = data?.data;
-    console.log(AmenitiesCategories);
+    const AmenitiesCategories = data?.data.data;
+    // console.log(AmenitiesCategories);
 
-    const { singleAmenitiesdata,  isLoading , refetch } = useGetSingleAmenitiesQuery();
-    console.log(singleAmenitiesdata);
-    // const SingleAmenity = singleAmenitiesdata?.data;
-    // console.log(SingleAmenity)
+    const {data: singleAmenitiesdata,  isLoading , refetch } = useGetSingleAmenitiesQuery(id);
+    // console.log(singleAmenitiesdata);
+    const SingleAmenity = singleAmenitiesdata?.data;
+    console.log(SingleAmenity)
 
-    // setSelectedAmenitiesCategory(SingleAmenity.amenities_type_id);
+    useEffect(() => {
+
+      setSelectedAmenitiesCategory(SingleAmenity?.amenities_type_id);
+      refetch();
+    }, [SingleAmenity]);
+
+   
   
    
     
@@ -45,84 +54,84 @@ const EditAmenities = () => {
     
     
   
-//     const [updateAmenitities, { isLoading: updateLoading,
+    const [updateAmenitities, { isLoading: updateLoading,
     
-//       }] =useUpdateAmenitiesMutation();
+      }] =useUpdateAmenitiesMutation();
   
-//    useEffect(() => {
+   useEffect(() => {
     
-//       if(SingleAmenity)
-//       {
-//         setamenitiesData({
-//           name: SingleAmenity.name,
-//           amenities_type_id : SingleAmenity.amenities_type_id,
-//           view_order: SingleAmenity.view_order,
-//           is_active: SingleAmenity.is_active,
-//         });
+      if(SingleAmenity)
+      {
+        setamenitiesData({
+          name: SingleAmenity.name,
+          amenities_type_id : SingleAmenity.amenities_type_id,
+          view_order: SingleAmenity.view_order,
+          is_active: SingleAmenity.is_active,
+        });
       
-//           refetch();
-//       }
+          refetch();
+      }
     
-//     }, [SingleAmenity]);
+    }, [SingleAmenity]);
   
     
   
-//     if (isLoading || updateLoading) {
-//       return <Loading></Loading>;
-//     }
+    if (isLoading ) {
+      return <Loading></Loading>;
+    }
   
   
-//     const onSubmit = async (data) => {
-//       const amenitiesInfo = {
-//         id: id,
-//         name: amenitiesData.name,
-//         amenities_type_id : amenitiesData.amenities_type_id,
-//         view_order: amenitiesData.view_order,
-//         is_active: parseInt(amenitiesData.is_active),
-//       };
+    const onSubmit = async (data) => {
+      const amenitiesInfo = {
+        id: id,
+        name: amenitiesData.name,
+        amenities_type_id : amenitiesData.amenities_type_id,
+        view_order: amenitiesData.view_order,
+        is_active: parseInt(amenitiesData.is_active),
+      };
   
     
   
      
   
-//       const formData = new FormData();
+      const formData = new FormData();
   
-//       Object.entries(amenitiesInfo).forEach(([key, value]) => {
-//         const formattedValue =
-//             key === "is_active" ? parseInt(value, 10) : value;
-//           formData.append(key, formattedValue);
+      Object.entries(amenitiesInfo).forEach(([key, value]) => {
+        const formattedValue =
+            key === "is_active" ? parseInt(value, 10) : value;
+          formData.append(key, formattedValue);
         
-//       });
+      });
       
-//       formData.append("_method", "PUT");
-//       console.log("formdata", Object.fromEntries(formData));
+      formData.append("_method", "PUT");
+      console.log("formdata", Object.fromEntries(formData));
   
-//       const amenitiesinfo = {
-//         id,
-//         formData,
-//       };
+      const amenitiesinfo = {
+        id,
+        formData,
+      };
   
-//       try {
-//         const result = await updateAmenitities(amenitiesinfo);
-//         if (result?.data?.status) {
-//           console.log("Amenities ", result);
-//           toast.success("Amenities  edited successfully");
-//           navigate("/dashboard/Amenities");
-//           reset();
-//         }
-//         else {
-//           console.log("Failed", result?.error?.data?.errors);
-//           setValidationErrors(result?.error?.data?.errors);
-//         }
-//       } catch (error) {
-//         console.error("Error adding Amenities:", error);
-//       }
-//     };
+      try {
+        const result = await updateAmenitities(amenitiesinfo);
+        if (result?.data?.status) {
+          console.log("Amenities ", result);
+          toast.success("Amenities  edited successfully");
+          navigate("/dashboard/Amenities");
+          reset();
+        }
+        else {
+          console.log("Failed", result?.error?.data?.errors);
+          setValidationErrors(result?.error?.data?.errors);
+        }
+      } catch (error) {
+        console.error("Error adding Amenities:", error);
+      }
+    };
     
     return (
         <div>
             <div className="amenities-add-division">
-        {/* <form
+        <form
           className="amenities-add-form"
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -137,12 +146,12 @@ const EditAmenities = () => {
                 name="amenities_type_id"
               value={selectedAmenitiesCategory}
 
-                {...register("amenities_type_id", {
-                  required: {
-                    value: true,
-                    message: "amenities_type_id  is required",
-                  },
-                })}
+                // {...register("amenities_type_id", {
+                //   required: {
+                //     value: true,
+                //     message: "amenities_type_id  is required",
+                //   },
+                // })}
 
                 onClick={(e) =>
                     setamenitiesData({
@@ -278,7 +287,7 @@ const EditAmenities = () => {
           <button type="submit" className="country-save-btn">
             Save
           </button>
-        </form> */}
+        </form>
 </div>
         </div>
     );

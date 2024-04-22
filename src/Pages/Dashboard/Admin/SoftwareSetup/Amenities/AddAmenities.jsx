@@ -79,7 +79,7 @@ const AddAmenities = () => {
      // Handle successful mutation
      if (result?.data?.status) {
        console.log("Amenities Category", result);
-       toast.success("Amenities Category added successfully");
+       toast.success("Amenities added successfully");
        navigate("/dashboard/Amenities");
      } else {
        // console.log("Failed", result);

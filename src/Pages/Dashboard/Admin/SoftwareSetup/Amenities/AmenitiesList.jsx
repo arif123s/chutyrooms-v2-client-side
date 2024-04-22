@@ -21,7 +21,7 @@ const AmenitiesCategoryList = () => {
 
  
   const Amenities = data?.data.data;
-  // console.log(Amenities);
+  console.log(Amenities);
 
   useEffect(() => {
     refetch();
@@ -73,7 +73,7 @@ const AmenitiesCategoryList = () => {
         </thead>
 
         <tbody className="gap-y-5">
-          {Amenities.slice()
+          {Amenities?.slice()
             .sort((a, b) => a.view_order - b.view_order)
             .map((Amenities) => (
               <tr key={Amenities.id}>
