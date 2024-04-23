@@ -79,6 +79,7 @@ import GuestPolicy from "../Pages/CompanyInformation/GuestPolicy/GuestPolicy";
 import Legal from "../Pages/CompanyInformation/Legal/Legal";
 import EarnWithChutyrooms from "../Pages/CompanyInformation/EarnWithChutyrooms/EarnWithChutyrooms";
 import PropertyList from "../Pages/Dashboard/PropertyManagement/PropertyList/PropertyList";
+import OwnerPropertyEdit from "../Pages/Dashboard/PropertyManagement/OwnerPropertyEdit/OwnerPropertyEdit";
 
 export const router = createBrowserRouter([
   {
@@ -225,6 +226,10 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/property-list",
             element: <PropertyList></PropertyList>,
+          },
+          {
+            path: "/dashboard/property/:propertyId/edit",
+            element: <OwnerPropertyEdit></OwnerPropertyEdit>,
           },
           {
             path: "/dashboard/room-add",

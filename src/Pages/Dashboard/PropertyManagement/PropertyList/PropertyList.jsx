@@ -49,7 +49,7 @@ const PropertyList = () => {
             </thead>
 
             <tbody className="gap-y-5">
-              {propertyData?.data?.data.map((property) => (
+              {propertyData?.data?.data?.map((property) => (
                 <tr key={property.id}>
                   <td>
                     <img
@@ -60,7 +60,7 @@ const PropertyList = () => {
                   </td>
                   <td>{property.name}</td>
                   <td>
-                    {property.added_by.map((owner) => (
+                    {property.property_owner?.map((owner) => (
                       <p key={owner.id}>{owner.name}</p>
                     ))}
                   </td>
@@ -72,8 +72,8 @@ const PropertyList = () => {
                   </td>
                   <td className="country-action-div">
                     <Link
-                      className="edit-btn"
-                      to={``}
+                      to={`/dashboard/property/${property.id}/edit`}
+                      className="edit-btn mt-[2px]"
                     >
                       <img
                         className="edit-delete-icon"
@@ -84,11 +84,11 @@ const PropertyList = () => {
 
                     {property.deleted_at == null ? (
                       <a
-                        className="delete-btn"
+                        className="delete-btn mt-[2px]"
                         onClick={() => handleDelete(property.id)}
                       >
                         <img
-                          className="edit-delete-icon"
+                          className="edit-delete-icon mt-[2px]"
                           src={deleteIcon}
                           alt="image"
                         ></img>
