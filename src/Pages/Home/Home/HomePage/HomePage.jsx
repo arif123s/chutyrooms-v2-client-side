@@ -11,6 +11,7 @@ import ChutyLogo from "../../../../assets/icons/chuty-logo.png";
 const HomePage = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
+  const [isOtherDivVisible, setIsOtherDivVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,7 +19,9 @@ const HomePage = () => {
 
       // Set the state based on the scroll position
       setIsHidden(scrollY === 0);
-      setIsSticky(scrollY > 10);
+      setIsSticky(scrollY > 0);
+      setIsOtherDivVisible(!isSticky);
+      setIsOtherDivVisible(scrollY === 0)
     };
 
     // Add scroll event listener
@@ -28,25 +31,27 @@ const HomePage = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isSticky]);
   return (
     <div>
       <div
         className={`scroll-show-sticky ${isHidden ? "hide" : ""}  ${
-          isSticky ? "sticky" : ""
+          isSticky ? "sticky" : "hidden"
         }`}
       >
         <img src={ChutyLogo} className="stickyLogo"></img>
-        <div className="w-full">
+        <div className="w-full ">
           <SearchField></SearchField>
         </div>
       </div>
 
       <div className="custom-container homepage-container">
         {/* <SearchField></SearchField> */}
-        <div className="mt-[40px] custom-container">
+        {isOtherDivVisible && (
+        <div className="mt-[40px] custom-container" >
           <SearchField></SearchField>
         </div>
+        )}
         <div className="hotels-membership-container">
           <PopularHotels></PopularHotels>
           <DealMembership></DealMembership>

@@ -1,14 +1,14 @@
 import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { BASE_ASSET_API } from "../../../../../BaseApi/AssetUrl";
-import Loading from "../../../../Common/Includes/Loading/Loading";
-import { useGetSingleAmenitiesCategoryQuery , useUpdateAmenitiesCategoryMutation  } from "../../../../../redux/features/admin/Amenities/amenitiesCategory.api";
+import { BASE_ASSET_API } from "../../../../../../BaseApi/AssetUrl";
+import Loading from "../../../../../Common/Includes/Loading/Loading";
+import { useGetSingleRoomTypeQuery , useUpdateRoomTypeMutation } from "../../../../../../redux/features/admin/Room/RoomTypes.api";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const EditAmenitiesCategory = () => {
+const RoomTypeEdit = () => {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
   const { id } = useParams();
 //   alert(id)
   const {
@@ -18,7 +18,7 @@ const EditAmenitiesCategory = () => {
     formState: { errors },
   } = useForm();
 
-  const [amenitiesCategoryData, setamenitiesCategoryData] = useState({
+  const [roomTypeData, setroomTypeData] = useState({
     name: "",
     view_order: "",
     is_active: null,
@@ -27,34 +27,34 @@ const EditAmenitiesCategory = () => {
 
    const [validationErrors, setValidationErrors] = useState({});
 
-  const { data, isLoading,refetch } = useGetSingleAmenitiesCategoryQuery(id);
-  const amenitiesCategory = data?.data;
+  const { data, isLoading,refetch } = useGetSingleRoomTypeQuery(id);
+  const roomType = data?.data;
 
  
-  console.log(amenitiesCategory);
+  console.log(roomType);
 
   
   
 
-  const [updateAmenititiesCategory, { isLoading: updateLoading,
+  const [updateRoomType, { isLoading: updateLoading,
   
-    }] =useUpdateAmenitiesCategoryMutation();
+    }] =useUpdateRoomTypeMutation();
 
  useEffect(() => {
   
-    if(amenitiesCategory)
+    if(roomType)
     {
-      setamenitiesCategoryData({
-        name: amenitiesCategory.name,
+        setroomTypeData({
+        name: roomType.name,
       
-        view_order: amenitiesCategory.view_order,
-        is_active: amenitiesCategory.is_active,
+        view_order: roomType.view_order,
+        is_active: roomType.is_active,
       });
     
         refetch();
     }
   
-  }, [amenitiesCategory]);
+  }, [roomType]);
 
   
 
@@ -64,12 +64,12 @@ const EditAmenitiesCategory = () => {
 
 
   const onSubmit = async (data) => {
-    const amenitiesCategoryInfo = {
+    const roomTypeInfo = {
       id: id,
-      name: amenitiesCategoryData.name,
+      name: roomTypeData.name,
    
-      view_order: amenitiesCategoryData.view_order,
-      is_active: parseInt(amenitiesCategoryData.is_active),
+      view_order: roomTypeData.view_order,
+      is_active: parseInt(roomTypeData.is_active),
     };
 
   
@@ -78,7 +78,7 @@ const EditAmenitiesCategory = () => {
 
     const formData = new FormData();
 
-    Object.entries(amenitiesCategoryInfo).forEach(([key, value]) => {
+    Object.entries(roomTypeInfo).forEach(([key, value]) => {
       const formattedValue =
           key === "is_active" ? parseInt(value, 10) : value;
         formData.append(key, formattedValue);
@@ -88,17 +88,17 @@ const EditAmenitiesCategory = () => {
     formData.append("_method", "PUT");
     console.log("formdata", Object.fromEntries(formData));
 
-    const amenitiescategoryInfo = {
+    const roomtypeInfo = {
       id,
       formData,
     };
 
     try {
-      const result = await updateAmenititiesCategory(amenitiescategoryInfo);
+      const result = await updateRoomType(roomtypeInfo);
       if (result?.data?.status) {
-        console.log("Amenities Category", result);
-        toast.success("Amenities Category edited successfully");
-        navigate("/dashboard/AmenitiesCategories");
+        console.log("Room Type", result);
+        toast.success("Room Type edited successfully");
+        navigate("/dashboard/rooms/roomTypes");
         reset();
       }
       else {
@@ -111,25 +111,25 @@ const EditAmenitiesCategory = () => {
   };
   
   
-  return (
-<div>
-<div className="amenities-add-division">
+    return (
+        <div>
+            <div className="RoomType-add-division">
         <form
-          className="amenities-add-form"
+          className="RoomType-add-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
             <label className="property-input-title" htmlFor="name">
-              PaymentType Name
+              RoomType Name
             </label>
             <input
               className="input-box"
               id="name"
               name="name"
-              value={amenitiesCategoryData.name}
+              value={roomTypeData.name}
               onChange={(e) =>
-                setamenitiesCategoryData({
-                  ...amenitiesCategoryData,
+               setroomTypeData({
+                  ...roomTypeData,
                   name: e.target.value,
                 })
               }
@@ -157,10 +157,10 @@ const EditAmenitiesCategory = () => {
               className="input-box"
               id="view_order"
               name="view_order"
-              value={amenitiesCategoryData.view_order}
+              value={roomTypeData.view_order}
               onChange={(e) =>
-                setamenitiesCategoryData({
-                  ...amenitiesCategoryData,
+                setroomTypeData({
+                  ...roomTypeData,
                   view_order: e.target.value,
                 })
               }
@@ -187,10 +187,10 @@ const EditAmenitiesCategory = () => {
                   name="is_active"
                   id="active"
                   value={1}
-                  checked={amenitiesCategoryData.is_active == 1}
+                  checked={roomTypeData.is_active == 1}
                   onChange={(e) =>
-                    setamenitiesCategoryData({
-                      ...amenitiesCategoryData,
+                    setroomTypeData({
+                      ...roomTypeData,
                       is_active: e.target.value,
                     })
                   }
@@ -204,10 +204,10 @@ const EditAmenitiesCategory = () => {
                   name="is_active"
                   id="inactive"
                   value={0}
-                  checked={amenitiesCategoryData.is_active == 0}
+                  checked={roomTypeData.is_active == 0}
                   onChange={(e) =>
-                    setamenitiesCategoryData({
-                      ...amenitiesCategoryData,
+                    setroomTypeData({
+                      ...roomTypeData,
                       is_active: e.target.value,
                     })
                   }
@@ -230,9 +230,8 @@ const EditAmenitiesCategory = () => {
           </button>
         </form>
 </div>
-            
-</div>
+        </div>
     );
 };
 
-export default EditAmenitiesCategory;
+export default RoomTypeEdit;

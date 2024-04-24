@@ -1,34 +1,22 @@
 import { useState } from "react";
 // import { useAddAmenitiesCategoryMutation } from "../../../../../redux/features/admin/Amenities/amenitiesCategory.api";
-import { useGetAllAmenitiesCategoriesQuery , useAddAmenitiesMutation } from "../../../../../redux/features/admin/Amenities/amenities.api";
-import Loading from "../../../../Common/Includes/Loading/Loading";
+// import { useGetAllAmenitiesCategoriesQuery , useAddAmenitiesMutation } from "../../../../../redux/features/admin/Amenities/amenities.api";
+import { useAddRoomTypeMutation } from "../../../../../../redux/features/admin/Room/RoomTypes.api";
+import Loading from "../../../../../Common/Includes/Loading/Loading";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg"
+import arrowDownIcon from "../../../../../../assets/icons/arrow-down.svg";
 
-const AddAmenities = () => {
+const AddRoomType = () => {
+
     const navigate = useNavigate();
-
-   
-
  const [
-   AddAmenities,
+   AddRoomType,
    {
      isLoading,
-     // isError,
-     //  error
    },
- ] = useAddAmenitiesMutation();
-
- const { data, refetch } = useGetAllAmenitiesCategoriesQuery();
- console.log(data?.data);
-
- 
- 
-  const AmenitiesCategories = data?.data.data;
- 
-// 
+ ] = useAddRoomTypeMutation();
  // const [inputValue, setInputValue] = useState({ name: '', view_order: '', is_active: null });
  const {
    control,
@@ -51,9 +39,8 @@ const AddAmenities = () => {
 
    setErrorMessage({ status: false, message: "", errors: [] });
 
-   const amenitiesInfo = {
+   const amenitiesCategoryInfo = {
      name: data.name,
-     amenities_type_id: data.amenities_type_id,
      view_order: data.view_order,
      is_active: parseInt(data.is_active),
    };
@@ -75,12 +62,12 @@ const AddAmenities = () => {
 
  
    try {
-     const result = await AddAmenities(formData);
+     const result = await AddRoomType(formData);
      // Handle successful mutation
      if (result?.data?.status) {
-       console.log("Amenities Category", result);
-       toast.success("Amenities added successfully");
-       navigate("/dashboard/Amenities");
+       console.log("Room Type", result);
+       toast.success("Room Type added successfully");
+       navigate("/dashboard/rooms/roomTypes");
      } else {
        // console.log("Failed", result);
        console.log("Failed", result.error.data.errors);
@@ -93,54 +80,20 @@ const AddAmenities = () => {
      }
    } catch (error) {
      // Handle error
-     console.error("Error adding payment method:", error);
+     console.error("Error adding Room Type:", error);
    }
  };
+    
     return (
-        <div className="amenities-add-division">
+        <div className="RoomType-add-division">
         <form
-          className="amenities-add-form"
+          className="RoomType-add-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           {/* Property name */}
-
-          <label className="property-input-title block" htmlFor="amenities_type_id">
-              Amenities Category
-            </label>
-            <div className="property-input-div">
-              <select
-                id="amenities_type_id"
-                className="property-input"
-                name="amenities_type_id"
-              
-
-                {...register("amenities_type_id", {
-                  required: {
-                    value: true,
-                    message: "amenities_type_id  is required",
-                  },
-                })}
-              >
-                <option>Select Amenities Type</option>
-             
-                {AmenitiesCategories?.map(amenitiescatergory => (
-                    <option key={amenitiescatergory.id} value={amenitiescatergory.id}>
-                        {amenitiescatergory.name}
-                    </option>
-                ))}
-           
-              </select>
-            
-              <img
-                // className="absolute top-[14px] right-[12px] arrow-icon"
-                className="arrow-icon"
-                src={arrowDownIcon}
-                alt=""
-              />
-            </div>
           <div className="mb-3">
             <label className="property-input-title" htmlFor="name">
-              Amenities Name
+              RoomType Name
             </label>
             <input
               className="input-box"
@@ -149,7 +102,7 @@ const AddAmenities = () => {
               {...register("name", {
                 required: {
                   value: true,
-                  message: "Amenities name is required",
+                  message: "Payment Type is required",
                 },
               })}
             />
@@ -240,4 +193,4 @@ const AddAmenities = () => {
     );
 };
 
-export default AddAmenities;
+export default AddRoomType;
