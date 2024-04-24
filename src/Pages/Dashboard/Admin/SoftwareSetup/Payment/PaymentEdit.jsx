@@ -58,7 +58,7 @@ const PaymentEdit = () => {
       });
     }
         refetch();
-  }, [paymentMethod]);
+  }, [paymentMethod,refetch]);
 
   if (isLoading || updateLoading) {
     return <Loading></Loading>;

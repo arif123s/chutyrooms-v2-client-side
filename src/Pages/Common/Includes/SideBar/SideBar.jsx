@@ -140,7 +140,6 @@ const SideBar = ({ open, setOpen }) => {
             submenu: [
               { name: "Property List", path: "/dashboard/property-list" },
               { name: "Add Property", path: "/dashboard/property-add" },
-              { name: "Edit Property", path: "#" },
             ],
           },
           {
@@ -185,7 +184,6 @@ const SideBar = ({ open, setOpen }) => {
             submenu: [
               { name: "Property List", path: "/dashboard/property-list" },
               { name: "Add Property", path: "/dashboard/property-add" },
-              { name: "Edit Property", path: "#" },
             ],
           },
           {
