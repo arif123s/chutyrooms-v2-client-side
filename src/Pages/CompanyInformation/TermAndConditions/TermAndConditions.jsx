@@ -18,7 +18,7 @@ const TermAndConditions = () => {
         </p>
 
         <p className="mb-[18px]">
-          Last updated:{" "}
+          Last updated :{" "}
           <span className="text-[#020F07] font-['Gilroy-semibold']">
             April 1, 2023
           </span>
@@ -326,7 +326,7 @@ const TermAndConditions = () => {
           </p>
         </div>
 
-        <div className="">
+        {/* <div className="">
           <h2 className="text-[16px] md:text-[18px] lg:text-[18px] font-['Gilroy-semibold'] mb-[4px]">
             Contact Information
           </h2>
@@ -339,7 +339,7 @@ const TermAndConditions = () => {
             <p className="mb-[2px]">Contact details: www.chutyrooms.com</p>
             <p> Phone number: +8801958609901</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
