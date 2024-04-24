@@ -1,0 +1,32 @@
+.RoomType-list-content {
+    padding: 20px;
+  }
+  
+.RoomType-option {
+  display: flex;
+  gap: 8px;
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.RoomType-tbl-head{
+  border-bottom: 1px solid #E6E7E6;
+  text-align: left;
+}
+
+.RoomType-list {
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.RoomType-add-division
+{
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.RoomType-add-form
+{
+  width: 50%;
+}

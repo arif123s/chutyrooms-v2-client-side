@@ -78,6 +78,10 @@ import FrequentlyAskedQuestions from "../Pages/CompanyInformation/FAQ/Frequently
 import GuestPolicy from "../Pages/CompanyInformation/GuestPolicy/GuestPolicy";
 import Legal from "../Pages/CompanyInformation/Legal/Legal";
 import EarnWithChutyrooms from "../Pages/CompanyInformation/EarnWithChutyrooms/EarnWithChutyrooms";
+import RoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomType";
+import RoomTypeList from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomTypeList";
+import AddRoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/AddRoomType";
+import RoomTypeEdit from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomTypeEdit";
 
 export const router = createBrowserRouter([
   {
@@ -389,6 +393,29 @@ export const router = createBrowserRouter([
               }
             ],
           },
+
+          {
+
+            path: "/dashboard/rooms/roomTypes",
+            element: <RoomType></RoomType>,
+
+            children: [
+              {
+                path: "/dashboard/rooms/roomTypes",
+                element: <RoomTypeList></RoomTypeList>
+              },
+              {
+                path: "/dashboard/rooms/roomTypes/addRoomType",
+                element: <AddRoomType></AddRoomType>
+              },
+
+              {
+                path: "dashboard/rooms/roomTypes/editRoomType/:id",
+                element: <RoomTypeEdit></RoomTypeEdit>
+              }
+            ],
+
+          }
         ],
       },
       {
