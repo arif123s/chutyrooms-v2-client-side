@@ -12,6 +12,16 @@ const propertyAddApi = baseApi.injectEndpoints({
       }),
     }),
 
+    getSingleProperty: builder.query({
+      query: (id) => ({
+        url: `/owner/property/${id}/edit`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+
     getAllPropertyAddingProperties: builder.query({
       query: () => ({
         url: "/owner/property/create",
@@ -109,6 +119,7 @@ const propertyAddApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllPropertyQuery,
+  useGetSinglePropertyQuery,
   useGetAllPropertyAddingPropertiesQuery,
   // useGetAllActiveCountriesQuery,
   useGetAllActiveDivisionQuery,

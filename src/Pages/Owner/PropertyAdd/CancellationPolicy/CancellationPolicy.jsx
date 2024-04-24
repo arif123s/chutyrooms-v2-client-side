@@ -78,53 +78,6 @@ const CancellationPolicy = (props) => {
 
   return (
     <div>
-      {/* <div>
-        <h2 className="property-input-title">Cancellation Policy</h2>
-
-        <div className="py-[10px] px-[14px] border-[1px] rounded-[8px] border-[#E6E7E6] md:flex lg:flex gap-x-[120px]">
-          <div className="md:flex lg:flex gap-x-[24px]">
-            <table className="custom-table">
-              
-              <thead className="">
-                <tr className="text-left mt-[24px]">
-                  <th className="property-input-title  font-normal ">
-                    Duration
-                  </th>
-                  <th className="property-input-title font-normal flex ">
-                    Refund
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="">
-                {policies.map((policy) => (
-                  <tr key={policy.id}>
-                   
-                    {policy.content}
-                  </tr>
-                ))}
-
-               
-              </tbody>
-            </table>
-           
-
-            <div className="text-[14px] md:text-[16px] lg:text-[16px] mt-3 md:mt-3 lg:mt-3 flex justify-end md:justify-start lg:justify-start gap-x-2 md:block lg:block">
-              <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center mb-[8px]">
-                Add
-              </button>
-              <button className="border-[1px] border-[#E6E7E6] px-[12px] py-[10px] rounded-[4px] w-[88px] h-[34px] flex items-center justify-center">
-                Remove
-              </button>
-            </div>
-          </div>
-
-          <h2 className="flex justify-center lg:justify-start items-center text-[16px] text-[#159947] mt-3 lg:mt-0">
-            <img className="w-[16px]" src={starIcon} alt="" />
-            Add Cancellation Policy
-          </h2>
-        </div>
-      </div> */}
-
       <div>
         <h2 className="property-input-title">Cancellation Policy</h2>
 
@@ -150,7 +103,7 @@ const CancellationPolicy = (props) => {
                           <p className="flex">
                             <input
                               type="number"
-                              className="w-[36px] border-[1px] border-[#E6E7E6] rounded-[4px] px-1"
+                              className="w-[36px] border-[1px] border-[#E6E7E6] rounded-[4px] px-1 bg-white"
                               value={cancellation.duration.hours}
                               onChange={(e) =>
                                 handleDurationChange(
@@ -168,7 +121,7 @@ const CancellationPolicy = (props) => {
                           <p className="flex">
                             <input
                               type="number"
-                              className="w-[36px] border-[1px] border-[#E6E7E6] rounded-[4px] px-1"
+                              className="w-[36px] border-[1px] border-[#E6E7E6] rounded-[4px] px-1 bg-white"
                               value={cancellation.duration.minutes}
                               onChange={(e) =>
                                 handleDurationChange(
@@ -244,62 +197,6 @@ const CancellationPolicy = (props) => {
         </div>
       </div>
 
-      {/* <div>
-        {cancellationData.map((cancellation, index) => (
-          <div
-            key={index}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              margin: "10px",
-            }}
-          >
-            <div>
-              <label>Duration:</label>
-              <input
-                type="number"
-                value={cancellation.duration.hours}
-                onChange={(e) =>
-                  handleDurationChange(index, "hours", e.target.value)
-                }
-              />
-              <span> hours </span>
-              <input
-                type="number"
-                value={cancellation.duration.minutes}
-                onChange={(e) =>
-                  handleDurationChange(index, "minutes", e.target.value)
-                }
-              />
-              <span> minutes</span>
-            </div>
-            <div>
-              <label>Refund Percentage:</label>
-              <div
-                onClick={() =>
-                  handleRefundChange(index, cancellation.refundPercentage + 1)
-                }
-              >
-                Increase
-              </div>
-              <span>{cancellation.refundPercentage}%</span>
-              <div
-                onClick={() =>
-                  handleRefundChange(index, cancellation.refundPercentage - 1)
-                }
-              >
-                Decrease
-              </div>
-            </div>
-            <div>
-              <button onClick={() => handleRemoveCancellation(index)}>
-                Remove
-              </button>
-            </div>
-          </div>
-        ))}
-        <button onClick={handleAddCancellation}>Add Cancellation</button>
-      </div> */}
     </div>
   );
 };

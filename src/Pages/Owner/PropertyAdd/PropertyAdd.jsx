@@ -5,6 +5,7 @@ import imgIcon from "../../../assets/icons/img.svg";
 import videoIcon from "../../../assets/icons/frame.svg";
 import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
+import markLoaction from "../../../assets/icons/mark-location.svg";
 import Rating from "@mui/material/Rating";
 // import Stack from "@mui/material/Stack";
 import "./PropertyAdd.css";
@@ -47,11 +48,6 @@ const mapContainerStyle = {
 
 const PropertyAdd = () => {
 
-  const amenities = [
-      {general: ["Hill view", "Sea view"]},
-      
-     { mediaTechnology: ["CCTV", "TV"]},
-  ];
   // const MAX_VIDEO_SIZE_MB = 5;
   const navigate = useNavigate();
 
@@ -1796,7 +1792,7 @@ const PropertyAdd = () => {
               // className="border-[1px] rounded-[4px] relative"
               >
                 <input
-                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6] bg-white"
                   type="number"
                   name="checkin_hour"
                   id="checkin_hour"
@@ -1832,7 +1828,7 @@ const PropertyAdd = () => {
               {/* <p>Minute</p> */}
               <div>
                 <input
-                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6] bg-white"
                   type="number"
                   name="checkin_minute"
                   id="checkin_minute"
@@ -1865,7 +1861,7 @@ const PropertyAdd = () => {
             <div className="w-[56px]">
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
-                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
+                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px] bg-white"
                   id="checkin_time_period"
                   name="checkin_time_period"
                   defaultValue="AM"
@@ -1916,7 +1912,7 @@ const PropertyAdd = () => {
               // className="border-[1px] rounded-[4px] relative"
               >
                 <input
-                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6] bg-white"
                   type="number"
                   name="checkout_hour"
                   id="checkout_hour"
@@ -1952,7 +1948,7 @@ const PropertyAdd = () => {
               {/* <p>Minute</p> */}
               <div>
                 <input
-                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6]"
+                  className="rounded-[4px] h-[36px] w-full p-[8px] border-[1px] border-[#E6E7E6] bg-white"
                   type="number"
                   name="checkout_minute"
                   id="checkout_minute"
@@ -1985,7 +1981,7 @@ const PropertyAdd = () => {
             <div className="w-[56px]">
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
-                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
+                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px] bg-white"
                   id="checkout_time_period"
                   name="checkout_time_period"
                   {...register("checkout_time_period", {
@@ -2206,7 +2202,7 @@ const PropertyAdd = () => {
               onSelect={handleSelect}
             >
               {({
-                getInputProps, 
+                getInputProps,
                 suggestions,
                 getSuggestionItemProps,
                 loading,
@@ -2227,7 +2223,7 @@ const PropertyAdd = () => {
                     />
                     <div className="autocomplete-dropdown-container text-[12px] bg-white">
                       {loading && <div>Loading...</div>}
-                      {suggestions.map((suggestion) => {
+                      {suggestions.map((suggestion,index) => {
                         const style = {
                           backgroundColor: suggestion.active
                             ? "#159947"
@@ -2237,6 +2233,7 @@ const PropertyAdd = () => {
                         return (
                           <div
                             className="p-1"
+                            key={index}
                             {...getSuggestionItemProps(suggestion, {
                               style,
                             })}
@@ -2282,6 +2279,7 @@ const PropertyAdd = () => {
                     position={selectedLocation}
                     icon={{
                       url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
+                      // url: {markLoaction}, // Customize the marker icon as needed
                       scaledSize: new window.google.maps.Size(30, 30),
                     }}
                   />
@@ -2381,3 +2379,4 @@ const PropertyAdd = () => {
 };
 
 export default PropertyAdd;
+ 
