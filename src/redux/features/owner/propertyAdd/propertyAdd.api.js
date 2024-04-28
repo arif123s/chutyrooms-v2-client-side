@@ -114,6 +114,19 @@ const propertyAddApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    updateProperty: builder.mutation({
+      query: (updatePropertyInfo) => {
+        return {
+          url: `/owner/property/${updatePropertyInfo.id}`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: updatePropertyInfo.formData,
+        };
+      },
+    }),
   }),
 });
 
@@ -125,5 +138,6 @@ export const {
   useGetAllActiveDivisionQuery,
   useGetAllActiveDistrictQuery,
   useGetAllActiveAreaQuery,
-  useAddPropertyAddMutation
+  useAddPropertyAddMutation,
+  useUpdatePropertyMutation,
 } = propertyAddApi;

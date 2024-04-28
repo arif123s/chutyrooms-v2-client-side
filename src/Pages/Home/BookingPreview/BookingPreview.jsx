@@ -116,7 +116,7 @@ const BookingPreview = () => {
                   Phone
                 </label>
                 <div className="relative w-full">
-                  <div className="phone-input-box  ">
+                  <div className="phone-input-box">
                     <div className="flex w-[104px]">
                       <div className="relative mr-[4px]">
                         <div className="custom-select-container">
@@ -154,7 +154,7 @@ const BookingPreview = () => {
                     </div>
                     <div className="w-[2px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
                     <input
-                      className="w-full block mb-[4px]"
+                      className="w-full block mb-[4px] bg-white"
                       id="phone"
                       name="phone"
                       type="text"
@@ -396,7 +396,7 @@ const BookingPreview = () => {
                       <p>Promo Code</p>
                       <div className="flex gap-[8px] md:gap-[12px] lg:gap-[12px]">
                         <input
-                          className="w-[70px] border-[1px] rounded-[4px] py-[2px] px-[4px]"
+                          className="w-[70px] border-[1px] rounded-[4px] py-[2px] px-[4px] bg-white"
                           type="text"
                           name=""
                           id=""
@@ -475,7 +475,7 @@ const BookingPreview = () => {
               <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
                 <div className="flex items-center">
                   <input
-                    className="w-[12px] mr-2"
+                    className="w-[12px] mr-2 bg-white"
                     type="checkbox"
                     name="terms"
                     id="terms"

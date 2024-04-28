@@ -326,7 +326,7 @@ const Register = () => {
                   <div className="relative mr-[4px]">
                     <div className="custom-select-container">
                       <div
-                        className="selected-option flex items-center "
+                        className="selected-option flex items-center"
                         onClick={() => setShowOptions(!showOptions)}
                       >
                         {selectedCountry ? (
@@ -362,7 +362,7 @@ const Register = () => {
                 </div>
                 <div className="w-[2px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
                 <input
-                  className="w-full block mb-[4px]"
+                  className="w-full block mb-[4px] bg-white"
                   id="phone"
                   name="phone"
                   type="text"
@@ -406,6 +406,7 @@ const Register = () => {
             </label>
           </div>
         ) : (
+          // Email
           <div className="mb-4">
             <label className="input-title" htmlFor="email">
               Email

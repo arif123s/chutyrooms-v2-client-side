@@ -4,13 +4,14 @@ import videoIcon from "../../../../assets/icons/frame.svg";
 import arrowDownIcon from "../../../../assets/icons/arrow-down.svg";
 import searchIcon from "../../../../assets/icons/search-normal.svg";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { json, useNavigate, useParams } from "react-router-dom";
 import {
   useGetAllActiveAreaQuery,
   useGetAllActiveDistrictQuery,
   useGetAllActiveDivisionQuery,
   useGetAllPropertyAddingPropertiesQuery,
   useGetSinglePropertyQuery,
+  useUpdatePropertyMutation,
 } from "../../../../redux/features/owner/propertyAdd/propertyAdd.api";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import PlacesAutocomplete, {
@@ -23,11 +24,12 @@ import {
   Rectangle,
   useLoadScript,
 } from "@react-google-maps/api";
-import { Rating } from "@mui/material";
+import { Rating, duration } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
+import CancellationPolicyEdit from "./CancellationPolicyEdit/CancellationPolicyEdit";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -44,7 +46,8 @@ const OwnerPropertyEdit = () => {
     // refetch,
   } = useGetSinglePropertyQuery(propertyId);
 
-//   const property = propertyData?.data;
+  const [updateProperty, { isLoading: updatePropertyLoading }] =
+    useUpdatePropertyMutation();
 
   const navigate = useNavigate();
 
@@ -54,27 +57,21 @@ const OwnerPropertyEdit = () => {
     // refetch,
   } = useGetAllPropertyAddingPropertiesQuery();
 
-  console.log("propertyAdding", propertyAdding?.data.property_types);
+  // console.log("propertyAdding", propertyAdding?.data.property_types);
 
   const {
     control,
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
 
-  const [cancellationData, setCancellationData] = useState([
-    { duration: { hours: 47, minutes: 59 }, refund_percentage: 100 },
-    { duration: { hours: 23, minutes: 59 }, refund_percentage: 50 },
-  ]);
+  const [center, setCenter] = useState({
+    lat: 23.862725477930507,
+    lng: 90.40080333547479,
+  });
 
-  // const [center, setCenter] = useState({
-  //   lat: null,
-  //   lng: null,
-  // });
-
-  const [mapCenter, setMapCenter] = useState({});
+  const [mapCenter, setMapCenter] = useState(center);
   const [mapError, setMapError] = useState({
     status: false,
     message: "",
@@ -96,49 +93,57 @@ const OwnerPropertyEdit = () => {
   });
 
   const [logo, setLogo] = useState(null);
-  const [logoError, setLogoError] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
+  const [images, setImages] = useState([]);
+  const [check_in_time, setCheck_in_time] = useState({});
+  const [check_out_time, setCheck_out_time] = useState({});
+  const [cancellationData, setCancellationData] = useState([]);
+  const [logoError, setLogoError] = useState(null);
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
-  const [video, setVideo] = useState(null);
-  const [videoError, setVideoError] = useState(true);
+  console.log(logo);
+  // const [video, setVideo] = useState(null);
+  // const [videoError, setVideoError] = useState(true);
 
-  const selectedPropertyTypes = useWatch({
-    control,
-    name: "propertyTypes",
-    defaultValue: [],
+  // console.log("logo", logo);
+  // console.log("displayImages", displayImages);
+  // console.log("cancellationData", cancellationData);
+  // console.log("check_in_time", check_in_time);
+  // console.log("check_out_time", check_out_time);
+
+  // const selectedPropertyTypes = useWatch({
+  //   control,
+  //   name: "propertyTypes",
+  //   defaultValue: [],
+  // });
+
+  const [property, setProperty] = useState({
+    name: "",
+    subtitle: "",
+    bin: "",
+    tin: "",
+    trade_license_number: "",
+    area_id: null,
+    address: "",
+    description: "",
+    hotel_class: null,
+    property_types: [],
+    amenities: [],
+    check_in_time: "",
+    check_in_time_period: "",
+    check_out_time: "",
+    check_out_time_period: "",
+    latitude: null,
+    longitude: null,
+    cancellation: [],
+    short_description: "",
+    instruction: "",
+    payment_methods: [],
+    pet_policy: "",
   });
 
-   const [property,setProperty] = useState({
-     name: "",
-     subtitle:"",
-     bin: "",
-     tin: "",
-     trade_license_number: "",
-     area_id: null,
-     address: "",
-     description: "",
-     hotel_class: null,
-     property_types: [],
-     amenities: [],
-     images: [],
-     check_in_time: "",
-     check_in_time_period: "",
-     check_out_time: "",
-     check_out_time_period: "",
-     latitude: null,
-     longitude: null,
-     cancellation: [],
-     logo: "",
-     short_description: "",
-     instruction: "",
-     payment_methods: [],
-     pet_policy: "",
-     is_active: null,
-     video:"",
-   });
-
-    console.log(property);
+  console.log(property);
 
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(null);
@@ -146,8 +151,7 @@ const OwnerPropertyEdit = () => {
   const [countryId, setCountryId] = useState(null);
   const [divisionId, setDivisionId] = useState(null);
   const [districtId, setDistrictId] = useState(null);
-
-  // console.log( countryId);
+  const [areaId, setAreaId] = useState(null);
 
   const { data: divisionData, refetch: refetchDivisions } =
     useGetAllActiveDivisionQuery(countryId);
@@ -158,44 +162,97 @@ const OwnerPropertyEdit = () => {
   const { data: areaData, refetch: refetchAreas } =
     useGetAllActiveAreaQuery(districtId);
 
+  // console.log("districtId", districtId);
+  // console.log("divisionId", divisionId);
+  // console.log("areaId", areaId);
+
   useEffect(() => {
-    setMapCenter({
-      lat: propertyData?.data?.latitude,
-      lng: propertyData?.data?.longitude,
-    });
-    setSelectedLocation({
-      lat: propertyData?.data?.latitude,
-      lng: propertyData?.data?.longitude,
-    }); 
-    setProperty(propertyData?.data);
+    if (propertyData?.data) {
+      setLogoFile({
+        name: "",
+        url: `${BASE_ASSET_API}/storage/images/property/property_logo/${propertyData?.data?.logo}`,
+        logoFile: null,
+      });
+
+      setDisplayImages(
+        propertyData?.data?.images?.map((image) => ({
+          name: "",
+          url: `${BASE_ASSET_API}/storage/images/property/property_image/${image.image}`,
+          displayImageFile: null,
+        }))
+      );
+
+      setCheck_in_time({
+        hour: property?.check_in_time.split(":")[0],
+        min: property?.check_in_time.split(":")[1],
+        check_in_time_period: property?.check_in_time_period,
+      });
+
+      setCheck_out_time({
+        hour: property?.check_out_time.split(":")[0],
+        min: property?.check_out_time.split(":")[1],
+        check_out_time_period: property?.check_out_time_period,
+      });
+
+      if (propertyData?.data?.cancellation_policies) {
+        const cancellation = propertyData.data.cancellation_policies?.map(
+          (c) => {
+            const parsedDuration = JSON.parse(c.duration);
+            return {
+              duration: parsedDuration,
+              refund_percentage: c.refund_percentage,
+            };
+          }
+        );
+        setCancellationData(cancellation);
+      }
+
+      setCountryId(propertyData?.data.area.district.division.country.id);
+      setDivisionId(propertyData?.data.area.district.division.id);
+      setDistrictId(propertyData?.data.area.district.id);
+      setAreaId(propertyData?.data.area.id);
+
+      setSelectedLocation(mapCenter);
+      setProperty(propertyData?.data);
+    }
+  }, [
+    propertyData?.data,
+    property?.check_in_time,
+    property?.check_in_time_period,
+    property?.check_out_time,
+    property?.check_out_time_period,
+    mapCenter,
+  ]);
+
+  useEffect(() => {
     // Fetch data only if Id is not null
     if (countryId !== null) {
       refetchDivisions();
     }
+  }, [countryId, refetchDivisions]);
+
+  useEffect(() => {
+    // Fetch data only if Id is not null
     if (divisionId !== null) {
       refetchDistricts();
     }
+  }, [divisionId, refetchDistricts]);
+
+  useEffect(() => {
+    // Fetch data only if Id is not null
     if (districtId !== null) {
       refetchAreas();
     }
-  }, [
-    countryId,
-    refetchDivisions,
-    divisionId,
-    refetchDistricts,
-    districtId,
-    refetchAreas,
-    propertyData?.data,
-  ]);
+  }, [districtId, refetchAreas]);
 
   const handleMapClick = (e) => {
     const { latLng } = e;
     const latitude = latLng.lat();
     const longitude = latLng.lng();
-    // setCenter({ lat: latitude, lng: longitude });
+    setCenter({ lat: latitude, lng: longitude });
     setMapCenter({ lat: latitude, lng: longitude });
     setSelectedLocation({ lat: latitude, lng: longitude }); // Update selected location
-
+    // setMapError(false);
     setMapError({
       status: true,
       message: "Location selected",
@@ -209,8 +266,10 @@ const OwnerPropertyEdit = () => {
     try {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
+      console.log("latLng", latLng);
       setMapCenter(latLng);
       setRectangleBounds(/* calculate your bounds if needed */);
+
       // Set the selected location
       setSelectedLocation(latLng);
       // setMapError(false);
@@ -227,6 +286,30 @@ const OwnerPropertyEdit = () => {
     console.log("Rectangle Loaded:", rectangle);
   };
 
+  const handleCountryChange = (e) => {
+    const countryId = e.target.value;
+    setCountryId(countryId);
+    // refetchDivisions();
+  };
+
+  const handleDivisionChange = (e) => {
+    const divisionId = e.target.value;
+    setDivisionId(divisionId);
+    // refetchDistricts();
+  };
+
+  const handleDistrictChange = (e) => {
+    const distritId = e.target.value;
+    setDistrictId(distritId);
+    // refetchAreas();
+  };
+
+  const handleAreaChange = (e) => {
+    const areaId = e.target.value;
+    setAreaId(areaId);
+    // refetchAreas();
+  };
+
   if (loadError) {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
@@ -239,7 +322,7 @@ const OwnerPropertyEdit = () => {
     const fileInput = event.target;
 
     if (fileInput?.files[0]?.size > 100 * 1024) {
-      setLogo(null);
+      setLogoFile(null);
       setLogoError({
         status: true,
         message: "Image size can't be more than 100KB",
@@ -248,15 +331,16 @@ const OwnerPropertyEdit = () => {
     }
 
     if (fileInput?.files?.length > 0) {
-      setLogo({
+      setLogoFile({
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
         logoFile: fileInput.files[0],
       });
+      setLogo(fileInput.files[0]);
       // setLogoError("");
       setLogoError(null);
     } else {
-      setLogo(null);
+      setLogoFile(null);
       // setLogoError("Logo is required");
       setLogoError({
         status: true,
@@ -275,7 +359,13 @@ const OwnerPropertyEdit = () => {
         displayImageFile: fileInput.files[0],
       };
       setDisplayImages(newImages);
-      displayImages.map((i) => {
+      // Update the 'images' array
+      setImages(
+        newImages
+          .filter((image) => image !== null)
+          .map((image) => image.displayImageFile)
+      );
+      displayImages?.map((i) => {
         if (i === null) {
           displayImageCount++;
         }
@@ -296,7 +386,7 @@ const OwnerPropertyEdit = () => {
       newImages[index] = null;
       setDisplayImages(newImages);
 
-      displayImages.map((i) => {
+      displayImages?.map((i) => {
         if (i === null) {
           displayImageCount++;
         }
@@ -310,32 +400,32 @@ const OwnerPropertyEdit = () => {
     }
   };
 
-  const handleVideoSelect = (event) => {
-    const fileInput = event.target;
-    if (fileInput?.files?.length > 0) {
-      setVideo({
-        name: fileInput.files[0].name,
-        url: URL.createObjectURL(fileInput.files[0]),
-      });
-    } else {
-      setVideo(null);
-      setVideoError(true);
-    }
-  };
+  // const handleVideoSelect = (event) => {
+  //   const fileInput = event.target;
+  //   if (fileInput?.files?.length > 0) {
+  //     setVideo({
+  //       name: fileInput.files[0].name,
+  //       url: URL.createObjectURL(fileInput.files[0]),
+  //     });
+  //   } else {
+  //     setVideo(null);
+  //     setVideoError(true);
+  //   }
+  // };
 
-  const handleVideoDelete = () => {
-    setVideo(null);
-    setVideoError(false);
-  };
+  // const handleVideoDelete = () => {
+  //   setVideo(null);
+  //   setVideoError(false);
+  // };
 
   const onSubmit = async (data) => {
-    displayImages.map((i) => {
+    displayImages?.map((i) => {
       if (i === null) {
         displayImageCount++;
       }
     });
 
-    if (!logo) {
+    if (!logoFile) {
       // setLogoError("Logo is required");
       setLogoError({
         status: true,
@@ -360,54 +450,59 @@ const OwnerPropertyEdit = () => {
       return;
     }
 
-    if (!mapError.count) {
-      console.log("Map error");
-      setMapError({
-        status: true,
-        message: "Please select hotel location",
-      });
-      return;
-    }
+    // if (!mapError.count) {
+    //   console.log("Map error");
+    //   setMapError({
+    //     status: true,
+    //     message: "Please select hotel location",
+    //   });
+    //   return;
+    // }
 
-    const displayImageFiles = displayImages.map(
+    const displayImageFiles = displayImages?.map(
       (image) => image.displayImageFile
     );
 
-    const propertyData = {
-      name: data.propertyName,
-      bin: data.bin,
-      tin: data.tin,
-      trade_license_number: "aaaa",
-      area_id: data.area,
-      address: data.address,
-      description: data.description,
-      hotel_class: data.rating,
-      property_types: data.propertyTypes,
-      amenities: data.amenities,
-      images: displayImageFiles,
-      check_in_time: `${data.checkin_hour}:${data.checkin_minute}`,
-      check_in_time_period: data.checkin_time_period,
-      // check_in_time_period: "AM",
-      check_out_time: `${data.checkout_hour}:${data.checkout_minute}`,
-      check_out_time_period: data.checkout_time_period,
-      // check_out_time_period: "AM",
+    const propertyTypesId = property.property_types.map((type) => type.id);
+    const paymentMethodsId = property.payment_methods.map(
+      (method) => method.id
+    );
+    console.log("paymentMethodsId", paymentMethodsId);
+    const amenitiesId = property.amenities.map((amenity) => amenity.id);
+    console.log("amenitiesId", amenitiesId);
+
+    const propertyEditData = {
+      id: property.id,
+      name: property.name,
+      bin: property.bin,
+      tin: property.tin,
+      trade_license_number: "123456",
+      area_id: areaId,
+      address: property.address,
+      description: property.description,
+      hotel_class: property.hotel_class,
+      property_types: propertyTypesId,
+      amenities: amenitiesId,
+      images: images,
+      check_in_time: `${check_in_time.hour}:${check_in_time.min}`,
+      check_in_time_period: check_in_time.check_in_time_period,
+      check_out_time: `${check_out_time.hour}:${check_out_time.min}`,
+      check_out_time_period: check_out_time.check_out_time_period,
       latitude: parseFloat(mapCenter.lat),
       longitude: parseFloat(mapCenter.lng),
       cancellation: cancellationData,
-      logo: logo.logoFile,
-      short_description: data.shortDescription,
-      instruction: data.instruction,
-      payment_methods: data.paymentMethods,
-      pet_policy: data.pet_policy,
-      is_active: data.is_active,
-      // video,
+      logo: logo,
+      short_description: property.short_description,
+      instruction: property.instruction,
+      payment_methods: paymentMethodsId,
+      pet_policy: property.pet_policy,
     };
 
-    console.log(propertyData);
+    console.log("propertyEditData", propertyEditData);
 
-    const propertyFormData = new FormData();
+    const propertyEditFormData = new FormData();
 
-    Object.entries(propertyData).forEach(([key, value]) => {
+    Object.entries(propertyEditData).forEach(([key, value]) => {
       if (
         key !== "images" &&
         key !== "logo" &&
@@ -421,21 +516,21 @@ const OwnerPropertyEdit = () => {
           key === "amenities"
         ) {
           value.forEach((item, index) => {
-            propertyFormData.append(`${key}[${index}]`, item);
+            propertyEditFormData.append(`${key}[${index}]`, item);
           });
         } else if (key === "cancellation") {
           // Handle cancellation data
           value.forEach((cancelData, index) => {
             // Append duration object with hours and minutes
-            propertyFormData.append(
+            propertyEditFormData.append(
               `cancellation_policies[${index}][duration]`,
-              `{hour:${cancelData.duration.hours},min:${cancelData.duration.minutes}}`
+              `{"hour":${cancelData.duration.hour},"min":${cancelData.duration.min}}`
             );
 
             // Append other cancellation properties
             Object.entries(cancelData).forEach(([cancelKey, cancelValue]) => {
               if (cancelKey !== "duration") {
-                propertyFormData.append(
+                propertyEditFormData.append(
                   `cancellation_policies[${index}][${cancelKey}]`,
                   cancelValue
                 );
@@ -443,30 +538,56 @@ const OwnerPropertyEdit = () => {
             });
           });
         } else {
-          // Convert is_active to integer if it's present
-          const formattedValue = key === "is_active" ? (value ? 1 : 0) : value;
-          propertyFormData.append(key, formattedValue);
+          propertyEditFormData.append(key, value);
         }
       }
     });
 
-    propertyFormData.append("latitude", parseFloat(mapCenter.lat));
-    propertyFormData.append("longitude", parseFloat(mapCenter.lng));
+    propertyEditFormData.append("latitude", parseFloat(mapCenter.lat));
+    propertyEditFormData.append("longitude", parseFloat(mapCenter.lng));
 
     // Append image files to FormData
     if (Array.isArray(propertyData.images)) {
-      propertyData.images.forEach((imageFile, index) => {
-        propertyFormData.append(`images[${index}][image]`, imageFile);
+      propertyEditData.images.forEach((imageFile, index) => {
+        if (imageFile != null) {
+          propertyEditFormData.append(`images[${index}][image]`, imageFile);
+        }
       });
     }
 
     // Append logo file to FormData
-    if (propertyData.logo) {
-      propertyFormData.append("logo", propertyData.logo);
+    if (propertyEditData.logo) {
+      propertyEditFormData.append("logo", propertyData.logo);
     }
 
+    propertyEditFormData.append("_method", "PUT");
+
     // Logging FormData to check its content
-    console.log("formdata", Object.fromEntries(propertyFormData));
+    console.log("formdata", Object.fromEntries(propertyEditFormData));
+
+    const updatePropertyInfo = {
+      id: property.id,
+      formData: propertyEditFormData,
+    };
+
+    try {
+      const result = await updateProperty(updatePropertyInfo);
+      // Handle successful mutation
+      if (result?.data?.status) {
+        console.log("updatePropertyInfo", result);
+        toast.success("Property updated successfully");
+        navigate(`/dashboard/property/${property.id}/edit`);
+        // reset();
+      } else {
+        console.log("Failed", result?.error?.data?.errors);
+        // setValidationErrors(result?.error?.data?.errors);
+        // console.log("Failed", result);
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error adding payment method:", error);
+      // setValidationErrors(err.response.data.errors);
+    }
   };
   return (
     <div className="p-[12px] md:p-[24px] lg:p-[24px]">
@@ -480,13 +601,13 @@ const OwnerPropertyEdit = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
             {/* Property Name */}
             <div className="">
-              <label className="property-input-title" htmlFor="propertyName">
+              <label className="property-input-title" htmlFor="name">
                 Property Name
               </label>
               <input
                 className="input-box"
-                id="propertyName"
-                name="propertyName"
+                id="name"
+                name="name"
                 type="text"
                 placeholder="Sea View"
                 value={property?.name}
@@ -569,15 +690,16 @@ const OwnerPropertyEdit = () => {
                   id="country"
                   className="property-input"
                   name="country"
-                  onClick={(e) => setCountryId(e.target.value)}
-                  defaultValue={
-                    propertyAdding?.data?.countries?.length > 0
-                      ? propertyAdding.data.countries[0].id
-                      : ""
-                  }
+                  onChange={(e) => handleCountryChange(e)}
+                  // defaultValue={
+                  //   propertyAdding?.data?.countries?.length > 0
+                  //     ? propertyAdding.data.countries[0].id
+                  //     : ""
+                  // }
+                  value={countryId || ""}
                   disabled={propertyAdding?.data?.countries?.length <= 0}
                 >
-                  <option value={null}>Select Country</option>
+                  <option value={0}>Select Country</option>
                   {propertyAdding?.data?.countries?.map((country) => (
                     <option key={country.id} value={country.id}>
                       {country.name}
@@ -609,11 +731,11 @@ const OwnerPropertyEdit = () => {
                   className="property-input"
                   name="division"
                   id="division"
-                  onClick={(e) => setDivisionId(e.target.value)}
+                  onChange={(e) => handleDivisionChange(e)}
+                  value={divisionId || ""}
                   disabled={divisionData?.data?.length <= 0}
-                  value={divisionId} // Assuming selectedDivisionId is the state holding the selected division ID
                 >
-                  <option value={null}>Select Division</option>
+                  <option value={0}>Select Division</option>
                   {divisionData?.data?.map((division) => (
                     <option key={division.id} value={division.id}>
                       {division.name}
@@ -640,21 +762,11 @@ const OwnerPropertyEdit = () => {
                   className="property-input"
                   name="district"
                   id="district"
-                  onClick={(e) => setDistrictId(e.target.value)}
+                  onChange={(e) => handleDistrictChange(e)}
                   disabled={districtData?.data?.length <= 0}
-                  {...register("district", {
-                    required: {
-                      value: true,
-                      message: "Please select a district",
-                    },
-                  })}
+                  value={districtId || ""}
                 >
-                  <option
-                    onClick={(e) => setDistrictId(e.target.value)}
-                    value={null}
-                  >
-                    Select District
-                  </option>
+                  <option value={0}>Select District</option>
                   {districtData?.data?.map((district) => (
                     <option key={district.id} value={district.id}>
                       {district.name}
@@ -681,15 +793,11 @@ const OwnerPropertyEdit = () => {
                   className="property-input"
                   name="area"
                   id="area"
-                  disabled={areaData?.data?.length <= 0}
-                  {...register("area", {
-                    required: {
-                      value: true,
-                      message: "Please select an area",
-                    },
-                  })}
+                  disabled={!areaData || areaData.data.length === 0}
+                  value={propertyData?.data.area.id || ""}
+                  onChange={(e) => handleAreaChange(e)}
                 >
-                  <option value="">Select Area</option>
+                  <option value={0}>Select Area</option>
                   {areaData?.data?.map((area) => (
                     <option key={area.id} value={area.id}>
                       {area.name}
@@ -744,6 +852,12 @@ const OwnerPropertyEdit = () => {
               id="description"
               placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
               value={property?.description}
+              onChange={(e) =>
+                setProperty({
+                  ...property,
+                  description: e.target.value,
+                })
+              }
             ></textarea>
             <label className="">
               {errors.description && (
@@ -767,7 +881,11 @@ const OwnerPropertyEdit = () => {
                 <div
                   className="flex items-center gap-1.5"
                   onClick={(e) => {
-                    field.onChange(e.target.value), setRating(e.target.value);
+                    field.onChange(e.target.value),
+                      setProperty({
+                        ...property,
+                        hotel_class: e.target.value,
+                      });
                   }}
                 >
                   <Rating
@@ -775,23 +893,23 @@ const OwnerPropertyEdit = () => {
                     precision={0.5}
                     value={parseFloat(property?.hotel_class)}
                   />
-                  {rating && (
+                  {property?.hotel_class && (
                     <p>
                       {"("}
-                      {rating}
+                      {property?.hotel_class}
                       {")"}
                     </p>
                   )}
                 </div>
               )}
-              rules={{
-                validate: (value) => {
-                  if (value < 1 || value > 5) {
-                    return "Rating must be between 1 and 5";
-                  }
-                  return true;
-                },
-              }}
+              // rules={{
+              //   validate: (value) => {
+              //     if (value < 1 || value > 5) {
+              //       return "Rating must be between 1 and 5";
+              //     }
+              //     return true;
+              //   },
+              // }}
             />
             {errors.rating && (
               <span className="label-text-alt text-red-500">
@@ -811,10 +929,10 @@ const OwnerPropertyEdit = () => {
                   name="propertyTypes"
                   control={control}
                   defaultValue={[]}
-                  rules={{ required: "Please select at least one checkbox." }}
+                  // rules={{ required: "Please select at least one checkbox." }}
                   render={({ field }) => (
                     <>
-                      {propertyAdding?.data?.property_types.map(
+                      {propertyAdding?.data?.property_types?.map(
                         (propertyType) => (
                           <div
                             key={propertyType.id}
@@ -880,13 +998,13 @@ const OwnerPropertyEdit = () => {
               Amenities
             </h2>
 
-            {propertyAdding?.data.amenitiesCategory.map((category) => (
+            {propertyAdding?.data.amenitiesCategory?.map((category) => (
               <div key={category.id} className="mb-[15px]">
                 <h2 className="property-input-title" htmlFor="address">
-                  {category.name}
+                  {category?.name}
                 </h2>
                 <div className="flex items-center gap-x-[8px] md:gap-x-[12px] lg:gap-x-[12px]">
-                  {category.amenities.map((amenity) => (
+                  {category?.amenities?.map((amenity) => (
                     <div
                       key={amenity.id}
                       className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]"
@@ -902,17 +1020,23 @@ const OwnerPropertyEdit = () => {
                             <input
                               type="checkbox"
                               id="near-sea-beach"
+                              checked={property?.amenities.some(
+                                (am) => am.id === amenity.id
+                              )}
                               {...field}
                               onChange={(e) => {
-                                field.onChange(e);
-                                setValue(
-                                  "amenities",
-                                  e.target.checked
-                                    ? [...field.value, amenity.id]
-                                    : field.value.filter(
-                                        (amenity) => amenity.id !== amenity.id
-                                      )
-                                );
+                                const isChecked = e.target.checked;
+                                const typeId = amenity.id;
+                                const updatedAmenities = isChecked
+                                  ? [...property.amenities, amenity]
+                                  : property.amenities.filter(
+                                      (am) => am.id !== typeId
+                                    );
+                                // Update state with the updated property types
+                                setProperty((prevState) => ({
+                                  ...prevState,
+                                  amenities: updatedAmenities,
+                                }));
                               }}
                             />
                             <label htmlFor="near-sea-beach">
@@ -949,13 +1073,13 @@ const OwnerPropertyEdit = () => {
                   <label htmlFor="logo" className="input-label">
                     <div className="w-full h-[148px]  flex justify-center items-center rounded-[8px] bg-[#F2F5F6] border-[1px] border-[#E6E7E6] mt-[0px]">
                       <div className="">
-                        {logo ? (
-                          <>
-                            <div className="grid justify-center w-full relative">
-                              <div
-                              // className="flex items-center mb-[8px] md:block md:justify-center"
-                              >
-                                {/* <div className="flex md:justify-center">
+                        {/* {logo ? ( */}
+                        <>
+                          <div className="grid justify-center w-full relative">
+                            <div
+                            // className="flex items-center mb-[8px] md:block md:justify-center"
+                            >
+                              {/* <div className="flex md:justify-center">
                                 <img
                                   src={logo.url}
                                   alt="Selected File"
@@ -963,33 +1087,34 @@ const OwnerPropertyEdit = () => {
                                   className="w-full absolute"
                                 />
                               </div> */}
-                                {/* <p className="text-[12px] text-center block z-10">
+                              {/* <p className="text-[12px] text-center block z-10">
                                 {logo?.name?.length > 16
                                   ? logo?.name.slice(0, 15) + "..."
                                   : logo?.name}
                               </p> */}
-                              </div>
-                              <p className="text-[14px] text-center absolute -bottom-6 left-4 z-10">
-                                Browse Photo
-                              </p>
-                              <img
-                                src={logo.url}
-                                alt="Selected File"
-                                // className="w-8 mr-1"
-                                className=" w-full h-[110px] mt-[-30px] "
-                              />
                             </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="flex justify-center mb-[8px]">
-                              <img className="w-[20px]" src={imgIcon} alt="" />
-                            </div>
-                            <p className="property-input-title text-center">
+                            <p className="text-[14px] text-center absolute -bottom-6 left-4 z-10">
                               Browse Photo
                             </p>
-                          </>
-                        )}
+                            <img
+                              src={logoFile.url}
+                              // src={logo?.url}
+                              alt="Selected File"
+                              // className="w-8 mr-1"
+                              className=" w-full h-[110px] mt-[-30px] "
+                            />
+                          </div>
+                        </>
+                        {/* // ) : (
+                        //   <>
+                        //     <div className="flex justify-center mb-[8px]">
+                        //       <img className="w-[20px]" src={imgIcon} alt="" />
+                        //     </div>
+                        //     <p className="property-input-title text-center">
+                        //       Browse Photo
+                        //     </p>
+                        //   </>
+                        // )} */}
                       </div>
                     </div>
                     <input
@@ -1014,7 +1139,7 @@ const OwnerPropertyEdit = () => {
               <div>
                 <h2 className="">Display Image</h2>
                 <div className="property-display-images">
-                  {displayImages.map((image, index) => (
+                  {displayImages?.map((image, index) => (
                     <div key={index}>
                       <label
                         htmlFor={`display-image-${index}`}
@@ -1085,7 +1210,7 @@ const OwnerPropertyEdit = () => {
             </div>
           </div>
           {/* Video */}
-          <div className="mt-[18px]">
+          {/* <div className="mt-[18px]">
             <h2> Property Video {`(Optional)`}</h2>
             <div className="relative">
               <div
@@ -1173,7 +1298,7 @@ const OwnerPropertyEdit = () => {
                 </div>
               </label>
             </div>
-          </div>
+          </div> */}
           {/* Checkin */}
           <div className="mt-[18px]">
             {/* Check In */}
@@ -1193,7 +1318,13 @@ const OwnerPropertyEdit = () => {
                     name="checkin_hour"
                     id="checkin_hour"
                     placeholder="Hour"
-                    value={property?.check_in_time.split(":")[0]}
+                    value={check_in_time.hour}
+                    onChange={(e) =>
+                      setCheck_in_time({
+                        ...check_in_time,
+                        hour: e.target.value,
+                      })
+                    }
                     // {...register("checkin_hour", {
                     //   required: {
                     //     value: true,
@@ -1230,8 +1361,13 @@ const OwnerPropertyEdit = () => {
                     name="checkin_minute"
                     id="checkin_minute"
                     placeholder="Minute"
-                    value={property?.check_in_time.split(":")[1]}
-
+                    value={check_in_time.min}
+                    onChange={(e) =>
+                      setCheck_in_time({
+                        ...check_in_time,
+                        min: e.target.value,
+                      })
+                    }
                     // {...register("checkin_minute", {
                     //   required: {
                     //     value: true,
@@ -1261,16 +1397,16 @@ const OwnerPropertyEdit = () => {
                 <div className="border-[1px] rounded-[4px] relative h-[36px]">
                   <select
                     className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
-                    id="checkin_time_period"
-                    name="checkin_time_period"
-                    defaultValue="AM"
-                    // onClick={(e) => setCountryId(e.target.value)}
-                    {...register("checkin_time_period", {
-                      // required: {
-                      //   value: true,
-                      //   message: "Please select an option",
-                      // },
-                    })}
+                    id="check_in_time_period"
+                    name="check_in_time_period"
+                    // {...register("checkout_time_period")}
+                    value={check_in_time.check_in_time_period}
+                    onChange={(e) =>
+                      setCheck_in_time({
+                        ...check_in_time,
+                        check_in_time_period: e.target.value,
+                      })
+                    }
                   >
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>
@@ -1317,20 +1453,27 @@ const OwnerPropertyEdit = () => {
                     name="checkout_hour"
                     id="checkout_hour"
                     placeholder="Hour"
-                    {...register("checkout_hour", {
-                      required: {
-                        value: true,
-                        message: "Check out time is required",
-                      },
-                      min: {
-                        value: 1,
-                        message: "Hour should be between 1 and 12",
-                      },
-                      max: {
-                        value: 12,
-                        message: "Hour should be between 1 and 12",
-                      },
-                    })}
+                    value={check_out_time.hour}
+                    onChange={(e) =>
+                      setCheck_out_time({
+                        ...check_out_time,
+                        hour: e.target.value,
+                      })
+                    }
+                    // {...register("checkout_hour", {
+                    //   required: {
+                    //     value: true,
+                    //     message: "Check out time is required",
+                    //   },
+                    //   min: {
+                    //     value: 1,
+                    //     message: "Hour should be between 1 and 12",
+                    //   },
+                    //   max: {
+                    //     value: 12,
+                    //     message: "Hour should be between 1 and 12",
+                    //   },
+                    // })}
                   />
                   {/* <label className="">
                   {errors.checkout_hour?.type === "required" && (
@@ -1353,20 +1496,27 @@ const OwnerPropertyEdit = () => {
                     name="checkout_minute"
                     id="checkout_minute"
                     placeholder="Minute"
-                    {...register("checkout_minute", {
-                      required: {
-                        value: true,
-                        message: "Check in time is required",
-                      },
-                      min: {
-                        value: 0,
-                        message: "Minute should be between 0 and 59",
-                      },
-                      max: {
-                        value: 59,
-                        message: "Minute should be between 0 and 59",
-                      },
-                    })}
+                    value={check_out_time.min}
+                    onChange={(e) =>
+                      setCheck_out_time({
+                        ...check_out_time,
+                        min: e.target.value,
+                      })
+                    }
+                    // {...register("checkout_minute", {
+                    //   required: {
+                    //     value: true,
+                    //     message: "Check in time is required",
+                    //   },
+                    //   min: {
+                    //     value: 0,
+                    //     message: "Minute should be between 0 and 59",
+                    //   },
+                    //   max: {
+                    //     value: 59,
+                    //     message: "Minute should be between 0 and 59",
+                    //   },
+                    // })}
                   />
                   {/* <label className="">
                   {errors.checkout_minute?.type === "required" && (
@@ -1384,14 +1534,17 @@ const OwnerPropertyEdit = () => {
                     className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px]"
                     id="checkout_time_period"
                     name="checkout_time_period"
-                    {...register("checkout_time_period", {
-                      // required: {
-                      //   value: true,
-                      //   message: "Please select an option",
-                      // },
-                    })}
+                    // {...register("checkout_time_period")}
+                    value={check_out_time.check_out_time_period}
+                    onChange={(e) =>
+                      setCheck_out_time({
+                        ...check_out_time,
+                        check_out_time_period: e.target.value,
+                      })
+                    }
+                    // onChange={(e) => setCheck_out_time_period(e.target.value)}
                   >
-                    <option defaultValue="AM">AM</option>
+                    <option value="AM">AM</option>
                     <option value="PM">PM</option>
                   </select>
                   <label className="">
@@ -1422,10 +1575,10 @@ const OwnerPropertyEdit = () => {
           </div>
           {/* Cancellation Policy */}
           <div className="mt-[18px]">
-            {/* <CancellationPolicy
-                cancellationData={cancellationData}
-                setCancellationData={setCancellationData}
-              ></CancellationPolicy> */}
+            <CancellationPolicyEdit
+              cancellationData={cancellationData}
+              setCancellationData={setCancellationData}
+            ></CancellationPolicyEdit>
           </div>
           {/* Short Description */}
           <div className="mt-[18px]">
@@ -1517,7 +1670,7 @@ const OwnerPropertyEdit = () => {
                   name="paymentMethods"
                   control={control}
                   defaultValue={[]}
-                  rules={{ required: "Please select at least one checkbox." }}
+                  // rules={{ required: "Please select at least one checkbox." }}
                   render={({ field }) => (
                     <>
                       {propertyAdding?.data?.paymentMethods?.map(
@@ -1574,11 +1727,11 @@ const OwnerPropertyEdit = () => {
                 />
               </div>
             </div>
-            {errors.propertyTypes && !selectedPropertyTypes?.length && (
+            {/* {errors.propertyTypes && !selectedPropertyTypes?.length && (
               <span className="label-text-alt text-red-500">
                 Please select at least one type
               </span>
-            )}
+            )} */}
           </div>
           {/* google map */}
           <div className="mt-[18px] mb-[20px]">
@@ -1613,7 +1766,7 @@ const OwnerPropertyEdit = () => {
                       />
                       <div className="autocomplete-dropdown-container text-[12px] bg-white">
                         {loading && <div>Loading...</div>}
-                        {suggestions.map((suggestion,index) => {
+                        {suggestions?.map((suggestion, index) => {
                           const style = {
                             backgroundColor: suggestion.active
                               ? "#159947"
@@ -1643,17 +1796,23 @@ const OwnerPropertyEdit = () => {
               <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={10}
+                // center={center}
                 center={mapCenter}
+                // onLoad={onMapLoad}
+                // onClick={(e) => {
+                //   setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                //   setValue("map", { lat: e.latLng.lat(), lng: e.latLng.lng() });
+                // }}
+                // onClick={onMapClick}
                 onClick={handleMapClick}
               >
-                {/* Show the rectangle if bounds are set */}
-                {rectangleBounds && ( 
+                {rectangleBounds && (
                   <Rectangle
                     bounds={rectangleBounds}
                     onLoad={onRectangleLoad}
                   />
                 )}
-                {/* Mark the mapCenter */}
+                {/* <Marker position={center} /> */}
                 <Marker position={mapCenter} />
                 {/* Additional marker at the search location */}
                 {selectedLocation && (
