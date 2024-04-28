@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import { useAddAmenitiesCategoryMutation } from "../../../../../redux/features/admin/Amenities/amenitiesCategory.api";
-// import { useGetAllAmenitiesCategoriesQuery , useAddAmenitiesMutation } from "../../../../../redux/features/admin/Amenities/amenities.api";
 import { useAddRoomTypeMutation } from "../../../../../../redux/features/admin/Room/RoomTypes.api";
 import Loading from "../../../../../Common/Includes/Loading/Loading";
 import { Controller, useForm } from "react-hook-form";
@@ -39,7 +37,7 @@ const AddRoomType = () => {
 
    setErrorMessage({ status: false, message: "", errors: [] });
 
-   const amenitiesCategoryInfo = {
+   const roomTypeInfo = {
      name: data.name,
      view_order: data.view_order,
      is_active: parseInt(data.is_active),

@@ -84,6 +84,10 @@ import AddRoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/R
 import RoomTypeEdit from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomTypeEdit";
 import PropertyList from "../Pages/Dashboard/PropertyManagement/PropertyList/PropertyList";
 import OwnerPropertyEdit from "../Pages/Dashboard/PropertyManagement/OwnerPropertyEdit/OwnerPropertyEdit";
+import PropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/PropertyType";
+import PropertyTypeList from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/PropertyTypeList";
+import EditPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/EditPropertyType";
+import AddPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/AddPropertyType";
 
 export const router = createBrowserRouter([
   {
@@ -425,7 +429,29 @@ export const router = createBrowserRouter([
               }
             ],
 
+          },
+
+          {
+
+            path: "/dashboard/properties/propertyTypes",
+            element: <PropertyType></PropertyType>,
+            children: [
+              {
+                path: "/dashboard/properties/propertyTypes",
+                element: <PropertyTypeList></PropertyTypeList>
+              },
+              {
+                path: "/dashboard/properties/propertyTypes/addPropertyType",
+                element: <AddPropertyType></AddPropertyType>
+              },
+
+              {
+                path: "dashboard/properties/propertyTypes/editPropertyType/:id",
+                element: <EditPropertyType></EditPropertyType>
+              }
+            ],
           }
+
         ],
       },
       {
