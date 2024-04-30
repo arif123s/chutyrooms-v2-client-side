@@ -391,6 +391,7 @@ const PropertyAdd = () => {
 
     const propertyData = {
       name: data.propertyName,
+      subtitle:data.subtitle,
       bin: data.bin,
       tin: data.tin,
       trade_license_number: "aaaa",
@@ -410,6 +411,7 @@ const PropertyAdd = () => {
       latitude: parseFloat(mapCenter.lat),
       longitude: parseFloat(mapCenter.lng),
       cancellation: cancellationData,
+      child_age_limit: data.child_age_limit,
       logo: logo.logoFile,
       short_description: data.shortDescription,
       instruction: data.instruction,
@@ -2027,6 +2029,31 @@ const PropertyAdd = () => {
             setCancellationData={setCancellationData}
           ></CancellationPolicy>
         </div>
+        {/* Child age limit */}
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="bin">
+            Child Age Limit
+          </label>
+          <input
+            className="input-box"
+            id="child_age_limit"
+            name="child_age_limit"
+            type="number"
+            {...register("child_age_limit", {
+              required: {
+                value: true,
+                message: "Child Age Limit is required",
+              },
+            })}
+          />
+          <label className="">
+            {errors.child_age_limit?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.child_age_limit?.message}
+              </span>
+            )}
+          </label>
+        </div>
         {/* Short Description */}
         <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="shortDescription">
@@ -2223,7 +2250,7 @@ const PropertyAdd = () => {
                     />
                     <div className="autocomplete-dropdown-container text-[12px] bg-white">
                       {loading && <div>Loading...</div>}
-                      {suggestions.map((suggestion,index) => {
+                      {suggestions.map((suggestion, index) => {
                         const style = {
                           backgroundColor: suggestion.active
                             ? "#159947"

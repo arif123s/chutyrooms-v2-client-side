@@ -141,6 +141,7 @@ const OwnerPropertyEdit = () => {
     instruction: "",
     payment_methods: [],
     pet_policy: "",
+    is_active:null,
   });
 
   console.log(property);
@@ -177,7 +178,7 @@ const OwnerPropertyEdit = () => {
       setDisplayImages(
         propertyData?.data?.images?.map((image) => ({
           name: "",
-          url: `${BASE_ASSET_API}/storage/images/property/property_image/${image.image}`,
+          url: `${BASE_ASSET_API}/storage/images/property/property_image/${image?.image}`,
           displayImageFile: null,
         }))
       );
@@ -332,8 +333,8 @@ const OwnerPropertyEdit = () => {
 
     if (fileInput?.files?.length > 0) {
       setLogoFile({
-        name: fileInput.files[0].name,
-        url: URL.createObjectURL(fileInput.files[0]),
+        name: fileInput?.files[0].name,
+        url: URL.createObjectURL(fileInput?.files[0]),
         logoFile: fileInput.files[0],
       });
       setLogo(fileInput.files[0]);
@@ -418,7 +419,7 @@ const OwnerPropertyEdit = () => {
   //   setVideoError(false);
   // };
 
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     displayImages?.map((i) => {
       if (i === null) {
         displayImageCount++;
@@ -463,8 +464,8 @@ const OwnerPropertyEdit = () => {
       (image) => image.displayImageFile
     );
 
-    const propertyTypesId = property.property_types.map((type) => type.id);
-    const paymentMethodsId = property.payment_methods.map(
+    const propertyTypesId = property?.property_types?.map((type) => type.id);
+    const paymentMethodsId = property?.payment_methods?.map(
       (method) => method.id
     );
     console.log("paymentMethodsId", paymentMethodsId);
@@ -496,8 +497,10 @@ const OwnerPropertyEdit = () => {
       instruction: property.instruction,
       payment_methods: paymentMethodsId,
       pet_policy: property.pet_policy,
+      is_active:property.is_active,
     };
 
+    console.log("propertyData", propertyData?.data);
     console.log("propertyEditData", propertyEditData);
 
     const propertyEditFormData = new FormData();
@@ -1097,7 +1100,7 @@ const OwnerPropertyEdit = () => {
                               Browse Photo
                             </p>
                             <img
-                              src={logoFile.url}
+                              src={logoFile?.url}
                               // src={logo?.url}
                               alt="Selected File"
                               // className="w-8 mr-1"
@@ -1152,7 +1155,7 @@ const OwnerPropertyEdit = () => {
                                 <div className="flex items-center mb-[8px] md:block md:justify-center">
                                   <div className="flex md:justify-center">
                                     <img
-                                      src={image.url}
+                                      src={image?.url}
                                       alt={image.name}
                                       className="w-8 mr-1"
                                     />
@@ -1732,6 +1735,48 @@ const OwnerPropertyEdit = () => {
                 Please select at least one type
               </span>
             )} */}
+          </div>
+          {/*  Is Active */}
+          <div className="mt-[18px]">
+            <h2 id="property-type-title" className="text-[14px] mr-[4px]">
+              Is Active
+            </h2>
+
+            <div className="flex gap-[8px]">
+              <div className="flex items-center gap-[6px]">
+                <input
+                  type="radio"
+                  name="is_active"
+                  id="active"
+                  value={1}
+                  checked={property?.is_active}
+                  onChange={(e) =>
+                    setProperty({
+                      ...property,
+                      is_active: e.target.value,
+                    })
+                  }
+                 
+                />
+                <label htmlFor="active">Active</label>
+              </div>
+              <div className="flex items-center gap-[6px]">
+                <input
+                  type="radio"
+                  name="is_active"
+                  id="inactive"
+                  value={0}
+                  onChange={(e) =>
+                    setProperty({
+                      ...property,
+                      is_active: e.target.value,
+                    })
+                  }
+                  
+                />
+                <label htmlFor="inactive">Inactive</label>
+              </div>
+            </div>
           </div>
           {/* google map */}
           <div className="mt-[18px] mb-[20px]">
