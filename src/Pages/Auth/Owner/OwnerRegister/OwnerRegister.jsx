@@ -290,7 +290,7 @@ const OwnerRegister = () => {
                 </div>
                 <div className="w-[2px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
                 <input
-                  className="w-full block mb-[4px]"
+                  className="w-full block mb-[4px] bg-white"
                   id="phone"
                   name="phone"
                   type="number"
@@ -334,6 +334,7 @@ const OwnerRegister = () => {
             </label>
           </div>
         ) : (
+          // Email
           <div className="mb-4">
             <label className="input-title" htmlFor="email">
               Email

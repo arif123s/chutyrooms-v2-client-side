@@ -5,7 +5,7 @@ import imgIcon from "../../../assets/icons/img.svg";
 import videoIcon from "../../../assets/icons/frame.svg";
 import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
-import markLoaction from "../../../assets/icons/mark-location.svg";
+// import markLoaction from "../../../assets/icons/mark-location.svg";
 import Rating from "@mui/material/Rating";
 // import Stack from "@mui/material/Stack";
 import "./PropertyAdd.css";
@@ -481,7 +481,7 @@ const PropertyAdd = () => {
             // Append duration object with hours and minutes
             propertyFormData.append(
               `cancellation_policies[${index}][duration]`,
-              `{hour:${cancelData.duration.hours},min:${cancelData.duration.minutes}}`
+              `{"hour":${cancelData.duration.hours},"min":${cancelData.duration.minutes}}`
             );
 
             // Append other cancellation properties
