@@ -164,7 +164,8 @@ const SideBar = ({ open, setOpen }) => {
               { name: "District", path: "/dashboard/district" },
               { name: "Area", path: "/dashboard/area" },
               { name: "Payment Method", path: "/dashboard/PaymentSystems" },
-              { name: "Property Types", path: "#" },
+              { name: "Property Types", path: "/dashboard/properties/propertyTypes" },
+              { name: "Room Types", path: "/dashboard/rooms/roomTypes" },
               { name: "Membership Card", path: "/dashboard/Membership" },
               {
                 name: "Amenities Type",

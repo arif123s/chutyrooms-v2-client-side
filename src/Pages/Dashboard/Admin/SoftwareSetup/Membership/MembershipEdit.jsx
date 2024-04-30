@@ -10,6 +10,8 @@ const MembershipEdit = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const [MemberShipImage, setMemberShipImage] = useState("");
+ 
   // const [isChecked, setIsChecked] = useState(false);
 
 
@@ -62,10 +64,29 @@ const MembershipEdit = () => {
         }
       });
 
+   
+
     console.log(result.data.data);
     setMembership(result.data.data);
+    const MembershipData = result.data.data;
+
+    
+  useEffect(() => {
+    if (MembershipData?.image) {
+      setMemberShipImage(
+        `${BASE_ASSET_API}/storage/images/Membership/${result.data.data.image}`
+      );
+  
+    }
+        refetch();
+  }, [MembershipData,refetch]);
 
   }
+
+
+
+
+
 
   const changeMembershipFieldHandler = (e) => {
     // alert(e.target.type === 'file');
@@ -332,7 +353,7 @@ const MembershipEdit = () => {
             for="image">
             Membership Card Image
           </label>
-          {Membership && Membership.image &&<img src={`${BASE_ASSET_API}/storage/images/Membership/${Membership.image}`}></img>}
+          {Membership && Membership.image &&<img src={MemberShipImage}></img>}
           <input
             className="input-box"
             type="file"
