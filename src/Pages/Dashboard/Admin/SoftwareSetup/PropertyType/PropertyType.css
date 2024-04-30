@@ -1,0 +1,32 @@
+.PropertyType-list-content {
+    padding: 20px;
+  }
+  
+.PropertyType-option {
+  display: flex;
+  gap: 8px;
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.PropertyType-tbl-head{
+  border-bottom: 1px solid #E6E7E6;
+  text-align: left;
+}
+
+.PropertyType-list {
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.PropertyType-add-division
+{
+  background-color: #ffff;
+  padding: 20px;
+}
+
+.PropertyType-add-form
+{
+  width: 50%;
+}
