@@ -12,26 +12,11 @@ import star from "../../../../../assets/icons/star-black.svg";
 import location from "../../../../../assets/icons/map-pin.svg";
 import favouriteIcon from "../../../../../assets/icons/favourite.svg";
 import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getPopularHotels } from "../../../../../redux/features/popularHotels/popularHotelSlice";
-// import Loading from "../../../../Common/Includes/Loading/Loading";
-import { useGetAllPopularHotelsQuery } from "../../../../../redux/features/popularHotels/popularHotelsApi";
+import { useState } from "react";
 // import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
 
 const PopularHotels = () => {
   const [favourite, setFavourite] = useState(false);
-  const dispatch = useDispatch();
-  // const {hotels,isLoading} = useSelector((state) => state.popularHotel);
-
-  const { data } = useGetAllPopularHotelsQuery();
-  console.log('country',data);
-
-  useEffect(() => {
-    dispatch(getPopularHotels());
-  }, []);
-
-
 
   return (
     <div className="popular-hotels-container">

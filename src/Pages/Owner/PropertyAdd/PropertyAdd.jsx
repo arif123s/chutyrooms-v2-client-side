@@ -57,24 +57,6 @@ const PropertyAdd = () => {
     // refetch,
   } = useGetAllPropertyAddingPropertiesQuery();
 
-  // console.log("property", propertyAdding?.data.amenitiesCategory);
-
-  // const {
-  //   data: countries,
-  //   isLoading: countriesLoading,
-  // } = useGetAllActiveCountriesQuery();
-
-  // const {
-  //   data: propertyTypes,
-  //   isLoading: propertyTypesLoading,
-  // } = useGetAllActivePropertyTypeQuery();
-
-  // const {
-  //   data: paymentMethods,
-  //   isLoading: paymentMethodsLoading,
-  // } = useGetAllActivePaymentMethodQuery();
-
-
    const {
      control,
      register,
@@ -205,14 +187,22 @@ const PropertyAdd = () => {
       const results = await geocodeByAddress(selectedAddress);
       const latLng = await getLatLng(results[0]);
       setMapCenter(latLng);
+      console.log("latLng", latLng);
       setRectangleBounds(/* calculate your bounds if needed */);
 
       // Set the selected location
       setSelectedLocation(latLng);
-      // setMapError(false);
+
+
+      // setMapError({
+      //   status: false,
+      // });
       setMapError({
-        status: false,
-      }); // Reset map error if a valid location is selected
+        status: true,
+        message: "Location selected",
+        color: true,
+        count: 1,
+      }); 
     } catch (error) {
       console.error("Error selecting address", error);
     }
@@ -504,6 +494,8 @@ const PropertyAdd = () => {
       }
     });
 
+    console.log(mapCenter)
+
     propertyFormData.append("latitude", parseFloat(mapCenter.lat));
     propertyFormData.append("longitude", parseFloat(mapCenter.lng));
 
@@ -530,7 +522,7 @@ const PropertyAdd = () => {
       if (result?.data?.status) {
         console.log("Property", result);
         toast.success("Property registered successfully");
-        navigate("/room-add");
+        navigate("/dashboard/property-list");
       } else {
         // console.log("Failed", result);
         console.log("Failed", result.error.data.errors);

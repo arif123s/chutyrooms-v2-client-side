@@ -20,13 +20,13 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import {
   GoogleMap,
-  Marker,
+  MarkerF,
   Rectangle,
   useLoadScript,
 } from "@react-google-maps/api";
-import { Rating, duration } from "@mui/material";
+import { Rating } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
 import CancellationPolicyEdit from "./CancellationPolicyEdit/CancellationPolicyEdit";
@@ -43,7 +43,7 @@ const OwnerPropertyEdit = () => {
   const {
     data: propertyData,
     isLoading,
-    // refetch,
+    refetch,
   } = useGetSinglePropertyQuery(propertyId);
 
   const [updateProperty, { isLoading: updatePropertyLoading }] =
@@ -67,32 +67,52 @@ const OwnerPropertyEdit = () => {
   } = useForm();
 
   const [center, setCenter] = useState({
-    lat: 23.862725477930507,
-    lng: 90.40080333547479,
+    lat: 22.347534723042624,
+    lng: 91.82298022754775,
   });
 
-  const [mapCenter, setMapCenter] = useState(center);
+  const [mapCenter, setMapCenter] = useState({
+    lat: 22.347534723042624,
+    lng: 91.82298022754775,
+  });
   const [mapError, setMapError] = useState({
     status: false,
     message: "",
     color: false,
     count: 0,
   });
+ 
 
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState({
+    lat: propertyData?.data?.latitude,
+    lng: propertyData?.data?.longitude,
+  });
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
-    libraries,
+    libraries: ["places"],
   });
+
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  useEffect(() => {
+    if (propertyData) {
+      setSelectedLocation({
+        lat: propertyData.data.latitude,
+        lng: propertyData.data.longitude,
+      });
+      setMapLoaded(true);
+    }
+  }, [propertyData]);
+
 
   const [allInputError, setAllInputError] = useState({
     status: false,
     message: "",
   });
 
-  const [logo, setLogo] = useState(null);
+  const [logo, setLogo] = useState("");
   const [logoFile, setLogoFile] = useState(null);
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [images, setImages] = useState([]);
@@ -105,18 +125,6 @@ const OwnerPropertyEdit = () => {
   console.log(logo);
   // const [video, setVideo] = useState(null);
   // const [videoError, setVideoError] = useState(true);
-
-  // console.log("logo", logo);
-  // console.log("displayImages", displayImages);
-  // console.log("cancellationData", cancellationData);
-  // console.log("check_in_time", check_in_time);
-  // console.log("check_out_time", check_out_time);
-
-  // const selectedPropertyTypes = useWatch({
-  //   control,
-  //   name: "propertyTypes",
-  //   defaultValue: [],
-  // });
 
   const [property, setProperty] = useState({
     name: "",
@@ -141,13 +149,13 @@ const OwnerPropertyEdit = () => {
     instruction: "",
     payment_methods: [],
     pet_policy: "",
-    is_active:null,
+    is_active: null,
+    view_order: null,
   });
 
   console.log(property);
 
   const [loading, setLoading] = useState(false);
-  const [rating, setRating] = useState(null);
 
   const [countryId, setCountryId] = useState(null);
   const [divisionId, setDivisionId] = useState(null);
@@ -163,11 +171,9 @@ const OwnerPropertyEdit = () => {
   const { data: areaData, refetch: refetchAreas } =
     useGetAllActiveAreaQuery(districtId);
 
-  // console.log("districtId", districtId);
-  // console.log("divisionId", divisionId);
-  // console.log("areaId", areaId);
-
   useEffect(() => {
+    refetch();
+
     if (propertyData?.data) {
       setLogoFile({
         name: "",
@@ -177,6 +183,7 @@ const OwnerPropertyEdit = () => {
 
       setDisplayImages(
         propertyData?.data?.images?.map((image) => ({
+          id: image.id,
           name: "",
           url: `${BASE_ASSET_API}/storage/images/property/property_image/${image?.image}`,
           displayImageFile: null,
@@ -213,7 +220,7 @@ const OwnerPropertyEdit = () => {
       setDistrictId(propertyData?.data.area.district.id);
       setAreaId(propertyData?.data.area.id);
 
-      setSelectedLocation(mapCenter);
+      // setSelectedLocation(mapCenter);
       setProperty(propertyData?.data);
     }
   }, [
@@ -222,7 +229,8 @@ const OwnerPropertyEdit = () => {
     property?.check_in_time_period,
     property?.check_out_time,
     property?.check_out_time_period,
-    mapCenter,
+    // mapCenter,
+    refetch,
   ]);
 
   useEffect(() => {
@@ -252,7 +260,7 @@ const OwnerPropertyEdit = () => {
     const longitude = latLng.lng();
     setCenter({ lat: latitude, lng: longitude });
     setMapCenter({ lat: latitude, lng: longitude });
-    setSelectedLocation({ lat: latitude, lng: longitude }); // Update selected location
+    setSelectedLocation({ lat: latitude, lng: longitude });
     // setMapError(false);
     setMapError({
       status: true,
@@ -315,7 +323,7 @@ const OwnerPropertyEdit = () => {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
 
-  if (!isLoaded || loading || propertyLoading) {
+  if (!isLoaded || loading || propertyLoading || isLoading) {
     return <Loading></Loading>;
   }
 
@@ -350,22 +358,26 @@ const OwnerPropertyEdit = () => {
     }
   };
 
-  const handleDisplayImageSelect = (index, event) => {
+  const handleDisplayImageSelect = (index, event, id) => {
+    console.log("index", index);
+    console.log("id", id);
     const fileInput = event.target;
     if (fileInput?.files?.length > 0) {
       const newImages = [...displayImages];
       newImages[index] = {
+        id: id,
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
         displayImageFile: fileInput.files[0],
       };
       setDisplayImages(newImages);
       // Update the 'images' array
-      setImages(
-        newImages
-          .filter((image) => image !== null)
-          .map((image) => image.displayImageFile)
-      );
+      const updatedImages = newImages.map((image) => ({
+        id: image?.id, // Assuming you have the ID in the displayImages array
+        file: image?.displayImageFile,
+      }));
+
+      setImages(updatedImages);
       displayImages?.map((i) => {
         if (i === null) {
           displayImageCount++;
@@ -401,23 +413,6 @@ const OwnerPropertyEdit = () => {
     }
   };
 
-  // const handleVideoSelect = (event) => {
-  //   const fileInput = event.target;
-  //   if (fileInput?.files?.length > 0) {
-  //     setVideo({
-  //       name: fileInput.files[0].name,
-  //       url: URL.createObjectURL(fileInput.files[0]),
-  //     });
-  //   } else {
-  //     setVideo(null);
-  //     setVideoError(true);
-  //   }
-  // };
-
-  // const handleVideoDelete = () => {
-  //   setVideo(null);
-  //   setVideoError(false);
-  // };
 
   const onSubmit = async () => {
     displayImages?.map((i) => {
@@ -468,13 +463,12 @@ const OwnerPropertyEdit = () => {
     const paymentMethodsId = property?.payment_methods?.map(
       (method) => method.id
     );
-    console.log("paymentMethodsId", paymentMethodsId);
     const amenitiesId = property.amenities.map((amenity) => amenity.id);
-    console.log("amenitiesId", amenitiesId);
 
     const propertyEditData = {
       id: property.id,
       name: property.name,
+      subtitle: property.subtitle,
       bin: property.bin,
       tin: property.tin,
       trade_license_number: "123456",
@@ -497,7 +491,8 @@ const OwnerPropertyEdit = () => {
       instruction: property.instruction,
       payment_methods: paymentMethodsId,
       pet_policy: property.pet_policy,
-      is_active:property.is_active,
+      is_active: property.is_active,
+      // view_order: property.view_order,
     };
 
     console.log("propertyData", propertyData?.data);
@@ -550,17 +545,17 @@ const OwnerPropertyEdit = () => {
     propertyEditFormData.append("longitude", parseFloat(mapCenter.lng));
 
     // Append image files to FormData
-    if (Array.isArray(propertyData.images)) {
-      propertyEditData.images.forEach((imageFile, index) => {
-        if (imageFile != null) {
-          propertyEditFormData.append(`images[${index}][image]`, imageFile);
+    if (Array.isArray(propertyEditData.images)) {
+      propertyEditData.images.forEach((image) => {
+        if (image && image.file) {
+          propertyEditFormData.append(`images[${image.id}][image]`, image.file);
         }
       });
     }
 
     // Append logo file to FormData
     if (propertyEditData.logo) {
-      propertyEditFormData.append("logo", propertyData.logo);
+      propertyEditFormData.append("logo", propertyEditData.logo);
     }
 
     propertyEditFormData.append("_method", "PUT");
@@ -579,10 +574,9 @@ const OwnerPropertyEdit = () => {
       if (result?.data?.status) {
         console.log("updatePropertyInfo", result);
         toast.success("Property updated successfully");
-        navigate(`/dashboard/property/${property.id}/edit`);
-        // reset();
+        navigate(`/dashboard/property-list`);
       } else {
-        console.log("Failed", result?.error?.data?.errors);
+        console.log("Failed", result);
         // setValidationErrors(result?.error?.data?.errors);
         // console.log("Failed", result);
       }
@@ -592,6 +586,7 @@ const OwnerPropertyEdit = () => {
       // setValidationErrors(err.response.data.errors);
     }
   };
+
   return (
     <div className="p-[12px] md:p-[24px] lg:p-[24px]">
       <div className=" ">
@@ -625,7 +620,7 @@ const OwnerPropertyEdit = () => {
             </div>
             {/* Subtitle */}
             <div className="">
-              <label className="property-input-title" htmlFor="bin">
+              <label className="property-input-title" htmlFor="subtitle">
                 Subtitle
               </label>
               <input
@@ -757,7 +752,7 @@ const OwnerPropertyEdit = () => {
             </div>
             {/* State/District */}
             <div className="">
-              <label className="property-input-title block" htmlFor="">
+              <label className="property-input-title block" htmlFor="district">
                 State/District
               </label>
               <div className="property-input-div">
@@ -783,7 +778,11 @@ const OwnerPropertyEdit = () => {
                     </span>
                   )}
                 </label>
-                <img className="arrow-icon" src={arrowDownIcon} alt="" />
+                <img
+                  className="arrow-icon"
+                  src={arrowDownIcon}
+                  alt="Arrow Down Icon"
+                />
               </div>
             </div>
             {/* Area */}
@@ -796,9 +795,11 @@ const OwnerPropertyEdit = () => {
                   className="property-input"
                   name="area"
                   id="area"
-                  disabled={!areaData || areaData.data.length === 0}
-                  value={propertyData?.data.area.id || ""}
+                  // disabled={!areaData || areaData.data.length === 0}
+                  // value={propertyData?.data.area.id || ""}
                   onChange={(e) => handleAreaChange(e)}
+                  disabled={areaData?.data?.length <= 0}
+                  value={areaId || ""}
                 >
                   <option value={0}>Select Area</option>
                   {areaData?.data?.map((area) => (
@@ -1096,15 +1097,15 @@ const OwnerPropertyEdit = () => {
                                   : logo?.name}
                               </p> */}
                             </div>
-                            <p className="text-[14px] text-center absolute -bottom-6 left-4 z-10">
-                              Browse Photo
+                            <p className="text-[12px] text-center absolute -bottom-6 left-4 z-10">
+                              Update Photo
                             </p>
                             <img
                               src={logoFile?.url}
                               // src={logo?.url}
-                              alt="Selected File"
+                              alt="Logo"
                               // className="w-8 mr-1"
-                              className=" w-full h-[110px] mt-[-30px] "
+                              className=" w-full h-[100px] mt-[-30px] "
                             />
                           </div>
                         </>
@@ -1157,7 +1158,7 @@ const OwnerPropertyEdit = () => {
                                     <img
                                       src={image?.url}
                                       alt={image.name}
-                                      className="w-8 mr-1"
+                                      className="w-20 mr-1"
                                     />
                                   </div>
                                   <span className="text-[12px] block text-center">
@@ -1166,8 +1167,8 @@ const OwnerPropertyEdit = () => {
                                       : image?.name}
                                   </span>
                                 </div>
-                                <p className="property-input-title text-center">
-                                  Browse Photo
+                                <p className="text-[12px] text-center">
+                                  Update Photo
                                 </p>
                               </div>
                             </>
@@ -1195,11 +1196,8 @@ const OwnerPropertyEdit = () => {
                         name={`display-image-${index}`}
                         style={{ display: "none" }}
                         onChange={(event) =>
-                          handleDisplayImageSelect(index, event)
+                          handleDisplayImageSelect(index, event, image?.id)
                         }
-                        // {...register(`displayImages[${index}]`, {
-                        //   required: "Image is required",
-                        // })}
                       />
                     </div>
                   ))}
@@ -1212,96 +1210,7 @@ const OwnerPropertyEdit = () => {
               </div>
             </div>
           </div>
-          {/* Video */}
-          {/* <div className="mt-[18px]">
-            <h2> Property Video {`(Optional)`}</h2>
-            <div className="relative">
-              <div
-                onClick={handleVideoDelete}
-                className="flex justify-end absolute top-[8px] right-[8px]"
-              >
-                <img
-                  className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                  src={delteIcon}
-                  alt=""
-                />
-              </div>
-              <label htmlFor="video" className="input-label">
-                <div className="w-full h-[120px] rounded-[8px] p-[8px] border-[1px] border-[#E6E7E6] mt-[12px]">
-                  <div className="mt-[30px]">
-                    {video && !errors.video ? (
-                      <div className="grid justify-center">
-                        <div className="flex mb-[8px] items-center">
-                          <img
-                            src={video.url}
-                            alt="Selected File"
-                            className="w-10 mr-1"
-                          />
-                          <span className="">{video.name}</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="flex justify-center mb-[8px]">
-                          <img className="w-[20px]" src={videoIcon} alt="" />
-                        </div>
-                        <p className="property-input-title text-center">
-                          Upload
-                        </p>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div>
-                  <Controller
-                    name="video"
-                    control={control}
-                    defaultValue=""
-                    rules={{
-                      validate: (value) => {
-                        if (value) {
-                          const allowedTypes = ["video/mp4", "video/mkv"];
-                          const fileType = value[0]?.type;
-                          const fileSize = value[0]?.size / (1024 * 1024);
 
-                          if (!allowedTypes.includes(fileType)) {
-                            return "Please select mp4 or mkv file.";
-                          }
-
-                          if (fileSize > MAX_VIDEO_SIZE_MB) {
-                            return `File size should be less than ${MAX_VIDEO_SIZE_MB} MB.`;
-                          }
-                        }
-                        return true;
-                      },
-                    }}
-                    render={({ field }) => (
-                      <>
-                        <input
-                          {...field}
-                          type="file"
-                          id="video"
-                          accept=".mkv, .mp4"
-                          onChange={(e) => {
-                            field.onChange(e);
-                            handleVideoSelect(e);
-                          }}
-                          style={{ display: "none" }}
-                        />
-                        <label className="">
-                          {errors.video && videoError && (
-                            <span className="label-text-alt text-red-500">
-                              {errors.video.message}
-                            </span>
-                          )}
-                        </label>
-                      </>
-                    )}
-                  />
-                </div>
-              </label>
-            </div>
-          </div> */}
           {/* Checkin */}
           <div className="mt-[18px]">
             {/* Check In */}
@@ -1749,14 +1658,13 @@ const OwnerPropertyEdit = () => {
                   name="is_active"
                   id="active"
                   value={1}
-                  checked={property?.is_active}
+                  checked={property?.is_active == 1}
                   onChange={(e) =>
                     setProperty({
                       ...property,
                       is_active: e.target.value,
                     })
                   }
-                 
                 />
                 <label htmlFor="active">Active</label>
               </div>
@@ -1766,13 +1674,13 @@ const OwnerPropertyEdit = () => {
                   name="is_active"
                   id="inactive"
                   value={0}
+                  checked={property?.is_active == 0}
                   onChange={(e) =>
                     setProperty({
                       ...property,
                       is_active: e.target.value,
                     })
                   }
-                  
                 />
                 <label htmlFor="inactive">Inactive</label>
               </div>
@@ -1811,7 +1719,7 @@ const OwnerPropertyEdit = () => {
                       />
                       <div className="autocomplete-dropdown-container text-[12px] bg-white">
                         {loading && <div>Loading...</div>}
-                        {suggestions?.map((suggestion, index) => {
+                        {suggestions.map((suggestion, index) => {
                           const style = {
                             backgroundColor: suggestion.active
                               ? "#159947"
@@ -1838,68 +1746,74 @@ const OwnerPropertyEdit = () => {
             </div>
 
             <div className="mt-[20px] z-0">
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                zoom={10}
-                // center={center}
-                center={mapCenter}
-                // onLoad={onMapLoad}
-                // onClick={(e) => {
-                //   setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-                //   setValue("map", { lat: e.latLng.lat(), lng: e.latLng.lng() });
-                // }}
-                // onClick={onMapClick}
-                onClick={handleMapClick}
-              >
-                {rectangleBounds && (
-                  <Rectangle
-                    bounds={rectangleBounds}
-                    onLoad={onRectangleLoad}
-                  />
-                )}
-                {/* <Marker position={center} /> */}
-                <Marker position={mapCenter} />
-                {/* Additional marker at the search location */}
-                {selectedLocation && (
-                  <Marker
-                    position={selectedLocation}
-                    icon={{
-                      url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                      scaledSize: new window.google.maps.Size(30, 30),
-                    }}
-                  />
-                )}
-              </GoogleMap>
+              {propertyData && selectedLocation && (
+                <GoogleMap
+                  mapContainerStyle={mapContainerStyle}
+                  zoom={10}
+                  center={selectedLocation}
+                  onClick={handleMapClick}
+                >
+                  {mapLoaded && rectangleBounds && (
+                    <Rectangle
+                      bounds={rectangleBounds}
+                      onLoad={onRectangleLoad}
+                    />
+                  )}
+                  {/* Display marker for center */}
+
+                  {/* Additional marker at the search location */}
+                  {console.log(selectedLocation)}
+                  {mapLoaded && selectedLocation && (
+                    <MarkerF
+                      position={
+                        selectedLocation || {
+                          lat: 22.347534723042624,
+                          lng: 91.82298022754775,
+                        }
+                      }
+                      icon={{
+                        url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                        scaledSize: new window.google.maps.Size(30, 30),
+                      }}
+                    />
+                  )}
+                </GoogleMap>
+              )}
               {/* Error messages */}
               <label className="">
-                {/* Display message when location is selected */}
-                {/* {selectedLocation && (
-                <span className="label-text-alt text-green-500">
-                  Location selected
-                </span>
-              )} */}
-                {/* Display other errors */}
-
-                {errors.map && (
-                  <span className="label-text-alt text-red-500">
-                    {errors.map.message}
-                  </span>
-                )}
-              </label>
-              {mapError.status && (
-                <label className="mt-[4px]">
+                {mapError.status && (
                   <span
                     className={`label-text-alt ${
                       mapError.color ? "text-[#159947]" : "text-red-500"
                     }`}
                   >
-                    {/* Please select hotel location */}
                     {mapError.message}
                   </span>
-                </label>
-              )}
+                )}
+              </label>
             </div>
           </div>
+
+          {/* View Order */}
+          {/* <div className="mt-[18px] mb-[20px]">
+            <label className="property-input-title" htmlFor="view_order">
+              View Order
+            </label>
+            <input
+              className="input-box"
+              id="view_order"
+              name="view_order"
+              type="text"
+              value={property?.view_order}
+              onChange={(e) =>
+                setProperty({
+                  ...property,
+                  view_order: e.target.value,
+                })
+              }
+            />
+            <label className=""></label>
+          </div> */}
           {/* 
             {allInputError.status && (
               <p className="label-text-alt text-red-500 text-right mb-[6px]">

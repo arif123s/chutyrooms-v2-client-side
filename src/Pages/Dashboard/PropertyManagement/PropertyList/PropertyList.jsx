@@ -5,6 +5,7 @@ import restoreIcon from "../../../../assets/icons/restore_icon.svg";
 import { useGetAllPropertyQuery } from "../../../../redux/features/owner/propertyAdd/propertyAdd.api";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
+import { useEffect } from "react";
 
 const PropertyList = () => {
 
@@ -12,8 +13,12 @@ const PropertyList = () => {
     const {
       data: propertyData,
       isLoading,
-      // refetch,
+      refetch,
     } = useGetAllPropertyQuery();
+
+    useEffect(()=>{
+      refetch()
+    },[refetch])
 
     console.log(propertyData?.data?.data)
 

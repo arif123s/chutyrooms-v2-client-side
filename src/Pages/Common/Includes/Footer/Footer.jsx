@@ -202,7 +202,7 @@ const navigate = useNavigate();
                           Legal
                         </a>
                       </p>
-                      <p>
+                      {/* <p>
                         <a
                           href=""
                           onClick={(e) => {
@@ -212,7 +212,7 @@ const navigate = useNavigate();
                         >
                           Earn with ChutyRooms
                         </a>
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>
