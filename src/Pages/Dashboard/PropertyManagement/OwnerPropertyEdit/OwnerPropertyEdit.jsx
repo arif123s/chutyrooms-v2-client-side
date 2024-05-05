@@ -81,7 +81,6 @@ const OwnerPropertyEdit = () => {
     color: false,
     count: 0,
   });
- 
 
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
