@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useHomePageDataQuery } from "../../../../redux/features/HomePage/index.api";
 import PopularHotels from "./PopularHotels/PopularHotels";
 import SearchField from "./SearchField/SearchField";
 import "./HomePage.css";
@@ -12,6 +13,15 @@ const HomePage = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const [isOtherDivVisible, setIsOtherDivVisible] = useState(true);
+
+  const { data, isLoading, refetch } = useHomePageDataQuery();
+  console.log(data?.data.memberships);
+
+ 
+  const popularProperties = data?.data.properties;
+  const membershipCards  = data?.data.memberships;
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,8 +63,8 @@ const HomePage = () => {
         </div>
         )}
         <div className="hotels-membership-container">
-          <PopularHotels></PopularHotels>
-          <DealMembership></DealMembership>
+          <PopularHotels sentValue={popularProperties}></PopularHotels>
+          <DealMembership sentValue={membershipCards}></DealMembership>
         </div>
         <ExploreCountry></ExploreCountry>
         {/* <div className="chat-box">
