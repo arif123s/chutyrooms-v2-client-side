@@ -12,22 +12,31 @@ import star from "../../../../../assets/icons/star-black.svg";
 import location from "../../../../../assets/icons/map-pin.svg";
 import favouriteIcon from "../../../../../assets/icons/favourite.svg";
 import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
-import { useState } from "react";
-// import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
+import { useEffect, useState } from "react";
 
-const PopularHotels = () => {
+const PopularHotels = (props) => {
   const [favourite, setFavourite] = useState(false);
+
+  if (!Array.isArray(props.sentValue)) {
+    console.error('Expected an array, received:', props.sentValue);
+    return null; // Or handle the error gracefully
+  }
+
+
 
   return (
     <div className="popular-hotels-container">
       <h2 className="homepage-title">Popular Hotels</h2>
       <div className="hotels-container">
-        <div className="relative">
+
+      {props.sentValue.map((popularHotels) => (
+
+          <div className="relative">
           <div className="w-full">
-            <img className="hotel-img" src={hotel1} alt="" />
+            <img className="hotel-img" src={popularHotels.image} alt="" />
           </div>
           <div className="flex justify-between items-center mt-[8px]">
-            <h2 className="hotel-name">Hotel Sea View</h2>
+            <h2 className="hotel-name">{popularHotels.name}</h2>
             <div className="flex itens-center gap-[4px]">
               <img className="w-[14px]" src={star} alt="" />
               <span className="hotel-info">4.7</span>
@@ -35,7 +44,7 @@ const PopularHotels = () => {
           </div>
           <div className="flex items-center mt-[2px] gap-[6px]">
             <img src={location} alt="" />
-            <span className="hotel-info">Cox’s Bazar</span>
+            <span className="hotel-info">{popularHotels.location}</span>
           </div>
           <p className="mt-[6px] hotel-info">
             <span className="font-['Gilroy-bold']">BDT 2100</span> Per Night
@@ -46,9 +55,11 @@ const PopularHotels = () => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div>
+          </div>
+      ))}
+    
 
-        <div className="relative">
+        {/* <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel2} alt="" />
           </div>
@@ -72,8 +83,8 @@ const PopularHotels = () => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div>
-
+        </div> */}
+{/* 
         <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel3} alt="" />
@@ -254,7 +265,7 @@ const PopularHotels = () => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">
