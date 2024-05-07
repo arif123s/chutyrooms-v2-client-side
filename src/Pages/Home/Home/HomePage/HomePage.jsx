@@ -15,11 +15,12 @@ const HomePage = () => {
   const [isOtherDivVisible, setIsOtherDivVisible] = useState(true);
 
   const { data, isLoading, refetch } = useHomePageDataQuery();
-  console.log(data?.data.memberships);
-
  
-  const popularProperties = data?.data.properties;
-  const membershipCards  = data?.data.memberships;
+  const popularProperties = data?.data?.properties;
+  const membershipCards  = data?.data?.memberships;
+
+  console.log("popularProperties", popularProperties);
+  console.log("membershipCards", membershipCards);
 
 
 
@@ -58,12 +59,12 @@ const HomePage = () => {
       <div className="custom-container homepage-container">
         {/* <SearchField></SearchField> */}
         {isOtherDivVisible && (
-        <div className="mt-[40px] custom-container" >
-          <SearchField></SearchField>
-        </div>
+          <div className="mt-[40px] custom-container">
+            <SearchField></SearchField>
+          </div>
         )}
         <div className="hotels-membership-container">
-          <PopularHotels sentValue={popularProperties}></PopularHotels>
+          <PopularHotels popularProperties={popularProperties}></PopularHotels>
           <DealMembership sentValue={membershipCards}></DealMembership>
         </div>
         <ExploreCountry></ExploreCountry>
