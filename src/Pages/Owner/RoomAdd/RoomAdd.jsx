@@ -3,6 +3,9 @@ import "./RoomAdd.css"
 import { useNavigate } from "react-router-dom";
 import imgIcon from "../../../assets/icons/img.svg";
 import delteIcon from "../../../assets/icons/delete.svg";
+import tickSquareIcon from "../../../assets/icons/tick-square-black.svg";
+import dashIcon from "../../../assets/icons/dash.svg";
+import plusIcon from "../../../assets/icons/plus.svg";
 import { useForm } from "react-hook-form";
 
 const RoomAdd = () => {
@@ -204,24 +207,54 @@ const RoomAdd = () => {
             Description
           </label>
           <textarea
-            className="property-description block input-box h-[120px]"
+            className="property-description"
             name="description"
             id="description"
-            placeholder="Sea View"
+            placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
+            {...register("description", {
+              required: "Description is required",
+              maxLength: {
+                value: 1000,
+                message: "Description cannot exceed 1000 characters",
+              },
+            })}
           ></textarea>
+          <label className="">
+            {errors.description && (
+              <span className="label-text-alt text-red-500">
+                {errors.description.message}
+              </span>
+            )}
+          </label>
         </div>
+
         {/* Short Description */}
         <div className="mt-[18px]">
-          <label className="property-input-title" htmlFor="short-description">
+          <label className="property-input-title" htmlFor="short_description">
             Short Description
           </label>
           <textarea
-            className="property-description block input-box h-[120px]"
-            name="short-description"
-            id="short-description"
-            placeholder=""
+            className="property-description"
+            name="short_description"
+            id="short_description"
+            placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
+            {...register("short_description", {
+              required: "Short Description is required",
+              maxLength: {
+                value: 1000,
+                message: "Short Description cannot exceed 1000 characters",
+              },
+            })}
           ></textarea>
+          <label className="">
+            {errors.short_description && (
+              <span className="label-text-alt text-red-500">
+                {errors.short_description.message}
+              </span>
+            )}
+          </label>
         </div>
+
         {/* Room price , bed, guest */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Regular Price */}
@@ -250,69 +283,47 @@ const RoomAdd = () => {
               type="number"
             />
           </div>
-        </div>
-        <div className="mt-[18px]">
-          <h2 className="text-[16px] font-['Gilroy-SemiBold'] mb-[8px]">
-            Guest Info
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] ">
-            <div className="">
-              <label className="property-input-title" htmlFor="adult-quantity">
-                Adult (qty)
-              </label>
-              <input
-                className="input-box"
-                id="adult-quantity"
-                name="adult-quantity"
-                type="number"
-              />
-            </div>
-            <div className="">
-              <label className="property-input-title" htmlFor="child-quantity">
-                Child (qty)
-              </label>
-              <input
-                className="input-box"
-                id="child-quantity"
-                name="child-quantity"
-                type="number"
-              />
-            </div>
-            <div className="">
-              <label className="property-input-title" htmlFor="adult-extra">
-                Adult (extra)
-              </label>
-              <input
-                className="input-box"
-                id="adult-quantity"
-                name="adult-quantity"
-                type="number"
-              />
-            </div>
-            <div className="">
-              <label className="property-input-title" htmlFor="child-extra">
-                Child (extra)
-              </label>
-              <input
-                className="input-box"
-                id="child-extra"
-                name="child-extra"
-                type="number"
-              />
-            </div>
+
+          <div className="">
+            <label className="property-input-title" htmlFor="adult-quantity">
+              Adult (qty)
+            </label>
+            <input
+              className="input-box"
+              id="adult-quantity"
+              name="adult-quantity"
+              type="number"
+            />
+          </div>
+          <div className="">
+            <label className="property-input-title" htmlFor="child-quantity">
+              Child (qty)
+            </label>
+            <input
+              className="input-box"
+              id="child-quantity"
+              name="child-quantity"
+              type="number"
+            />
           </div>
         </div>
+
+        {/* Extra guest info */}
         <div className="mt-[18px]">
-          <h2 className="text-[16px] font-['Gilroy-SemiBold'] mb-[8px]">
-            Extra Guest Info
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] ">
+          <div className="flex items-center gap-[8px] mb-[8px]">
+            <h2 className="text-[16px] font-['Gilroy-SemiBold']">
+              Extra Guest Info
+            </h2>
+            <img src={tickSquareIcon} alt="" />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mb-[18px]">
+            {/* Extra Adult */}
             <div className="">
               <label
                 className="property-input-title"
                 htmlFor="extra-guest-quantity"
               >
-                Extra guest (qty)
+                Extra Adult
               </label>
               <input
                 className="input-box"
@@ -321,12 +332,13 @@ const RoomAdd = () => {
                 type="number"
               />
             </div>
+            {/* Price per person */}
             <div className="">
               <label
                 className="property-input-title"
                 htmlFor="extra-guest-price"
               >
-                Price per extra guest
+                Price {"("}per person{")"}
               </label>
               <input
                 className="input-box"
@@ -335,6 +347,67 @@ const RoomAdd = () => {
                 type="number"
               />
             </div>
+          </div>
+          {/* Extra Child */}
+          <div className="">
+            <label
+              className="property-input-title"
+              htmlFor="extra-guest-quantity"
+            >
+              Extra Child
+            </label>
+            <input
+              className="input-box"
+              id="extra-guest-quantity"
+              name="extra-guest-quantity"
+              type="number"
+            />
+          </div>
+
+          {/* age variation */}
+          <div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] my-[18px]">
+              <div>
+                <label
+                  className="property-input-title"
+                  htmlFor="extra-guest-quantity"
+                >
+                  Age
+                </label>
+                <div className="flex">
+                  <input
+                    className="input-box"
+                    id="extra-guest-quantity"
+                    name="extra-guest-quantity"
+                    type="number"
+                  />
+                  <img className="mx-[12px]" src={dashIcon} alt="" />
+                  <input
+                    className="input-box"
+                    id="extra-guest-quantity"
+                    name="extra-guest-quantity"
+                    type="number"
+                  />
+                </div>
+              </div>
+
+              {/* Price */}
+              <div className="">
+                <label
+                  className="property-input-title"
+                  htmlFor="extra-guest-quantity"
+                >
+                  Price
+                </label>
+                <input
+                  className="input-box"
+                  id="extra-guest-quantity"
+                  name="extra-guest-quantity"
+                  type="number"
+                />
+              </div>
+            </div>
+            <button className="input-box flex"><img src={plusIcon} alt="" /> Add more variation</button>
           </div>
         </div>
         <div className="mt-[18px]">

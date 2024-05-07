@@ -144,22 +144,26 @@ const OtpEmailVerification = () => {
          .then((res) => res.json())
          .then((data) => {
            setLoading(false);
-           if (data.status === true) {
+           if (data?.status === true) {
              console.log("data", data);
+             localStorage.setItem("accessToken", data.accessToken);
              localStorage.setItem(
                "userInfo",
                JSON.stringify({
-                 id: data.data.id,
-                 accessToken: data.accessToken,
-                 name: data.data.name,
-                 img: data.data.image,
-                 role: "",
+                 id: data?.data?.id,
+                 accessToken: data?.accessToken,
+                 name: data?.data?.name,
+                 img: data?.data?.image,
+                 role: data.data.roles[0],
                })
              );
              toast.success("Successfully registered!");
-              if (data.data.roles[0].role_code == 345) {
+              if (data?.data?.roles[0]?.role_code == 345) {
                 navigate("/");
               } else navigate("/dashboard");
+              if (data?.data?.roles[0]?.role_code == 234) {
+                navigate("/dashboard/property-list");
+              }
            } else {
              setOtpError({ status: true, message: data.message });
              console.log(data);

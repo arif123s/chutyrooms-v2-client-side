@@ -26,7 +26,7 @@ import {
 } from "@react-google-maps/api";
 import { Rating } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
 import CancellationPolicyEdit from "./CancellationPolicyEdit/CancellationPolicyEdit";
@@ -61,20 +61,11 @@ const OwnerPropertyEdit = () => {
 
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [center, setCenter] = useState({
-    lat: 22.347534723042624,
-    lng: 91.82298022754775,
-  });
-
-  const [mapCenter, setMapCenter] = useState({
-    lat: 22.347534723042624,
-    lng: 91.82298022754775,
-  });
+  const [mapCenter, setMapCenter] = useState({});
   const [mapError, setMapError] = useState({
     status: false,
     message: "",
@@ -101,10 +92,13 @@ const OwnerPropertyEdit = () => {
         lat: propertyData.data.latitude,
         lng: propertyData.data.longitude,
       });
+      setMapCenter({
+        lat: propertyData.data.latitude,
+        lng: propertyData.data.longitude,
+      });
       setMapLoaded(true);
     }
   }, [propertyData]);
-
 
   const [allInputError, setAllInputError] = useState({
     status: false,
@@ -120,10 +114,17 @@ const OwnerPropertyEdit = () => {
   const [cancellationData, setCancellationData] = useState([]);
   const [logoError, setLogoError] = useState(null);
   const [displayImageError, setDisplayImageError] = useState(null);
+  // const selectedPropertyTypes = useWatch({
+  //   control,
+  //   name: "propertyTypes",
+  //   defaultValue: [],
+  // });
+  // const selectedPaymentMethods = useWatch({
+  //   control,
+  //   name: "paymentMethods",
+  //   defaultValue: [],
+  // });
   let displayImageCount = 0;
-  console.log(logo);
-  // const [video, setVideo] = useState(null);
-  // const [videoError, setVideoError] = useState(true);
 
   const [property, setProperty] = useState({
     name: "",
@@ -170,6 +171,8 @@ const OwnerPropertyEdit = () => {
   const { data: areaData, refetch: refetchAreas } =
     useGetAllActiveAreaQuery(districtId);
 
+  const [validationErrors, setValidationErrors] = useState({});
+
   useEffect(() => {
     refetch();
 
@@ -214,10 +217,10 @@ const OwnerPropertyEdit = () => {
         setCancellationData(cancellation);
       }
 
-      setCountryId(propertyData?.data.area.district.division.country.id);
-      setDivisionId(propertyData?.data.area.district.division.id);
-      setDistrictId(propertyData?.data.area.district.id);
-      setAreaId(propertyData?.data.area.id);
+      setCountryId(propertyData?.data?.area?.district?.division?.country?.id);
+      setDivisionId(propertyData?.data?.area?.district?.division?.id);
+      setDistrictId(propertyData?.data?.area?.district?.id);
+      setAreaId(propertyData?.data?.area?.id);
 
       // setSelectedLocation(mapCenter);
       setProperty(propertyData?.data);
@@ -257,7 +260,6 @@ const OwnerPropertyEdit = () => {
     const { latLng } = e;
     const latitude = latLng.lat();
     const longitude = latLng.lng();
-    setCenter({ lat: latitude, lng: longitude });
     setMapCenter({ lat: latitude, lng: longitude });
     setSelectedLocation({ lat: latitude, lng: longitude });
     // setMapError(false);
@@ -412,7 +414,6 @@ const OwnerPropertyEdit = () => {
     }
   };
 
-
   const onSubmit = async () => {
     displayImages?.map((i) => {
       if (i === null) {
@@ -444,19 +445,6 @@ const OwnerPropertyEdit = () => {
       });
       return;
     }
-
-    // if (!mapError.count) {
-    //   console.log("Map error");
-    //   setMapError({
-    //     status: true,
-    //     message: "Please select hotel location",
-    //   });
-    //   return;
-    // }
-
-    const displayImageFiles = displayImages?.map(
-      (image) => image.displayImageFile
-    );
 
     const propertyTypesId = property?.property_types?.map((type) => type.id);
     const paymentMethodsId = property?.payment_methods?.map(
@@ -494,7 +482,6 @@ const OwnerPropertyEdit = () => {
       // view_order: property.view_order,
     };
 
-    console.log("propertyData", propertyData?.data);
     console.log("propertyEditData", propertyEditData);
 
     const propertyEditFormData = new FormData();
@@ -575,8 +562,8 @@ const OwnerPropertyEdit = () => {
         toast.success("Property updated successfully");
         navigate(`/dashboard/property-list`);
       } else {
-        console.log("Failed", result);
-        // setValidationErrors(result?.error?.data?.errors);
+        console.log("Failed", result?.error?.data?.errors);
+        setValidationErrors(result?.error?.data?.errors);
         // console.log("Failed", result);
       }
     } catch (error) {
@@ -615,7 +602,11 @@ const OwnerPropertyEdit = () => {
                   })
                 }
               />
-              <label className=""></label>
+              {validationErrors?.name && (
+                <span className="label-text-alt text-red-500">
+                  {validationErrors?.name}
+                </span>
+              )}
             </div>
             {/* Subtitle */}
             <div className="">
@@ -635,7 +626,11 @@ const OwnerPropertyEdit = () => {
                   })
                 }
               />
-              <label className=""></label>
+              {validationErrors?.subtitle && (
+                <span className="label-text-alt text-red-500">
+                  {validationErrors?.subtitle}
+                </span>
+              )}
             </div>
             {/* Bin */}
             <div className="">
@@ -655,7 +650,11 @@ const OwnerPropertyEdit = () => {
                   })
                 }
               />
-              <label className=""></label>
+              {validationErrors?.bin && (
+                <span className="label-text-alt text-red-500">
+                  {validationErrors?.bin}
+                </span>
+              )}
             </div>
             {/* Tin */}
             <div className="">
@@ -675,7 +674,11 @@ const OwnerPropertyEdit = () => {
                   })
                 }
               />
-              <label className=""></label>
+              {validationErrors?.tin && (
+                <span className="label-text-alt text-red-500">
+                  {validationErrors?.tin}
+                </span>
+              )}
             </div>
             {/* Country */}
             <div className="">
@@ -703,24 +706,24 @@ const OwnerPropertyEdit = () => {
                     </option>
                   ))}
                 </select>
-                <label className="">
-                  {errors.country?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.country?.message}
-                    </span>
-                  )}
-                </label>
+
                 <img
                   // className="absolute top-[14px] right-[12px] arrow-icon"
                   className="arrow-icon"
                   src={arrowDownIcon}
                   alt=""
                 />
+
+                {validationErrors?.country && (
+                  <span className="label-text-alt text-red-500">
+                    {validationErrors?.country}
+                  </span>
+                )}
               </div>
             </div>
             {/* Division */}
             <div className="">
-              <label className="property-input-title block" htmlFor="">
+              <label className="property-input-title block" htmlFor="division">
                 Division
               </label>
               <div className="property-input-div">
@@ -739,14 +742,14 @@ const OwnerPropertyEdit = () => {
                     </option>
                   ))}
                 </select>
-                <label className="">
-                  {errors.division?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.division?.message}
-                    </span>
-                  )}
-                </label>
+
                 <img className="arrow-icon" src={arrowDownIcon} alt="" />
+
+                {validationErrors?.division && (
+                  <span className="label-text-alt text-red-500">
+                    {validationErrors?.division}
+                  </span>
+                )}
               </div>
             </div>
             {/* State/District */}
@@ -765,23 +768,23 @@ const OwnerPropertyEdit = () => {
                 >
                   <option value={0}>Select District</option>
                   {districtData?.data?.map((district) => (
-                    <option key={district.id} value={district.id}>
-                      {district.name}
+                    <option key={district?.id} value={district?.id}>
+                      {district?.name}
                     </option>
                   ))}
                 </select>
-                <label className="">
-                  {errors.district?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.district?.message}
-                    </span>
-                  )}
-                </label>
+
                 <img
                   className="arrow-icon"
                   src={arrowDownIcon}
                   alt="Arrow Down Icon"
                 />
+
+                {validationErrors?.district && (
+                  <span className="label-text-alt text-red-500">
+                    {validationErrors?.district}
+                  </span>
+                )}
               </div>
             </div>
             {/* Area */}
@@ -794,8 +797,6 @@ const OwnerPropertyEdit = () => {
                   className="property-input"
                   name="area"
                   id="area"
-                  // disabled={!areaData || areaData.data.length === 0}
-                  // value={propertyData?.data.area.id || ""}
                   onChange={(e) => handleAreaChange(e)}
                   disabled={areaData?.data?.length <= 0}
                   value={areaId || ""}
@@ -807,14 +808,14 @@ const OwnerPropertyEdit = () => {
                     </option>
                   ))}
                 </select>
-                <label className="">
-                  {errors.area?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.area?.message}
-                    </span>
-                  )}
-                </label>
+
                 <img className="arrow-icon" src={arrowDownIcon} alt="" />
+
+                {validationErrors?.area && (
+                  <span className="label-text-alt text-red-500">
+                    {validationErrors?.area}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -836,13 +837,11 @@ const OwnerPropertyEdit = () => {
                 })
               }
             />
-            <label className="">
-              {errors.address?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.address?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.address && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.address}
+              </span>
+            )}
           </div>
           {/* Description */}
           <div className="mt-[18px]">
@@ -862,13 +861,11 @@ const OwnerPropertyEdit = () => {
                 })
               }
             ></textarea>
-            <label className="">
-              {errors.description && (
-                <span className="label-text-alt text-red-500">
-                  {errors.description.message}
-                </span>
-              )}
-            </label>
+            {validationErrors.description && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.description}
+              </span>
+            )}
           </div>
           {/* Property Rating */}
           <div className="mt-[18px]">
@@ -907,16 +904,21 @@ const OwnerPropertyEdit = () => {
               )}
               // rules={{
               //   validate: (value) => {
-              //     if (value < 1 || value > 5) {
+              //     if (value < "1" || value > "5" || value == null) {
               //       return "Rating must be between 1 and 5";
               //     }
               //     return true;
               //   },
               // }}
             />
-            {errors.rating && (
+            {/* {errors?.rating && (
               <span className="label-text-alt text-red-500">
-                {errors.rating.message}
+                {errors?.rating.message}
+              </span>
+            )} */}
+            {validationErrors?.rating && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.rating}
               </span>
             )}
           </div>
@@ -929,7 +931,7 @@ const OwnerPropertyEdit = () => {
             <div className="text-[14px] flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
               <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                 <Controller
-                  name="propertyTypes"
+                  name="property_types"
                   control={control}
                   defaultValue={[]}
                   // rules={{ required: "Please select at least one checkbox." }}
@@ -986,12 +988,18 @@ const OwnerPropertyEdit = () => {
                 />
               </div>
             </div>
-            {errors.propertyTypes && !selectedPropertyTypes?.length && (
+            {/* {errors.propertyTypes && !property?.property_types?.length && (
               <span className="label-text-alt text-red-500">
                 Please select at least one type
               </span>
+            )} */}
+            {validationErrors?.property_types && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.property_types}
+              </span>
             )}
-          </div>
+          </div>   
+
           {/* Amenities */}
           <div className="mt-[18px] text-[14px]">
             <h2
@@ -1017,7 +1025,9 @@ const OwnerPropertyEdit = () => {
                         // name="amenities.generalAmenities"
                         control={control}
                         defaultValue={[]}
-                        // rules={{ required: "Please select at least one checkbox." }}
+                        // rules={{
+                        //   required: "Please select at least one checkbox.",
+                        // }}
                         render={({ field }) => (
                           <div className="flex items-center gap-[4px]">
                             <input
@@ -1063,6 +1073,11 @@ const OwnerPropertyEdit = () => {
             {errors.bathroomAmenities && (
               <span className="label-text-alt text-red-500">
                 {errors.bathroomAmenities.message}
+              </span>
+            )}
+            {validationErrors?.amenities && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.amenities}
               </span>
             )}
           </div>
@@ -1493,13 +1508,13 @@ const OwnerPropertyEdit = () => {
           </div>
           {/* Short Description */}
           <div className="mt-[18px]">
-            <label className="property-input-title" htmlFor="shortDescription">
+            <label className="property-input-title" htmlFor="short_description">
               Short Description
             </label>
             <textarea
               className="property-description block input-box h-[120px]"
-              name="shortDescription"
-              id="shortDescription"
+              name="short_description"
+              id="short_description"
               placeholder=""
               value={property?.short_description}
               onChange={(e) =>
@@ -1509,13 +1524,11 @@ const OwnerPropertyEdit = () => {
                 })
               }
             ></textarea>
-            <label className="">
-              {errors.shortDescription && (
-                <span className="label-text-alt text-red-500">
-                  {errors.shortDescription.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.short_description && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.short_description}
+              </span>
+            )}
           </div>
           {/* Instruction */}
           <div className="mt-[18px]">
@@ -1535,13 +1548,11 @@ const OwnerPropertyEdit = () => {
                 })
               }
             ></textarea>
-            <label className="">
-              {errors.instruction && (
-                <span className="label-text-alt text-red-500">
-                  {errors.instruction.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.instruction && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.instruction}
+              </span>
+            )}
           </div>
           {/* Pet policy */}
           <div className="mt-[18px]">
@@ -1561,13 +1572,11 @@ const OwnerPropertyEdit = () => {
                 })
               }
             ></textarea>
-            <label className="">
-              {errors.pet_policy && (
-                <span className="label-text-alt text-red-500">
-                  {errors.pet_policy.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.pet_policy && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.pet_policy}
+              </span>
+            )}
           </div>
           {/* Payment Method */}
           <div className="mt-[18px]">
@@ -1578,7 +1587,7 @@ const OwnerPropertyEdit = () => {
             <div className="text-[14px] flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
               <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                 <Controller
-                  name="paymentMethods"
+                  name="payment_methods"
                   control={control}
                   defaultValue={[]}
                   // rules={{ required: "Please select at least one checkbox." }}
@@ -1638,11 +1647,16 @@ const OwnerPropertyEdit = () => {
                 />
               </div>
             </div>
-            {/* {errors.propertyTypes && !selectedPropertyTypes?.length && (
+            {/* {errors?.paymentMethods && !selectedPaymentMethods?.length && (
               <span className="label-text-alt text-red-500">
-                Please select at least one type
+                Please select at least one payment method
               </span>
             )} */}
+            {validationErrors?.payment_methods && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors?.payment_methods}
+              </span>
+            )}
           </div>
           {/*  Is Active */}
           <div className="mt-[18px]">
@@ -1758,10 +1772,8 @@ const OwnerPropertyEdit = () => {
                       onLoad={onRectangleLoad}
                     />
                   )}
-                  {/* Display marker for center */}
 
                   {/* Additional marker at the search location */}
-                  {console.log(selectedLocation)}
                   {mapLoaded && selectedLocation && (
                     <MarkerF
                       position={
@@ -1813,12 +1825,12 @@ const OwnerPropertyEdit = () => {
             />
             <label className=""></label>
           </div> */}
-          {/* 
-            {allInputError.status && (
-              <p className="label-text-alt text-red-500 text-right mb-[6px]">
-                {allInputError.message}
-              </p>
-            )} */}
+
+          {allInputError.status && (
+            <p className="label-text-alt text-red-500 text-right mb-[6px]">
+              {allInputError.message}
+            </p>
+          )}
           <div className=" flex justify-end gap-x-[12px]">
             <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
               Cancel

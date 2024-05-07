@@ -540,7 +540,7 @@ const PropertyAdd = () => {
   };
 
   return (
-    <div className=" ">
+    <div>
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}
