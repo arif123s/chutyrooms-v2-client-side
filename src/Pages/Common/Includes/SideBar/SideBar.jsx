@@ -142,17 +142,17 @@ const SideBar = ({ open, setOpen }) => {
               { name: "Add Property", path: "/dashboard/property-add" },
             ],
           },
-          {
-            name: "Room Management",
-            path: "#",
-            icon: Key,
-            clickedicon: KeyGreen,
-            submenu: [
-              { name: "All Rooms", path: "#" },
-              { name: "Add Room", path: "/dashboard/room-add" },
-              { name: "Edit Rooms", path: "#" },
-            ],
-          },
+          // {
+          //   name: "Room Management",
+          //   path: "#",
+          //   icon: Key,
+          //   clickedicon: KeyGreen,
+          //   submenu: [
+          //     { name: "All Rooms", path: "#" },
+          //     { name: "Add Room", path: "/dashboard/room-add" },
+          //     { name: "Edit Rooms", path: "#" },
+          //   ],
+          // },
           {
             name: "Chuty Setup",
             path: "#",
@@ -187,17 +187,17 @@ const SideBar = ({ open, setOpen }) => {
               { name: "Add Property", path: "/dashboard/property-add" },
             ],
           },
-          {
-            name: "Room Management",
-            path: "#",
-            icon: Key,
-            clickedicon: KeyGreen,
-            submenu: [
-              { name: "All Rooms", path: "#" },
-              { name: "Add Room", path: "/dashboard/room-add" },
-              { name: "Edit Rooms", path: "#" },
-            ],
-          },
+          // {
+          //   name: "Room Management",
+          //   path: "#",
+          //   icon: Key,
+          //   clickedicon: KeyGreen,
+          //   submenu: [
+          //     { name: "All Rooms", path: "#" },
+          //     { name: "Add Room", path: "/dashboard/room-add" },
+          //     { name: "Edit Rooms", path: "#" },
+          //   ],
+          // },
         ];
       case "user":
         return [

@@ -26,8 +26,8 @@ const NavBar = () => {
   const userRole = userInfo?.role.name;
   const countryList = [
     { id: 1, name: "BD", flag: globalLogo },
-    { id: 2, name: "USA", flag: globalLogo },
-    { id: 3, name: "India", flag: globalLogo },
+    // { id: 2, name: "USA", flag: globalLogo },
+    // { id: 3, name: "India", flag: globalLogo },
   ];
 
   const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
@@ -116,6 +116,7 @@ const NavBar = () => {
 
         <ul className="flex items-center menu-horizontal  gap-[18px] text-[14px]">
           <div className="flex items-center gap-[18px]">
+            {/* Chuty Property */}
             <li className="menu-mobile">
               <a
                 href="/owner-register"
@@ -144,6 +145,7 @@ const NavBar = () => {
                 Chuty Property
               </a>
             </li>
+            {/* Deal Membership */}
             <li>
               <a
                 onClick={(e) => handleNavigate(e, "membership")}
@@ -170,6 +172,7 @@ const NavBar = () => {
                 Deal Membership
               </a>
             </li>
+            {/* Country */}
             <li className="menu-mobile">
               <div className="">
                 {/* <img src={globalLogo} alt="Global logo"></img> */}
@@ -232,6 +235,7 @@ const NavBar = () => {
               </div>
             </li>
           </div>
+          {/* Profile */}
           {user ? (
             <li
               className="menu-mobile user-icon-container relative"
@@ -331,42 +335,45 @@ const NavBar = () => {
           </div>
 
           <div
-            className={`transition-trnasform transform duration-[1200] ${
+            className={`transition-trnasform transform duration-[1200] z-20 ${
               menu ? " block" : "hidden"
             }`}
           >
-            <a className="flex">
-              <img src={globalLogo} className="Global logo"></img>
-              {/* <select className="bg-[#F8FEFF]" name="" id="">
-                <option value="">BDT</option>
-              </select> */}
-              <div className="relative pr-[8px] ">
-                <select
-                  className="w-[55px] ml-1 mr-2 p-[5px] text-[14px] md:text-[16px] lg:text-[16px]"
-                  name=""
-                  id=""
-                >
-                  <option className="bg-white " value="BDT">
-                    BDT
-                  </option>
-                  <option className="bg-white " value="USD">
-                    USD
-                  </option>
-                </select>
-                <img
-                  // className="w-[20px] absolute top-[17%] right-[0px]"
-                  className="arrow-icon"
-                  src={arrowDownIcon}
-                  alt="Arrow icon"
-                />
-              </div>
-            </a>
+            <div
+              className=" w-[80px] flex items-center gap-[8px] relative"
+              name=""
+              id=""
+              onClick={() => {
+                setCountry(!country);
+                setProfile(false);
+              }}
+            >
+              <img src={selectedCountry.flag} alt="" />
+              <p className="bg-white cursor-default" value="BDT">
+                {selectedCountry.name}
+              </p>
+              <img className="absolute right-0" src={arrowDownIcon} alt="" />
+              {country && (
+                <div className="bg-white absolute top-[22px] w-full cursor-pointer flex flex-col z-10 rounded-[4px]  border-[1px] ">
+                  {countryList.map((country) => (
+                    <div
+                      key={country.id}
+                      onClick={() => setSelectedCountry(country)}
+                      className="px-[8px] py-[4px] flex gap-[8px] hover:bg-[#159947] hover:text-white"
+                    >
+                      <img src={country.flag} alt="Global logo"></img>
+                      <p>{country.name}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <hr className="my-3" />
           </div>
 
           <div
-            className={`transition-trnasform transform duration-[1500] ${
+            className={`transition-trnasform transform duration-[1500] z-0 ${
               menu ? " block" : "hidden"
             }`}
           >

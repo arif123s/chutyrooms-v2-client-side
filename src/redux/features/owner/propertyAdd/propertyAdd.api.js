@@ -72,35 +72,35 @@ const propertyAddApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getAllActivePaymentMethod: builder.query({
-      query: () => ({
-        url: "/ActivePaymentMethods",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }),
-    }),
+    // getAllActivePaymentMethod: builder.query({
+    //   query: () => ({
+    //     url: "/ActivePaymentMethods",
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //     },
+    //   }),
+    // }),
 
-    getAllActivePropertyType: builder.query({
-      query: () => ({
-        url: "/ActivepropertyType",
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }),
-    }),
+    // getAllActivePropertyType: builder.query({
+    //   query: () => ({
+    //     url: "/ActivepropertyType",
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //     },
+    //   }),
+    // }),
 
-    getAllActiveAmenities: builder.query({
-      query: (id) => ({
-        url: `/ActiveAmenities/${id}`,
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }),
-    }),
+    // getAllActiveAmenities: builder.query({
+    //   query: (id) => ({
+    //     url: `/ActiveAmenities/${id}`,
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //     },
+    //   }),
+    // }),
 
     addPropertyAdd: builder.mutation({
       query: (data) => {

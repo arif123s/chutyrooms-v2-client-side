@@ -152,6 +152,7 @@ const OtpPhoneVerification = () => {
         if (data.status === true) {
           console.log("data", data);
           console.log("role code", data.data.roles);
+          localStorage.setItem("accessToken", data.accessToken);
           localStorage.setItem(
             "userInfo",
             JSON.stringify({
@@ -159,14 +160,16 @@ const OtpPhoneVerification = () => {
               accessToken: data.accessToken,
               name: data.data.name,
               img: data.data.image,
-              role: "",
+              role: data.data.roles[0],
             })
           );
           toast.success("Successfully registered!");
-          if (data.data.roles[0].role_code == 345) {
+          if (data?.data?.roles[0]?.role_code == 345) {
             navigate("/");
           }
-          else navigate("/dashboard");
+           if (data?.data?.roles[0]?.role_code == 234) {
+             navigate("/dashboard/property-list");
+           }
         } else {
           setOtpError({ status: true, message: data.message });
           console.log(data);
