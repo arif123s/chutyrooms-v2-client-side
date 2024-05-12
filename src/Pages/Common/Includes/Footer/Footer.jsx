@@ -19,10 +19,13 @@ import instagramIcon from "../../../../assets/icons/instagram.svg";
 import linkedinIcon from "../../../../assets/icons/linkedin.svg";
 import youtubeIcon from "../../../../assets/icons/youtube.svg";
 import { useNavigate } from "react-router-dom";
+import { useGetAllActivePaymentMethodsQuery } from "../../../../redux/features/footer/paymentMethods.api";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetAllActivePaymentMethodsQuery();
 
-const navigate = useNavigate();
+  console.log("paymentMethods", data?.paymentMethods);
 
   return (
     <div className="">
@@ -138,7 +141,8 @@ const navigate = useNavigate();
                         <a
                           href=""
                           onClick={(e) => {
-                            e.preventDefault(), navigate("/term-and-conditions");
+                            e.preventDefault(),
+                              navigate("/term-and-conditions");
                           }}
                           className="link link-hover"
                         >

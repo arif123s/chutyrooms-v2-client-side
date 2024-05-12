@@ -1,63 +1,103 @@
 import { useState } from "react";
-import "./RoomAdd.css"
-import { useNavigate } from "react-router-dom";
+import "./RoomAdd.css";
+import { useNavigate, useParams } from "react-router-dom";
 import imgIcon from "../../../assets/icons/img.svg";
-import delteIcon from "../../../assets/icons/delete.svg";
+import deleteIcon from "../../../assets/icons/delete.svg";
 import tickSquareIcon from "../../../assets/icons/tick-square-black.svg";
-import dashIcon from "../../../assets/icons/dash.svg";
-import plusIcon from "../../../assets/icons/plus.svg";
-import { useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
+import BedInfo from "./BedInfo/BedInfo";
+import { useGetAllRoomCategoriesQuery } from "../../../redux/features/owner/RoomAdd/roomAdd.api";
+import Loading from "../../Common/Includes/Loading/Loading";
 
 const RoomAdd = () => {
-  const [dashboard,setDashboard]=useState(false);
+  const { propertyId } = useParams();
   const navigate = useNavigate();
+  const [dashboard, setDashboard] = useState(false);
+  const { data: roomCategories, isLoading } =
+    useGetAllRoomCategoriesQuery(propertyId);
+  console.log(roomCategories?.data?.çhild_age_limit);
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     watch,
     formState: { errors },
   } = useForm();
+
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
+  const [childAgeVariation, setChildAgeVariation] = useState([
+    { start_age: null, end_age: null, price: null },
+  ]);
 
-    const handleDisplayImageSelect = (index, event) => {
-      const fileInput = event.target;
-      if (fileInput.files.length > 0) {
-        const newImages = [...displayImages];
-        newImages[index] = {
-          name: fileInput.files[0].name,
-          url: URL.createObjectURL(fileInput.files[0]),
-          displayImageFile: fileInput.files[0],
-        };
-        setDisplayImages(newImages);
-      } else {
-        const newImages = [...displayImages];
-        newImages[index] = null;
-        setDisplayImages(newImages);
-      }
-    };
+  const [bedInfos, setBedInfos] = useState([{ bed_name: "", qty: null }]);
+  const selectedRoomTypes = useWatch({
+    control,
+    name: "roomTypes",
+    defaultValue: [],
+  });
 
-      const handleDeleteImage = (index) => {
-        const newImages = [...displayImages];
-        newImages[index] = null;
-        setDisplayImages(newImages);
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
+  const handleDisplayImageSelect = (index, event) => {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      const newImages = [...displayImages];
+      newImages[index] = {
+        name: fileInput.files[0].name,
+        url: URL.createObjectURL(fileInput.files[0]),
+        displayImageFile: fileInput.files[0],
       };
+      setDisplayImages(newImages);
+    } else {
+      const newImages = [...displayImages];
+      newImages[index] = null;
+      setDisplayImages(newImages);
+    }
+  };
+
+  const handleDeleteImage = (index) => {
+    const newImages = [...displayImages];
+    newImages[index] = null;
+    setDisplayImages(newImages);
+  };
 
   // const handleSave = () => {
   //   setDashboard(!dashboard)
   // };
 
-    const onSubmit = (data) => {
-      // Handle form submission here
-      console.log(data);
-      setDashboard(true)
+  const onSubmit = (data) => {
+    
+    const rommAddInfo = {
+      name: data.room_name,
+      room_size: data.room_size,
+      short_description: data.short_description,
+      description: data.description,
+      room_categories: data.roomTypes,
+      images: displayImages,
+      regular_price: parseInt(data.regular_price),
+      chuty_purchase_price: parseInt(data.chuty_purchase_price),
+      adult_quantity: parseInt(data.adult_quantity),
+      child_quantity: parseInt(data.child_quantity),
+      extra_adult_quantity: parseInt(data.extra_adult_quantity) || 0,
+      extra_adult_price_per_person: parseInt(data.extra_adult_price) || 0,
+      extra_child_quantity: parseInt(data.extra_child_quantity) || 0,
+      child_age_variation: childAgeVariation,
+      bed_infos: bedInfos,
     };
+
+    console.log(rommAddInfo)
+  
+    setDashboard(true);
+  };
 
   const navigateDashboard = (e) => {
     e.preventDefault();
     navigate("/dashboard");
   };
-
 
   return (
     <div className="">
@@ -69,7 +109,7 @@ const RoomAdd = () => {
         {/* Room Category */}
         <div>
           <h2 className="property-input-title">Room Category</h2>
-          <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
+          {/* <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
             <div className="flex gap-[8px]">
               <input type="checkbox" name="single" id="single" />
               <label htmlFor="deluxe">Single</label>
@@ -102,44 +142,114 @@ const RoomAdd = () => {
               <input type="checkbox" name="deluxe" id="deluxe" />
               <label htmlFor="deluxe">Deluxe</label>
             </div>
+          </div> */}
+
+          <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
+            <Controller
+              name="roomTypes"
+              control={control}
+              defaultValue={[]}
+              rules={{ required: "Please select at least one checkbox." }}
+              render={({ field }) => (
+                <>
+                  {roomCategories?.data?.room_types?.map((roomType) => (
+                    <div key={roomType.id} className="flex gap-[8px]">
+                      <input
+                        type="checkbox"
+                        id={`room-type${roomType.id}`}
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          setValue(
+                            "roomTypes",
+                            e.target.checked
+                              ? [...field.value, roomType.id]
+                              : field.value.filter(
+                                  (type) => type !== roomType.id
+                                )
+                          );
+                        }}
+                      />
+                      <label htmlFor={`room-type${roomType.id}`}>
+                        {roomType.name}
+                      </label>
+                    </div>
+                  ))}
+                </>
+              )}
+            />
           </div>
+          {errors.propertyTypes && !selectedRoomTypes?.length && (
+            <span className="label-text-alt text-red-500">
+              Please select at least one type
+            </span>
+          )}
         </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
+          {/* Room Name */}
           <div className="">
-            <label className="property-input-title" htmlFor="room-name">
+            <label className="property-input-title" htmlFor="room_name">
               Room Name
             </label>
             <input
               className="input-box"
-              id="room-name"
-              name="room-name"
+              id="room_name"
+              name="room_name"
               type="text"
               placeholder="Single Room"
+              {...register("room_name", {
+                required: {
+                  value: true,
+                  message: "Room Name is required",
+                },
+              })}
             />
+            <label className="">
+              {errors.room_name?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.room_name?.message}
+                </span>
+              )}
+            </label>
           </div>
+          {/* Room Size */}
           <div className="">
-            <label className="property-input-title" htmlFor="room-size">
+            <label className="property-input-title" htmlFor="room_size">
               Room Size
             </label>
             <input
               className="input-box"
-              id="room-size"
-              name="room-size"
+              id="room_size"
+              name="room_size"
               type="text"
               placeholder="250 square feet"
+              {...register("room_size", {
+                required: {
+                  value: true,
+                  message: "Room Size is required",
+                },
+              })}
             />
+            <label className="">
+              {errors.room_size?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.room_size?.message}
+                </span>
+              )}
+            </label>
           </div>
         </div>
         {/* Room image */}
         <div className="mt-[18px]">
           <h2 className="">Display Image</h2>
           <div className="property-display-images">
-            {displayImages.map((image, index) => (
+            {displayImages?.map((image, index) => (
               <div className="relative" key={index}>
                 <div className="flex justify-end absolute top-[20px] right-[8px]">
                   <img
                     className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
-                    src={delteIcon}
+                    src={deleteIcon}
                     onClick={() => handleDeleteImage(index)}
                     alt=""
                   />
@@ -200,7 +310,6 @@ const RoomAdd = () => {
             ))}
           </div>
         </div>
-
         {/* Description */}
         <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="description">
@@ -227,7 +336,6 @@ const RoomAdd = () => {
             )}
           </label>
         </div>
-
         {/* Short Description */}
         <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="short_description">
@@ -254,60 +362,112 @@ const RoomAdd = () => {
             )}
           </label>
         </div>
-
         {/* Room price , bed, guest */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Regular Price */}
           <div className="">
-            <label className="property-input-title" htmlFor="regular-price">
+            <label className="property-input-title" htmlFor="regular_price">
               Regular Price
             </label>
             <input
               className="input-box"
-              id="regular-price"
-              name="regular-price"
+              id="regular_price"
+              name="regular_price"
               type="number"
+              {...register("regular_price", {
+                required: {
+                  value: true,
+                  message: "Regular Price is required",
+                },
+              })}
             />
+            <label className="">
+              {errors.regular_price?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.regular_price?.message}
+                </span>
+              )}
+            </label>
           </div>
+          {/* Chuty Purchase Price */}
           <div className="">
             <label
               className="property-input-title"
-              htmlFor="chuty-purchase-price"
+              htmlFor="chuty_purchase_price"
             >
               Chuty Purchase Price
             </label>
             <input
               className="input-box"
-              id="chuty-purchase-price"
-              name="chuty-purchase-price"
+              id="chuty_purchase_price"
+              name="chuty_purchase_price"
               type="number"
+              {...register("chuty_purchase_price", {
+                required: {
+                  value: true,
+                  message: "Chuty Purchase Price is required",
+                },
+              })}
             />
+            <label className="">
+              {errors.chuty_purchase_price?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.chuty_purchase_price?.message}
+                </span>
+              )}
+            </label>
           </div>
-
+          {/* Adult (qty) */}
           <div className="">
-            <label className="property-input-title" htmlFor="adult-quantity">
+            <label className="property-input-title" htmlFor="adult_quantity">
               Adult (qty)
             </label>
             <input
               className="input-box"
-              id="adult-quantity"
-              name="adult-quantity"
+              id="adult_quantity"
+              name="adult_quantity"
               type="number"
+              {...register("adult_quantity", {
+                required: {
+                  value: true,
+                  message: "Adult Quantity is required",
+                },
+              })}
             />
+            <label className="">
+              {errors.adult_quantity?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.adult_quantity?.message}
+                </span>
+              )}
+            </label>
           </div>
+          {/* Child (qty) */}
           <div className="">
-            <label className="property-input-title" htmlFor="child-quantity">
+            <label className="property-input-title" htmlFor="child_quantity">
               Child (qty)
             </label>
             <input
               className="input-box"
-              id="child-quantity"
-              name="child-quantity"
+              id="child_quantity"
+              name="child_quantity"
               type="number"
+              {...register("child_quantity", {
+                required: {
+                  value: true,
+                  message: "Child Quantity is required",
+                },
+              })}
             />
+            <label className="">
+              {errors.child_quantity?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.child_quantity?.message}
+                </span>
+              )}
+            </label>
           </div>
         </div>
-
         {/* Extra guest info */}
         <div className="mt-[18px]">
           <div className="flex items-center gap-[8px] mb-[8px]">
@@ -321,30 +481,32 @@ const RoomAdd = () => {
             <div className="">
               <label
                 className="property-input-title"
-                htmlFor="extra-guest-quantity"
+                htmlFor="extra_adult_quantity"
               >
                 Extra Adult
               </label>
               <input
                 className="input-box"
-                id="extra-guest-quantity"
-                name="extra-guest-quantity"
+                id="extra_adult_quantity"
+                name="extra_adult_quantity"
                 type="number"
+                {...register("extra_adult_quantity")}
               />
             </div>
             {/* Price per person */}
             <div className="">
               <label
                 className="property-input-title"
-                htmlFor="extra-guest-price"
+                htmlFor="extra_adult_price"
               >
                 Price {"("}per person{")"}
               </label>
               <input
                 className="input-box"
-                id="extra-guest-price"
-                name="extra-guest-price"
+                id="extra_adult_price"
+                name="extra_adult_price"
                 type="number"
+                {...register("extra_adult_price")}
               />
             </div>
           </div>
@@ -352,98 +514,36 @@ const RoomAdd = () => {
           <div className="">
             <label
               className="property-input-title"
-              htmlFor="extra-guest-quantity"
+              htmlFor="extra_child_quantity"
             >
               Extra Child
             </label>
             <input
               className="input-box"
-              id="extra-guest-quantity"
-              name="extra-guest-quantity"
+              id="extra_child_quantity"
+              name="extra_child_quantity"
               type="number"
+              {...register("extra_child_quantity")}
             />
           </div>
 
           {/* age variation */}
-          <div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] my-[18px]">
-              <div>
-                <label
-                  className="property-input-title"
-                  htmlFor="extra-guest-quantity"
-                >
-                  Age
-                </label>
-                <div className="flex">
-                  <input
-                    className="input-box"
-                    id="extra-guest-quantity"
-                    name="extra-guest-quantity"
-                    type="number"
-                  />
-                  <img className="mx-[12px]" src={dashIcon} alt="" />
-                  <input
-                    className="input-box"
-                    id="extra-guest-quantity"
-                    name="extra-guest-quantity"
-                    type="number"
-                  />
-                </div>
-              </div>
-
-              {/* Price */}
-              <div className="">
-                <label
-                  className="property-input-title"
-                  htmlFor="extra-guest-quantity"
-                >
-                  Price
-                </label>
-                <input
-                  className="input-box"
-                  id="extra-guest-quantity"
-                  name="extra-guest-quantity"
-                  type="number"
-                />
-              </div>
-            </div>
-            <button className="input-box flex"><img src={plusIcon} alt="" /> Add more variation</button>
-          </div>
+          <ChildAgeVariation
+            childAgeVariation={childAgeVariation}
+            setChildAgeVariation={setChildAgeVariation}
+            register={register}
+          ></ChildAgeVariation>
         </div>
-        <div className="mt-[18px]">
-          <h2 className="text-[16px] font-['Gilroy-SemiBold'] mb-[8px]">
-            Extra Bed
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] ">
-            <div className="">
-              <label
-                className="property-input-title"
-                htmlFor="extra-bed-quantity"
-              >
-                Extra bed (qty)
-              </label>
-              <input
-                className="input-box"
-                id="extra-bed-quantity"
-                name="extra-bed-quantity"
-                type="number"
-              />
-            </div>
-            <div className="">
-              <label className="property-input-title" htmlFor="extra-bed-price">
-                Price per extra bed
-              </label>
-              <input
-                className="input-box"
-                id="extra-bed-price"
-                name="extra-bed-price"
-                type="number"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-[18px]">
+        {/* Bed info */}
+        <BedInfo
+          register={register}
+          errors={errors}
+          bedInfos={bedInfos}
+          setBedInfos={setBedInfos}
+          setValue={setValue}
+        ></BedInfo>
+        {/* Order By */}
+        {/* <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="orderby">
             Order By
           </label>
@@ -453,7 +553,7 @@ const RoomAdd = () => {
             name="orderby"
             type="number"
           />
-        </div>
+        </div> */}
 
         <div className="mt-[20px] flex justify-end items-center gap-x-[12px]">
           <a className="text-[14px] flex justify-center items-center w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
@@ -467,7 +567,6 @@ const RoomAdd = () => {
             Save
           </button>
         </div>
-
         {dashboard && (
           <div className="mt-[18px] text-center">
             <a

@@ -24,15 +24,15 @@ const MembershipCards = () => {
       price: " Tk 1500",
       isActive: true,
     },
-    {
-      id: 2,
-      img: goldCard,
-      name: "Gold",
-      title: "Flat 4.5% discount on every purchase",
-      validation: "Validation: 1 year",
-      price: " Tk 1000 tk",
-      isActive: false,
-    },
+    // {
+    //   id: 2,
+    //   img: goldCard,
+    //   name: "Gold",
+    //   title: "Flat 4.5% discount on every purchase",
+    //   validation: "Validation: 1 year",
+    //   price: " Tk 1000 tk",
+    //   isActive: false,
+    // },
     // {
     //   id: 3,
     //   img: silverCard,
@@ -40,6 +40,7 @@ const MembershipCards = () => {
     //   title: " Flat 2% discount on every purchase",
     //   validation: "Validation: 1 year",
     //   price: " Tk 500 tk",
+    //   isActive: false,
     // },
   ]);
 

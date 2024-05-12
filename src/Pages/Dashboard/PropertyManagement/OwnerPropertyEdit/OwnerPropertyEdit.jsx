@@ -699,7 +699,7 @@ const OwnerPropertyEdit = () => {
                   value={countryId || ""}
                   disabled={propertyAdding?.data?.countries?.length <= 0}
                 >
-                  <option value={0}>Select Country</option>
+                  <option value="">Select Country</option>
                   {propertyAdding?.data?.countries?.map((country) => (
                     <option key={country.id} value={country.id}>
                       {country.name}
@@ -735,7 +735,7 @@ const OwnerPropertyEdit = () => {
                   value={divisionId || ""}
                   disabled={divisionData?.data?.length <= 0}
                 >
-                  <option value={0}>Select Division</option>
+                  <option value="">Select Division</option>
                   {divisionData?.data?.map((division) => (
                     <option key={division.id} value={division.id}>
                       {division.name}
@@ -766,7 +766,7 @@ const OwnerPropertyEdit = () => {
                   disabled={districtData?.data?.length <= 0}
                   value={districtId || ""}
                 >
-                  <option value={0}>Select District</option>
+                  <option value="">Select District</option>
                   {districtData?.data?.map((district) => (
                     <option key={district?.id} value={district?.id}>
                       {district?.name}
@@ -789,19 +789,19 @@ const OwnerPropertyEdit = () => {
             </div>
             {/* Area */}
             <div className="">
-              <label className="property-input-title block" htmlFor="">
+              <label className="property-input-title block" htmlFor="area_id">
                 Area
               </label>
               <div className="property-input-div">
                 <select
                   className="property-input"
-                  name="area"
-                  id="area"
+                  name="area_id"
+                  id="area_id"
                   onChange={(e) => handleAreaChange(e)}
                   disabled={areaData?.data?.length <= 0}
                   value={areaId || ""}
                 >
-                  <option value={0}>Select Area</option>
+                  <option value="">Select Area</option>
                   {areaData?.data?.map((area) => (
                     <option key={area.id} value={area.id}>
                       {area.name}
@@ -811,9 +811,9 @@ const OwnerPropertyEdit = () => {
 
                 <img className="arrow-icon" src={arrowDownIcon} alt="" />
 
-                {validationErrors?.area && (
+                {validationErrors?.area_id && (
                   <span className="label-text-alt text-red-500">
-                    {validationErrors?.area}
+                    {validationErrors?.area_id}
                   </span>
                 )}
               </div>
@@ -998,7 +998,7 @@ const OwnerPropertyEdit = () => {
                 {validationErrors?.property_types}
               </span>
             )}
-          </div>   
+          </div>
 
           {/* Amenities */}
           <div className="mt-[18px] text-[14px]">

@@ -160,8 +160,9 @@ export const router = createBrowserRouter([
             path: "property-add",
             element: <OwnerPropertyAdd></OwnerPropertyAdd>,
           },
+
           {
-            path: "room-add",
+            path: "room-add/:propertyId",
             element: <PropertyRoomAdd></PropertyRoomAdd>,
           },
 
@@ -169,26 +170,32 @@ export const router = createBrowserRouter([
             path: "about-us",
             element: <AboutUs></AboutUs>,
           },
+
           {
             path: "blog",
             element: <Blog></Blog>,
           },
+
           {
             path: "team",
             element: <Team></Team>,
           },
+
           {
             path: "term-and-conditions",
             element: <TermAndConditions></TermAndConditions>,
           },
+
           {
             path: "privacy-policy",
             element: <PrivacyPolicy></PrivacyPolicy>,
           },
+
           {
             path: "refund-policy",
             element: <RefundPolicy></RefundPolicy>,
           },
+
           {
             path: "faq",
             element: <FrequentlyAskedQuestions></FrequentlyAskedQuestions>,
@@ -240,7 +247,7 @@ export const router = createBrowserRouter([
             element: <OwnerPropertyEdit></OwnerPropertyEdit>,
           },
           {
-            path: "/dashboard/room-add",
+            path: "/dashboard/room-add/:propertyId",
             element: <OwnerRoomAdd></OwnerRoomAdd>,
           },
           {
@@ -394,64 +401,60 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: "/dashboard/Amenities",
-                element: <AmenitiesList></AmenitiesList>
+                element: <AmenitiesList></AmenitiesList>,
               },
               {
                 path: "/dashboard/Amenities/AddAmenities",
-                element: <AddAmenities></AddAmenities>
+                element: <AddAmenities></AddAmenities>,
               },
 
               {
                 path: "dashboard/Amenities/EditAmenities/:id",
-                element: <EditAmenities></EditAmenities>
-              }
+                element: <EditAmenities></EditAmenities>,
+              },
             ],
           },
 
           {
-
             path: "/dashboard/rooms/roomTypes",
             element: <RoomType></RoomType>,
 
             children: [
               {
                 path: "/dashboard/rooms/roomTypes",
-                element: <RoomTypeList></RoomTypeList>
+                element: <RoomTypeList></RoomTypeList>,
               },
               {
                 path: "/dashboard/rooms/roomTypes/addRoomType",
-                element: <AddRoomType></AddRoomType>
+                element: <AddRoomType></AddRoomType>,
               },
 
               {
                 path: "dashboard/rooms/roomTypes/editRoomType/:id",
-                element: <RoomTypeEdit></RoomTypeEdit>
-              }
+                element: <RoomTypeEdit></RoomTypeEdit>,
+              },
             ],
-
           },
 
           {
-
             path: "/dashboard/properties/propertyTypes",
             element: <PropertyType></PropertyType>,
             children: [
               {
                 path: "/dashboard/properties/propertyTypes",
-                element: <PropertyTypeList></PropertyTypeList>
+                element: <PropertyTypeList></PropertyTypeList>,
               },
               {
                 path: "/dashboard/properties/propertyTypes/addPropertyType",
-                element: <AddPropertyType></AddPropertyType>
+                element: <AddPropertyType></AddPropertyType>,
               },
 
               {
                 path: "dashboard/properties/propertyTypes/editPropertyType/:id",
-                element: <EditPropertyType></EditPropertyType>
-              }
+                element: <EditPropertyType></EditPropertyType>,
+              },
             ],
-          }
-
+          },
         ],
       },
       {

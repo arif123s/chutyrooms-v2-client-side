@@ -28,7 +28,7 @@ const PopularHotels = (props) => {
     <div className="popular-hotels-container">
       <h2 className="homepage-title">Popular Hotels</h2>
       <div className="hotels-container">
-        {props.popularProperties.map((popularHotel) => (
+        {/* {props.popularProperties.map((popularHotel) => (
           <div key={popularHotel.id} className="relative">
             <div className="w-full">
               <img className="hotel-img" src={popularHotel.image} alt="" />
@@ -54,9 +54,35 @@ const PopularHotels = (props) => {
               alt="hotel img"
             />
           </div>
-        ))}
+        ))} */}
 
-        {/* <div className="relative">
+        <div className="relative">
+          <div className="">
+            <img className="hotel-img" src={hotel1} alt="" />
+          </div>
+          <div className="flex justify-between items-center mt-[8px]">
+            <h2 className="hotel-name">Hotel Sea View</h2>
+            <div className="flex itens-center gap-[4px]">
+              <img className="w-[14px]" src={star} alt="" />
+              <span className="hotel-info">4.7</span>
+            </div>
+          </div>
+          <div className="flex items-center mt-[2px] gap-[6px]">
+            <img src={location} alt="" />
+            <span className="hotel-info">Cox’s Bazar</span>
+          </div>
+          <p className="mt-[6px] hotel-info">
+            <span className="font-['Gilroy-bold']">BDT 2100</span> Per Night
+          </p>
+          <img
+            onClick={() => setFavourite(!favourite)}
+            className="w-[24px] absolute top-3 right-3"
+            src={favourite ? favouriteGreen : favouriteIcon}
+            alt="hotel img"
+          />
+        </div>
+
+        <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel2} alt="" />
           </div>
@@ -80,8 +106,8 @@ const PopularHotels = (props) => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div> */}
-        {/* 
+        </div>
+     
         <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel3} alt="" />
@@ -262,7 +288,7 @@ const PopularHotels = (props) => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div> */}
+        </div> 
       </div>
 
       <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">

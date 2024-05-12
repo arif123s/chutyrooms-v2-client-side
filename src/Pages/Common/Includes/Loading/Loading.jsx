@@ -6,6 +6,7 @@ const Loading = () => {
       <div className="min-h-screen flex mt-[200px] justify-center">
         {/* <CircularProgress color="success" /> */}
         {/* <div className="w-16 h-16 border-b-2  border-gray-900 rounded-full animate-spin"></div> */}
+        {/* <p >Chutyrooms</p> */}
         <ThreeDots
           visible={true}
           height="80"
