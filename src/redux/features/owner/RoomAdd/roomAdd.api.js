@@ -12,15 +12,15 @@ const roomAddApi = baseApi.injectEndpoints({
       }),
     }),
 
-    addPropertyAdd: builder.mutation({
-      query: (data) => {
+    roomAdd: builder.mutation({
+      query: (roomInfo) => {
         return {
-          url: "/owner/property",
+          url: `/owner/property/room?property_id=${roomInfo.id}`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
-          body: data,
+          body: roomInfo.formData,
         };
       },
     }),
@@ -28,7 +28,7 @@ const roomAddApi = baseApi.injectEndpoints({
     updateProperty: builder.mutation({
       query: (updatePropertyInfo) => {
         return {
-          url: `/owner/property/${updatePropertyInfo.id}`,
+          url: `/owner/property/room?property_id=${updatePropertyInfo.id}`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -42,4 +42,5 @@ const roomAddApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllRoomCategoriesQuery,
+  useRoomAddMutation,
 } = roomAddApi;

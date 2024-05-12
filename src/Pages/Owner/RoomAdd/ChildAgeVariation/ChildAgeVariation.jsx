@@ -2,17 +2,27 @@
 import dashIcon from "../../../../assets/icons/dash.svg";
 import plusIcon from "../../../../assets/icons/plus.svg";
 import minusIcon from "../../../../assets/icons/minus.svg";
+import { useState } from "react";
 
-const ChildAgeVariation = ({ childAgeVariation, setChildAgeVariation }) => {
+const ChildAgeVariation = ({
+  childAgeVariation,
+  setChildAgeVariation,
+  childAgeLimit,
+}) => {
 
+  const [errorMessage, setErrorMessage] = useState({
+    message:"",
+    active:false
+  });
   const handleAddAgeVariation = (e) => {
     e.preventDefault();
 
     setChildAgeVariation([
       ...childAgeVariation,
-      { start_age: null, end_age: null, price: null },
+      { start_age: null, end_age: null, free_qty:null, price: null },
     ]);
   };
+
 
   const handleRemoveAgeVariation = (e) => {
     e.preventDefault();
@@ -21,16 +31,35 @@ const ChildAgeVariation = ({ childAgeVariation, setChildAgeVariation }) => {
     }
   };
 
-const handleValueChange = (index, field, value) => {
-  // Parse the value to a number
-  const numericValue = parseFloat(value);
-  // Check if the parsed numericValue is NaN (Not-a-Number)
-  const newValue = isNaN(numericValue) ? null : numericValue;
+  const handleValueChange = (index, field, value) => {
+     if(field=='start_age' || field=='end_age'){
+      if (field === "start_age" && parseInt(value) < 0) {
+       setErrorMessage({
+         message: "Input value cannot be less than 0",
+         active: true,
+       });
+       return;
+     }
+    if (parseInt(value) > childAgeLimit) {
+        console.log(errorMessage);
+      setErrorMessage({message:`Input value cannot be greater than ${childAgeLimit}`,active:true});
+      return;
+    }
+     }
+    // Clear error message if input is valid
+     setErrorMessage({
+        ...errorMessage,
+        active:false
+      });
+    // Parse the value to a number
+    const numericValue = parseInt(value);
+    // Check if the parsed numericValue is NaN (Not-a-Number)
+    const newValue = isNaN(numericValue) ? null : numericValue;
 
-  const newData = [...childAgeVariation];
-  newData[index][field] = newValue;
-  setChildAgeVariation(newData);
-};
+    const newData = [...childAgeVariation];
+    newData[index][field] = newValue;
+    setChildAgeVariation(newData);
+  };
 
   return (
     <div>
@@ -49,7 +78,9 @@ const handleValueChange = (index, field, value) => {
                 id="start_age"
                 name="start_age"
                 type="number"
-                value={ageVariation?.start_age || ""}
+                value={
+                  ageVariation?.start_age !== null ? ageVariation.start_age : ""
+                }
                 onChange={(e) =>
                   handleValueChange(index, "start_age", e.target.value)
                 }
@@ -60,29 +91,54 @@ const handleValueChange = (index, field, value) => {
                 id="end_age"
                 name="end_age"
                 type="number"
-                value={ageVariation?.end_age || ""}
+                value={
+                  ageVariation?.end_age !== null ? ageVariation.end_age : ""
+                }
                 onChange={(e) =>
                   handleValueChange(index, "end_age", e.target.value)
                 }
               />
             </div>
+
+            {errorMessage.active && (
+              <span className="label-text-alt text-red-500">
+                {errorMessage.message}
+              </span>
+            )}
           </div>
 
           {/* Price */}
-          <div className="">
-            <label className="property-input-title" htmlFor="price">
-              Price
-            </label>
-            <input
-              className="input-box"
-              id="price"
-              name="price"
-              type="number"
-              value={ageVariation?.price || ""}
-              onChange={(e) =>
-                handleValueChange(index, "price", e.target.value)
-              }
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px]">
+            <div className="">
+              <label className="property-input-title" htmlFor="free_qty">
+                Free Qty
+              </label>
+              <input
+                className="input-box"
+                id="free_qty"
+                name="free_qty"
+                type="number"
+                value={ageVariation?.free_qty || ""}
+                onChange={(e) =>
+                  handleValueChange(index, "free_qty", e.target.value)
+                }
+              />
+            </div>
+            <div className="">
+              <label className="property-input-title" htmlFor="price">
+                Price
+              </label>
+              <input
+                className="input-box"
+                id="price"
+                name="price"
+                type="number"
+                value={ageVariation?.price || ""}
+                onChange={(e) =>
+                  handleValueChange(index, "price", e.target.value)
+                }
+              />
+            </div>
           </div>
         </div>
       ))}

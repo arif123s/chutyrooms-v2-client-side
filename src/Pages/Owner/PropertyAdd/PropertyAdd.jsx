@@ -57,6 +57,8 @@ const PropertyAdd = () => {
     // refetch,
   } = useGetAllPropertyAddingPropertiesQuery();
 
+  console.log(propertyAdding)
+
    const {
      control,
      register,
@@ -985,7 +987,7 @@ const PropertyAdd = () => {
                   // </div>
 
                   <>
-                    {propertyAdding?.data?.property_types.map(
+                    {propertyAdding?.data?.property_types?.map(
                       (propertyType) => (
                         <div
                           key={propertyType.id}
@@ -1196,7 +1198,7 @@ const PropertyAdd = () => {
             Amenities
           </h2>
 
-          {propertyAdding?.data.amenitiesCategory.map((category) => (
+          {propertyAdding?.data?.amenitiesCategory?.map((category) => (
             <div key={category.id} className="mb-[15px]">
               <h2 className="property-input-title" htmlFor="address">
                 {category.name}

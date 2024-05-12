@@ -5,7 +5,6 @@ import tickSquareIcon from "../../../../assets/icons/tick-square-black.svg";
 
 const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
       
-    console.log(bedInfos)
     const handleAddBed = (e) => {
         e.preventDefault();
         setBedInfos([...bedInfos, { bed_name: "", qty: null }]);
