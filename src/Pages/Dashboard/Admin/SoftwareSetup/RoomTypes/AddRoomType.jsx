@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useAddRoomTypeMutation } from "../../../../../../redux/features/admin/Room/RoomTypes.api";
-import Loading from "../../../../../Common/Includes/Loading/Loading";
+import { useAddRoomTypeMutation } from "../../../../../redux/features/admin/Room/RoomTypes.api";
+
+import Loading from "../../../../Common/Includes/Loading/Loading";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import arrowDownIcon from "../../../../../../assets/icons/arrow-down.svg";
+import arrowDownIcon from "../../../../../assets/icons/arrow-down.svg";
 
 const AddRoomType = () => {
 
