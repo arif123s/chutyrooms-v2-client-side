@@ -25,6 +25,16 @@ const roomAddApi = baseApi.injectEndpoints({
       },
     }),
 
+    getSingleRoomInfo: builder.query({
+      query: (id) => ({
+        url: `/owner/property/room/${id}/edit`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+
     updateProperty: builder.mutation({
       query: (updatePropertyInfo) => {
         return {
@@ -41,5 +51,5 @@ const roomAddApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllRoomCategoriesQuery,
+  useGetAllRoomCategoriesQuery, useGetSingleRoomInfoQuery
 } = roomAddApi;

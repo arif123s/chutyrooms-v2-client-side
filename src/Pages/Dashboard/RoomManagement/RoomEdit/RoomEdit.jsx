@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
+import { useParams, useNavigate } from "react-router";
 import deleteIcon from "../../../../assets/icons/delete.svg";
 import imgIcon from "../../../../assets/icons/img.svg";
+import { useGetSingleRoomInfoQuery } from '../../../../redux/features/owner/RoomAdd/roomAdd.api';
 
 
 const RoomEdit = () => {
-
+    const { id } = useParams();
     const [displayImages, setDisplayImages] = useState([null, null, null, null]);
+
+
+    const { data, isLoading,refetch } = useGetSingleRoomInfoQuery(id);
+    const roomTypes = data?.data.room_types;
+    const roomInfo = data?.data.room;
+    const roomPrice = data?.data.room.yearly_prices[0].regular_price;
+  
+   
+    console.log(roomPrice);
+  
 
     const handleDisplayImageSelect = (index, event) => {
       const fileInput = event.target;
@@ -35,43 +47,19 @@ const RoomEdit = () => {
         className="property-add-container"
         // onSubmit={handleSubmit(onSubmit)}
       >
-        <h2 className="property-add-title mb-[25px]">Room Adding</h2>
+        <h2 className="property-add-title mb-[25px]">Room Edit</h2>
         {/* Room Category */}
         <div>
           <h2 className="property-input-title">Room Category</h2>
           <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
+          {roomTypes?.map((roomType) => (
             <div className="flex gap-[8px]">
               <input type="checkbox" name="single" id="single" />
-              <label htmlFor="deluxe">Single</label>
+              <label htmlFor="deluxe">{roomType.name}</label>
             </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="double" id="double" />
-              <label htmlFor="deluxe">Double</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="triple" id="triple" />
-              <label htmlFor="deluxe">Triple</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="quad" id="quad" />
-              <label htmlFor="deluxe">Quad</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="couple" id="couple" />
-              <label htmlFor="deluxe">Couple</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="king" id="king" />
-              <label htmlFor="deluxe">King</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="queen" id="queen" />
-              <label htmlFor="deluxe">Queen</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="deluxe" id="deluxe" />
-              <label htmlFor="deluxe">Deluxe</label>
-            </div>
+          ))}
+           
+           
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
@@ -84,6 +72,7 @@ const RoomEdit = () => {
               id="room-name"
               name="room-name"
               type="text"
+              value={roomInfo?.name}
               placeholder="Single Room"
             />
           </div>
@@ -96,6 +85,7 @@ const RoomEdit = () => {
               id="room-size"
               name="room-size"
               type="text"
+              value={roomInfo?.room_size}
               placeholder="250 square feet"
             />
           </div>
@@ -179,6 +169,7 @@ const RoomEdit = () => {
           <textarea
             className="property-description block input-box h-[120px]"
             name="description"
+            value={roomInfo?.description}
             id="description"
             placeholder="Sea View"
           ></textarea>
@@ -191,6 +182,7 @@ const RoomEdit = () => {
           <textarea
             className="property-description block input-box h-[120px]"
             name="short-description"
+            value={roomInfo?.short_description}
             id="short-description"
             placeholder=""
           ></textarea>
@@ -207,6 +199,7 @@ const RoomEdit = () => {
               id="regular-price"
               name="regular-price"
               type="number"
+              value={roomInfo?.yearly_prices[0].regular_price}
             />
           </div>
           <div className="">
@@ -221,6 +214,7 @@ const RoomEdit = () => {
               id="chuty-purchase-price"
               name="chuty-purchase-price"
               type="number"
+              value={roomInfo?.yearly_prices[0].company_purchase_price}
             />
           </div>
         </div>
@@ -238,6 +232,7 @@ const RoomEdit = () => {
                 id="adult-quantity"
                 name="adult-quantity"
                 type="number"
+                value={roomInfo?.guest_info.adult_guest_qty}
               />
             </div>
             <div className="">
@@ -249,6 +244,7 @@ const RoomEdit = () => {
                 id="child-quantity"
                 name="child-quantity"
                 type="number"
+                value={roomInfo?.guest_info.child_guest_qty}
               />
             </div>
             <div className="">
@@ -260,6 +256,7 @@ const RoomEdit = () => {
                 id="adult-quantity"
                 name="adult-quantity"
                 type="number"
+                value={roomInfo?.guest_info.extra_adult_guest_qty}
               />
             </div>
             <div className="">
@@ -271,6 +268,7 @@ const RoomEdit = () => {
                 id="child-extra"
                 name="child-extra"
                 type="number"
+                value={roomInfo?.guest_info.extra_child_guest_qty}
               />
             </div>
           </div>
