@@ -79,6 +79,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
 
     const roomAddInfo = {
       name: data.room_name,
+      number_of_rooms:data.number_of_rooms,
       room_size: data.room_size,
       short_description: data.short_description,
       description: data.description,
@@ -93,7 +94,6 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       extra_child_guest_qty: parseInt(data.extra_child_quantity) || 0,
       child_age_variation: childAgeVariation,
       bed_infos: bedInfos,
-      number_of_rooms: 3,
     };
 
     console.log(roomAddInfo);
@@ -191,40 +191,6 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         {/* Room Category */}
         <div>
           <h2 className="property-input-title">Room Category</h2>
-          {/* <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="single" id="single" />
-              <label htmlFor="deluxe">Single</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="double" id="double" />
-              <label htmlFor="deluxe">Double</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="triple" id="triple" />
-              <label htmlFor="deluxe">Triple</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="quad" id="quad" />
-              <label htmlFor="deluxe">Quad</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="couple" id="couple" />
-              <label htmlFor="deluxe">Couple</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="king" id="king" />
-              <label htmlFor="deluxe">King</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="queen" id="queen" />
-              <label htmlFor="deluxe">Queen</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="deluxe" id="deluxe" />
-              <label htmlFor="deluxe">Deluxe</label>
-            </div>
-          </div> */}
 
           <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
             <Controller
@@ -268,33 +234,60 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           )}
         </div>
 
+        {/* Room Name */}
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="room_name">
+            Room Name
+          </label>
+          <input
+            className="input-box"
+            id="room_name"
+            name="room_name"
+            type="text"
+            placeholder="Single Room"
+            {...register("room_name", {
+              required: {
+                value: true,
+                message: "Room Name is required",
+              },
+            })}
+          />
+          <label className="">
+            {errors.room_name?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.room_name?.message}
+              </span>
+            )}
+          </label>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
-          {/* Room Name */}
+          {/* Number of room */}
           <div className="">
-            <label className="property-input-title" htmlFor="room_name">
-              Room Name
+            <label className="property-input-title block" htmlFor="number_of_rooms">
+              Number of Rooms
             </label>
             <input
               className="input-box"
-              id="room_name"
-              name="room_name"
-              type="text"
-              placeholder="Single Room"
-              {...register("room_name", {
+              id="number_of_rooms"
+              name="number_of_rooms"
+              type="number"
+              {...register("number_of_rooms", {
                 required: {
                   value: true,
-                  message: "Room Name is required",
+                  message: "Number of Rooms is required",
                 },
               })}
             />
             <label className="">
-              {errors.room_name?.type === "required" && (
+              {errors.number_of_rooms?.type === "required" && (
                 <span className="label-text-alt text-red-500">
-                  {errors.room_name?.message}
+                  {errors.number_of_rooms?.message}
                 </span>
               )}
             </label>
           </div>
+
           {/* Room Size */}
           <div className="">
             <label className="property-input-title" htmlFor="room_size">

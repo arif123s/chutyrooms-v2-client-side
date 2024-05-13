@@ -42,11 +42,11 @@ const PropertyList = () => {
 
     return (
       <div className="country-list-content">
-        <div className="country-list min-h-[600px]">
+        <div className="country-list min-h-[700px]">
           <table className="custom-table">
             <thead className="country-tbl-head">
               <tr>
-                <th></th>
+                <th>Logo</th>
                 <th>Property Name</th>
                 <th>Owner</th>
                 <th>Rating</th>
@@ -58,7 +58,7 @@ const PropertyList = () => {
 
             <tbody className="gap-y-5">
               {propertyData?.data?.data?.map((property) => (
-                <tr key={property.id}>
+                <tr className="gap-y-[12px]" key={property.id}>
                   <td>
                     <img
                       className="w-12"
