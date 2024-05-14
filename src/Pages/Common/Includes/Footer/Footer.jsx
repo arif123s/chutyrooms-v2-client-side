@@ -75,7 +75,7 @@ const Footer = () => {
               <div className="payment-container">
                 <div className="payment">
                   <header className="nav-item-title">Payment Method</header>
-                  <div className="payment-items-container">
+                  {/* <div className="payment-items-container">
                     <div className="">
                       <Swiper
                         slidesPerView={3} // Display 3 items per slide (3 columns)
@@ -153,8 +153,8 @@ const Footer = () => {
                         </div>
                       </Swiper>
                     </div>
-                  </div>
-                  {/* <div className="payment-items-container">
+                  </div> */}
+                  <div className="payment-items-container">
                     <img className="payment-arrow" src={arrowLeftIcon} alt="" />
                     <div className="payment-items">
                       <img className="payment-icon" src={visaIcon} alt="" />
@@ -180,7 +180,7 @@ const Footer = () => {
                       src={arrowRightIcon}
                       alt=""
                     />
-                  </div> */}
+                  </div>
                 </div>
                 <div className="divide"></div>
               </div>
