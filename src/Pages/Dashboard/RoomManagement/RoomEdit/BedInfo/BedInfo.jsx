@@ -2,8 +2,14 @@
 import plusIcon from "../../../../../assets/icons/plus.svg";
 import minusIcon from "../../../../../assets/icons/minus.svg";
 import tickSquareIcon from "../../../../../assets/icons/tick-square-black.svg";
+import { useState } from "react";
 
 const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
+
+   const [errorMessage, setErrorMessage] = useState({
+     message: "",
+     active: false,
+   });
       
     const handleAddBed = (e) => {
         e.preventDefault();
@@ -17,13 +23,31 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
         }
       };
 
-      const handleValueChange = (index, field, value) => {
-        // const numericValue = parseFloat(value);
-        // const newValue = isNaN(numericValue) ? null : numericValue;
-        const newData = [...bedInfos];
-        newData[index][field] = value;
-        setBedInfos(newData);
-      };
+     const handleValueChange = (index, field, value) => {
+       // If field is 'qty' and newValue is null or less than 0, set error message
+       if (field === "qty" && (value === null || value < 0)) {
+         setErrorMessage({
+           message: "Quantity cannot be less than 0",
+           active: true,
+         });
+         return;
+       }
+
+       // Create a new array with a copy of the bedInfos
+       const newData = bedInfos.map((bed, i) => {
+         // If it's not the bed we're updating, return it as is
+         if (i !== index) return bed;
+
+         // If it's the bed we're updating, return a new object with the updated field
+         return {
+           ...bed,
+           [field]: value,
+         };
+       });
+
+       // Update the state with the new array
+       setBedInfos(newData);
+     };
       
   return (
     <div className="mt-[18px]">

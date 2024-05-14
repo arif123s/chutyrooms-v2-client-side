@@ -4,7 +4,7 @@ const propertyAddApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProperty: builder.query({
       query: () => ({
-        url: "/owner/property",
+        url: "/property",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -14,7 +14,7 @@ const propertyAddApi = baseApi.injectEndpoints({
 
     getSingleProperty: builder.query({
       query: (id) => ({
-        url: `/owner/property/${id}/edit`,
+        url: `/property/${id}/edit`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -24,7 +24,7 @@ const propertyAddApi = baseApi.injectEndpoints({
 
     getAllPropertyAddingProperties: builder.query({
       query: () => ({
-        url: "/owner/property/create",
+        url: "/property/create",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -105,7 +105,7 @@ const propertyAddApi = baseApi.injectEndpoints({
     addPropertyAdd: builder.mutation({
       query: (data) => {
         return {
-          url: "/owner/property",
+          url: "/property",
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -118,7 +118,7 @@ const propertyAddApi = baseApi.injectEndpoints({
     updateProperty: builder.mutation({
       query: (updatePropertyInfo) => {
         return {
-          url: `/owner/property/${updatePropertyInfo.id}`,
+          url: `/property/${updatePropertyInfo.id}`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

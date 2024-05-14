@@ -33,35 +33,34 @@ const ChildAgeVariation = ({
     }
   };
 
-  const handleValueChange = (index, field, value) => {
-     if(field=='start_age' || field=='end_age'){
-      if (field === "start_age" && parseInt(value) < 0) {
-       setErrorMessage({
-         message: "Input value cannot be less than 0",
-         active: true,
-       });
-       return;
-     }
-    if (parseInt(value) > childAgeLimit) {
-        console.log(errorMessage);
-      setErrorMessage({message:`Input value cannot be greater than ${childAgeLimit}`,active:true});
-      return;
-    }
-     }
-    // Clear error message if input is valid
-     setErrorMessage({
-        ...errorMessage,
-        active:false
-      });
-    // Parse the value to a number
-    const numericValue = parseInt(value);
-    // Check if the parsed numericValue is NaN (Not-a-Number)
-    const newValue = isNaN(numericValue) ? null : numericValue;
+const handleValueChange = (index, field, value) => {
+  // Parse the value to a number
+  const numericValue = parseInt(value);
 
-    const newData = [...childAgeVariation];
-    newData[index][field] = newValue;
-    setChildAgeVariation(newData);
-  };
+  // Check if the parsed numericValue is less than 0
+  if ( numericValue < 0) {
+    setErrorMessage({
+      message: "Input value cannot be less than 0",
+      active: true,
+    });
+    return;
+  }
+
+  // Check if the parsed numericValue is NaN (Not-a-Number)
+  // const newValue = isNaN(numericValue) ? null : numericValue;
+
+  const newData = [...childAgeVariation];
+  newData[index][field] = value;
+
+  // Clear error message if input is valid
+  setErrorMessage({
+    ...errorMessage,
+    active: false,
+  });
+
+  // Update the state with the new array
+  setChildAgeVariation(newData);
+};
 
   return (
     <div>

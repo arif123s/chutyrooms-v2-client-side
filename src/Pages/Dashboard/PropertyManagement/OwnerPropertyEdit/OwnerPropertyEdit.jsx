@@ -939,7 +939,7 @@ const OwnerPropertyEdit = () => {
                     <>
                       {propertyAdding?.data?.property_types?.map(
                         (propertyType) => (
-                          <div
+                          <div  
                             key={propertyType.id}
                             className="flex items-center gap-[4px]"
                           >
