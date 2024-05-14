@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import dashIcon from "../../../../assets/icons/dash.svg";
-import plusIcon from "../../../../assets/icons/plus.svg";
-import minusIcon from "../../../../assets/icons/minus.svg";
+import dashIcon from "../../../../../assets/icons/dash.svg";
+import plusIcon from "../../../../../assets/icons/plus.svg";
+import minusIcon from "../../../../../assets/icons/minus.svg";
 import { useState } from "react";
 
 const ChildAgeVariation = ({
@@ -9,6 +9,8 @@ const ChildAgeVariation = ({
   setChildAgeVariation,
   childAgeLimit,
 }) => {
+
+  
 
   const [errorMessage, setErrorMessage] = useState({
     message:"",
@@ -63,7 +65,7 @@ const ChildAgeVariation = ({
 
   return (
     <div>
-      {childAgeVariation.map((ageVariation, index) => (
+      {childAgeVariation?.map((ageVariation, index) => (
         <div
           key={index}
           className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] my-[18px]"

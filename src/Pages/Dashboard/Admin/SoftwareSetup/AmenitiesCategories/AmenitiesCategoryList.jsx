@@ -72,7 +72,7 @@ const AmenitiesCategoryList = () => {
         </thead>
 
         <tbody className="gap-y-5">
-          {AmenitiesCategories.slice()
+          {AmenitiesCategories?.slice()
             .sort((a, b) => a.view_order - b.view_order)
             .map((AmenitiesCategories) => (
               <tr key={AmenitiesCategories.id}>

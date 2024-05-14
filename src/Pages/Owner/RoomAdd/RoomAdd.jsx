@@ -7,8 +7,9 @@ import tickSquareIcon from "../../../assets/icons/tick-square-black.svg";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
 import BedInfo from "./BedInfo/BedInfo";
-import { useGetAllRoomCategoriesQuery } from "../../../redux/features/owner/RoomAdd/roomAdd.api";
+import { useGetAllRoomCategoriesQuery, useRoomAddMutation } from "../../../redux/features/owner/RoomAdd/roomAdd.api";
 import Loading from "../../Common/Includes/Loading/Loading";
+import { toast } from "react-toastify";
 
 const RoomAdd = () => {
   const { propertyId } = useParams();
@@ -16,19 +17,19 @@ const RoomAdd = () => {
   const [dashboard, setDashboard] = useState(false);
   const { data: roomCategories, isLoading } =
     useGetAllRoomCategoriesQuery(propertyId);
-  console.log(roomCategories?.data?.çhild_age_limit);
+const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   const {
     register,
     handleSubmit,
     control,
     setValue,
-    watch,
+    // watch,
     formState: { errors },
   } = useForm();
 
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [childAgeVariation, setChildAgeVariation] = useState([
-    { start_age: null, end_age: null, price: null },
+    { start_age: null, end_age: null, free_qty:null, price: null },
   ]);
 
   const [bedInfos, setBedInfos] = useState([{ bed_name: "", qty: null }]);
@@ -43,6 +44,7 @@ const RoomAdd = () => {
   }
 
   const handleDisplayImageSelect = (index, event) => {
+
     const fileInput = event.target;
     if (fileInput.files.length > 0) {
       const newImages = [...displayImages];
@@ -57,6 +59,7 @@ const RoomAdd = () => {
       newImages[index] = null;
       setDisplayImages(newImages);
     }
+
   };
 
   const handleDeleteImage = (index) => {
@@ -69,28 +72,107 @@ const RoomAdd = () => {
   //   setDashboard(!dashboard)
   // };
 
-  const onSubmit = (data) => {
-    
-    const rommAddInfo = {
+  const onSubmit = async(data) => {
+    const displayImageFiles = displayImages.map(
+      (image) => image.displayImageFile
+    );
+
+    const roomAddInfo = {
       name: data.room_name,
+      number_of_rooms:data.number_of_rooms,
       room_size: data.room_size,
       short_description: data.short_description,
       description: data.description,
       room_categories: data.roomTypes,
-      images: displayImages,
+      images: displayImageFiles,
       regular_price: parseInt(data.regular_price),
-      chuty_purchase_price: parseInt(data.chuty_purchase_price),
-      adult_quantity: parseInt(data.adult_quantity),
-      child_quantity: parseInt(data.child_quantity),
-      extra_adult_quantity: parseInt(data.extra_adult_quantity) || 0,
-      extra_adult_price_per_person: parseInt(data.extra_adult_price) || 0,
-      extra_child_quantity: parseInt(data.extra_child_quantity) || 0,
+      company_purchase_price: parseInt(data.chuty_purchase_price),
+      adult_guest_qty: parseInt(data.adult_quantity),
+      child_guest_qty: parseInt(data.child_quantity),
+      extra_adult_guest_qty: parseInt(data.extra_adult_quantity) || 0,
+      price_per_extra_adult_guest: parseInt(data.extra_adult_price) || 0,
+      extra_child_guest_qty: parseInt(data.extra_child_quantity) || 0,
       child_age_variation: childAgeVariation,
       bed_infos: bedInfos,
     };
 
-    console.log(rommAddInfo)
-  
+    console.log(roomAddInfo);
+
+    const formData = new FormData();
+
+    // Append non-file fields to FormData
+    // Object.entries(paymentMethodInfo).forEach(([key, value]) => {
+    //   if (key !== "image") {
+    //     formData.append(key, value);
+    //   }
+    // });
+
+    Object.entries(roomAddInfo).forEach(([key, value]) => {
+      if (key !== "images") {
+        if (key === "room_categories") {
+          value.forEach((item, index) => {
+            formData.append(`${key}[${index}]`, item);
+          });
+        }
+        else if (key === "bed_infos") {
+          value.forEach((bed, index) => {
+            Object.entries(bed).forEach(([subKey, subValue]) => {
+              formData.append(`bed_infos[${index}][${subKey}]`, subValue);
+            });
+          });
+        }
+        else if (key === "child_age_variation") {
+          value.forEach((bed, index) => {
+            Object.entries(bed).forEach(([subKey, subValue]) => {
+              formData.append(`child_age_infos[${index}][${subKey}]`, subValue);
+            });
+          });
+        } else if (
+          key === "adult_guest_qty" ||
+          key === "child_guest_qty" ||
+          key === "extra_adult_guest_qty" ||
+          key === "price_per_extra_adult_guest" ||
+          key === "extra_child_guest_qty"
+        ) {
+          formData.append(`guest_infos[${key}]`, value);
+        } else {
+          formData.append(key, value);
+        }
+      }
+    });
+    // Append image files to FormData
+    if (Array.isArray(roomAddInfo.images)) {
+      roomAddInfo.images.forEach((imageFile, index) => {
+        formData.append(`images[${index}][image]`, imageFile);
+      });
+    }
+
+    // Logging FormData to check its content
+    console.log("formdata", Object.fromEntries(formData));
+
+    const roomInfo = {
+      id: propertyId,
+      formData: formData,
+    };
+
+    try {
+      const result = await roomAdd(roomInfo);
+      // Handle successful mutation
+      if (result?.data?.status) {
+        console.log("Room", result);
+        toast.success("Room added successfully");
+        navigate(`/dashboard/property-list`);
+      } else {
+        console.log("Failed", result);
+        // setValidationErrors(result?.error?.data?.errors);
+        // console.log("Failed", result);
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error adding payment method:", error);
+      // setValidationErrors(err.response.data.errors);
+    }
+
     setDashboard(true);
   };
 
@@ -109,40 +191,6 @@ const RoomAdd = () => {
         {/* Room Category */}
         <div>
           <h2 className="property-input-title">Room Category</h2>
-          {/* <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="single" id="single" />
-              <label htmlFor="deluxe">Single</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="double" id="double" />
-              <label htmlFor="deluxe">Double</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="triple" id="triple" />
-              <label htmlFor="deluxe">Triple</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="quad" id="quad" />
-              <label htmlFor="deluxe">Quad</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="couple" id="couple" />
-              <label htmlFor="deluxe">Couple</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="king" id="king" />
-              <label htmlFor="deluxe">King</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="queen" id="queen" />
-              <label htmlFor="deluxe">Queen</label>
-            </div>
-            <div className="flex gap-[8px]">
-              <input type="checkbox" name="deluxe" id="deluxe" />
-              <label htmlFor="deluxe">Deluxe</label>
-            </div>
-          </div> */}
 
           <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
             <Controller
@@ -186,33 +234,60 @@ const RoomAdd = () => {
           )}
         </div>
 
+        {/* Room Name */}
+        <div className="mt-[18px]">
+          <label className="property-input-title" htmlFor="room_name">
+            Room Name
+          </label>
+          <input
+            className="input-box"
+            id="room_name"
+            name="room_name"
+            type="text"
+            placeholder="Single Room"
+            {...register("room_name", {
+              required: {
+                value: true,
+                message: "Room Name is required",
+              },
+            })}
+          />
+          <label className="">
+            {errors.room_name?.type === "required" && (
+              <span className="label-text-alt text-red-500">
+                {errors.room_name?.message}
+              </span>
+            )}
+          </label>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
-          {/* Room Name */}
+          {/* Number of room */}
           <div className="">
-            <label className="property-input-title" htmlFor="room_name">
-              Room Name
+            <label className="property-input-title block" htmlFor="number_of_rooms">
+              Number of Rooms
             </label>
             <input
               className="input-box"
-              id="room_name"
-              name="room_name"
-              type="text"
-              placeholder="Single Room"
-              {...register("room_name", {
+              id="number_of_rooms"
+              name="number_of_rooms"
+              type="number"
+              {...register("number_of_rooms", {
                 required: {
                   value: true,
-                  message: "Room Name is required",
+                  message: "Number of Rooms is required",
                 },
               })}
             />
             <label className="">
-              {errors.room_name?.type === "required" && (
+              {errors.number_of_rooms?.type === "required" && (
                 <span className="label-text-alt text-red-500">
-                  {errors.room_name?.message}
+                  {errors.number_of_rooms?.message}
                 </span>
               )}
             </label>
           </div>
+
           {/* Room Size */}
           <div className="">
             <label className="property-input-title" htmlFor="room_size">
@@ -532,6 +607,7 @@ const RoomAdd = () => {
             childAgeVariation={childAgeVariation}
             setChildAgeVariation={setChildAgeVariation}
             register={register}
+            childAgeLimit={parseInt(roomCategories?.data?.çhild_age_limit)}
           ></ChildAgeVariation>
         </div>
         {/* Bed info */}

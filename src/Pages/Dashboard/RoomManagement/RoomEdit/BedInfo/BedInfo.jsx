@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import plusIcon from "../../../../assets/icons/plus.svg";
-import minusIcon from "../../../../assets/icons/minus.svg";
-import tickSquareIcon from "../../../../assets/icons/tick-square-black.svg";
+import plusIcon from "../../../../../assets/icons/plus.svg";
+import minusIcon from "../../../../../assets/icons/minus.svg";
+import tickSquareIcon from "../../../../../assets/icons/tick-square-black.svg";
 
 const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
       
@@ -32,7 +32,7 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
         <img src={tickSquareIcon} alt="" />
       </div>
       
-      {bedInfos.map((bed, index) => (
+      {bedInfos?.map((bed, index) => (
         <div
           key={index}
           className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mb-[18px]"
