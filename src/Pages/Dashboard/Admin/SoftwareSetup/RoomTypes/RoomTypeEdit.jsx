@@ -1,8 +1,8 @@
 import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
-import { BASE_ASSET_API } from "../../../../../../BaseApi/AssetUrl";
-import Loading from "../../../../../Common/Includes/Loading/Loading";
-import { useGetSingleRoomTypeQuery , useUpdateRoomTypeMutation } from "../../../../../../redux/features/admin/Room/RoomTypes.api";
+import { BASE_ASSET_API } from "../../../../../BaseApi/AssetUrl";
+import Loading from "../../../../Common/Includes/Loading/Loading";
+import { useGetSingleRoomTypeQuery , useUpdateRoomTypeMutation } from "../../../../../redux/features/admin/Room/RoomTypes.api";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 

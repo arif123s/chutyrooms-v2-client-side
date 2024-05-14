@@ -1,11 +1,11 @@
-import EditIcon from "../../../../../../assets/icons/edit-icon.svg";
-import DeleteIcon from "../../../../../../assets/icons/delete-icon.svg";
-import RestoreIcon from "../../../../../../assets/icons/restore_icon_green.svg";
+import EditIcon from "../../../../../assets/icons/edit-icon.svg";
+import DeleteIcon from "../../../../../assets/icons/delete-icon.svg";
+import RestoreIcon from "../../../../../assets/icons/restore_icon_green.svg";
 import { useEffect } from "react";
 // import Loading from "../../../../Common/Includes/Loading/Loading";
-import Loading from "../../../../../Common/Includes/Loading/Loading";
+import Loading from "../../../../Common/Includes/Loading/Loading";
 import { Link } from "react-router-dom";
-import { useGetAllRoomTypesQuery , useDeleteRoomTypeMutation , useRestoreRoomTypeMutation } from "../../../../../../redux/features/admin/Room/RoomTypes.api";
+import { useGetAllRoomTypesQuery , useDeleteRoomTypeMutation , useRestoreRoomTypeMutation } from "../../../../../redux/features/admin/Room/RoomTypes.api";
 
 const RoomTypeList = () => {
     const [deleteRoomType,

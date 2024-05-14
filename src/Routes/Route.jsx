@@ -78,16 +78,18 @@ import FrequentlyAskedQuestions from "../Pages/CompanyInformation/FAQ/Frequently
 import GuestPolicy from "../Pages/CompanyInformation/GuestPolicy/GuestPolicy";
 import Legal from "../Pages/CompanyInformation/Legal/Legal";
 import EarnWithChutyrooms from "../Pages/CompanyInformation/EarnWithChutyrooms/EarnWithChutyrooms";
-import RoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomType";
-import RoomTypeList from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomTypeList";
-import AddRoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/AddRoomType";
-import RoomTypeEdit from "../Pages/Dashboard/Admin/SoftwareSetup/RoomManagement/RoomTypes/RoomTypeEdit";
+import RoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomTypes/RoomType";
+import RoomTypeList from "../Pages/Dashboard/Admin/SoftwareSetup/RoomTypes/RoomTypeList";
+import AddRoomType from "../Pages/Dashboard/Admin/SoftwareSetup/RoomTypes/AddRoomType";
+import RoomTypeEdit from "../Pages/Dashboard/Admin/SoftwareSetup/RoomTypes/RoomTypeEdit";
 import PropertyList from "../Pages/Dashboard/PropertyManagement/PropertyList/PropertyList";
 import OwnerPropertyEdit from "../Pages/Dashboard/PropertyManagement/OwnerPropertyEdit/OwnerPropertyEdit";
 import PropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/PropertyType";
 import PropertyTypeList from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/PropertyTypeList";
 import EditPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/EditPropertyType";
 import AddPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/AddPropertyType";
+import RoomRate from "../Pages/Dashboard/RoomManagement/RoomRate/RoomRate";
+import RoomEdit from "../Pages/Dashboard/RoomManagement/RoomEdit/RoomEdit";
 
 export const router = createBrowserRouter([
   {
@@ -249,6 +251,15 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/room-add/:propertyId",
             element: <OwnerRoomAdd></OwnerRoomAdd>,
+          },
+
+          {
+            path: "/dashboard/room-edit/:id",
+            element: <RoomEdit></RoomEdit>,
+          },
+          {
+            path: "/dashboard/room-rate",
+            element: <RoomRate></RoomRate>,
           },
           {
             path: "/dashboard/country",

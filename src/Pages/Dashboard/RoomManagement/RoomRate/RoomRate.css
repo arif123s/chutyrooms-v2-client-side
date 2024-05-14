@@ -1,0 +1,107 @@
+.room-rate-option
+{
+  background-color: #ffff;
+  padding: 20px;
+  border-radius: 5px;
+}
+.calender
+{
+    font-size: 20px;
+}
+
+.date-from-to
+{
+    display:flex;
+    border: solid 1px #E6E7E6;
+    border-radius: 5px;
+    padding: 12px;
+}
+.Month-name
+{
+    border: solid 1px #E6E7E6;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+
+}
+
+.partition
+{
+    border-right: 2px solid #C0C3C1;
+    height: 400px;
+}
+
+.calender-date-price
+{
+    display: grid;
+    grid-template-columns: 10% 30% 30%;
+    column-gap: 10px;
+}
+
+.Calender-date-portion
+{
+    display: grid;
+    grid-template-columns: 30% 30%;
+
+}
+
+@media (max-width: 575.98px) 
+{
+
+.calender-date-price
+{
+    display: grid;
+    grid-template-columns: 100%;
+    row-gap: 10px;
+}
+
+.Calender-date-portion
+{
+    display: grid;
+    grid-template-columns: 30%;
+
+}
+
+.calender-table
+{
+    overflow-x: auto;
+}
+.partition
+{
+    border-right: none;
+   
+}
+
+
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .calender-date-price
+    {
+        display: grid;
+        grid-template-columns: 100%;
+        row-gap: 10px;
+    }
+    .Calender-date-portion
+{
+    display: grid;
+    grid-template-columns: 100%;
+
+}
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+.calender-date-price
+    {
+        display: grid;
+        grid-template-columns: 100%;
+        row-gap: 10px;
+    }
+.Calender-date-portion
+{
+    display: grid;
+    grid-template-columns: 100%;
+
+}
+}
