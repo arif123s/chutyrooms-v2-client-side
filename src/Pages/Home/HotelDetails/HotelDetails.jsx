@@ -647,10 +647,10 @@ const HotelDetails = () => {
                             <div>Not Allowed</div>
                             <div>Alhohol Prohibited</div>
                             <div className="flex space-x-[5px]">
-                                <img className="payment-icon" src={Bkash}></img>
-                                <img className="payment-icon" src={Nagad}></img>
-                                <img className="payment-icon" src={Dbbl}></img>
-                                <img className="payment-icon" src={Visa}></img>
+                                <img className="payment-method-icon" src={Bkash}></img>
+                                <img className="payment-method-icon" src={Nagad}></img>
+                                <img className="payment-method-icon" src={Dbbl}></img>
+                                <img className="payment-method-icon" src={Visa}></img>
                             </div>
                         </div>
 

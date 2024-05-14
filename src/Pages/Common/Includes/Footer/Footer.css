@@ -73,9 +73,9 @@
 }
 
 .payment-items-container {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   width: 220px;
 }
 
@@ -90,6 +90,7 @@
 
 .payment-icon {
   width: 80px;
+  width: 60px;
   /* height: 46px; */
 }
 

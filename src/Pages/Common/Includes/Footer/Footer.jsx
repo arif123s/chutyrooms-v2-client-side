@@ -20,6 +20,13 @@ import linkedinIcon from "../../../../assets/icons/linkedin.svg";
 import youtubeIcon from "../../../../assets/icons/youtube.svg";
 import { useNavigate } from "react-router-dom";
 import { useGetAllActivePaymentMethodsQuery } from "../../../../redux/features/footer/paymentMethods.api";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Autoplay, Navigation } from "swiper/modules";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -69,6 +76,85 @@ const Footer = () => {
                 <div className="payment">
                   <header className="nav-item-title">Payment Method</header>
                   <div className="payment-items-container">
+                    <div className="">
+                      <Swiper
+                        slidesPerView={3} // Display 3 items per slide (3 columns)
+                        // slidesPerColumn={3}
+                        spaceBetween={10}
+                        navigation={true}
+                        speed={1000}
+                        modules={[Autoplay, Navigation]}
+                        className="mySwiper"
+                      >
+                        <div className="payment-items">
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={visaIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={americanIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={mastercardIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={dbblIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={citytouchIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={bracIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={bkashIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={nagadIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                          <SwiperSlide>
+                            <img
+                              className="payment-icon"
+                              src={rocketIcon}
+                              alt=""
+                            />
+                          </SwiperSlide>
+                        </div>
+                      </Swiper>
+                    </div>
+                  </div>
+                  {/* <div className="payment-items-container">
                     <img className="payment-arrow" src={arrowLeftIcon} alt="" />
                     <div className="payment-items">
                       <img className="payment-icon" src={visaIcon} alt="" />
@@ -94,7 +180,7 @@ const Footer = () => {
                       src={arrowRightIcon}
                       alt=""
                     />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="divide"></div>
               </div>

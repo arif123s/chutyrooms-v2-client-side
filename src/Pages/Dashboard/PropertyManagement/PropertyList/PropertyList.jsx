@@ -58,29 +58,29 @@ const PropertyList = () => {
 
             <tbody className="gap-y-5">
               {propertyData?.data?.data?.map((property) => (
-                <tr className="gap-y-[12px]" key={property.id}>
+                <tr className="gap-y-[12px]" key={property?.id}>
                   <td>
                     <img
                       className="w-12"
-                      src={`${BASE_ASSET_API}/storage/images/property/property_logo/${property.logo}`}
+                      src={`${BASE_ASSET_API}/storage/images/property/property_logo/${property?.logo}`}
                       alt=""
                     />
                   </td>
-                  <td>{property.name}</td>
+                  <td>{property?.name}</td>
                   <td>
-                    {property.property_owner?.map((owner) => (
-                      <p key={owner.id}>{owner.name}</p>
+                    {property?.property_owner?.map((owner) => (
+                      <p key={owner?.id}>{owner?.name}</p>
                     ))}
                   </td>
-                  <td>{property.hotel_class}</td>
+                  <td>{property?.hotel_class}</td>
                   <td>
                     <a className="active-inactive-btn">
-                      {property.is_active == true ? "Active" : "Inactive"}
+                      {property?.is_active == true ? "Active" : "Inactive"}
                     </a>
                   </td>
                   <td>
                     <a href="" onClick={(e)=>{e.preventDefault(),
-                      navigate(`/dashboard/room-add/${property.id}`);}} className="active-inactive-btn">
+                      navigate(`/dashboard/room-add/${property?.id}`);}} className="active-inactive-btn">
                       Room List
                     </a>
                   </td>

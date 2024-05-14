@@ -78,6 +78,7 @@ const ChildAgeVariation = ({
                 id="start_age"
                 name="start_age"
                 type="number"
+                placeholder="Start Age"
                 value={
                   ageVariation?.start_age !== null ? ageVariation.start_age : ""
                 }
@@ -91,6 +92,7 @@ const ChildAgeVariation = ({
                 id="end_age"
                 name="end_age"
                 type="number"
+                placeholder="End Age"
                 value={
                   ageVariation?.end_age !== null ? ageVariation.end_age : ""
                 }

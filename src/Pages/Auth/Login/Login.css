@@ -59,7 +59,8 @@
   padding: 8px 12px;
   align-items: center;
   border-radius: 8px;
-  border: 1px solid #c6c6c6;
+  /* border: 1px solid #c6c6c6; */
+  border: 1px solid #e6e7e6;
   margin-top: 6px;
   background-color: #ffffff;
 }

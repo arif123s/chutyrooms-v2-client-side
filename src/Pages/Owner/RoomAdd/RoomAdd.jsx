@@ -182,7 +182,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   };
 
   return (
-    <div className="">
+    <div className="mt-[12px] md:mt-[18px] lg:mt-[18px]">
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}
@@ -264,7 +264,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Number of room */}
           <div className="">
-            <label className="property-input-title block" htmlFor="number_of_rooms">
+            <label className="property-input-title" htmlFor="number_of_rooms">
               Number of Rooms
             </label>
             <input

@@ -1,5 +1,5 @@
 .property-add-container {
-  margin: 42px 0px;
+  /* margin: 42px 0px; */
   padding: 24px 24px 32px 24px;
   border-radius: 8px;
   background: #ffffff;
@@ -10,12 +10,14 @@
   font-size: 20px;
   font-weight: 600;
   letter-spacing: 0.72px;
+  font-family: 'Gilroy-semibold';
 }
 
 .property-input-title {
   font-size: 16px;
   line-height: 145%;
   margin-bottom: 6px;
+  display: block;
 }
 
 .property-input-div {
@@ -101,7 +103,7 @@ background-color: #ffffff;
 
 @media (max-width: 575.98px) {
   .property-add-container {
-    margin-top: 36px;
+    /* margin-top: 36px; */
     margin-bottom: 32px;
     padding: 22px 10px 22px 10px;
   }
@@ -123,6 +125,10 @@ background-color: #ffffff;
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
+  .property-add-title {
+  font-size: 18px;
+}
+
   .property-images-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -140,7 +146,7 @@ background-color: #ffffff;
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .property-add-container {
-    margin-top: 18px;
+    /* margin-top: 18px; */
     padding: 22px 17px 22px 19px;
   }
 }

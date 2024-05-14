@@ -11,7 +11,7 @@ import Rating from "@mui/material/Rating";
 import "./PropertyAdd.css";
 import { useEffect, useState } from "react";
 import {
-  GoogleMap,
+  GoogleMap, 
   useLoadScript,
   Marker,
   Rectangle,
@@ -84,7 +84,7 @@ const PropertyAdd = () => {
     message: "",
     color: false,
     count: 0,
-  });
+  }); 
 
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
@@ -542,7 +542,7 @@ const PropertyAdd = () => {
   };
 
   return (
-    <div>
+    <div className="mt-[12px] md:mt-[18px] lg:mt-[18px]">
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}
@@ -1194,13 +1194,16 @@ const PropertyAdd = () => {
 
         {/* Amenities */}
         <div className="mt-[18px] text-[14px]">
-          <h2 className="text-[16px] font-semibold mb-[15px]" htmlFor="address">
+          <h2
+            className="text-[16px] font-['Gilroy-semibold'] mb-[15px]"
+            htmlFor="amenities"
+          >
             Amenities
           </h2>
 
           {propertyAdding?.data?.amenitiesCategory?.map((category) => (
             <div key={category.id} className="mb-[15px]">
-              <h2 className="property-input-title" htmlFor="address">
+              <h2 className="property-input-title" htmlFor="amenities">
                 {category.name}
               </h2>
               <div className="flex items-center gap-x-[8px] md:gap-x-[12px] lg:gap-x-[12px]">
