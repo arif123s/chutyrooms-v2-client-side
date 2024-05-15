@@ -12,6 +12,17 @@ const roomAddApi = baseApi.injectEndpoints({
       }),
     }),
 
+    getAllRooms: builder.query({
+      query: (id) => ({
+        url: `/property/room/?property_id=${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }),
+    }),
+
+
     roomAdd: builder.mutation({
       query: (roomInfo) => {
         return {
@@ -51,5 +62,5 @@ const roomAddApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllRoomCategoriesQuery, useGetSingleRoomInfoQuery,useRoomAddMutation,
+  useGetAllRoomCategoriesQuery, useGetAllRoomsQuery,  useGetSingleRoomInfoQuery,useRoomAddMutation,
 } = roomAddApi;
