@@ -63,7 +63,7 @@ const ChildAgeVariation = ({
 
   return (
     <div>
-      {childAgeVariation.map((ageVariation, index) => (
+      {childAgeVariation?.map((ageVariation, index) => (
         <div
           key={index}
           className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] my-[18px]"

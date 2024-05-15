@@ -79,7 +79,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
 
     const roomAddInfo = {
       name: data.room_name,
-      number_of_rooms:data.number_of_rooms,
+      number_of_rooms: data.number_of_rooms,
       room_size: data.room_size,
       short_description: data.short_description,
       description: data.description,
@@ -92,7 +92,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       extra_adult_guest_qty: parseInt(data.extra_adult_quantity) || 0,
       price_per_extra_adult_guest: parseInt(data.extra_adult_price) || 0,
       extra_child_guest_qty: parseInt(data.extra_child_quantity) || 0,
-      child_age_variation: childAgeVariation,
+      child_age_infos: childAgeVariation,
       bed_infos: bedInfos,
     };
 
@@ -121,7 +121,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
             });
           });
         }
-        else if (key === "child_age_variation") {
+        else if (key === "child_age_infos") {
           value.forEach((bed, index) => {
             Object.entries(bed).forEach(([subKey, subValue]) => {
               formData.append(`child_age_infos[${index}][${subKey}]`, subValue);
@@ -140,6 +140,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         }
       }
     });
+
     // Append image files to FormData
     if (Array.isArray(roomAddInfo.images)) {
       roomAddInfo.images.forEach((imageFile, index) => {

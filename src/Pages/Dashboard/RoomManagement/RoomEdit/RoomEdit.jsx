@@ -3,16 +3,18 @@ import { useParams, useNavigate } from "react-router";
 import deleteIcon from "../../../../assets/icons/delete.svg";
 import imgIcon from "../../../../assets/icons/img.svg";
 import tickSquareIcon from "../../../../assets/icons/tick-square-black.svg";
-import { useGetSingleRoomInfoQuery } from "../../../../redux/features/owner/RoomAdd/roomAdd.api";
+import { useGetSingleRoomInfoQuery, useUpdateRoomMutation } from "../../../../redux/features/owner/RoomAdd/roomAdd.api";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
 import BedInfo from "./BedInfo/BedInfo";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
+import { toast } from "react-toastify";
 
 const RoomEdit = () => {
-  const { id } = useParams();
 
+  const navigate = useNavigate();
+  const { id } = useParams();
   const {
     register,
     handleSubmit,
@@ -22,6 +24,13 @@ const RoomEdit = () => {
     formState: { errors },
   } = useForm();
 
+  const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(id);
+   const [updateRoom, { isLoading: updateRoomLoading }] =
+     useUpdateRoomMutation();
+  const roomTypes = data?.data?.room_types; 
+  // const room_rates = JSON.parse(data?.data?.room?.room_rates?.rates);
+  // console.log(room_rates)
+
   const [roomData, setRoomData] = useState({
     name: "",
     number_of_rooms: null,
@@ -30,9 +39,10 @@ const RoomEdit = () => {
     description: "",
     room_categories: [],
     images: [],
-    yearly_prices: [],
-    guest_info: [],
-    view_order:null,
+    room_rates: {},
+    guest_info: {},
+    is_active: null,
+    view_order: null,
   });
 
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
@@ -48,18 +58,18 @@ const RoomEdit = () => {
     defaultValue: [],
   });
 
-  const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(id);
-  const roomTypes = data?.data?.room_types;
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
 
   console.log("roomData", roomData);
-  console.log("roomTypes", roomTypes);
 
   useEffect(() => {
     refetch();
 
     if (data?.data?.room) {
+     const room_rates = data?.data?.room?.room_rates?.rates
+       ? JSON.parse(data?.data?.room?.room_rates?.rates)
+       : {};
       setDisplayImages(
         data?.data?.room?.room_images?.map((image) => ({
           id: image.id,
@@ -69,14 +79,14 @@ const RoomEdit = () => {
         }))
       );
 
-      setRoomData(data?.data?.room);
+      setRoomData({...data?.data?.room,room_rates: room_rates});
     }
-  }, [data?.data?.room, refetch]);
+  }, [data?.data?.room ,refetch]);
 
   useEffect(() => {
-    setChildAgeVariation(data?.data?.room?.cahild_age_variations);
+    setChildAgeVariation(data?.data?.room?.child_age_variations);
     setBedInfos(data?.data?.room?.beds);
-  }, [data?.data?.room?.cahild_age_variations, data?.data?.room?.beds]);
+  }, [data?.data?.room?.child_age_variations, data?.data?.room?.beds]);
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -90,9 +100,9 @@ const RoomEdit = () => {
       const newImages = [...displayImages];
       newImages[index] = {
         id: id,
-        name: fileInput.files[0].name,
-        url: URL.createObjectURL(fileInput.files[0]),
-        displayImageFile: fileInput.files[0],
+        name: fileInput?.files[0].name,
+        url: URL.createObjectURL(fileInput?.files[0]),
+        displayImageFile: fileInput?.files[0],
       };
       setDisplayImages(newImages);
       // Update the 'images' array
@@ -137,32 +147,131 @@ const RoomEdit = () => {
     }
   };
 
-  const handleDeleteImage = (index) => {
-    const newImages = [...displayImages];
-    newImages[index] = null;
-    setDisplayImages(newImages);
-  };
-
   const onSubmit = async () => {
+    const roomCategoriesId = roomData?.room_categories?.map((type) => type.id);
+    const updatedBeds = bedInfos.map((bed) => ({
+      id: bed.id,
+      bed_name: bed.bed_name,
+      qty: bed.qty,
+      is_active: bed.is_active,
+      view_order: bed.view_order,
+    }));
+    const updateChildVariation = childAgeVariation.map((variation) => ({
+      id: variation.id,
+      start_age: variation.start_age,
+      end_age: variation.end_age,
+      price: variation.price,
+      free_qty: variation.free_qty,
+      view_order: variation.view_order,
+      is_active: variation.is_active,
+    }));
+
+    console.log(updatedBeds)
+    
     const updateRoomInfo = {
-      name: roomData.room_name,
+      room_id: roomData.id,
+      name: roomData.name,
       number_of_rooms: roomData.number_of_rooms,
       room_size: roomData.room_size,
       short_description: roomData.short_description,
       description: roomData.description,
-      room_categories: roomData.room_categories,
-      room_images: room_images,
-      regular_price: parseInt(roomData.regular_price),
-      company_purchase_price: parseInt(roomData.chuty_purchase_price),
-      adult_guest_qty: parseInt(roomData.adult_quantity),
-      child_guest_qty: parseInt(roomData.child_quantity),
-      extra_adult_guest_qty: parseInt(roomData.extra_adult_quantity) || 0,
-      price_per_extra_adult_guest: parseInt(roomData.extra_adult_price) || 0,
-      extra_child_guest_qty: parseInt(roomData.extra_child_quantity) || 0,
-      child_age_variation: childAgeVariation,
-      beds: bedInfos,
-      view_order:roomData.view_order,
+      room_categories: roomCategoriesId,
+      images: room_images,
+      regular_price: parseInt(roomData.room_rates.regular_price),
+      company_purchase_price: parseInt(
+        roomData.room_rates.company_purchase_price
+      ),
+      start_date: parseInt(roomData.room_rates.start_date),
+      end_date: parseInt(roomData.room_rates.end_date),
+      guest_infos: {
+        id: parseInt(roomData.guest_info.id),
+        adult_guest_qty: parseInt(roomData.guest_info.adult_guest_qty),
+        child_guest_qty: parseInt(roomData.guest_info.adult_guest_qty),
+        extra_adult_guest_qty: parseInt(
+          roomData.guest_info.extra_adult_guest_qty
+        ),
+        price_per_extra_adult_guest: parseInt(
+          roomData.guest_info.price_per_extra_adult_guest
+        ),
+        extra_child_guest_qty: parseInt(
+          roomData.guest_info.extra_child_guest_qty
+        ),
+        is_active: parseInt(roomData.guest_info.is_active),
+        view_order: parseInt(roomData.guest_info.view_order),
+      },
+      child_age_variation: updateChildVariation,
+      beds: updatedBeds,
+      is_active: roomData.is_active,
+      view_order: roomData.view_order,
     };
+
+    console.log(updateRoomInfo)
+
+    const formData = new FormData();
+
+    Object.entries(updateRoomInfo).forEach(([key, value]) => {
+      if (key !== "images") {
+        if (key === "room_categories") {
+          value.forEach((item, index) => {
+            formData.append(`${key}[${index}]`, item);
+          });
+        } else if (key === "beds") {
+          value.forEach((bed, index) => {
+            Object.entries(bed).forEach(([subKey, subValue]) => {
+              formData.append(`bed_infos[${index}][${subKey}]`, subValue);
+            });
+          });
+        }
+        else if (key === "child_age_variation") {
+          value.forEach((bed, index) => {
+            Object.entries(bed).forEach(([subKey, subValue]) => {
+              formData.append(`child_age_infos[${index}][${subKey}]`, subValue);
+            });
+          });
+        } else if (key === "guest_infos") {
+          Object.entries(value).forEach(([subKey, subValue]) => {
+            formData.append(`guest_infos[${subKey}]`, subValue);
+          });
+        } else {
+          formData.append(key, value);
+        }
+      }
+    });
+
+    // Append image files to FormData
+    if (Array.isArray(updateRoomInfo.images)) {
+      updateRoomInfo.images.forEach((imageFile, index) => {
+        formData.append(`images[${index}][image]`, imageFile);
+      });
+    }
+
+    formData.append("_method", "PUT");
+
+    // Logging FormData to check its content
+    console.log("formdata", Object.fromEntries(formData));
+
+    const updateRoomData = {
+      id: roomData.id,
+      formData: formData,
+    };
+
+    try {
+      const result = await updateRoom(updateRoomData);
+      // Handle successful mutation
+      if (result?.data?.status) {
+        console.log("updateRoomInfo", result);
+        toast.success("Room updated successfully");
+        navigate(`/dashboard/property-list`);
+      } else {
+        // console.log("Failed", result?.error?.data?.errors);
+        // setValidationErrors(result?.error?.data?.errors);
+        console.log("Failed", result);
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error adding payment method:", error);
+      // setValidationErrors(err.response.data.errors);
+    }
   };
 
   return (
@@ -311,7 +420,54 @@ const RoomEdit = () => {
               )}
             </label>
           </div>
+
+          {/* Select Date */}
+          <div className="">
+            <label className="property-input-title block" htmlFor="start_date">
+              Start Date
+            </label>
+            <input
+              className="input-box"
+              id="start_date"
+              name="start_date"
+              type="date"
+              value={roomData?.room_rates?.start_date}
+              onChange={(e) =>
+                setRoomData({
+                  ...roomData,
+                  room_rates: {
+                    ...roomData.room_rates,
+                    start_date: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
+
+          {/* End Date */}
+          <div className="">
+            <label className="property-input-title block" htmlFor="end_date">
+              End Date
+            </label>
+            <input
+              className="input-box"
+              id="end_date"
+              name="end_date"
+              type="date"
+              value={roomData?.room_rates?.end_date}
+              onChange={(e) =>
+                setRoomData({
+                  ...roomData,
+                  room_rates: {
+                    ...roomData.room_rates,
+                    end_date: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
         </div>
+
         {/* Room image */}
         <div className="mt-[18px]">
           <h2 className="">Display Image</h2>
@@ -441,12 +597,15 @@ const RoomEdit = () => {
               id="regular_price"
               name="regular_price"
               type="number"
-              value={roomData?.yearly_prices[0]?.regular_price}
+              value={roomData?.room_rates?.regular_price}
               onChange={(e) =>
-                setRoomData({
-                  ...roomData,
-                  regular_price: e.target.value,
-                })
+                setRoomData((prevRoomData) => ({
+                  ...prevRoomData,
+                  room_rates: {
+                    ...prevRoomData.room_rates,
+                    regular_price: e.target.value,
+                  },
+                }))
               }
             />
             <label className="">
@@ -470,12 +629,15 @@ const RoomEdit = () => {
               id="chuty_purchase_price"
               name="chuty_purchase_price"
               type="number"
-              value={roomData?.yearly_prices[0]?.company_purchase_price}
+              value={roomData?.room_rates?.company_purchase_price}
               onChange={(e) =>
-                setRoomData({
-                  ...roomData,
-                  company_purchase_price: e.target.value,
-                })
+                setRoomData((prevRoomData) => ({
+                  ...prevRoomData,
+                  room_rates: {
+                    ...prevRoomData.room_rates,
+                    company_purchase_price: e.target.value,
+                  },
+                }))
               }
             />
             <label className="">
@@ -498,10 +660,13 @@ const RoomEdit = () => {
               type="number"
               value={roomData?.guest_info?.adult_guest_qty}
               onChange={(e) =>
-                setRoomData({
-                  ...roomData,
-                  adult_guest_qty: e.target.value,
-                })
+                setRoomData((prevRoomData) => ({
+                  ...prevRoomData,
+                  guest_info: {
+                    ...prevRoomData.guest_info,
+                    adult_guest_qty: e.target.value,
+                  },
+                }))
               }
             />
             <label className="">
@@ -524,10 +689,13 @@ const RoomEdit = () => {
               type="number"
               value={roomData?.guest_info?.child_guest_qty}
               onChange={(e) =>
-                setRoomData({
-                  ...roomData,
-                  child_guest_qty: e.target.value,
-                })
+                setRoomData((prevRoomData) => ({
+                  ...prevRoomData,
+                  guest_info: {
+                    ...prevRoomData.guest_info,
+                    child_guest_qty: e.target.value,
+                  },
+                }))
               }
             />
             <label className="">
@@ -641,6 +809,49 @@ const RoomEdit = () => {
           setBedInfos={setBedInfos}
           setValue={setValue}
         ></BedInfo>
+
+        {/*  Is Active */}
+        <div className="mt-[18px]">
+          <h2 id="property-type-title" className="text-[14px] mr-[4px]">
+            Is Active
+          </h2>
+
+          <div className="flex gap-[8px]">
+            <div className="flex items-center gap-[6px]">
+              <input
+                type="radio"
+                name="is_active"
+                id="active"
+                value={1}
+                checked={roomData?.is_active == 1}
+                onChange={(e) =>
+                  setRoomData({
+                    ...roomData,
+                    is_active: e.target.value,
+                  })
+                }
+              />
+              <label htmlFor="active">Active</label>
+            </div>
+            <div className="flex items-center gap-[6px]">
+              <input
+                type="radio"
+                name="is_active"
+                id="inactive"
+                value={0}
+                checked={roomData?.is_active == 0}
+                onChange={(e) =>
+                  setRoomData({
+                    ...roomData,
+                    is_active: e.target.value,
+                  })
+                }
+              />
+              <label htmlFor="inactive">Inactive</label>
+            </div>
+          </div>
+        </div>
+
         {/* Order By */}
         <div className="mt-[18px]">
           <label className="property-input-title" htmlFor="view_order">
