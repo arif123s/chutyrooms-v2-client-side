@@ -99,7 +99,7 @@ const CancellationPolicy = (props) => {
                 {cancellationData.map((cancellation, index) => (
                   <tr key={index} className=" ">
                     <td>
-                      <div className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] md:mr-[24px] lg:mr-[24px]">
+                      <div className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] md:mr-[24px] lg:mr-[24px] my-[4px]">
                         <div>
                           <p className="flex">
                             <input

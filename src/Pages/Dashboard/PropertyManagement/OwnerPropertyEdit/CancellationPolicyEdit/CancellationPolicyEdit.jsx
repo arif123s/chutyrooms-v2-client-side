@@ -46,7 +46,7 @@ const CancellationPolicyEdit = (props) => {
         <div className="py-[10px] px-[14px] border-[1px] rounded-[8px] border-[#E6E7E6] md:flex lg:flex md:gap-x-[18px] lg:gap-x-[120px]">
           <div className="md:flex lg:flex gap-x-[24px] md:items-center lg:items-center">
             <table className="custom-table">
-              <thead className="mt-[]">
+              <thead className="">
                 <tr className="">
                   <th className="property-input-title text-left font-normal mr-[12px] md:mr-[24px] lg:mr-[24px]">
                     <p className="mr-[12px]">Duration</p>
@@ -58,9 +58,9 @@ const CancellationPolicyEdit = (props) => {
               </thead>
               <tbody className="">
                 {cancellationData.map((cancellation, index) => (
-                  <tr key={index} className=" ">
+                  <tr key={index} className="mb-[12px]">
                     <td>
-                      <div className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] md:mr-[24px] lg:mr-[24px]">
+                      <div className="flex gap-x-[15px] text-[14px] md:text-[16px] lg:text-[16px] md:mr-[24px] lg:mr-[24px] my-[4px]">
                         <div>
                           <p className="flex">
                             <input

@@ -473,6 +473,7 @@ const OwnerPropertyEdit = () => {
       latitude: parseFloat(mapCenter.lat),
       longitude: parseFloat(mapCenter.lng),
       cancellation: cancellationData,
+      child_age_limit:property.child_age_limit,
       logo: logo,
       short_description: property.short_description,
       instruction: property.instruction,
@@ -939,7 +940,7 @@ const OwnerPropertyEdit = () => {
                     <>
                       {propertyAdding?.data?.property_types?.map(
                         (propertyType) => (
-                          <div  
+                          <div
                             key={propertyType.id}
                             className="flex items-center gap-[4px]"
                           >
@@ -1506,6 +1507,34 @@ const OwnerPropertyEdit = () => {
               setCancellationData={setCancellationData}
             ></CancellationPolicyEdit>
           </div>
+
+          {/* Child age limit */}
+          <div className="mt-[18px]">
+            <label className="property-input-title" htmlFor="bin">
+              Child Age Limit
+            </label>
+            <input
+              className="input-box"
+              id="child_age_limit"
+              name="child_age_limit"
+              type="number"
+              value={property?.child_age_limit}
+              onChange={(e) =>
+                setProperty({
+                  ...property,
+                  child_age_limit: e.target.value,
+                })
+              }
+            />
+            <label className="">
+              {errors.child_age_limit?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.child_age_limit?.message}
+                </span>
+              )}
+            </label>
+          </div>
+
           {/* Short Description */}
           <div className="mt-[18px]">
             <label className="property-input-title" htmlFor="short_description">
@@ -1585,7 +1614,7 @@ const OwnerPropertyEdit = () => {
             </h2>
 
             <div className="text-[14px] flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
-              <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
+              <div className="flex flex-wrap gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
                 <Controller
                   name="payment_methods"
                   control={control}
@@ -1635,7 +1664,7 @@ const OwnerPropertyEdit = () => {
                           {paymentMethod.name}
                         </label> */}
                             <img
-                              className="w-14 "
+                              className="w-12"
                               src={`${BASE_ASSET_API}/storage/images/payment/payment_methods/${paymentMethod.image}`}
                               alt="Payment-method"
                             />

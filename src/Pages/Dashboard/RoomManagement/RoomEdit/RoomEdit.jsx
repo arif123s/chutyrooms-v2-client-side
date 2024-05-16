@@ -166,8 +166,8 @@ const RoomEdit = () => {
       is_active: variation.is_active,
     }));
 
-    console.log(updatedBeds)
-    
+    console.log(updatedBeds);
+
     const updateRoomInfo = {
       room_id: roomData.id,
       name: roomData.name,
@@ -205,7 +205,7 @@ const RoomEdit = () => {
       view_order: roomData.view_order,
     };
 
-    console.log(updateRoomInfo)
+    console.log(updateRoomInfo);
 
     const formData = new FormData();
 
@@ -221,8 +221,7 @@ const RoomEdit = () => {
               formData.append(`bed_infos[${index}][${subKey}]`, subValue);
             });
           });
-        }
-        else if (key === "child_age_variation") {
+        } else if (key === "child_age_variation") {
           value.forEach((bed, index) => {
             Object.entries(bed).forEach(([subKey, subValue]) => {
               formData.append(`child_age_infos[${index}][${subKey}]`, subValue);
@@ -240,8 +239,10 @@ const RoomEdit = () => {
 
     // Append image files to FormData
     if (Array.isArray(updateRoomInfo.images)) {
-      updateRoomInfo.images.forEach((imageFile, index) => {
-        formData.append(`images[${index}][image]`, imageFile);
+      updateRoomInfo.images.forEach((image) => {
+        if (image && image.file) {
+          formData.append(`images[${image.id}][image]`, image.file);
+        }
       });
     }
 
@@ -261,7 +262,7 @@ const RoomEdit = () => {
       if (result?.data?.status) {
         console.log("updateRoomInfo", result);
         toast.success("Room updated successfully");
-        navigate(`/dashboard/property-list`);
+        // navigate(`/dashboard/property-list`);
       } else {
         // console.log("Failed", result?.error?.data?.errors);
         // setValidationErrors(result?.error?.data?.errors);
@@ -420,9 +421,11 @@ const RoomEdit = () => {
               )}
             </label>
           </div>
+        </div>
 
+        <div className="mt-[18px] flex gap-x-[18px] md:gap-x-[44px] lg:gap-x-[44px]">
           {/* Select Date */}
-          <div className="">
+          <div className="w-fit">
             <label className="property-input-title block" htmlFor="start_date">
               Start Date
             </label>
@@ -445,7 +448,7 @@ const RoomEdit = () => {
           </div>
 
           {/* End Date */}
-          <div className="">
+          <div className="w-fit">
             <label className="property-input-title block" htmlFor="end_date">
               End Date
             </label>
@@ -490,11 +493,11 @@ const RoomEdit = () => {
                                 className="w-20 mr-1"
                               />
                             </div>
-                            <span className="text-[12px] block text-center">
+                            {/* <span className="text-[12px] block text-center">
                               {image?.name?.length > 16
                                 ? image?.name?.slice(0, 15) + "..."
                                 : image?.name}
-                            </span>
+                            </span> */}
                           </div>
                           <p className="text-[12px] text-center">
                             Update Photo
