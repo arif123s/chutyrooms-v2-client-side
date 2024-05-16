@@ -10,8 +10,6 @@ const ChildAgeVariation = ({
   childAgeLimit,
 }) => {
 
-  
-
   const [errorMessage, setErrorMessage] = useState({
     message:"",
     active:false
@@ -80,7 +78,7 @@ const handleValueChange = (index, field, value) => {
                 name="start_age"
                 type="number"
                 value={
-                  ageVariation?.start_age !== null ? ageVariation.start_age : ""
+                  ageVariation?.start_age !== null ? ageVariation?.start_age : ""
                 }
                 onChange={(e) =>
                   handleValueChange(index, "start_age", e.target.value)
@@ -93,7 +91,7 @@ const handleValueChange = (index, field, value) => {
                 name="end_age"
                 type="number"
                 value={
-                  ageVariation?.end_age !== null ? ageVariation.end_age : ""
+                  ageVariation?.end_age !== null ? ageVariation?.end_age : ""
                 }
                 onChange={(e) =>
                   handleValueChange(index, "end_age", e.target.value)

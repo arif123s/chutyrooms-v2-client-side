@@ -47,20 +47,22 @@ const roomAddApi = baseApi.injectEndpoints({
     }),
 
     updateRoom: builder.mutation({
-      query: (updatePropertyInfo) => {
+      query: (updateRoomInfo) => {
         return {
-          url: `/property/room?property_id=${updatePropertyInfo.id}`,
+          url: `/property/room/${updateRoomInfo.id}`,
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
-          body: updatePropertyInfo.formData,
+          body: updateRoomInfo.formData,
         };
       },
     }),
+
   }),
 });
 
 export const {
   useGetAllRoomCategoriesQuery, useGetAllRoomsQuery,  useGetSingleRoomInfoQuery,useRoomAddMutation,
+  useUpdateRoomMutation,
 } = roomAddApi;
