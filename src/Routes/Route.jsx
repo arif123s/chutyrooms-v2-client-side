@@ -90,6 +90,7 @@ import EditPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyTyp
 import AddPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/AddPropertyType";
 import RoomRate from "../Pages/Dashboard/RoomManagement/RoomRate/RoomRate";
 import RoomEdit from "../Pages/Dashboard/RoomManagement/RoomEdit/RoomEdit";
+import RoomList from "../Pages/Dashboard/RoomManagement/RoomList/RoomList"
 
 export const router = createBrowserRouter([
   {
@@ -248,15 +249,25 @@ export const router = createBrowserRouter([
             path: "/dashboard/property/:propertyId/edit",
             element: <OwnerPropertyEdit></OwnerPropertyEdit>,
           },
+
+          {
+            path: "/dashboard/room-list/:propertyId",
+            element: <RoomList></RoomList>,
+          },
+
           {
             path: "/dashboard/room-add/:propertyId",
             element: <OwnerRoomAdd></OwnerRoomAdd>,
           },
 
+
+
           {
             path: "/dashboard/room-edit/:id",
             element: <RoomEdit></RoomEdit>,
           },
+
+        
           {
             path: "/dashboard/room-rate",
             element: <RoomRate></RoomRate>,
