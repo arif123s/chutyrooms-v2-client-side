@@ -28,8 +28,7 @@ const RoomEdit = () => {
    const [updateRoom, { isLoading: updateRoomLoading }] =
      useUpdateRoomMutation();
   const roomTypes = data?.data?.room_types; 
-  // const room_rates = JSON.parse(data?.data?.room?.room_rates?.rates);
-  // console.log(room_rates)
+  // console.log(data?.data);
 
   const [roomData, setRoomData] = useState({
     name: "",
@@ -157,13 +156,13 @@ const RoomEdit = () => {
       view_order: bed.view_order,
     }));
     const updateChildVariation = childAgeVariation.map((variation) => ({
-      id: variation.id,
-      start_age: variation.start_age,
-      end_age: variation.end_age,
-      price: variation.price,
-      free_qty: variation.free_qty,
-      view_order: variation.view_order,
-      is_active: variation.is_active,
+      id: parseInt(variation.id),
+      start_age: parseInt(variation.start_age),
+      end_age: parseInt(variation.end_age),
+      price: parseInt(variation.price),
+      free_qty: parseInt(variation.free_qty),
+      view_order: parseInt(variation.view_order),
+      is_active: parseInt(variation.is_active),
     }));
 
     console.log(updatedBeds);
@@ -423,8 +422,9 @@ const RoomEdit = () => {
           </div>
         </div>
 
+        {/* Select Date */}
         <div className="mt-[18px] flex gap-x-[18px] md:gap-x-[44px] lg:gap-x-[44px]">
-          {/* Select Date */}
+          {/* Start Date */}
           <div className="w-fit">
             <label className="property-input-title block" htmlFor="start_date">
               Start Date
@@ -801,7 +801,7 @@ const RoomEdit = () => {
             childAgeVariation={childAgeVariation}
             setChildAgeVariation={setChildAgeVariation}
             register={register}
-            childAgeLimit={parseInt(roomTypes?.çhild_age_limit)}
+            childAgeLimit={parseInt(data?.data?.çhild_age_limit)}
           ></ChildAgeVariation>
         </div>
         {/* Bed info */}

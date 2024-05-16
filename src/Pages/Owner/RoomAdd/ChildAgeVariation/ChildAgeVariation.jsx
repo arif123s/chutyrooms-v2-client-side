@@ -32,19 +32,21 @@ const ChildAgeVariation = ({
   };
 
   const handleValueChange = (index, field, value) => {
-     if(field=='start_age' || field=='end_age'){
-      if (field === "start_age" && parseInt(value) < 0) {
+     if (parseInt(value) < 0) {
        setErrorMessage({
          message: "Input value cannot be less than 0",
          active: true,
        });
        return;
      }
-    if (parseInt(value) > childAgeLimit) {
-        console.log(errorMessage);
-      setErrorMessage({message:`Input value cannot be greater than ${childAgeLimit}`,active:true});
-      return;
-    }
+     if (field == "start_age" || field == "end_age") {
+       if (parseInt(value) > childAgeLimit) {
+         setErrorMessage({
+           message: `Value cannot exceed age limit ${childAgeLimit}`,
+           active: true,
+         });
+         return;
+       }
      }
     // Clear error message if input is valid
      setErrorMessage({
@@ -120,7 +122,10 @@ const ChildAgeVariation = ({
                 id="free_qty"
                 name="free_qty"
                 type="number"
-                value={ageVariation?.free_qty || ""}
+                // value={ageVariation?.free_qty || ""}
+                value={
+                  ageVariation?.free_qty !== null ? ageVariation.free_qty : ""
+                }
                 onChange={(e) =>
                   handleValueChange(index, "free_qty", e.target.value)
                 }
@@ -135,7 +140,7 @@ const ChildAgeVariation = ({
                 id="price"
                 name="price"
                 type="number"
-                value={ageVariation?.price || ""}
+                value={ageVariation?.price !== null ? ageVariation.price : ""}
                 onChange={(e) =>
                   handleValueChange(index, "price", e.target.value)
                 }
