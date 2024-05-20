@@ -862,9 +862,9 @@ const OwnerPropertyEdit = () => {
                 })
               }
             ></textarea>
-            {validationErrors.description && (
+            {validationErrors?.description && (
               <span className="label-text-alt text-red-500">
-                {validationErrors.description}
+                {validationErrors?.description}
               </span>
             )}
           </div>

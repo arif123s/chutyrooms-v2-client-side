@@ -80,7 +80,7 @@ const PropertyList = () => {
                   </td>
                   <td>
                     <a href="" onClick={(e)=>{e.preventDefault(),
-                      navigate(`/dashboard/room-add/${property?.id}`);}} className="active-inactive-btn">
+                      navigate(`/dashboard/rooms/${property?.id}`)}} className="active-inactive-btn">
                       Room List
                     </a>
                   </td>

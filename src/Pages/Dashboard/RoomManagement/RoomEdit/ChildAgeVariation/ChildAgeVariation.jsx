@@ -9,10 +9,9 @@ const ChildAgeVariation = ({
   setChildAgeVariation,
   childAgeLimit,
 }) => {
-
   const [errorMessage, setErrorMessage] = useState({
-    message:"",
-    active:false
+    message: "",
+    active: false,
   });
 
   const handleAddAgeVariation = (e) => {
@@ -20,10 +19,9 @@ const ChildAgeVariation = ({
 
     setChildAgeVariation([
       ...childAgeVariation,
-      { start_age: null, end_age: null, free_qty:null, price: null },
+      { start_age: null, end_age: null, free_qty: null, price: null },
     ]);
   };
-
 
   const handleRemoveAgeVariation = (e) => {
     e.preventDefault();
@@ -32,71 +30,71 @@ const ChildAgeVariation = ({
     }
   };
 
-const handleValueChange = (index, field, value) => {
-  // if (parseInt(value) < 0) {
-  //   setErrorMessage({
-  //     message: "Input value cannot be less than 0",
-  //     active: true,
-  //   });
-  //   return;
-  // }
-  // if (field == "start_age" || field == "end_age") {
-  //   if (parseInt(value) > childAgeLimit) {
-  //     setErrorMessage({
-  //       message: `Value cannot exceed age limit ${childAgeLimit}`,
-  //       active: true,
-  //     });
-  //     return;
-  //   }
-  // }
-  // // Clear error message if input is valid
-  // setErrorMessage({
-  //   ...errorMessage,
-  //   active: false,
-  // });
-  // // Parse the value to a number
-  // const numericValue = parseInt(value);
-  // // Check if the parsed numericValue is NaN (Not-a-Number)
-  // const newValue = isNaN(numericValue) ? null : numericValue;
+  const handleValueChange = (index, field, value) => {
+    // if (parseInt(value) < 0) {
+    //   setErrorMessage({
+    //     message: "Input value cannot be less than 0",
+    //     active: true,
+    //   });
+    //   return;
+    // }
+    // if (field == "start_age" || field == "end_age") {
+    //   if (parseInt(value) > childAgeLimit) {
+    //     setErrorMessage({
+    //       message: `Value cannot exceed age limit ${childAgeLimit}`,
+    //       active: true,
+    //     });
+    //     return;
+    //   }
+    // }
+    // // Clear error message if input is valid
+    // setErrorMessage({
+    //   ...errorMessage,
+    //   active: false,
+    // });
+    // // Parse the value to a number
+    // const numericValue = parseInt(value);
+    // // Check if the parsed numericValue is NaN (Not-a-Number)
+    // const newValue = isNaN(numericValue) ? null : numericValue;
 
-  // const newData = [...childAgeVariation];
-  // newData[index][field] = newValue;
-  // setChildAgeVariation(newData);
+    // const newData = [...childAgeVariation];
+    // newData[index][field] = newValue;
+    // setChildAgeVariation(newData);
 
-  // If field is 'qty' and newValue is null or less than 0, set error message
-  if (value === null || value < 0) {
-    setErrorMessage({
-      message: "Value cannot be less than 0",
-      active: true,
-    });
-    return;
-  }
-
-  if (field == "start_age" || field == "end_age") {
-    if (parseInt(value) > childAgeLimit) {
+    // If field is 'qty' and newValue is null or less than 0, set error message
+    if (value === null || value < 0) {
       setErrorMessage({
-        message: `Value cannot exceed age limit ${childAgeLimit}`,
+        message: "Value cannot be less than 0",
         active: true,
       });
       return;
     }
-  }
 
-  // Create a new array with a copy of the bedInfos
-  const newData = childAgeVariation.map((variation, i) => {
-    // If it's not the bed we're updating, return it as is
-    if (i !== index) return variation;
+    if (field == "start_age" || field == "end_age") {
+      if (parseInt(value) > childAgeLimit) {
+        setErrorMessage({
+          message: `Value cannot exceed age limit ${childAgeLimit}`,
+          active: true,
+        });
+        return;
+      }
+    }
 
-    // If it's the bed we're updating, return a new object with the updated field
-    return {
-      ...variation,
-      [field]: value,
-    };
-  });
+    // Create a new array with a copy of the bedInfos
+    const newData = childAgeVariation.map((variation, i) => {
+      // If it's not the bed we're updating, return it as is
+      if (i !== index) return variation;
 
-  // Update the state with the new array
-  setChildAgeVariation(newData);
-};
+      // If it's the bed we're updating, return a new object with the updated field
+      return {
+        ...variation,
+        [field]: value,
+      };
+    });
+
+    // Update the state with the new array
+    setChildAgeVariation(newData);
+  };
 
   return (
     <div>

@@ -27,6 +27,7 @@ const Login = () => {
   });
   const dispatch = useDispatch();
   const [disableButton, setDisableButton] = useState(false);
+  console.log("errorMessage", errorMessage);
 
   // const [loading, setLoading] = useState(false);
 
@@ -34,15 +35,15 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-   const location = useLocation();
-    let from = location.state?.from?.pathname || "/";
-    const token = localStorage.getItem("accessToken");
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+  const token = localStorage.getItem("accessToken");
 
-    useEffect(() => {
-      if (token) {
-        navigate(location.state?.from || "/", { replace: true });
-      }
-    }, [token, navigate, location]);
+  useEffect(() => {
+    if (token) {
+      navigate(location.state?.from || "/", { replace: true });
+    }
+  }, [token, navigate, location]);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -54,7 +55,7 @@ const Login = () => {
       setPassword(storedPassword);
       setRememberMe(true);
     }
-  }, []);                 
+  }, []);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -72,15 +73,14 @@ const Login = () => {
   // }
 
   const onSubmit = async (data) => {
-    // setLoading(true);
     setDisableButton(true);
-    toast.loading("Loading...");
+    const toastId = toast.loading("Loading...");
     setErrorMessage({ status: false, message: "" });
 
     // If "Remember me" is checked, store username and password
     if (rememberMe) {
-      localStorage.setItem("username", username);
-      localStorage.setItem("password", password);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("password", data.password);
       localStorage.setItem("rememberMe", rememberMe);
     } else {
       // Clear stored username and password if "Remember me" is unchecked
@@ -94,71 +94,82 @@ const Login = () => {
       password: data.password,
     };
 
-    const res = await login(user).unwrap();
+    try {
+      const res = await login(user).unwrap();
 
-    const userInfo = {
-      user: {
-        id: res.data?.id,
-        name: res.data?.name,
-        img: res.data?.image,
-        role: "",
-      },
-      token: {
-        accessToken: res.accessToken,
-      },
-    };
-    console.log("info", userInfo);
+      const userInfo = {
+        user: {
+          id: res.data?.id,
+          name: res.data?.name,
+          img: res.data?.image,
+          role: "",
+        },
+        token: {
+          accessToken: res.accessToken,
+        },
+      };
+      console.log("info", userInfo);
 
-    dispatch(setUser(userInfo));
+      dispatch(setUser(userInfo));
 
-    // send user data to database
-    fetch(`${BASE_API}/user/login`, {
-      // fetch("http://127.0.0.1:8000/api/user/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // setLoading(false);
-        setDisableButton(false);
-        toast.dismiss(toastId.current);
-        if (data.status === true) {
-          console.log("Successfully logged in!", data);
-          console.log(data.data.roles[0].role_code);
-          localStorage.setItem("accessToken", data.accessToken);
-          localStorage.setItem(
-            "userInfo",
-            JSON.stringify({
-              id: data.data.id,
-              accessToken: data.accessToken,
-              name: data.data.name,
-              img: data.data.image,
-              role: data.data.roles[0],
-            })
-          );
-
-          toast.success(data.message);
-
-          if (data.data.roles[0].role_code == 345) {
-            navigate("/");
-          }
-           if (data.data.roles[0].role_code == 234) {
-             navigate("/dashboard/property-add");
-           } else navigate("/dashboard");
-        } else {
-          console.log("Login failed!", data);
-          // setErrorMessage({ status: true, message: data.errors.username[0] });
-          // toast.error(data.message);
-          setErrorMessage({
-            status: true,
-            message: data.message,
-            errors: [data.errors],
-          });
-        }
+      const response = await fetch(`${BASE_API}/user/login`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
       });
+
+      const data = await response.json();
+      setDisableButton(false);
+      toast.dismiss(toastId);
+
+      if (data.status === true) {
+        console.log("Successfully logged in!", data);
+        console.log(data.data.roles[0].role_code);
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            id: data.data.id,
+            accessToken: data.accessToken,
+            name: data.data.name,
+            img: data.data.image,
+            role: data.data.roles[0],
+          })
+        );
+
+        toast.success(data.message);
+
+        if (data.data.roles[0].role_code === 345) {
+          navigate("/");
+        } else if (
+          data.data.roles[0].role_code === 123 ||
+          data.data.roles[0].role_code === 234
+        ) {
+          navigate("/dashboard");
+        }
+      } else {
+        console.log("Login failed!", data);
+        toast.dismiss(toastId);
+        setErrorMessage({
+          status: true,
+          message: data?.message,
+          // errors: [data?.errors],
+        });
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setDisableButton(false);
+      setErrorMessage({
+        status: true,
+        message: data?.message,
+        errors: [error?.data?.errors],
+      });
+      toast.dismiss(toastId);
+      toast.error("Login failed! Please try again.");
+    }
   };
 
   const navigateToRegister = (e) => {
@@ -270,13 +281,12 @@ const Login = () => {
           </a>
         </div>
 
-        {errorMessage.status && (
+        {errorMessage?.status && (
           <p className="label-text-alt text-red-500 text-center mb-[8px]">
-            {errorMessage.message}
+            {errorMessage?.message}
           </p>
         )}
-
-        {/* {errorMessage.errors?.length > 0 &&
+        {errorMessage?.errors?.length > 0 &&
           errorMessage?.errors?.map((err, index) => (
             <div key={index}>
               {Object.values(err).map((value, i) => (
@@ -288,7 +298,7 @@ const Login = () => {
                 </p>
               ))}
             </div>
-          ))} */}
+          ))}
 
         <input
           type="submit"

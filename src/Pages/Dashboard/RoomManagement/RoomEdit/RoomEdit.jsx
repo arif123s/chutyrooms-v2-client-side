@@ -3,7 +3,10 @@ import { useParams, useNavigate } from "react-router";
 import deleteIcon from "../../../../assets/icons/delete.svg";
 import imgIcon from "../../../../assets/icons/img.svg";
 import tickSquareIcon from "../../../../assets/icons/tick-square-black.svg";
-import { useGetSingleRoomInfoQuery, useUpdateRoomMutation } from "../../../../redux/features/owner/RoomAdd/roomAdd.api";
+import {
+  useGetSingleRoomInfoQuery,
+  useUpdateRoomMutation,
+} from "../../../../redux/features/owner/RoomAdd/roomAdd.api";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
 import BedInfo from "./BedInfo/BedInfo";
@@ -12,7 +15,6 @@ import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
 import { toast } from "react-toastify";
 
 const RoomEdit = () => {
-
   const navigate = useNavigate();
   const { id } = useParams();
   const {
@@ -25,10 +27,10 @@ const RoomEdit = () => {
   } = useForm();
 
   const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(id);
-   const [updateRoom, { isLoading: updateRoomLoading }] =
-     useUpdateRoomMutation();
-  const roomTypes = data?.data?.room_types; 
-  // console.log(data?.data);
+  const [updateRoom, { isLoading: updateRoomLoading }] =
+    useUpdateRoomMutation();
+  const roomTypes = data?.data?.room_types;
+  console.log(data?.data?.room);
 
   const [roomData, setRoomData] = useState({
     name: "",
@@ -66,9 +68,9 @@ const RoomEdit = () => {
     refetch();
 
     if (data?.data?.room) {
-     const room_rates = data?.data?.room?.room_rates?.rates
-       ? JSON.parse(data?.data?.room?.room_rates?.rates)
-       : {};
+      const room_rates = data?.data?.room?.room_rates?.rates
+        ? JSON.parse(data?.data?.room?.room_rates?.rates)
+        : {};
       setDisplayImages(
         data?.data?.room?.room_images?.map((image) => ({
           id: image.id,
@@ -78,9 +80,28 @@ const RoomEdit = () => {
         }))
       );
 
-      setRoomData({...data?.data?.room,room_rates: room_rates});
+      // Function to convert date format
+      const convertDateFormat=(dateString)=> {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear();
+          return `${year}-${month}-${day}`;
+      }
+
+      setRoomData({ ...data?.data?.room, room_rates: room_rates });
+      setRoomData({
+        ...data?.data?.room,
+        room_rates: {
+          company_purchase_price: room_rates?.company_purchase_price,
+          end_date: convertDateFormat(new Date(room_rates?.end_date)),
+          regular_price: room_rates?.regular_price,
+          start_date: convertDateFormat(new Date(room_rates?.start_date)),
+          website_users_price: room_rates?.website_users_price,
+        },
+      });
     }
-  }, [data?.data?.room ,refetch]);
+  }, [data?.data?.room, refetch]);
 
   useEffect(() => {
     setChildAgeVariation(data?.data?.room?.child_age_variations);
@@ -180,8 +201,8 @@ const RoomEdit = () => {
       company_purchase_price: parseInt(
         roomData.room_rates.company_purchase_price
       ),
-      start_date: parseInt(roomData.room_rates.start_date),
-      end_date: parseInt(roomData.room_rates.end_date),
+      start_date: roomData.room_rates.start_date,
+      end_date: roomData.room_rates.end_date,
       guest_infos: {
         id: parseInt(roomData.guest_info.id),
         adult_guest_qty: parseInt(roomData.guest_info.adult_guest_qty),

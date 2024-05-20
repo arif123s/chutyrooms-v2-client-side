@@ -8,8 +8,10 @@ import DealMembership from "./DealMembership/DealMembership";
 import ExploreCountry from "./ExploreCountry/ExploreCountry";
 import chat from "../../../../assets/icons/chat-bot.svg";
 import ChutyLogo from "../../../../assets/icons/chuty-logo.png";
+import Loading from "../../../Common/Includes/Loading/Loading";
 
 const HomePage = () => {
+  
   const [isSticky, setIsSticky] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const [isOtherDivVisible, setIsOtherDivVisible] = useState(true);
@@ -32,7 +34,7 @@ const HomePage = () => {
       setIsHidden(scrollY === 0);
       setIsSticky(scrollY > 0);
       setIsOtherDivVisible(!isSticky);
-      setIsOtherDivVisible(scrollY === 0)
+      setIsOtherDivVisible(scrollY === 0);
     };
 
     // Add scroll event listener
@@ -43,6 +45,11 @@ const HomePage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [isSticky]);
+
+  //  if (isLoading) {
+  //    return <Loading></Loading>;
+  //  }
+
   return (
     <div>
       <div

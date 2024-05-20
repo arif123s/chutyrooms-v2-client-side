@@ -39,6 +39,17 @@ const ChildAgeVariation = ({
        });
        return;
      }
+    //  if (field === "end_age") {
+    //    const startAge = childAgeVariation[index].start_age;
+    //    console.log(startAge)
+    //    if (parseInt(value) < startAge) {
+    //      setErrorMessage({
+    //        message: "End age cannot be less than Start age",
+    //        active: true,
+    //      });
+    //      return;
+    //    }
+    //  }
      if (field == "start_age" || field == "end_age") {
        if (parseInt(value) > childAgeLimit) {
          setErrorMessage({
@@ -48,6 +59,7 @@ const ChildAgeVariation = ({
          return;
        }
      }
+     
     // Clear error message if input is valid
      setErrorMessage({
         ...errorMessage,
@@ -103,12 +115,6 @@ const ChildAgeVariation = ({
                 }
               />
             </div>
-
-            {errorMessage.active && (
-              <span className="label-text-alt text-red-500">
-                {errorMessage.message}
-              </span>
-            )}
           </div>
 
           {/* Price */}
@@ -149,6 +155,11 @@ const ChildAgeVariation = ({
           </div>
         </div>
       ))}
+      {errorMessage.active && (
+        <span className="label-text-alt text-red-500">
+          {errorMessage.message}
+        </span>
+      )}
       <div className="input-box flex items-center justify-center gap-[12px]">
         <button
           onClick={(e) => handleAddAgeVariation(e)}
