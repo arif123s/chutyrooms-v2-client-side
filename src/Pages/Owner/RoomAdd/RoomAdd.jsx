@@ -77,6 +77,21 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       (image) => image.displayImageFile
     );
 
+    // Loop through childAgeVariation to update free_qty if null
+    const updatedChildAgeVariation = childAgeVariation.map((childAge) => {
+      // If free_qty is null, set it to 0
+      if (childAge.free_qty == null) {
+        if(childAge.start_age==null || childAge.end_age==null){
+          return { ...childAge,start_age:0,end_age:0, free_qty: 0, price:0 };
+        }
+
+        return { ...childAge, free_qty: 0 };
+      }
+      return childAge; // Otherwise, return the original object
+    });
+
+    console.log("updatedChildAgeVariation", updatedChildAgeVariation);
+
     const roomAddInfo = {
       name: data.room_name,
       number_of_rooms: data.number_of_rooms,
@@ -92,7 +107,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       extra_adult_guest_qty: parseInt(data.extra_adult_quantity) || 0,
       price_per_extra_adult_guest: parseInt(data.extra_adult_price) || 0,
       extra_child_guest_qty: parseInt(data.extra_child_quantity) || 0,
-      child_age_infos: childAgeVariation,
+      child_age_infos: updatedChildAgeVariation,
       bed_infos: bedInfos,
     };
 
@@ -100,28 +115,19 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
 
     const formData = new FormData();
 
-    // Append non-file fields to FormData
-    // Object.entries(paymentMethodInfo).forEach(([key, value]) => {
-    //   if (key !== "image") {
-    //     formData.append(key, value);
-    //   }
-    // });
-
     Object.entries(roomAddInfo).forEach(([key, value]) => {
       if (key !== "images") {
         if (key === "room_categories") {
           value.forEach((item, index) => {
             formData.append(`${key}[${index}]`, item);
           });
-        }
-        else if (key === "bed_infos") {
+        } else if (key === "bed_infos") {
           value.forEach((bed, index) => {
             Object.entries(bed).forEach(([subKey, subValue]) => {
               formData.append(`bed_infos[${index}][${subKey}]`, subValue);
             });
           });
-        }
-        else if (key === "child_age_infos") {
+        } else if (key === "child_age_infos") {
           value.forEach((bed, index) => {
             Object.entries(bed).forEach(([subKey, subValue]) => {
               formData.append(`child_age_infos[${index}][${subKey}]`, subValue);
@@ -162,7 +168,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       if (result?.data?.status) {
         console.log("Room", result);
         toast.success("Room added successfully");
-        navigate(`/dashboard/property-list`);
+        navigate(`/dashboard/rooms/${propertyId}`);
       } else {
         console.log("Failed", result);
         // setValidationErrors(result?.error?.data?.errors);
@@ -644,7 +650,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
             Save
           </button>
         </div>
-        {dashboard && (
+        {/* {dashboard && ( */}
           <div className="mt-[18px] text-center">
             <a
               onClick={navigateDashboard}
@@ -653,7 +659,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
               Go to dashboard
             </a>
           </div>
-        )}
+        {/* )} */}
       </form>
     </div>
   );

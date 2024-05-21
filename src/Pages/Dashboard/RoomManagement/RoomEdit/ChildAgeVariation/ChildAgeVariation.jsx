@@ -9,20 +9,19 @@ const ChildAgeVariation = ({
   setChildAgeVariation,
   childAgeLimit,
 }) => {
-
   const [errorMessage, setErrorMessage] = useState({
-    message:"",
-    active:false
+    message: "",
+    active: false,
   });
+
   const handleAddAgeVariation = (e) => {
     e.preventDefault();
 
     setChildAgeVariation([
       ...childAgeVariation,
-      { start_age: null, end_age: null, free_qty:null, price: null },
+      { start_age: null, end_age: null, free_qty: null, price: null },
     ]);
   };
-
 
   const handleRemoveAgeVariation = (e) => {
     e.preventDefault();
@@ -31,34 +30,71 @@ const ChildAgeVariation = ({
     }
   };
 
-const handleValueChange = (index, field, value) => {
-  // Parse the value to a number
-  const numericValue = parseInt(value);
+  const handleValueChange = (index, field, value) => {
+    // if (parseInt(value) < 0) {
+    //   setErrorMessage({
+    //     message: "Input value cannot be less than 0",
+    //     active: true,
+    //   });
+    //   return;
+    // }
+    // if (field == "start_age" || field == "end_age") {
+    //   if (parseInt(value) > childAgeLimit) {
+    //     setErrorMessage({
+    //       message: `Value cannot exceed age limit ${childAgeLimit}`,
+    //       active: true,
+    //     });
+    //     return;
+    //   }
+    // }
+    // // Clear error message if input is valid
+    // setErrorMessage({
+    //   ...errorMessage,
+    //   active: false,
+    // });
+    // // Parse the value to a number
+    // const numericValue = parseInt(value);
+    // // Check if the parsed numericValue is NaN (Not-a-Number)
+    // const newValue = isNaN(numericValue) ? null : numericValue;
 
-  // Check if the parsed numericValue is less than 0
-  if ( numericValue < 0) {
-    setErrorMessage({
-      message: "Input value cannot be less than 0",
-      active: true,
+    // const newData = [...childAgeVariation];
+    // newData[index][field] = newValue;
+    // setChildAgeVariation(newData);
+
+    // If field is 'qty' and newValue is null or less than 0, set error message
+    if (value === null || value < 0) {
+      setErrorMessage({
+        message: "Value cannot be less than 0",
+        active: true,
+      });
+      return;
+    }
+
+    if (field == "start_age" || field == "end_age") {
+      if (parseInt(value) > childAgeLimit) {
+        setErrorMessage({
+          message: `Value cannot exceed age limit ${childAgeLimit}`,
+          active: true,
+        });
+        return;
+      }
+    }
+
+    // Create a new array with a copy of the bedInfos
+    const newData = childAgeVariation.map((variation, i) => {
+      // If it's not the bed we're updating, return it as is
+      if (i !== index) return variation;
+
+      // If it's the bed we're updating, return a new object with the updated field
+      return {
+        ...variation,
+        [field]: value,
+      };
     });
-    return;
-  }
 
-  // Check if the parsed numericValue is NaN (Not-a-Number)
-  // const newValue = isNaN(numericValue) ? null : numericValue;
-
-  const newData = [...childAgeVariation];
-  newData[index][field] = value;
-
-  // Clear error message if input is valid
-  setErrorMessage({
-    ...errorMessage,
-    active: false,
-  });
-
-  // Update the state with the new array
-  setChildAgeVariation(newData);
-};
+    // Update the state with the new array
+    setChildAgeVariation(newData);
+  };
 
   return (
     <div>
@@ -78,7 +114,9 @@ const handleValueChange = (index, field, value) => {
                 name="start_age"
                 type="number"
                 value={
-                  ageVariation?.start_age !== null ? ageVariation?.start_age : ""
+                  ageVariation?.start_age !== null
+                    ? ageVariation?.start_age
+                    : ""
                 }
                 onChange={(e) =>
                   handleValueChange(index, "start_age", e.target.value)
@@ -98,12 +136,6 @@ const handleValueChange = (index, field, value) => {
                 }
               />
             </div>
-
-            {errorMessage.active && (
-              <span className="label-text-alt text-red-500">
-                {errorMessage.message}
-              </span>
-            )}
           </div>
 
           {/* Price */}
@@ -117,7 +149,10 @@ const handleValueChange = (index, field, value) => {
                 id="free_qty"
                 name="free_qty"
                 type="number"
-                value={ageVariation?.free_qty || ""}
+                // value={ageVariation?.free_qty || ""}
+                value={
+                  ageVariation?.free_qty !== null ? ageVariation?.free_qty : ""
+                }
                 onChange={(e) =>
                   handleValueChange(index, "free_qty", e.target.value)
                 }
@@ -132,7 +167,8 @@ const handleValueChange = (index, field, value) => {
                 id="price"
                 name="price"
                 type="number"
-                value={ageVariation?.price || ""}
+                // value={ageVariation?.price || ""}
+                value={ageVariation?.price !== null ? ageVariation?.price : ""}
                 onChange={(e) =>
                   handleValueChange(index, "price", e.target.value)
                 }
@@ -141,6 +177,11 @@ const handleValueChange = (index, field, value) => {
           </div>
         </div>
       ))}
+      {errorMessage.active && (
+        <span className="label-text-alt text-red-500">
+          {errorMessage.message}
+        </span>
+      )}
       <div className="input-box flex items-center justify-center gap-[12px]">
         <button
           onClick={(e) => handleAddAgeVariation(e)}

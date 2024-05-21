@@ -168,7 +168,8 @@ const OtpPhoneVerification = () => {
             navigate("/");
           }
            if (data?.data?.roles[0]?.role_code == 234) {
-             navigate("/dashboard/property-list");
+            //  navigate("/dashboard/property-list");
+             navigate("/property-add");
            }
         } else {
           setOtpError({ status: true, message: data.message });

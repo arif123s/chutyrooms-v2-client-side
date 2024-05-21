@@ -22,8 +22,8 @@ import PropertyRoomAdd from "../Pages/Owner/PropertyRoomAdd/PropertyRoomAdd";
 import OwnerRoomAdd from "../Pages/Dashboard/RoomManagement/OwnerRoomAdd";
 import Country from "../Pages/Dashboard/Admin/SoftwareSetup/Country/Country";
 
-import CountryList from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryList"
-import CountryAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryAdd"
+import CountryList from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryList";
+import CountryAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Country/CountryAdd";
 
 import OtpPhoneVerification from "../Pages/Auth/Verification/OtpVerification/OtpPhoneVerification";
 import OtpEmailVerification from "../Pages/Auth/Verification/OtpVerification/OtpEmailVerification";
@@ -40,7 +40,7 @@ import AreaEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Area/AreaEdit";
 
 import DistrictInfo from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictInfo";
 import DistrictList from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictList";
-import DistrictAdd from  "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictAdd";
+import DistrictAdd from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictAdd";
 import DistrictEdit from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictEdit";
 import HotelDetails from "../Pages/Home/HotelDetails/HotelDetails";
 
@@ -55,7 +55,7 @@ import MembershipList from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/Me
 import MembershipAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipAdd";
 import MembershipEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Membership/MembershipEdit";
 
-import PaymentSystems from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystems"
+import PaymentSystems from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystems";
 import PaymentSystemsList from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentSystemsList";
 import PaymentAdd from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentAdd";
 import PaymentEdit from "../Pages/Dashboard/Admin/SoftwareSetup/Payment/PaymentEdit";
@@ -90,7 +90,8 @@ import EditPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyTyp
 import AddPropertyType from "../Pages/Dashboard/Admin/SoftwareSetup/PropertyType/AddPropertyType";
 import RoomRate from "../Pages/Dashboard/RoomManagement/RoomRate/RoomRate";
 import RoomEdit from "../Pages/Dashboard/RoomManagement/RoomEdit/RoomEdit";
-import RoomList from "../Pages/Dashboard/RoomManagement/RoomList/RoomList"
+import RoomList from "../Pages/Dashboard/RoomManagement/RoomList/RoomList";
+import Rooms from "../Pages/Dashboard/RoomManagement/RoomList/Rooms";
 
 export const router = createBrowserRouter([
   {
@@ -251,23 +252,35 @@ export const router = createBrowserRouter([
           },
 
           {
-            path: "/dashboard/room-list/:propertyId",
-            element: <RoomList></RoomList>,
+            path: "/dashboard/rooms/",
+            element: <Rooms></Rooms>,
+            children: [
+              {
+                path: "/dashboard/rooms/:propertyId",
+                element: <RoomList></RoomList>,
+              },
+              {
+                path: "/dashboard/rooms/room-add/:propertyId",
+                element: <OwnerRoomAdd></OwnerRoomAdd>,
+              },
+            ],
           },
 
+          // {
+          //   path: "/dashboard/room-list/:propertyId",
+          //   element: <RoomList></RoomList>,
+          // },
+
+          // {
+          //   path: "/dashboard/room-add/:propertyId",
+          //   element: <OwnerRoomAdd></OwnerRoomAdd>,
+          // },
+
           {
-            path: "/dashboard/room-add/:propertyId",
-            element: <OwnerRoomAdd></OwnerRoomAdd>,
-          },
-
-
-
-          {
-            path: "/dashboard/room-edit/:id",
+            path: "/dashboard/room-edit/:roomId",
             element: <RoomEdit></RoomEdit>,
           },
 
-        
           {
             path: "/dashboard/room-rate",
             element: <RoomRate></RoomRate>,

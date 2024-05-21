@@ -1860,7 +1860,7 @@ const PropertyAdd = () => {
             <div className="w-[56px]">
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
-                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px] bg-white"
+                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px] bg-white text-[14px]"
                   id="checkin_time_period"
                   name="checkin_time_period"
                   defaultValue="AM"
@@ -1980,7 +1980,7 @@ const PropertyAdd = () => {
             <div className="w-[56px]">
               <div className="border-[1px] rounded-[4px] relative h-[36px]">
                 <select
-                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px] bg-white"
+                  className="flex items-center justify-center w-full h-full rounded-[4px] px-[4px] bg-white text-[14px]"
                   id="checkout_time_period"
                   name="checkout_time_period"
                   {...register("checkout_time_period", {
@@ -2161,7 +2161,7 @@ const PropertyAdd = () => {
           </h2>
 
           <div className="text-[14px] flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
-            <div className="flex gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
+            <div className="flex flex-wrap gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
               <Controller
                 name="paymentMethods"
                 control={control}
@@ -2195,7 +2195,7 @@ const PropertyAdd = () => {
                           {paymentMethod.name}
                         </label> */}
                           <img
-                            className="w-14 "
+                            className="w-12"
                             src={`${BASE_ASSET_API}/storage/images/payment/payment_methods/${paymentMethod.image}`}
                             alt="Payment-method"
                           />
@@ -2385,14 +2385,14 @@ const PropertyAdd = () => {
         )}
 
         <div className=" flex justify-end gap-x-[12px]">
-          <button className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
+          <button className="w-[80px] flex items-center justify-center md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px]">
             Cancel
           </button>
           <button
             // onClick={(e) => handleSave(e)}
             type="submit"
             // disabled={!rectangleBounds}
-            className="w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+            className="w-[80px] flex items-center justify-center md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
           >
             Save
           </button>

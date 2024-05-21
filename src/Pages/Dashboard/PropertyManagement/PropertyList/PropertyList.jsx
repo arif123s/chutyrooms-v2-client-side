@@ -5,20 +5,72 @@ import restoreIcon from "../../../../assets/icons/restore_icon.svg";
 import { useGetAllPropertyQuery } from "../../../../redux/features/owner/propertyAdd/propertyAdd.api";
 import Loading from "../../../Common/Includes/Loading/Loading";
 import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
+import ArrowRightPaginate from '../../../../assets/icons/arrow-left-paginate.svg';
+import ArrowLeftPaginate from '../../../../assets/icons/arrow-right-paginate.svg';
+import ArrowRightHidden from '../../../../assets/icons/arrow-left-hide.svg';
+import ArrowLeftHidden from '../../../../assets/icons/arrow-right-hide.svg';
 
 const PropertyList = () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+ 
+
+  const defaultLeftArrow = ArrowLeftPaginate;
+  const conditionalLeftArrow = ArrowLeftHidden;
+  const defaultRightArrow = ArrowRightPaginate;
+  const conditionalRightArrow = ArrowRightHidden;
+
+
+  let RightArrowUrl = defaultRightArrow;
+  let LeftArrowUrl = defaultLeftArrow;
 
     const navigate = useNavigate();
     const {
       data: propertyData,
       isLoading,
       refetch,
-    } = useGetAllPropertyQuery();
+    } = useGetAllPropertyQuery(currentPage);
 
-    useEffect(()=>{
-      refetch()
-    },[refetch])
+
+    console.log(propertyData?.data.pagination);
+
+    useEffect(() => {
+      if (propertyData?.data?.pagination) {
+        setTotalPages(propertyData?.data?.pagination.last_page);
+      }
+      refetch();
+    }, [currentPage, refetch, propertyData]);
+  
+  
+  if (currentPage === 1) {
+    RightArrowUrl = conditionalRightArrow;
+    
+  }
+  
+  else
+  {
+    RightArrowUrl = defaultRightArrow;
+  }
+  
+  if (currentPage === totalPages) {
+    LeftArrowUrl = conditionalLeftArrow;
+   
+  }
+  
+  else{
+    LeftArrowUrl = defaultLeftArrow;
+  }
+  
+  
+  
+  const handlePageChange = (pageNumber) => {
+   
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+    setCurrentPage(pageNumber);
+    }
+  };
 
     console.log(propertyData?.data?.data)
 
@@ -80,7 +132,7 @@ const PropertyList = () => {
                   </td>
                   <td>
                     <a href="" onClick={(e)=>{e.preventDefault(),
-                      navigate(`/dashboard/room-add/${property?.id}`);}} className="active-inactive-btn">
+                      navigate(`/dashboard/rooms/${property?.id}`)}} className="active-inactive-btn">
                       Room List
                     </a>
                   </td>
@@ -124,6 +176,27 @@ const PropertyList = () => {
               ))}
             </tbody>
           </table>
+
+        <div className='pagination w-full'>
+        <img  src={RightArrowUrl} onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}></img>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+          <button key={pageNumber}  className={`${
+            currentPage === pageNumber 
+              ? "onclick-page-color"
+              : "onclickcancel-page-color"
+          } } `} onClick={() => {
+            handlePageChange(pageNumber);
+          
+          }}
+          
+            disabled={currentPage === pageNumber}>
+            {pageNumber}
+          </button>
+        ))}
+        <img src={LeftArrowUrl} onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}></img>
+      </div>
         </div>
       </div>
     );

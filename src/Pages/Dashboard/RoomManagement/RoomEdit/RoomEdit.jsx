@@ -3,7 +3,10 @@ import { useParams, useNavigate } from "react-router";
 import deleteIcon from "../../../../assets/icons/delete.svg";
 import imgIcon from "../../../../assets/icons/img.svg";
 import tickSquareIcon from "../../../../assets/icons/tick-square-black.svg";
-import { useGetSingleRoomInfoQuery, useUpdateRoomMutation } from "../../../../redux/features/owner/RoomAdd/roomAdd.api";
+import {
+  useGetSingleRoomInfoQuery,
+  useUpdateRoomMutation,
+} from "../../../../redux/features/owner/RoomAdd/roomAdd.api";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
 import BedInfo from "./BedInfo/BedInfo";
@@ -12,9 +15,8 @@ import { BASE_ASSET_API } from "../../../../BaseApi/AssetUrl";
 import { toast } from "react-toastify";
 
 const RoomEdit = () => {
-
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { roomId } = useParams();
   const {
     register,
     handleSubmit,
@@ -24,12 +26,10 @@ const RoomEdit = () => {
     formState: { errors },
   } = useForm();
 
-  const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(id);
-   const [updateRoom, { isLoading: updateRoomLoading }] =
-     useUpdateRoomMutation();
-  const roomTypes = data?.data?.room_types; 
-  // const room_rates = JSON.parse(data?.data?.room?.room_rates?.rates);
-  // console.log(room_rates)
+  const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(roomId);
+  const [updateRoom, { isLoading: updateRoomLoading }] =
+    useUpdateRoomMutation();
+  const roomTypes = data?.data?.room_types;
 
   const [roomData, setRoomData] = useState({
     name: "",
@@ -67,9 +67,9 @@ const RoomEdit = () => {
     refetch();
 
     if (data?.data?.room) {
-     const room_rates = data?.data?.room?.room_rates?.rates
-       ? JSON.parse(data?.data?.room?.room_rates?.rates)
-       : {};
+      const room_rates = data?.data?.room?.room_rates?.rates
+        ? JSON.parse(data?.data?.room?.room_rates?.rates)
+        : {};
       setDisplayImages(
         data?.data?.room?.room_images?.map((image) => ({
           id: image.id,
@@ -79,9 +79,28 @@ const RoomEdit = () => {
         }))
       );
 
-      setRoomData({...data?.data?.room,room_rates: room_rates});
+      // Function to convert date format
+      const convertDateFormat=(dateString)=> {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear();
+          return `${year}-${month}-${day}`;
+      }
+
+      setRoomData({ ...data?.data?.room, room_rates: room_rates });
+      setRoomData({
+        ...data?.data?.room,
+        room_rates: {
+          company_purchase_price: room_rates?.company_purchase_price,
+          end_date: convertDateFormat(new Date(room_rates?.end_date)),
+          regular_price: room_rates?.regular_price,
+          start_date: convertDateFormat(new Date(room_rates?.start_date)),
+          website_users_price: room_rates?.website_users_price,
+        },
+      });
     }
-  }, [data?.data?.room ,refetch]);
+  }, [data?.data?.room, refetch]);
 
   useEffect(() => {
     setChildAgeVariation(data?.data?.room?.child_age_variations);
@@ -157,17 +176,17 @@ const RoomEdit = () => {
       view_order: bed.view_order,
     }));
     const updateChildVariation = childAgeVariation.map((variation) => ({
-      id: variation.id,
-      start_age: variation.start_age,
-      end_age: variation.end_age,
-      price: variation.price,
-      free_qty: variation.free_qty,
-      view_order: variation.view_order,
-      is_active: variation.is_active,
+      id: parseInt(variation.id),
+      start_age: parseInt(variation.start_age),
+      end_age: parseInt(variation.end_age),
+      price: parseInt(variation.price),
+      free_qty: parseInt(variation.free_qty),
+      view_order: parseInt(variation.view_order),
+      is_active: parseInt(variation.is_active),
     }));
 
-    console.log(updatedBeds)
-    
+    console.log(updatedBeds);
+
     const updateRoomInfo = {
       room_id: roomData.id,
       name: roomData.name,
@@ -181,8 +200,8 @@ const RoomEdit = () => {
       company_purchase_price: parseInt(
         roomData.room_rates.company_purchase_price
       ),
-      start_date: parseInt(roomData.room_rates.start_date),
-      end_date: parseInt(roomData.room_rates.end_date),
+      start_date: roomData.room_rates.start_date,
+      end_date: roomData.room_rates.end_date,
       guest_infos: {
         id: parseInt(roomData.guest_info.id),
         adult_guest_qty: parseInt(roomData.guest_info.adult_guest_qty),
@@ -205,7 +224,7 @@ const RoomEdit = () => {
       view_order: roomData.view_order,
     };
 
-    console.log(updateRoomInfo)
+    console.log(updateRoomInfo);
 
     const formData = new FormData();
 
@@ -221,8 +240,7 @@ const RoomEdit = () => {
               formData.append(`bed_infos[${index}][${subKey}]`, subValue);
             });
           });
-        }
-        else if (key === "child_age_variation") {
+        } else if (key === "child_age_variation") {
           value.forEach((bed, index) => {
             Object.entries(bed).forEach(([subKey, subValue]) => {
               formData.append(`child_age_infos[${index}][${subKey}]`, subValue);
@@ -240,8 +258,10 @@ const RoomEdit = () => {
 
     // Append image files to FormData
     if (Array.isArray(updateRoomInfo.images)) {
-      updateRoomInfo.images.forEach((imageFile, index) => {
-        formData.append(`images[${index}][image]`, imageFile);
+      updateRoomInfo.images.forEach((image) => {
+        if (image && image.file) {
+          formData.append(`images[${image.id}][image]`, image.file);
+        }
       });
     }
 
@@ -261,7 +281,7 @@ const RoomEdit = () => {
       if (result?.data?.status) {
         console.log("updateRoomInfo", result);
         toast.success("Room updated successfully");
-        navigate(`/dashboard/property-list`);
+        navigate(`/dashboard/rooms/${data?.data?.room?.property_id}`);
       } else {
         // console.log("Failed", result?.error?.data?.errors);
         // setValidationErrors(result?.error?.data?.errors);
@@ -420,9 +440,12 @@ const RoomEdit = () => {
               )}
             </label>
           </div>
+        </div>
 
-          {/* Select Date */}
-          <div className="">
+        {/* Select Date */}
+        <div className="mt-[18px] flex gap-x-[18px] md:gap-x-[44px] lg:gap-x-[44px]">
+          {/* Start Date */}
+          <div className="w-fit">
             <label className="property-input-title block" htmlFor="start_date">
               Start Date
             </label>
@@ -445,7 +468,7 @@ const RoomEdit = () => {
           </div>
 
           {/* End Date */}
-          <div className="">
+          <div className="w-fit">
             <label className="property-input-title block" htmlFor="end_date">
               End Date
             </label>
@@ -490,11 +513,11 @@ const RoomEdit = () => {
                                 className="w-20 mr-1"
                               />
                             </div>
-                            <span className="text-[12px] block text-center">
+                            {/* <span className="text-[12px] block text-center">
                               {image?.name?.length > 16
                                 ? image?.name?.slice(0, 15) + "..."
                                 : image?.name}
-                            </span>
+                            </span> */}
                           </div>
                           <p className="text-[12px] text-center">
                             Update Photo
@@ -798,7 +821,7 @@ const RoomEdit = () => {
             childAgeVariation={childAgeVariation}
             setChildAgeVariation={setChildAgeVariation}
             register={register}
-            childAgeLimit={parseInt(roomTypes?.çhild_age_limit)}
+            childAgeLimit={parseInt(data?.data?.çhild_age_limit)}
           ></ChildAgeVariation>
         </div>
         {/* Bed info */}

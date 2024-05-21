@@ -123,7 +123,7 @@ const Register = () => {
     //   setErrorMessage(true);
     // }
     toast.loading("Loading...");
-    setDisableButton(true)
+    setDisableButton(true);
     setErrorMessage({ status: false, message: "" });
     // setLoading(true);
 
@@ -155,8 +155,8 @@ const Register = () => {
           .then((res) => res.json())
           .then((data) => {
             // setLoading(false);
-             toast.dismiss(toastId.current);
-             setDisableButton(false)
+            toast.dismiss(toastId.current);
+            setDisableButton(false);
             if (data.status == 102) {
               console.log("Successfully registered!", data);
               sessionStorage.setItem(
@@ -199,8 +199,8 @@ const Register = () => {
       }
     } else {
       // Passwords do not match
-       toast.dismiss(toastId.current);
-        setDisableButton(false);
+      toast.dismiss(toastId.current);
+      setDisableButton(false);
       // setLoading(false);
       setPassErrorMessage(true);
     }

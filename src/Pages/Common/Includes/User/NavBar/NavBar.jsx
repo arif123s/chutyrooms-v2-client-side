@@ -75,7 +75,7 @@ const NavBar = () => {
     e.preventDefault();
     // Determine the default page based on user role
     switch (userRole) {
-      case "Super Admin":
+      case "Admin":
         return navigate(`/dashboard`);
       case "owner":
         return navigate(`/dashboard/property-add`);

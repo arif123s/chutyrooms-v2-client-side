@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./DealMembership.css";
 import platinum from "../../../../../assets/membership/platinum.png";
 import gold from "../../../../../assets/membership/gold.png";
@@ -14,7 +15,7 @@ const DealMembership = (props) => {
 
   if (!Array.isArray(props.sentValue)) {
     console.error('Expected an array, received:', props.sentValue);
-    return null; // Or handle the error gracefully
+    return null; 
   }
 
   return (
@@ -74,7 +75,7 @@ const DealMembership = (props) => {
         >
           {/* <Swiper {...swiperSettings}> */}
           {props.sentValue.map((Memberships) => (
-             <SwiperSlide>
+             <SwiperSlide key={Memberships.id}>
              <img
                className="membership-card"
                src={Memberships.image}
