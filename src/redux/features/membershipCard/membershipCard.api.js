@@ -3,8 +3,8 @@ import { baseApi } from "../../api/baseApi";
 const membershipCardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     membershipCard: builder.query({
-      query: () => ({
-        url: "/membershipcards",
+      query: (currentPage) => ({
+        url: `/membershipcards?page=${currentPage}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

@@ -3,8 +3,8 @@ import { baseApi } from "../../../api/baseApi";
 const amenitiesCategoriesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllAmenitiesCategories: builder.query({
-      query: () => ({
-        url: "/amenities_type",
+      query: (currentPage) => ({
+        url: `/amenities_type?page=${currentPage}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

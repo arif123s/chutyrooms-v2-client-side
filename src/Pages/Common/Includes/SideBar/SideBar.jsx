@@ -123,7 +123,7 @@ const SideBar = ({ open, setOpen }) => {
 
   const getMenuItems = () => {
      switch (userRole) {
-      case "Super Admin":
+      case "Admin":
         return [
           {
             name: "Dashboard",

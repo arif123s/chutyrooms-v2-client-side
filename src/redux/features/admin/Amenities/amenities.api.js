@@ -18,8 +18,8 @@ const amenitiesApi = baseApi.injectEndpoints({
     }),
 
     getAllAmenities: builder.query({
-        query: () => ({
-          url: "/amenities",
+        query: (currentPage) => ({
+          url: `/amenities?page=${currentPage}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

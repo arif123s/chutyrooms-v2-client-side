@@ -37,7 +37,7 @@ const RoomList = () => {
      {RoomLists?.slice()
        .sort((a, b) => a.view_order - b.view_order)
        .map((RoomList) => (
-         <tr key={RoomList.id}>
+         <tr key={RoomList.id} className="mt-[20px]">
              <td>
              <img
                       className="w-[100px]"

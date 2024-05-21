@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState  } from 'react';
 import "./Country.css";
 import EditIcon from '../../../../../assets/icons/edit-icon.svg';
 import DeleteIcon from '../../../../../assets/icons/delete-icon.svg';
@@ -8,41 +8,101 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../../../../Common/Includes/Loading/Loading';
 import { BASE_API } from '../../../../../BaseApi/BaseApi';
+import ArrowRightPaginate from '../../../../../assets/icons/arrow-left-paginate.svg';
+import ArrowLeftPaginate from '../../../../../assets/icons/arrow-right-paginate.svg';
+import ArrowRightHidden from '../../../../../assets/icons/arrow-left-hide.svg';
+import ArrowLeftHidden from '../../../../../assets/icons/arrow-right-hide.svg';
+
 const CountryList = () => {
 
   const navigate =useNavigate();
   const [Countrylist, setCountry] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+ 
+
+  const defaultLeftArrow = ArrowLeftPaginate;
+  const conditionalLeftArrow = ArrowLeftHidden;
+  const defaultRightArrow = ArrowRightPaginate;
+  const conditionalRightArrow = ArrowRightHidden;
+
+
+  let RightArrowUrl = defaultRightArrow;
+  let LeftArrowUrl = defaultLeftArrow;
+  
+ 
+
 
   useEffect(() => {
 
-    fetch(`${BASE_API}/country`, {
+    fetch(`${BASE_API}/country?page=${currentPage}`, {
       // fetch('http://127.0.0.1:8000/api/country', {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
+      
     })
       .then((response) => {
+       
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
+
+
+
       .then((data) => {
+        // console.log(data.data.pagination.last_page);
+
         setCountry(data.data.data);
+        setTotalPages(data.data.pagination.last_page);
+        // setTotalPages()
       })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
   },
-    [Countrylist]);
+    [Countrylist , currentPage]);
+
+
+    if (currentPage === 1) {
+      RightArrowUrl = conditionalRightArrow;
+      
+    }
+
+    else
+    {
+      RightArrowUrl = defaultRightArrow;
+    }
+
+    if (currentPage === totalPages) {
+      LeftArrowUrl = conditionalLeftArrow;
+     
+    }
+
+    else{
+      LeftArrowUrl = defaultLeftArrow;
+    }
+
+ 
+
+    const handlePageChange = (pageNumber) => {
+     
+      if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+      }
+    };
+
+
+  
 
 
   const handleDelete = async (id) => {
-    console.log(id);
-
+   
     await axios.delete(`${BASE_API}/country/` + id,
-      // await axios.delete("http://127.0.0.1:8000/api/country/" + id,
+   
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -112,19 +172,34 @@ const CountryList = () => {
               </tr>
             ))}
 
-            {/* <tr>
-                             <td>India</td>
-                             <td>2</td>
-                             <td><a className='active-inactive-btn'>Active</a></td>
-                             <td className='country-action-div'>
-                                <a className='edit-btn'><img src={EditIcon}></img></a>
-                               
-                                <a className='delete-btn'><img src={DeleteIcon}></img></a>
-                             </td>
-                            </tr> */}
           </tbody>
 
+     
+
         </table>
+
+        <div className='pagination w-full'>
+        <img  src={RightArrowUrl} onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}></img>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+          <button key={pageNumber}  className={`${
+            currentPage === pageNumber 
+              ? "onclick-page-color"
+              : "onclickcancel-page-color"
+          } } `} onClick={() => {
+            handlePageChange(pageNumber);
+          
+          }}
+          
+            disabled={currentPage === pageNumber}>
+            {pageNumber}
+          </button>
+        ))}
+        <img src={LeftArrowUrl} onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}></img>
+      </div>
+
+    
       </div>
 
     </div>

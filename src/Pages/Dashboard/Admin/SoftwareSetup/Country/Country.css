@@ -118,6 +118,24 @@ input[type="radio"]:checked {
     color: red;
   }
 
+  .pagination
+  {
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+  }
+
+
+  .onclick-page-color
+  {
+    color: #159947;
+  }
+
+  .onclickcancel-page-color
+  {
+    color : #020F07;
+  }
+
 
 @media (max-width: 575.98px) 
 {
