@@ -4,6 +4,8 @@ import fbIcon from "../../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../../assets/icons/google-login.svg";
 import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 import countryIcon from "../../../../assets/bd.svg";
+import showPasswordIcon from "../../../../assets/icons/hide-password.svg";
+import hidePasswordIcon from "../../../../assets/icons/show-password.svg";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -35,7 +37,9 @@ const Register = () => {
   // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [loginMethod, setLoginMethod] = useState("phone");
-
+const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
     code: "+880",
@@ -58,6 +62,14 @@ const Register = () => {
     { code: "+960", name: "Argentina", image: countryIcon },
     // Add more countries as needed
   ];
+
+     const togglePasswordVisibility = () => {
+       setIsPasswordVisible(!isPasswordVisible);
+     };
+
+       const toggleConfirmPasswordVisibility = () => {
+         setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+       };
 
   const handleOptionSelect = (option) => {
     setSelectedCountry(option);
@@ -251,6 +263,7 @@ const Register = () => {
             />
           </div> */}
 
+        {/* Name */}
         <div className="mb-[14px]">
           <label className="input-title" htmlFor="name">
             Name
@@ -435,45 +448,42 @@ const Register = () => {
           </div>
         )}
 
-        <div className="mb-[14px]">
+        <div className="relative mb-[14px]">
           <label className="input-title" htmlFor="password">
             Password
           </label>
           <input
-            className="input-box"
+            className={`${
+              errors.password ? "input-box input-error" : "input-box"
+            }`}
             id="password"
             name="password"
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Enter a password"
             {...register("password", {
-              required: "Password is Required",
-              minLength: {
-                value: 8,
-                message: "Password must be 8 characters or longer",
+              required: {
+                value: true,
+                message: "Password is Required",
               },
-              maxLength: {
-                value: 30,
-                message: "Password must be 30 characters or shorter",
-              },
-              pattern: {
-                value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
-                message:
-                  "Password must contain at least one uppercase letter, one lowercase letter, and one special character (!@#$%^&*)",
-              },
+              // minLength: {
+              //   value: 8,
+              //   message: "Password must be 8 characters or longer",
+              // },
             })}
           />
-          <label className=" mb-0 pb-0">
-            {errors.password?.type === "required" && (
-              <span className="label-text-alt text-red-500">
-                {errors.password.message}
-              </span>
+          <span
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisible ? (
+              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+            ) : (
+              // Eye icon for showing password
+              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
             )}
-            {errors.password?.type === "minLength" && (
-              <span className="label-text-alt text-red-500">
-                {errors.password.message}
-              </span>
-            )}
-            {errors.password?.type === "pattern" && (
+          </span>
+          <label className="mb-0 pb-0">
+            {errors.password && (
               <span className="label-text-alt text-red-500">
                 {errors.password.message}
               </span>
@@ -481,7 +491,7 @@ const Register = () => {
           </label>
         </div>
 
-        <div className="mb-[14px]">
+        <div className="mb-[14px] relative">
           <label className="input-title" htmlFor="confirmPassword">
             Confirm Password
           </label>
@@ -489,7 +499,7 @@ const Register = () => {
             className="input-box"
             id="confirmPassword"
             name="confirmPassword"
-            type="password"
+            type={isConfirmPasswordVisible ? "text" : "password"}
             placeholder="Confirm password"
             {...register("confirmPassword", {
               required: {
@@ -498,6 +508,17 @@ const Register = () => {
               },
             })}
           />
+          <span
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+            onClick={toggleConfirmPasswordVisibility}
+          >
+            {isConfirmPasswordVisible ? (
+              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+            ) : (
+              // Eye icon for showing password
+              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+            )}
+          </span>
           <label className=" mb-0 pb-0">
             {errors.confirmPassword?.type === "required" && (
               <span className="label-text-alt text-red-500">

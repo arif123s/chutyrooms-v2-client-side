@@ -1,6 +1,8 @@
 // import selectBoxIcon from "../../../assets/icons/rectangle-select-box.svg";
 import fbIcon from "../../../assets/icons/facebook-login.svg";
 import googleIcon from "../../../assets/icons/google-login.svg";
+import showPasswordIcon from "../../../assets/icons/hide-password.svg";
+import hidePasswordIcon from "../../../assets/icons/show-password.svg";
 import "./login.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -38,6 +40,9 @@ const Login = () => {
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
   const token = localStorage.getItem("accessToken");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+ 
 
   useEffect(() => {
     if (token) {
@@ -56,6 +61,10 @@ const Login = () => {
       setRememberMe(true);
     }
   }, []);
+
+   const togglePasswordVisibility = () => {
+     setIsPasswordVisible(!isPasswordVisible);
+   };
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -182,6 +191,7 @@ const Login = () => {
       <h2 className="login-title font-['Gilroy-semibold']">Sign In</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Phone/Email */}
         <div className="mb-[14px]">
           <label className="input-title" htmlFor="username">
             Phone/Email
@@ -214,8 +224,8 @@ const Login = () => {
             )}
           </label>
         </div>
-
-        <div className="">
+        {/* Password */}
+        {/* <div className="">
           <label className="input-title" htmlFor="password">
             Password
           </label>
@@ -255,8 +265,49 @@ const Login = () => {
               </span>
             )}
           </label>
+        </div> */}
+        <div className="relative">
+          <label className="input-title" htmlFor="password">
+            Password
+          </label>
+          <input
+            className={`${
+              errors.password ? "input-box input-error" : "input-box"
+            }`}
+            id="password"
+            name="password"
+            type={isPasswordVisible ? "text" : "password"}
+            placeholder="Enter a password"
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Password is Required",
+              },
+              // minLength: {
+              //   value: 8,
+              //   message: "Password must be 8 characters or longer",
+              // },
+            })}
+          />
+          <span
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisible ? (
+              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+            ) : (
+              // Eye icon for showing password
+              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+            )}
+          </span>
+          <label className="mb-0 pb-0">
+            {errors.password && (
+              <span className="label-text-alt text-red-500">
+                {errors.password.message}
+              </span>
+            )}
+          </label>
         </div>
-
         <div className="flex justify-between mt-3 text-[12px] lg:text-[14px] mb-[12px]">
           <div className="flex items-center">
             {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
@@ -280,7 +331,6 @@ const Login = () => {
             Forgot Password?
           </a>
         </div>
-
         {errorMessage?.status && (
           <p className="label-text-alt text-red-500 text-center mb-[8px]">
             {errorMessage?.message}
@@ -299,7 +349,6 @@ const Login = () => {
               ))}
             </div>
           ))}
-
         <input
           type="submit"
           disabled={disableButton}

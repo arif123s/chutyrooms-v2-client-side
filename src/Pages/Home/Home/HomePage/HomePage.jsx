@@ -21,11 +21,6 @@ const HomePage = () => {
   const popularProperties = data?.data?.properties;
   const membershipCards  = data?.data?.memberships;
 
-  console.log("popularProperties", popularProperties);
-  console.log("membershipCards", membershipCards);
-
-
-
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;

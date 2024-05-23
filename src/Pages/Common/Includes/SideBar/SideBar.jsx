@@ -3,8 +3,6 @@ import { useState, useRef, useEffect } from "react";
 // import ChutyLogo from "../../../../assets/icons/Chuty-logo.svg"
 import ChutyLogo from "../../../../assets/icons/chuty-logo.png";
 import ChutySmallLogo from "../../../../assets/icons/Chuty-logo-small.svg";
-import Category from "../../../../assets/icons/category.svg";
-import CategoryGreen from "../../../../assets/icons/category-green.svg";
 // // import Key from "../../../../assets/icons/key.svg"
 import Key from "../../../../assets/icons/key.svg";
 import KeyGreen from "../../../../assets/icons/key-green.svg";
@@ -13,15 +11,12 @@ import ArrowGreen from "../../../../assets/icons/arrow-down-green.svg";
 import Rectangle from "../../../../assets/icons/Rectangle.svg";
 import RectangleGreen from "../../../../assets/icons/Rectangle-green.svg";
 import "../SideBar/SideBar.css";
-import Email from "../../../../assets/icons/Email.svg";
-import EmailGreen from "../../../../assets/icons/email-green.svg";
-// import { key } from "localforage";
-import CusNavLink from "./Includes/CusNavLink";
 import { Link, useNavigate } from "react-router-dom";
 
 const menuClicked = "";
 
-const SideBar = ({ open, setOpen }) => {
+// eslint-disable-next-line react/prop-types
+const SideBar = ({ open }) => {
   const [active, setActive] = useState(false);
 
   const [handleclick, sethandleclick] = useState(menuClicked);
@@ -30,7 +25,7 @@ const SideBar = ({ open, setOpen }) => {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   console.log(userInfo?.role);
-  const userRole = userInfo?.role.name;
+   const userRole = userInfo?.role?.role_code;
 
   useEffect(() => {
     prevMenuClicked.current = handleclick;
@@ -122,8 +117,8 @@ const SideBar = ({ open, setOpen }) => {
   // Define menu items based on user role
 
   const getMenuItems = () => {
-     switch (userRole) {
-      case "Admin":
+    switch (userRole) {
+      case 123:
         return [
           {
             name: "Dashboard",
@@ -164,7 +159,10 @@ const SideBar = ({ open, setOpen }) => {
               { name: "District", path: "/dashboard/district" },
               { name: "Area", path: "/dashboard/area" },
               { name: "Payment Method", path: "/dashboard/PaymentSystems" },
-              { name: "Property Types", path: "/dashboard/properties/propertyTypes" },
+              {
+                name: "Property Types",
+                path: "/dashboard/properties/propertyTypes",
+              },
               { name: "Room Types", path: "/dashboard/rooms/roomTypes" },
               { name: "Membership Card", path: "/dashboard/Membership" },
               {
@@ -175,7 +173,7 @@ const SideBar = ({ open, setOpen }) => {
             ],
           },
         ];
-      case "owner":
+      case 234:
         return [
           {
             name: "Property Management",
@@ -199,14 +197,14 @@ const SideBar = ({ open, setOpen }) => {
           //   ],
           // },
         ];
-      case "user":
+      case 345:
         return [
           {
             name: "Profile",
             path: "/dashboard/profile",
             icon: Key,
             clickedicon: KeyGreen,
-            submenu: [], 
+            submenu: [],
           },
         ];
       default:

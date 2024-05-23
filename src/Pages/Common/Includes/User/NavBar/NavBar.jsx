@@ -23,7 +23,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userRole = userInfo?.role.name;
+  const userRole = userInfo?.role?.role_code;
   const countryList = [
     { id: 1, name: "BD", flag: globalLogo },
     // { id: 2, name: "USA", flag: globalLogo },
@@ -75,11 +75,11 @@ const NavBar = () => {
     e.preventDefault();
     // Determine the default page based on user role
     switch (userRole) {
-      case "Admin":
+      case 123:
         return navigate(`/dashboard`);
-      case "owner":
-        return navigate(`/dashboard/property-add`);
-      case "user":
+      case 234:
+        return navigate(`/dashboard/property-list`);
+      case 345:
         return navigate(`/dashboard/profile`);
       default:
         return null; // Render nothing if the role is not recognized

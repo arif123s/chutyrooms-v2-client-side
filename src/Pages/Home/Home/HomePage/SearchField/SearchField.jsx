@@ -5,11 +5,13 @@ import RoomGuest from "./RoomGuest";
 import "react-datepicker/dist/react-datepicker.css";
 import "./SearchField.css";
 import Gps from "./../../../../../assets/icons/gps.svg";
-import { Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+
 const { RangePicker } = DatePicker;
+
 const SearchField = () => {
+
   const [open, seDatePickerOpen] = useState(false);
   const today = new Date();
 
@@ -28,6 +30,53 @@ const SearchField = () => {
   const [startDate, endDate] = dateRange;
   const [calendarVisible, setCalendarVisible] = useState(true);
   const divToBeClickedRef = useRef(null);
+  const [rooms, setRooms] = useState([
+    {
+      adults: 1,
+      children: 1,
+      child_age: {
+        0: 1,
+      },
+    },
+    // {
+    //   adults: 2,
+    //   children: 2,
+    //   child_age: {
+    //     0: 2,
+    //     1: 1,
+    //   },
+    // },
+    // {
+    //   adults: 2,
+    //   children: 2,
+    //   child_age: {
+    //     0: 3,
+    //     1: 6,
+    //   },
+    // },
+  ]);
+
+  const [searchInputData, setSearchInputData] = useState({
+    location: "",
+    search_type: "district",
+    location_id: 1,
+    rooms: 2,
+    adult_guest: 2,
+    child_guest: 1,
+    child_age: 8,
+  });
+
+  console.log(rooms);
+  console.log(searchInputData);
+
+  // Function to convert date format
+  const convertDateFormat = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${year}/${month}/${day}`;
+  };
 
   const handleDivClick = () => {
     // setCalendarVisible(true);
@@ -59,21 +108,8 @@ const SearchField = () => {
       seDatePickerOpen(false);
     }
   };
-
- 
-
   const [isDivClicked, setDivClicked] = useState(false);
-
-
   const navigate = useNavigate();
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    navigate("/search-result-hotel");
-  }
-
-
-
 
   const [scrollY, setScrollY] = useState(0);
 
@@ -83,44 +119,70 @@ const SearchField = () => {
     };
 
     // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-    return (
+  const handleSearch = (e) => {
 
+    e.preventDefault();
+    const searchInfo = {
+      location: searchInputData.location,
+      search_type: searchInputData.search_type,
+      location_id: searchInputData.location_id,
+      check_in: convertDateFormat(new Date(startDate)),
+      check_out: convertDateFormat(new Date(endDate)),
+      rooms: searchInputData.rooms,
+      adult_guest: searchInputData.adult_guest,
+      child_guest: searchInputData.child_guest,
+      child_age: searchInputData.child_age,
+    };
+    console.log(searchInfo);
 
-    
-    <div className=" ">
-    {/* <div className="custom-container "> */}
+    const queryString = new URLSearchParams(searchInfo).toString();
+    navigate(`/search-result-hotel?${queryString}`);
+  };
+
+  return (
+    <div className="mt-[12px] md:mt-[24px] lg:mt-[36px]">
+      {/* <div className="custom-container "> */}
       <div className="main-container">
-       <div  className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>
-          <div className='search-input-container'>
-                  <input type='text' className='search-input' placeholder='Search by city,hotel,resort,area'></input>
-                  <div className='nearme'>
-                      <img className='gps-image' src={Gps} alt="Near-me"></img>
-                      Near Me
-                  </div>
+        <div className={`searchBox ${scrollY > 0 ? "remove-border" : ""}`}>
+          <div className="search-input-container">
+            <input
+              name="location"
+              onChange={(e) =>
+                setSearchInputData({
+                  ...searchInputData,
+                  location: e.target.value,
+                })
+              }
+              type="text"
+              className="search-input"
+              placeholder="Search by city,hotel,resort,area"
+            ></input>
+            <div className="nearme">
+              <img className="gps-image" src={Gps} alt="Near-me"></img>
+              Near Me
+            </div>
           </div>
-        
-        <div className="checkin-box" onClick={handleDivClick}>
+
+          <div className="checkin-box" onClick={handleDivClick}>
             <div className="datePickerSection">
               <DatePicker
                 selectsRange={true}
                 startDate={startDate}
                 endDate={endDate}
                 minDate={new Date()}
-               
                 ref={divToBeClickedRef}
                 onChange={(update) => {
                   setDateRange(update);
                   datePickerHandle(update);
                 }}
-             
                 isClearable
                 monthsShown={2}
               />
@@ -129,7 +191,7 @@ const SearchField = () => {
             <div>
               <div className="checkin-checkout-date"> {startDateformatted}</div>
             </div>
-        </div>
+          </div>
 
           <div className="checkout-box" onClick={handleDivClick}>
             <div className="checkin-checkout-type">CHECK OUT</div>
@@ -144,21 +206,26 @@ const SearchField = () => {
 
             {isDivClicked && (
               <RoomGuest
+                rooms={rooms}
+                setRooms={setRooms}
                 isDivClicked={isDivClicked}
                 setDivClicked={setDivClicked}
               ></RoomGuest>
             )}
           </div>
 
-            <div className='search-button-division'>
-                <button onClick={(e)=>handleSearch(e)} type='button' className='Search-button'>Search</button>
-            </div>
+          <div className="search-button-division">
+            <button
+              onClick={(e) => handleSearch(e)}
+              type="button"
+              className="Search-button"
+            >
+              Search
+            </button>
           </div>
+        </div>
       </div>
-
-      </div>
-    
-  
+    </div>
   );
 };
 

@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 
 const RoomEdit = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { roomId } = useParams();
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ const RoomEdit = () => {
     formState: { errors },
   } = useForm();
 
-  const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(id);
+  const { data, isLoading, refetch } = useGetSingleRoomInfoQuery(roomId);
   const [updateRoom, { isLoading: updateRoomLoading }] =
     useUpdateRoomMutation();
   const roomTypes = data?.data?.room_types;
@@ -111,6 +111,7 @@ const RoomEdit = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
+
 
   const handleDisplayImageSelect = (index, event, id) => {
     console.log("index", index);
@@ -282,7 +283,7 @@ const RoomEdit = () => {
       if (result?.data?.status) {
         console.log("updateRoomInfo", result);
         toast.success("Room updated successfully");
-        // navigate(`/dashboard/property-list`);
+        navigate(`/dashboard/rooms/${data?.data?.room?.property_id}`);
       } else {
         // console.log("Failed", result?.error?.data?.errors);
         // setValidationErrors(result?.error?.data?.errors);

@@ -277,7 +277,7 @@ export const router = createBrowserRouter([
           // },
 
           {
-            path: "/dashboard/room-edit/:id",
+            path: "/dashboard/room-edit/:roomId",
             element: <RoomEdit></RoomEdit>,
           },
 

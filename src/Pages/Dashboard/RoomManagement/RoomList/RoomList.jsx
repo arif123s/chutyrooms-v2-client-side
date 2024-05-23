@@ -42,18 +42,18 @@ const RoomList = () => {
             {RoomLists?.slice()
               .sort((a, b) => a.view_order - b.view_order)
               .map((RoomList) => (
-                <tr key={RoomList.id}>
+                <tr key={RoomList?.id}>
                   <td>
                     <img className="w-[60px]" src={RoomList?.image} alt="" />
                   </td>
-                  <td>{RoomList.name}</td>
-                  <td>{RoomList.room_quantity}</td>
-                  <td>{RoomList.user_price}</td>
+                  <td>{RoomList?.name}</td>
+                  <td>{RoomList?.room_quantity}</td>
+                  <td>{RoomList?.user_price}</td>
 
-                  <td>{RoomList.view_order}</td>
+                  <td>{RoomList?.view_order}</td>
                   <td>
                     <a className="active-inactive-btn">
-                      {RoomList.is_active == true ? "Active" : "Inactive"}
+                      {RoomList?.is_active == true ? "Active" : "Inactive"}
                     </a>
                   </td>
                   <td className="country-action-div mt-[16px]">
@@ -71,7 +71,7 @@ const RoomList = () => {
                     {RoomList.deleted_at == null ? (
                       <a
                         className="delete-btn"
-                        onClick={() => handleDelete(RoomList.id)}
+                        // onClick={() => handleDelete(RoomList.id)}
                       >
                         <img
                           className="edit-delete-icon"
@@ -82,7 +82,7 @@ const RoomList = () => {
                     ) : (
                       <a
                         className="restore-btn"
-                        onClick={() => handleRestore(RoomList.id)}
+                        // onClick={() => handleRestore(RoomList.id)}
                       >
                         <img
                           className="edit-delete-icon"

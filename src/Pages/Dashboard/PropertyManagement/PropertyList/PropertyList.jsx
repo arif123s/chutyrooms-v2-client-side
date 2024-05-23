@@ -86,7 +86,7 @@ const PropertyList = () => {
                   </td>
                   <td className="country-action-div">
                     <Link
-                      to={`/dashboard/property/${property.id}/edit`}
+                      to={`/dashboard/property/${property?.id}/edit`}
                       className="edit-btn mt-[2px]"
                     >
                       <img
@@ -96,7 +96,7 @@ const PropertyList = () => {
                       ></img>
                     </Link>
 
-                    {property.deleted_at == null ? (
+                    {property?.deleted_at == null ? (
                       <a
                         className="delete-btn mt-[2px]"
                         onClick={() => handleDelete(property.id)}
@@ -110,7 +110,7 @@ const PropertyList = () => {
                     ) : (
                       <a
                         className="restore-btn"
-                        onClick={() => handleRestore(property.id)}
+                        onClick={() => handleRestore(property?.id)}
                       >
                         <img
                           className="edit-delete-icon"

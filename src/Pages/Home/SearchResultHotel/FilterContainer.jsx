@@ -18,13 +18,13 @@ const FilterContainer = () => {
     initialState.map((label) => ({ label, isChecked: false }))
   );
 
-  console.log(rating);
+  // console.log(rating);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  console.log("value", priceRange);
+  // console.log("value", priceRange);
 
   const toggleCheckbox = (index) => {
     setCheckboxes((prevCheckboxes) => {

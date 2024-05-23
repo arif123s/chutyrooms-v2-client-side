@@ -22,7 +22,7 @@ const navigate  = useNavigate();
             <div>
               <h2 className="text-[16px] md:text-[16px] lg:text-[20px] font-[Gilroy-semibold]">
                 Anisur Rahman
-                <span className="font-[Gilroy-bold] text-primary">
+                <span className="font-[Gilroy-bold] text-red-500">
                   {" "}
                   (Nasir bhai)
                 </span>

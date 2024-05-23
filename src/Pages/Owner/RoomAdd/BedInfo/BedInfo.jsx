@@ -31,7 +31,7 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
         <h2 className="text-[16px] font-['Gilroy-SemiBold']">Bed Info</h2>
         <img src={tickSquareIcon} alt="" />
       </div>
-      
+
       {bedInfos.map((bed, index) => (
         <div
           key={index}
@@ -51,12 +51,12 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
               onChange={(e) =>
                 handleValueChange(index, "bed_name", e.target.value)
               }
-            //   {...register("bed_name", {
-            //     required: {
-            //       value: true,
-            //       message: "Bed Name is required",
-            //     },
-            //   })}
+              //   {...register("bed_name", {
+              //     required: {
+              //       value: true,
+              //       message: "Bed Name is required",
+              //     },
+              //   })}
             />
             <label className="">
               {errors.bed_name?.type === "required" && (
@@ -69,7 +69,10 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
 
           {/* Qty */}
           <div className="">
-            <label className="property-input-title" htmlFor="bed_quantity">
+            <label
+              className="property-input-title block"
+              htmlFor="bed_quantity"
+            >
               Qty
             </label>
             <input
@@ -79,12 +82,12 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
               type="number"
               value={bed?.qty || ""}
               onChange={(e) => handleValueChange(index, "qty", e.target.value)}
-            //   {...register("bed_quantity", {
-            //     required: {
-            //       value: true,
-            //       message: "Bed quantity is required",
-            //     },
-            //   })}
+              //   {...register("bed_quantity", {
+              //     required: {
+              //       value: true,
+              //       message: "Bed quantity is required",
+              //     },
+              //   })}
             />
             <label className="">
               {errors.bed_quantity?.type === "required" && (
@@ -111,7 +114,6 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
           <img src={minusIcon} alt="" /> <span>Remove</span>
         </button>
       </div>
-
     </div>
   );
 };

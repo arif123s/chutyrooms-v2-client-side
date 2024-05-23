@@ -7,6 +7,8 @@ import FilterContainer from "./FilterContainer";
 import SingleHotel from "./SingleHotel";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import Loading from "../../Common/Includes/Loading/Loading";
+import { useLocation } from "react-router-dom";
+import { useGetAllSearchResultHotelsQuery } from "../../../redux/features/searchProperty/searchResultHotel.api";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -14,8 +16,9 @@ const mapContainerStyle = {
   height: "630px",
   borderRadius: "8px",
 };
-
+ 
 const SearchResultHotel = () => {
+
   const [mapView, setMapView] = useState(false);
   const [center, setCenter] = useState({
     lat: 23.862725477930507,
@@ -25,6 +28,24 @@ const SearchResultHotel = () => {
     googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
     libraries,
   });
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const searchInfo = {
+    location: searchParams.get("location"),
+    search_type: searchParams.get("search_type"),
+    location_id: searchParams.get("location_id"),
+    check_in: searchParams.get("check_in"),
+    check_out: searchParams.get("check_out"),
+    rooms: searchParams.get("rooms"),
+    adult_guest: searchParams.get("adult_guest"),
+    child_guest: searchParams.get("child_guest"),
+    child_age: searchParams.get("child_age"),
+  };
+
+    const { data, error, isLoading } =
+      useGetAllSearchResultHotelsQuery(searchInfo);
+      console.log(data)
 
   if (loadError) {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
@@ -33,6 +54,9 @@ const SearchResultHotel = () => {
   if (!isLoaded) {
     return <Loading></Loading>;
   }
+
+   if (isLoading) return <div>Loading...</div>;
+   if (!data.status) return <div className="text-center mt-[28px]">Error!!</div>;
 
   return (
     <div className="hotel-search-result-container">

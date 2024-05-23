@@ -7,17 +7,21 @@ import tickSquareIcon from "../../../assets/icons/tick-square-black.svg";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
 import BedInfo from "./BedInfo/BedInfo";
-import { useGetAllRoomCategoriesQuery, useRoomAddMutation } from "../../../redux/features/owner/RoomAdd/roomAdd.api";
+import {
+  useGetAllRoomCategoriesQuery,
+  useRoomAddMutation,
+} from "../../../redux/features/owner/RoomAdd/roomAdd.api";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
 
 const RoomAdd = () => {
   const { propertyId } = useParams();
   const navigate = useNavigate();
-  const [dashboard, setDashboard] = useState(false);
+  // const [dashboard, setDashboard] = useState(false);
   const { data: roomCategories, isLoading } =
     useGetAllRoomCategoriesQuery(propertyId);
-const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
+  console.log(roomCategories);
+  const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   const {
     register,
     handleSubmit,
@@ -29,7 +33,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
 
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [childAgeVariation, setChildAgeVariation] = useState([
-    { start_age: null, end_age: null, free_qty:null, price: null },
+    { start_age: null, end_age: null, free_qty: null, price: null },
   ]);
 
   const [bedInfos, setBedInfos] = useState([{ bed_name: "", qty: null }]);
@@ -43,8 +47,11 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
     return <Loading></Loading>;
   }
 
-  const handleDisplayImageSelect = (index, event) => {
+  if (!roomCategories?.status) {
+    return <div className="ml-[18px] mt-[28px]">{roomCategories?.message}!</div>;
+  }
 
+  const handleDisplayImageSelect = (index, event) => {
     const fileInput = event.target;
     if (fileInput.files.length > 0) {
       const newImages = [...displayImages];
@@ -59,7 +66,6 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       newImages[index] = null;
       setDisplayImages(newImages);
     }
-
   };
 
   const handleDeleteImage = (index) => {
@@ -72,7 +78,9 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   //   setDashboard(!dashboard)
   // };
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
+    const toastId = toast.loading("Loading...");
+
     const displayImageFiles = displayImages.map(
       (image) => image.displayImageFile
     );
@@ -81,8 +89,14 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
     const updatedChildAgeVariation = childAgeVariation.map((childAge) => {
       // If free_qty is null, set it to 0
       if (childAge.free_qty == null) {
-        if(childAge.start_age==null || childAge.end_age==null){
-          return { ...childAge,start_age:0,end_age:0, free_qty: 0, price:0 };
+        if (childAge.start_age == null || childAge.end_age == null) {
+          return {
+            ...childAge,
+            start_age: 0,
+            end_age: 0,
+            free_qty: 0,
+            price: 0,
+          };
         }
 
         return { ...childAge, free_qty: 0 };
@@ -167,9 +181,11 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Room", result);
+        toast.dismiss(toastId);
         toast.success("Room added successfully");
         navigate(`/dashboard/rooms/${propertyId}`);
       } else {
+        toast.dismiss(toastId);
         console.log("Failed", result);
         // setValidationErrors(result?.error?.data?.errors);
         // console.log("Failed", result);
@@ -180,7 +196,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       // setValidationErrors(err.response.data.errors);
     }
 
-    setDashboard(true);
+    // setDashboard(true);
   };
 
   const navigateDashboard = (e) => {
@@ -189,7 +205,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   };
 
   return (
-    <div className="mt-[12px] md:mt-[18px] lg:mt-[18px]">
+    <div className="mt-[12px] md:mt-[18px] lg:mt-[18px] ">
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}
@@ -271,7 +287,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Number of room */}
           <div className="">
-            <label className="property-input-title" htmlFor="number_of_rooms">
+            <label
+              className="property-input-title block"
+              htmlFor="number_of_rooms"
+            >
               Number of Rooms
             </label>
             <input
@@ -448,7 +467,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Regular Price */}
           <div className="">
-            <label className="property-input-title" htmlFor="regular_price">
+            <label
+              className="property-input-title block"
+              htmlFor="regular_price"
+            >
               Regular Price
             </label>
             <input
@@ -474,7 +496,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           {/* Chuty Purchase Price */}
           <div className="">
             <label
-              className="property-input-title"
+              className="property-input-title block"
               htmlFor="chuty_purchase_price"
             >
               Chuty Purchase Price
@@ -501,7 +523,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           </div>
           {/* Adult (qty) */}
           <div className="">
-            <label className="property-input-title" htmlFor="adult_quantity">
+            <label
+              className="property-input-title block"
+              htmlFor="adult_quantity"
+            >
               Adult (qty)
             </label>
             <input
@@ -526,7 +551,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           </div>
           {/* Child (qty) */}
           <div className="">
-            <label className="property-input-title" htmlFor="child_quantity">
+            <label
+              className="property-input-title block"
+              htmlFor="child_quantity"
+            >
               Child (qty)
             </label>
             <input
@@ -562,7 +590,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
             {/* Extra Adult */}
             <div className="">
               <label
-                className="property-input-title"
+                className="property-input-title block"
                 htmlFor="extra_adult_quantity"
               >
                 Extra Adult
@@ -578,7 +606,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
             {/* Price per person */}
             <div className="">
               <label
-                className="property-input-title"
+                className="property-input-title block"
                 htmlFor="extra_adult_price"
               >
                 Price {"("}per person{")"}
@@ -595,7 +623,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           {/* Extra Child */}
           <div className="">
             <label
-              className="property-input-title"
+              className="property-input-title block"
               htmlFor="extra_child_quantity"
             >
               Extra Child
@@ -651,14 +679,14 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           </button>
         </div>
         {/* {dashboard && ( */}
-          <div className="mt-[18px] text-center">
-            <a
-              onClick={navigateDashboard}
-              className="text-[14px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
-            >
-              Go to dashboard
-            </a>
-          </div>
+        <div className="mt-[18px] text-center">
+          <a
+            onClick={navigateDashboard}
+            className="text-[14px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+          >
+            Go to dashboard
+          </a>
+        </div>
         {/* )} */}
       </form>
     </div>
