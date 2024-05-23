@@ -30,7 +30,6 @@ const RoomEdit = () => {
   const [updateRoom, { isLoading: updateRoomLoading }] =
     useUpdateRoomMutation();
   const roomTypes = data?.data?.room_types;
-  console.log(data?.data?.room);
 
   const [roomData, setRoomData] = useState({
     name: "",

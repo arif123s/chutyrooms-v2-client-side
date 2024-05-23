@@ -3,8 +3,8 @@ import { baseApi } from "../../../api/baseApi";
 const roomTypesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
       getAllRoomTypes: builder.query({
-        query: () => ({
-          url: "/room/room_type",
+        query: (currentPage) => ({
+          url: `/room/room_type?page=${currentPage}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

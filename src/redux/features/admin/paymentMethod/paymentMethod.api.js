@@ -3,8 +3,8 @@ import { baseApi } from "../../../api/baseApi";
 const paymentMethodApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllPaymentMethods: builder.query({
-      query: () => ({
-        url: "/payment_methods",
+      query: (currentPage) => ({
+        url: `/payment_methods?page=${currentPage}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

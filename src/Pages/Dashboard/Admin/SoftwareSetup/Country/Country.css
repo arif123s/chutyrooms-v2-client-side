@@ -63,6 +63,12 @@
     width: 50%;
 }
 
+.country-add-division
+{
+    background-color: #ffff;
+    padding: 20px;
+}
+
 .country-save-btn
 {
     padding: 10px 15px;
@@ -110,6 +116,24 @@ input[type="radio"]:checked {
   .validation-message
   {
     color: red;
+  }
+
+  .pagination
+  {
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+  }
+
+
+  .onclick-page-color
+  {
+    color: #159947;
+  }
+
+  .onclickcancel-page-color
+  {
+    color : #020F07;
   }
 
 

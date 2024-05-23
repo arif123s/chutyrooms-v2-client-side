@@ -3,8 +3,8 @@ import { baseApi } from "../../../api/baseApi";
 const propertyAddApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProperty: builder.query({
-      query: () => ({
-        url: "/property",
+      query: (currentPage) => ({
+        url: `/property?page=${currentPage}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
