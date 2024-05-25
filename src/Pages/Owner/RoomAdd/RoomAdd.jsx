@@ -81,7 +81,7 @@ const RoomAdd = () => {
   const onSubmit = async (data) => {
     const toastId = toast.loading("Loading...");
 
-    const displayImageFiles = displayImages.map(
+    const displayImageFiles = displayImages?.map(
       (image) => image.displayImageFile
     );
 
@@ -220,7 +220,7 @@ const RoomAdd = () => {
               name="roomTypes"
               control={control}
               defaultValue={[]}
-              rules={{ required: "Please select at least one checkbox." }}
+              // rules={{ required: "Please select at least one checkbox." }}
               render={({ field }) => (
                 <>
                   {roomCategories?.data?.room_types?.map((roomType) => (
@@ -250,11 +250,11 @@ const RoomAdd = () => {
               )}
             />
           </div>
-          {errors.propertyTypes && !selectedRoomTypes?.length && (
+          {/* {errors.propertyTypes && !selectedRoomTypes?.length && (
             <span className="label-text-alt text-red-500">
               Please select at least one type
             </span>
-          )}
+          )} */}
         </div>
 
         {/* Room Name */}

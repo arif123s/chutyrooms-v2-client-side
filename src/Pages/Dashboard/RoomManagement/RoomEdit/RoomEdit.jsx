@@ -60,6 +60,7 @@ const RoomEdit = () => {
 
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
+   const [validationErrors, setValidationErrors] = useState({});
 
   console.log("roomData", roomData);
 
@@ -110,7 +111,6 @@ const RoomEdit = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
-
 
   const handleDisplayImageSelect = (index, event, id) => {
     console.log("index", index);
@@ -285,7 +285,7 @@ const RoomEdit = () => {
         navigate(`/dashboard/rooms/${data?.data?.room?.property_id}`);
       } else {
         // console.log("Failed", result?.error?.data?.errors);
-        // setValidationErrors(result?.error?.data?.errors);
+        setValidationErrors(result?.error?.data?.errors);
         console.log("Failed", result);
       }
     } catch (error) {
@@ -308,7 +308,8 @@ const RoomEdit = () => {
 
           <div className="flex gap-x-[12px] gap-y-[15px] lg:gap-x-[18px] text-[16px] flex-wrap">
             <Controller
-              name="roomTypes"
+              name="room_categories
+"
               control={control}
               defaultValue={[]}
               // rules={{ required: "Please select at least one checkbox." }}
@@ -348,9 +349,9 @@ const RoomEdit = () => {
               )}
             />
           </div>
-          {errors.propertyTypes && !selectedRoomTypes?.length && (
+          {validationErrors?.room_categories && (
             <span className="label-text-alt text-red-500">
-              Please select at least one type
+              {validationErrors.room_categories}
             </span>
           )}
         </div>
@@ -363,7 +364,7 @@ const RoomEdit = () => {
           <input
             className="input-box"
             id="room_name"
-            name="room_name"
+            name="name"
             type="text"
             value={roomData?.name}
             onChange={(e) =>
@@ -374,13 +375,11 @@ const RoomEdit = () => {
             }
             placeholder="Single Room"
           />
-          <label className="">
-            {errors.room_name?.type === "required" && (
-              <span className="label-text-alt text-red-500">
-                {errors.room_name?.message}
-              </span>
-            )}
-          </label>
+          {validationErrors?.name && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.name}
+            </span>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
@@ -405,13 +404,11 @@ const RoomEdit = () => {
                 })
               }
             />
-            <label className="">
-              {errors.number_of_rooms?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.number_of_rooms?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.number_of_rooms && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.number_of_rooms}
+              </span>
+            )}
           </div>
 
           {/* Room Size */}
@@ -433,13 +430,11 @@ const RoomEdit = () => {
                 })
               }
             />
-            <label className="">
-              {errors.room_size?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.room_size?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.room_size && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.room_size}
+              </span>
+            )}
           </div>
         </div>
 
@@ -575,13 +570,11 @@ const RoomEdit = () => {
               })
             }
           ></textarea>
-          <label className="">
-            {errors.description && (
-              <span className="label-text-alt text-red-500">
-                {errors.description.message}
-              </span>
-            )}
-          </label>
+          {validationErrors?.description && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.description}
+            </span>
+          )}
         </div>
         {/* Short Description */}
         <div className="mt-[18px]">
@@ -601,13 +594,11 @@ const RoomEdit = () => {
               })
             }
           ></textarea>
-          <label className="">
-            {errors.short_description && (
-              <span className="label-text-alt text-red-500">
-                {errors.short_description.message}
-              </span>
-            )}
-          </label>
+          {validationErrors?.short_description && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.short_description}
+            </span>
+          )}
         </div>
         {/* Room price , bed, guest */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
@@ -632,13 +623,11 @@ const RoomEdit = () => {
                 }))
               }
             />
-            <label className="">
-              {errors.regular_price?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.regular_price?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.regular_price && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.regular_price}
+              </span>
+            )}
           </div>
           {/* Chuty Purchase Price */}
           <div className="">
@@ -664,13 +653,11 @@ const RoomEdit = () => {
                 }))
               }
             />
-            <label className="">
-              {errors.chuty_purchase_price?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.chuty_purchase_price?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.company_purchase_price && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.company_purchase_price}
+              </span>
+            )}
           </div>
           {/* Adult (qty) */}
           <div className="">
@@ -693,13 +680,11 @@ const RoomEdit = () => {
                 }))
               }
             />
-            <label className="">
-              {errors.adult_quantity?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.adult_quantity?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.adult_guest_qty && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.adult_guest_qty}
+              </span>
+            )}
           </div>
           {/* Child (qty) */}
           <div className="">
@@ -722,13 +707,11 @@ const RoomEdit = () => {
                 }))
               }
             />
-            <label className="">
-              {errors.child_quantity?.type === "required" && (
-                <span className="label-text-alt text-red-500">
-                  {errors.child_quantity?.message}
-                </span>
-              )}
-            </label>
+            {validationErrors?.child_guest_qty && (
+              <span className="label-text-alt text-red-500">
+                {validationErrors.child_guest_qty}
+              </span>
+            )}
           </div>
         </div>
         {/* Extra guest info */}
@@ -832,6 +815,7 @@ const RoomEdit = () => {
           bedInfos={bedInfos}
           setBedInfos={setBedInfos}
           setValue={setValue}
+          validationErrors={validationErrors}
         ></BedInfo>
 
         {/*  Is Active */}

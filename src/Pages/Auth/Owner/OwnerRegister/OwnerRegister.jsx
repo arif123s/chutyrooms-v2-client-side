@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../../../redux/features/user/userSlice";
 import { BASE_API } from "../../../../BaseApi/BaseApi";
 import { toast } from "react-toastify";
+import showPasswordIcon from "../../../../assets/icons/hide-password.svg";
+import hidePasswordIcon from "../../../../assets/icons/show-password.svg";
 
 
 const OwnerRegister = () => {
@@ -32,6 +34,9 @@ const OwnerRegister = () => {
   const dispatch = useDispatch();
   const [loginMethod, setLoginMethod] = useState("phone");
   const [showOptions, setShowOptions] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
     code: "+880",
     name: "Bangladesh",
@@ -53,6 +58,14 @@ const OwnerRegister = () => {
     { code: "+960", name: "Argentina", image: countryIcon },
     // Add more countries as needed
   ];
+
+      const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+      };
+
+      const toggleConfirmPasswordVisibility = () => {
+        setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+      };
 
   const handleOptionSelect = (option) => {
     setSelectedCountry(option);
@@ -124,7 +137,8 @@ const OwnerRegister = () => {
             dispatch(registerUser(data));
             // dispatch(otpInfo(data));
             navigate(`/otp-phone`);
-          } else if (data.status === 101) {
+          } 
+          else if (data.status === 101) {
             console.log("Successfully registered!", data);
             sessionStorage.setItem(
               "user",
@@ -137,7 +151,8 @@ const OwnerRegister = () => {
             dispatch(registerUser(data));
             // dispatch(otpInfo(data));
             navigate(`/otp-email`);
-          } else {
+          }
+          else {
             console.log("Registration failed!", data);
             setErrorMessage({
               status: true,
@@ -414,7 +429,7 @@ const OwnerRegister = () => {
             )}
           </label>
         </div> */}
-        <div className="mb-[14px]">
+        <div className="relative mb-[14px]">
           <label className="input-title" htmlFor="password">
             Password
           </label>
@@ -422,25 +437,36 @@ const OwnerRegister = () => {
             className="input-box"
             id="password"
             name="password"
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Enter a password"
             {...register("password", {
               required: "Password is Required",
-              minLength: {
-                value: 8,
-                message: "Password must be 8 characters or longer",
-              },
+              // minLength: {
+              //   value: 8,
+              //   message: "Password must be 8 characters or longer",
+              // },
               maxLength: {
                 value: 30,
                 message: "Password must be 30 characters or shorter",
               },
-              pattern: {
-                value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
-                message:
-                  "Password must contain at least one uppercase letter, one lowercase letter, and one special character (!@#$%^&*)",
-              },
+              // pattern: {
+              //   value: /^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/,
+              //   message:
+              //     "Password must contain at least one uppercase letter, one lowercase letter, and one special character (!@#$%^&*)",
+              // },
             })}
           />
+          <span
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            {isPasswordVisible ? (
+              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+            ) : (
+              // Eye icon for showing password
+              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+            )}
+          </span>
           {errors.password && (
             <span className="label-text-alt text-red-500">
               {errors.password.message}
@@ -449,7 +475,7 @@ const OwnerRegister = () => {
         </div>
 
         {/* confirm password */}
-        <div className="mb-[14px]">
+        <div className="relative mb-[14px]">
           <label className="input-title" htmlFor="confirmPassword">
             Confirm Password
           </label>
@@ -457,7 +483,7 @@ const OwnerRegister = () => {
             className="input-box"
             id="confirmPassword"
             name="confirmPassword"
-            type="password"
+            type={isConfirmPasswordVisible ? "text" : "password"}
             placeholder="Confirm password"
             {...register("confirmPassword", {
               required: {
@@ -466,6 +492,18 @@ const OwnerRegister = () => {
               },
             })}
           />
+          <span
+            className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+            onClick={toggleConfirmPasswordVisibility}
+          >
+            {isConfirmPasswordVisible ? (
+              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+            ) : (
+              // Eye icon for showing password
+              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+            )}
+          </span>
+         
           <label className="">
             {errors.confirmPassword?.type === "required" && (
               <span className="label-text-alt text-red-500">

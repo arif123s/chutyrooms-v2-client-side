@@ -200,10 +200,10 @@ const [isPasswordVisible, setIsPasswordVisible] = useState(false);
               // console.log("Registration failed!", data?.errors?.username[0]);
               setErrorMessage({
                 status: true,
-                message: data.message,
-                errors: [data.errors],
+                message: data?.message,
+                errors: [data?.errors],
               });
-              console.log("errormessage", errorMessage.errors.length);
+             
             }
           });
       } catch (err) {

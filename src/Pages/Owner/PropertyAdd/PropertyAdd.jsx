@@ -534,7 +534,7 @@ const PropertyAdd = () => {
       }
     } catch (error) {
       // Handle error
-      // console.error("Error adding payment method:", error);
+      // console.error("Error :", error);
     }
   };
 
