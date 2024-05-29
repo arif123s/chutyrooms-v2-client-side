@@ -176,6 +176,11 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
     );
   };
 
+
+
+
+  
+
   return (
     <div className="room-guest-content">
       {rooms.map((room, index) => (
@@ -310,6 +315,8 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
         <a href="#" onClick={(e) => setDivClickedCus(e)} className="done-btn">
           Done
         </a>
+
+       
       </div>
     </div>
   );

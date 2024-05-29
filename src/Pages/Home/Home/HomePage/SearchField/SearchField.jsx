@@ -154,6 +154,7 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       child_guest: totalChildren,
       child_age: 5,
       guest_session_id: "",
+      rooms: rooms.json(),
     };
     console.log(searchInfo);
 
