@@ -7,37 +7,22 @@ import Minus from "./../../../../../assets/icons/minus.svg";
 import GreenAddIcon from "./../../../../../assets/icons/Add-circle-green.svg";
 import ArrowDown from "./../../../../../assets/icons/arrow-down.svg";
 
-const RoomGuest = ({ isDivClicked, setDivClicked }) => {
+const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRooms }) => {
 
   const setDivClickedCus = (event) => {
     event.preventDefault();
     setDivClicked(!isDivClicked);
   }
-  const [rooms, setRooms] = useState([
-    {
-      adults: 1,
-      children: 1,
-      child_age: {
-        0: 1,
-      },
-    },
-    // {
-    //   adults: 2,
-    //   children: 2,
-    //   child_age: {
-    //     0: 2,
-    //     1: 1,
-    //   },
-    // },
-    // {
-    //   adults: 2,
-    //   children: 2,
-    //   child_age: {
-    //     0: 3,
-    //     1: 6,
-    //   },
-    // },
-  ]);
+  // const [rooms, setRooms] = useState([
+  //   {
+  //     adults: 1,
+  //     children: 1,
+  //     child_age: {
+  //       0: 1,
+  //     },
+  //   },
+   
+  // ]);
  
   const [divVisibility, setDivVisibility] = useState('0');
 
@@ -56,6 +41,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
   
       // Update state with the new rooms array
       setRooms(updatedRooms);
+      updateRoomsqty(updatedRooms);
 
       // setDivVisibility( updatedRooms.length-1);
 
@@ -94,6 +80,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
   
     // Update state with the new rooms array
     setRooms(NumberofRooms);
+    updateRoomsqty(NumberofRooms);
     setDivVisibility(rooms.length);
 
     // setDivVisibility(updatedRooms.length);
@@ -114,6 +101,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
 
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   const removeAdultGuest = (event, index) => {
@@ -126,6 +114,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
 
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   const addChildGuest = (event, index) => {
@@ -143,6 +132,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
     }
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   const removeChildGuest = (event, index) => {
@@ -162,6 +152,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked }) => {
 
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   
