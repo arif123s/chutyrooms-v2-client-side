@@ -66,7 +66,7 @@ const SearchField = () => {
   });
  
   console.log(rooms);
-  console.log(searchInputData);
+  console.log(searchInputData); 
 
   // Function to convert date format
   const convertDateFormat = (dateString) => {
