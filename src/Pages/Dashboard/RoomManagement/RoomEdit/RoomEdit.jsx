@@ -68,9 +68,14 @@ const RoomEdit = () => {
     refetch();
 
     if (data?.data?.room) {
-      const room_rates = data?.data?.room?.room_rates?.rates
-        ? JSON.parse(data?.data?.room?.room_rates?.rates)
-        : {};
+      let room_rates = {};
+      try {
+        room_rates = data?.data?.room?.room_rates?.rates
+          ? JSON.parse(data?.data?.room?.room_rates?.rates)
+          : {};
+      } catch (error) {
+        console.error('Failed to parse room rates JSON:', error);
+      }
       setDisplayImages(
         data?.data?.room?.room_images?.map((image) => ({
           id: image.id,
@@ -396,6 +401,7 @@ const RoomEdit = () => {
               id="number_of_rooms"
               name="number_of_rooms"
               type="number"
+              // min={0}
               value={roomData?.number_of_rooms}
               onChange={(e) =>
                 setRoomData({
@@ -612,6 +618,7 @@ const RoomEdit = () => {
               id="regular_price"
               name="regular_price"
               type="number"
+              // min={0}
               value={roomData?.room_rates?.regular_price}
               onChange={(e) =>
                 setRoomData((prevRoomData) => ({
@@ -642,6 +649,7 @@ const RoomEdit = () => {
               id="chuty_purchase_price"
               name="chuty_purchase_price"
               type="number"
+              // min={0}
               value={roomData?.room_rates?.company_purchase_price}
               onChange={(e) =>
                 setRoomData((prevRoomData) => ({
@@ -669,6 +677,7 @@ const RoomEdit = () => {
               id="adult_quantity"
               name="adult_quantity"
               type="number"
+              // min={0}
               value={roomData?.guest_info?.adult_guest_qty}
               onChange={(e) =>
                 setRoomData((prevRoomData) => ({
@@ -696,6 +705,7 @@ const RoomEdit = () => {
               id="child_quantity"
               name="child_quantity"
               type="number"
+              // min={0}
               value={roomData?.guest_info?.child_guest_qty}
               onChange={(e) =>
                 setRoomData((prevRoomData) => ({

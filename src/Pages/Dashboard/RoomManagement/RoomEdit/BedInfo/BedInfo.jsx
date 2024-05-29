@@ -92,6 +92,7 @@ const BedInfo = ({ errors, bedInfos, setBedInfos, validationErrors }) => {
               id="bed_quantity"
               name="bed_quantity"
               type="number"
+              min={1}
               value={bed?.qty || ""}
               onChange={(e) => handleValueChange(index, "qty", e.target.value)}
             />

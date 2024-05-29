@@ -1,36 +1,50 @@
+/* eslint-disable react/prop-types */
 import { Rating, Slider } from "@mui/material";
 import addIcon from "../../../assets/icons/addIcon.svg";
 import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import checkboxIcon from "../../../assets/icons/square.svg";
 import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const FilterContainer = () => {
+const FilterContainer = ({searchData}) => {
+
   const [rating, setRating] = useState(0);
   const [value, setValue] = useState([0, 200000]);
   const [priceRange, setPriceRange] = useState({
-    lowestPrice: 500,
-    highestPrice: 200000,
+    lowestPrice: 0,
+    highestPrice: 0,
   });
-  const initialState = ["Hotel", "Resort", "Cottage"];
-  const [checkboxes, setCheckboxes] = useState(
-    initialState.map((label) => ({ label, isChecked: false }))
-  );
+ 
+  const [allChildLocation,setAllChildLocation]=useState(false);
+  const [allFacilities, setAllFacilities] = useState(false);
+  const [allAccomodationType, setAllAccomodationType] = useState(false);
+  const [accommodation_types, setAccommodationTypes] = useState([]);
 
-  // console.log(rating);
+  console.log(searchData);
+  console.log(accommodation_types);
+
+   useEffect(() => {
+     if (searchData?.accommodation_types) {
+       const types = searchData.accommodation_types.map((type) => ({
+         name: type.name,
+         isChecked: false,
+       }));
+       setAccommodationTypes(types);
+     }
+     setPriceRange({lowestPrice:searchData?.min_price || 0, highestPrice:searchData?.max_price||0})
+   }, [searchData]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // console.log("value", priceRange);
-
   const toggleCheckbox = (index) => {
-    setCheckboxes((prevCheckboxes) => {
-      const updatedCheckboxes = [...prevCheckboxes];
-      updatedCheckboxes[index].isChecked = !updatedCheckboxes[index].isChecked;
-      return updatedCheckboxes;
+    setAccommodationTypes((prevAccommodationTypes) => {
+      const updatedAccommodationTypes = [...prevAccommodationTypes];
+      updatedAccommodationTypes[index].isChecked =
+        !updatedAccommodationTypes[index].isChecked;
+      return updatedAccommodationTypes;
     });
   };
 
@@ -56,26 +70,49 @@ const FilterContainer = () => {
           alt="search icon"
         />
       </div>
-
+      {/* Child Location */}
       <div className="flex flex-wrap gap-[10px] text-[14px]">
-        <p className="suggested-place">Cox’s Bazar</p>
-        <p className="suggested-place">Saint Martin</p>
-        <p className="suggested-place">Teknaf</p>
-        <p className="suggested-place">Marine Drive</p>
-        <p className="suggested-place">Laboni</p>
-        <div className="flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit">
-          <img className="mr-[4px]" src={addIcon} alt="" />
-          <button>See more</button>
-        </div>
+        {allChildLocation ? (
+          <>
+            {searchData?.child_location.map((location) => (
+              <p key={location.id} className="suggested-place">
+                {location?.name}
+              </p>
+            ))}
+            <div
+              onClick={() => setAllChildLocation(!allChildLocation)}
+              className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
+            >
+              <img className="mr-[4px]" src={addIcon} alt="" />
+              <button>See Less</button>
+            </div>
+          </>
+        ) : (
+          <>
+            {searchData?.child_location?.slice(0, 4).map((location) => (
+              <p key={location.id} className="suggested-place">
+                {location?.name}
+              </p>
+            ))}
+            {searchData?.child_location?.length > 4 && (
+              <div
+                onClick={() => setAllChildLocation(!allChildLocation)}
+                className="flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
+              >
+                <img className="mr-[4px]" src={addIcon} alt="" />
+                <button>See more</button>
+              </div>
+            )}
+          </>
+        )}
       </div>
-
       <div className="w-full h-[1px] bg-[#808783] my-[18px] lg:my-[20px]"></div>
-
+      {/* Popularity */}
       <div>
         <h2 className="search-page-title">Sort By</h2>
 
         <div className="mt-[8px]">
-          <div className="property-input-div h-[40]">
+          <div className="property-input-div h-[40] bg-[#F8FEFF]">
             <select
               id="popularity"
               className="property-input bg-[#F8FEFF] text-[14px] md:text-[16px] lg:text-[16px] "
@@ -94,7 +131,7 @@ const FilterContainer = () => {
           </div>
         </div>
       </div>
-
+      {/* Price Range */}
       <div>
         <h2 className="search-page-title mt-[20px]">Sort By</h2>
 
@@ -103,9 +140,8 @@ const FilterContainer = () => {
             value={value}
             onChange={handleChange}
             valueLabelDisplay="auto"
-            min={0}
-            max={200000}
-            // getAriaValueText={valuetext}
+            min={priceRange?.lowestPrice}
+            max={priceRange?.highestPrice}
           />
 
           <div className="flex justify-between items-center gap-[12px] text-[12px] md:text-[12px] lg:text-[16px]">
@@ -122,11 +158,8 @@ const FilterContainer = () => {
                 onChange={(e) =>
                   setPriceRange({ ...priceRange, lowestPrice: e.target.value })
                 }
-                // onChange={}
               />
             </div>
-
-            {/* <p>To</p> */}
 
             <div className="h-[40px] border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="highest-price" className="mr-[4px]">
@@ -146,17 +179,11 @@ const FilterContainer = () => {
           </div>
         </div>
       </div>
-
       <div className="w-full h-[1px] bg-[#808783] my-[18px] lg:my-[20px]"></div>
-
+      {/* Rating */}
       <div>
         <h2 className="search-page-title">Rating</h2>
         <div className="mt-[8px]">
-          {/* <Controller
-                name="rating"
-                control={control}
-                defaultValue={0}
-                render={({ field }) => ( */}
           <div>
             <Rating
               name="half-rating"
@@ -165,55 +192,105 @@ const FilterContainer = () => {
               onClick={(e) => setRating(e.target.value)}
             />
           </div>
-          {/* //   )}
-               
-              // > */}
         </div>
       </div>
-
       <div className="w-full h-[1px] bg-[#808783] my-[18px] lg:my-[20px]"></div>
-
+      {/* Accommodation Type */}
       <div>
         <h2 className="search-page-title">Accommodation Type</h2>
         <div className="mt-[8px] text-[14px] md:text-[16px] lg:text-[16px]">
-          {checkboxes.map((checkbox, index) => (
-            <div className="flex items-center gap-[4px]" key={index}>
-              <div>
-                <img
-                  className="w-[18px]"
-                  src={checkbox.isChecked ? checkboxTickIcon : checkboxIcon}
-                  alt="checkbox icon"
-                  onClick={() => toggleCheckbox(index)}
-                />
+          {allAccomodationType ? (
+            <>
+              {accommodation_types?.map((type, index) => (
+                <div className="flex items-center gap-[4px]" key={index}>
+                  <div>
+                    <img
+                      className="w-[18px] cursor-pointer"
+                      src={type.isChecked ? checkboxTickIcon : checkboxIcon}
+                      alt={
+                        type.isChecked
+                          ? "checked checkbox"
+                          : "unchecked checkbox"
+                      }
+                      onClick={() => toggleCheckbox(index)}
+                    />
+                  </div>
+                  <label htmlFor={`checkbox-${index}`}>{type.name}</label>
+                </div>
+              ))}
+              <div
+                onClick={() => setAllAccomodationType(!allAccomodationType)}
+                className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
+              >
+                <img className="mr-[4px]" src={addIcon} alt="" />
+                <button>See Less</button>
               </div>
-              <label htmlFor="">{checkbox.label}</label>
-            </div>
-          ))}
-          <div className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit">
-            <img className="mr-[4px]" src={addIcon} alt="" />
-            <button>See more</button>
-          </div>
+            </>
+          ) : (
+            <>
+              {accommodation_types?.slice(0, 4).map((type, index) => (
+                <div className="flex items-center gap-[4px]" key={index}>
+                  <div>
+                    <img
+                      className="w-[18px] cursor-pointer"
+                      src={type.isChecked ? checkboxTickIcon : checkboxIcon}
+                      alt={
+                        type.isChecked
+                          ? "checked checkbox"
+                          : "unchecked checkbox"
+                      }
+                      onClick={() => toggleCheckbox(index)}
+                    />
+                  </div>
+                  <label htmlFor={`checkbox-${index}`}>{type.name}</label>
+                </div>
+              ))}
+              {allAccomodationType?.length > 4 && (
+                <div
+                  onClick={() => setAllAccomodationType(!allAccomodationType)}
+                  className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
+                >
+                  <img className="mr-[4px]" src={addIcon} alt="" />
+                  <button>See More</button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
-
       <div className="w-full h-[1px] bg-[#808783] my-[18px] lg:my-[20px]"></div>
-
       <div>
         <h2 className="search-page-title">Facilities</h2>
         <div className="mt-[8px] text-[14px] md:text-[16px] lg:text-[16px]">
-          <p>Wifi</p>
-          <p>TV</p>
-          <p>CCTV</p>
-          <p>Restaurant</p>
-          <p>Premium Suite</p>
-          <p>Twin Bed</p>
-          <p>Deluxe Bed</p>
-          <p>Room Heater</p>
-
-          <div className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit">
-            <img className="mr-[4px]" src={addIcon} alt="" />
-            <button>See more</button>
-          </div>
+          {allFacilities ? (
+            <>
+              {searchData?.amenities_side.map((amenity) => (
+                <p key={amenity.id}>{amenity?.name}</p>
+              ))}
+              <div
+                onClick={() => setAllFacilities(!allFacilities)}
+                className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
+              >
+                <img className="mr-[4px]" src={addIcon} alt="" />
+                <button>See Less</button>
+              </div>
+            </>
+          ) : (
+            <>
+              {searchData?.amenities_side?.slice(0, 4).map((amenity) => (
+                <p key={amenity.id}>{amenity?.name}</p>
+              ))}
+              {searchData?.amenities_side?.length > 4 && (
+                <div
+                  onClick={() => setAllFacilities(!allFacilities)}
+                  className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
+                >
+                  <img className="mr-[4px]" src={addIcon} alt="" />
+                  <button>See more</button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

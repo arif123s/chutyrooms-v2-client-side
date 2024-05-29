@@ -884,56 +884,14 @@ const PropertyAdd = () => {
           <label className="property-input-title block" htmlFor="address">
             Property Rating
           </label>
-          {/* <div className="flex gap-x-[4px] mt-[12px]">
-            <img className="w-[20px]" src={starFill} alt="" />
-            <img className="w-[20px]" src={starFill} alt="" />
-            <img className="w-[20px]" src={starFill} alt="" />
-            <img className="w-[20px]" src={starBlank} alt="" />
-            <img className="w-[20px]" src={starBlank} alt="" />
-            <Controller
-              name="rating"
-              control={control}
-              defaultValue={0}
-              render={({ field }) => (
-                <>
-                  {[1, 2, 3, 4, 5].map((index) => (
-                    <img
-                      key={index}
-                      className="w-[20px]"
-                      src={index <= field.value ? starFill : starBlank}
-                      alt=""
-                      onClick={() => field.onChange(index)}
-                    />
-                  ))}
-                </>
-              )}
-              rules={{
-                validate: (value) => {
-                  if (value < 1 || value > 5) {
-                    return "Rating must be between 1 and 5";
-                  }
-                  return true;
-                },
-              }}
-            />
-          </div> */}
-          {/* <Stack spacing={1} className="mt-[1px]">
-            <Rating
-              name="half-rating"
-              defaultValue={0}
-              precision={0.5}
-              disabled={false}
-              className="w-[130px] "
-            />
-          </Stack> */}
-
+          
           <Controller
             name="rating"
             control={control}
             defaultValue={0}
             render={({ field }) => (
               <div
-                className="flex items-center gap-1.5"
+                className="flex items-center gap-1.5 w-fit"
                 onClick={(e) => {
                   field.onChange(e.target.value), setRating(e.target.value);
                 }}
@@ -1607,14 +1565,14 @@ const PropertyAdd = () => {
                                     className="w-8 mr-1"
                                   />
                                 </div>
-                                <span className="text-[12px] block text-center">
+                                {/* <span className="text-[12px] block text-center">
                                   {image?.name?.length > 16
                                     ? image?.name?.slice(0, 15) + "..."
                                     : image?.name}
-                                </span>
+                                </span> */}
                               </div>
                               <p className="property-input-title text-center">
-                                Browse Photo
+                                Update Photo
                               </p>
                             </div>
                           </>
@@ -1747,7 +1705,7 @@ const PropertyAdd = () => {
           </div>
         </div>
         {/* Video */}
-        <div className="mt-[18px]">
+        {/* <div className="mt-[18px]">
           <h2> Property Video {`(Optional)`}</h2>
           <div className="relative">
             <div
@@ -1833,7 +1791,7 @@ const PropertyAdd = () => {
               </div>
             </label>
           </div>
-        </div>
+        </div> */}
 
         {/* Checkin */}
         <div className="mt-[18px]">

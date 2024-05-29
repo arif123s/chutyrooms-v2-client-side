@@ -35,7 +35,7 @@ const RoomAdd = () => {
   const [childAgeVariation, setChildAgeVariation] = useState([
     { start_age: null, end_age: null, free_qty: null, price: null },
   ]);
-
+  const [validationErrors, setValidationErrors] = useState({});
   const [bedInfos, setBedInfos] = useState([{ bed_name: "", qty: null }]);
   const selectedRoomTypes = useWatch({
     control,
@@ -58,7 +58,7 @@ const RoomAdd = () => {
       newImages[index] = {
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
-        displayImageFile: fileInput.files[0],
+        displayImageFile: fileInput?.files[0],
       };
       setDisplayImages(newImages);
     } else {
@@ -77,12 +77,28 @@ const RoomAdd = () => {
   // const handleSave = () => {
   //   setDashboard(!dashboard)
   // };
+  const renderSpecificImageErrors = (validationErrors, imageIndex) => {
+    const key = `images.${imageIndex}.image`;
+    const errors = validationErrors[key];
+
+    return (
+      errors?.length > 0 &&
+      errors.map((err, index) => (
+        <p
+          className="label-text-alt text-red-500 mt-[4px]"
+          key={`${key}-${index}`}
+        >
+          {err}
+        </p>
+      ))
+    );
+  };
 
   const onSubmit = async (data) => {
     const toastId = toast.loading("Loading...");
 
     const displayImageFiles = displayImages?.map(
-      (image) => image.displayImageFile
+      (image) => image?.displayImageFile
     );
 
     // Loop through childAgeVariation to update free_qty if null
@@ -107,7 +123,7 @@ const RoomAdd = () => {
     console.log("updatedChildAgeVariation", updatedChildAgeVariation);
 
     const roomAddInfo = {
-      name: data.room_name,
+      name: data.name,
       number_of_rooms: data.number_of_rooms,
       room_size: data.room_size,
       short_description: data.short_description,
@@ -187,11 +203,12 @@ const RoomAdd = () => {
       } else {
         toast.dismiss(toastId);
         console.log("Failed", result);
-        // setValidationErrors(result?.error?.data?.errors);
+         setValidationErrors(result?.error?.data?.errors);
         // console.log("Failed", result);
       }
     } catch (error) {
       // Handle error
+      toast.dismiss(toastId);
       console.error("Error adding payment method:", error);
       // setValidationErrors(err.response.data.errors);
     }
@@ -255,6 +272,11 @@ const RoomAdd = () => {
               Please select at least one type
             </span>
           )} */}
+          {validationErrors?.room_categories && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.room_categories}
+            </span>
+          )}
         </div>
 
         {/* Room Name */}
@@ -264,21 +286,26 @@ const RoomAdd = () => {
           </label>
           <input
             className="input-box"
-            id="room_name"
-            name="room_name"
+            id="name"
+            name="name"
             type="text"
             placeholder="Single Room"
-            {...register("room_name", {
+            {...register("name", {
               required: {
                 value: true,
                 message: "Room Name is required",
               },
             })}
           />
+          {/* {validationErrors?.name && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.name}
+            </span>
+          )} */}
           <label className="">
-            {errors.room_name?.type === "required" && (
+            {errors.name?.type === "required" && (
               <span className="label-text-alt text-red-500">
-                {errors.room_name?.message}
+                {errors.name?.message}
               </span>
             )}
           </label>
@@ -303,10 +330,20 @@ const RoomAdd = () => {
                   value: true,
                   message: "Number of Rooms is required",
                 },
+                validate: {
+                  positive: (v) =>
+                    parseInt(v) > 0 ||
+                    "Number of Rooms must be a positive number",
+                },
               })}
             />
             <label className="">
               {errors.number_of_rooms?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.number_of_rooms?.message}
+                </span>
+              )}
+              {errors.number_of_rooms?.type === "positive" && (
                 <span className="label-text-alt text-red-500">
                   {errors.number_of_rooms?.message}
                 </span>
@@ -407,6 +444,7 @@ const RoomAdd = () => {
                   style={{ display: "none" }}
                   onChange={(event) => handleDisplayImageSelect(index, event)}
                 />
+                {renderSpecificImageErrors(validationErrors, index)}
               </div>
             ))}
           </div>
@@ -483,10 +521,19 @@ const RoomAdd = () => {
                   value: true,
                   message: "Regular Price is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Regular Price must be a positive number",
+                },
               })}
             />
             <label className="">
               {errors.regular_price?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.regular_price?.message}
+                </span>
+              )}
+              {errors.regular_price?.type === "min" && (
                 <span className="label-text-alt text-red-500">
                   {errors.regular_price?.message}
                 </span>
@@ -511,10 +558,19 @@ const RoomAdd = () => {
                   value: true,
                   message: "Chuty Purchase Price is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Chuty Purchase Price must be a positive number",
+                },
               })}
             />
             <label className="">
               {errors.chuty_purchase_price?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.chuty_purchase_price?.message}
+                </span>
+              )}
+              {errors.chuty_purchase_price?.type === "min" && (
                 <span className="label-text-alt text-red-500">
                   {errors.chuty_purchase_price?.message}
                 </span>
@@ -539,10 +595,19 @@ const RoomAdd = () => {
                   value: true,
                   message: "Adult Quantity is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Adult Quantity must be a positive number",
+                },
               })}
             />
             <label className="">
               {errors.adult_quantity?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.adult_quantity?.message}
+                </span>
+              )}
+              {errors.adult_quantity?.type === "min" && (
                 <span className="label-text-alt text-red-500">
                   {errors.adult_quantity?.message}
                 </span>
@@ -567,6 +632,10 @@ const RoomAdd = () => {
                   value: true,
                   message: "Child Quantity is required",
                 },
+                min: {
+                  value: 0,
+                  message: "Child Quantity must be a positive number",
+                },
               })}
             />
             <label className="">
@@ -575,9 +644,15 @@ const RoomAdd = () => {
                   {errors.child_quantity?.message}
                 </span>
               )}
+              {errors.child_quantity?.type === "min" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.child_quantity?.message}
+                </span>
+              )}
             </label>
           </div>
         </div>
+
         {/* Extra guest info */}
         <div className="mt-[18px]">
           <div className="flex items-center gap-[8px] mb-[8px]">
@@ -652,6 +727,7 @@ const RoomAdd = () => {
           bedInfos={bedInfos}
           setBedInfos={setBedInfos}
           setValue={setValue}
+          validationErrors={validationErrors}
         ></BedInfo>
         {/* Order By */}
         {/* <div className="mt-[18px]">

@@ -149,26 +149,30 @@ const NavBar = () => {
             <li>
               <a
                 onClick={(e) => handleNavigate(e, "membership")}
-                onMouseEnter={(e) =>
-                  e.target.querySelector(".nav-icon").classList.add("hovered")
-                }
-                onMouseLeave={(e) =>
-                  e.target
-                    .querySelector(".nav-icon")
-                    .classList.remove("hovered")
-                }
+                onMouseEnter={(e) => {
+                  const navIcon = e.target.querySelector(".nav-icon");
+                  if (navIcon) {
+                    navIcon.classList.add("hovered");
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const navIcon = e.target.querySelector(".nav-icon");
+                  if (navIcon) {
+                    navIcon.classList.remove("hovered");
+                  }
+                }}
                 className="nav-item-container cursor-pointer bg-[#E8F5ED] text-[#008942] text-[14px] flex items-center p-[8px] md:px-[16px] lg:px-[16px] md:py-[10px] lg:py-[10px] rounded-[8px]"
               >
                 <img
                   className="nav-icon"
                   src={memberIcon}
                   alt="Membership icon"
-                ></img>
+                />
                 <img
                   className="nav-icon light"
                   src={memberLightIcon}
                   alt="Membership icon"
-                ></img>
+                />
                 Deal Membership
               </a>
             </li>

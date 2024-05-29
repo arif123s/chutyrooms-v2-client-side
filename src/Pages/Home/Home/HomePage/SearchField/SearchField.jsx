@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import RoomGuest from "./RoomGuest";
@@ -7,11 +7,9 @@ import "./SearchField.css";
 import Gps from "./../../../../../assets/icons/gps.svg";
 import { useNavigate } from "react-router-dom";
 
-
 const { RangePicker } = DatePicker;
 
 const SearchField = () => {
-
   const [open, seDatePickerOpen] = useState(false);
   const today = new Date();
 
@@ -61,11 +59,12 @@ const SearchField = () => {
     search_type: "district",
     location_id: 1,
     rooms: 2,
-    adult_guest: 2,
+    adult_guest: 1,
     child_guest: 1,
-    child_age: 8,
+    child_age: 1,
+    guest_session_id: "",
   });
-
+ 
   console.log(rooms);
   console.log(searchInputData);
 
@@ -75,7 +74,7 @@ const SearchField = () => {
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
-    return `${year}/${month}/${day}`;
+    return `${year}-${month}-${day}`;
   };
 
   const handleDivClick = () => {
@@ -128,7 +127,6 @@ const SearchField = () => {
   }, []);
 
   const handleSearch = (e) => {
-
     e.preventDefault();
     const searchInfo = {
       location: searchInputData.location,
@@ -140,6 +138,7 @@ const SearchField = () => {
       adult_guest: searchInputData.adult_guest,
       child_guest: searchInputData.child_guest,
       child_age: searchInputData.child_age,
+      guest_session_id: "",
     };
     console.log(searchInfo);
 
