@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -160,7 +161,7 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
 
     // console.log('Form Data:', formData);
     const queryString = new URLSearchParams(searchInfo).toString();
-    // navigate(`/search-result-hotel?${queryString}`);
+    navigate(`/search-result-hotel?${queryString}`);
     
   };
 

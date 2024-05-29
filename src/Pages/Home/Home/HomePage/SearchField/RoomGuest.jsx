@@ -59,6 +59,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
 
   const addDiv = (event) => {
     event.preventDefault();
+
     const NumberofRooms = [...rooms];
     if (NumberofRooms.length < 4) {
     const newRoom = {
@@ -76,15 +77,6 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
     setRooms(NumberofRooms);
     updateRoomsqty(NumberofRooms);
     setDivVisibility(rooms.length);
-
-      // Create a copy of the current rooms array
-
-      // Add the new room to the array
-      NumberofRooms.push(newRoom);
-
-      // Update state with the new rooms array
-      setRooms(NumberofRooms);
-      setDivVisibility(rooms.length);
 
       // setDivVisibility(updatedRooms.length);
 
