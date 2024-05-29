@@ -109,7 +109,10 @@ console.log('length',searchData?.data?.hotels_data?.data);
             <div className={`${mapView ? "hidden" : ""}`}>
               <div className="hotels">
                 {searchData?.data?.hotels_data?.data?.map((hotel) => (
-                  <SingleHotel key={hotel.id} hotel={hotel}></SingleHotel>
+                  <SingleHotel
+                    key={hotel?.property_id}
+                    hotel={hotel}
+                  ></SingleHotel>
                 ))}
 
                 {/* <SingleHotel></SingleHotel> */}

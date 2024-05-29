@@ -8,17 +8,22 @@ import Minus from "./../../../../../assets/icons/minus.svg";
 import GreenAddIcon from "./../../../../../assets/icons/Add-circle-green.svg";
 import ArrowDown from "./../../../../../assets/icons/arrow-down.svg";
 
-const RoomGuest = ({
-  rooms,
-  setRooms,
-  isDivClicked,
-  setDivClicked,
-}) => {
+const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRooms }) => {
+
   const setDivClickedCus = (event) => {
     event.preventDefault();
     setDivClicked(!isDivClicked);
-  };
- 
+  }
+
+  // const [rooms, setRooms] = useState([
+  //   {
+  //     adults: 1,
+  //     children: 1,
+  //     child_age: {
+  //       0: 1,
+  //     },
+  //   },
+  // ]);
 
   const [divVisibility, setDivVisibility] = useState("0");
 
@@ -36,9 +41,8 @@ const RoomGuest = ({
 
       // Update state with the new rooms array
       setRooms(updatedRooms);
-
+      updateRoomsqty(updatedRooms);
       // setDivVisibility( updatedRooms.length-1);
-
       console.log(updatedRooms, updatedRooms.length - 1);
     }
   };
@@ -47,32 +51,32 @@ const RoomGuest = ({
     // e.preventDefault();
     // Create a copy of the rooms array
     const updatedRooms = [...rooms];
-
     // Update the guests for the specified room and type (adults or children)
     updatedRooms[index][type] = value;
-
     // Update state with the new rooms array
     setRooms(updatedRooms);
   };
 
   const addDiv = (event) => {
     event.preventDefault();
+
     const NumberofRooms = [...rooms];
     if (NumberofRooms.length < 4) {
-      const newRoom = {
-        adults: 1, // You can set default values for adults and children as needed
-        children: 0,
-        child_age: {}, // Assuming no children initially
-      };
-
-      // Create a copy of the current rooms array
-
-      // Add the new room to the array
-      NumberofRooms.push(newRoom);
-
-      // Update state with the new rooms array
-      setRooms(NumberofRooms);
-      setDivVisibility(rooms.length);
+    const newRoom = {
+      adults: 1,  // You can set default values for adults and children as needed
+      children: 0,
+      child_age: {},  // Assuming no children initially
+    };
+    
+    // Create a copy of the current rooms array
+  
+    // Add the new room to the array
+    NumberofRooms.push(newRoom);
+  
+    // Update state with the new rooms array
+    setRooms(NumberofRooms);
+    updateRoomsqty(NumberofRooms);
+    setDivVisibility(rooms.length);
 
       // setDivVisibility(updatedRooms.length);
 
@@ -90,6 +94,7 @@ const RoomGuest = ({
 
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   const removeAdultGuest = (event, index) => {
@@ -102,6 +107,7 @@ const RoomGuest = ({
 
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   const addChildGuest = (event, index) => {
@@ -122,6 +128,7 @@ const RoomGuest = ({
     }
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   const removeChildGuest = (event, index) => {
@@ -146,6 +153,7 @@ const RoomGuest = ({
 
     // Update state with the new rooms array
     setRooms(updatedRooms);
+    updateRoomsqty(updatedRooms);
   };
 
   // Function to toggle the visibility of a specific div

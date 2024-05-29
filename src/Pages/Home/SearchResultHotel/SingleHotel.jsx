@@ -25,30 +25,41 @@ const SingleHotel = ({hotel}) => {
           modules={[Autoplay, Navigation]}
           className="mySwiper rounded-[8px] "
         >
-          <SwiperSlide>
+          {hotel?.property_image?.map((img, index) => (
+            <SwiperSlide key={index}>
+              {console.log(img.url)}
+              <img className="room-img" src={img.url} alt="Place" />
+            </SwiperSlide>
+          ))}
+          {/* <SwiperSlide>
             <img className="room-img" src={room1} alt="Place" />
           </SwiperSlide>
           <SwiperSlide>
             <img className="room-img" src={room2} alt="Place" />
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
 
         <div className="absolute top-[16px] z-10 flex justify-between w-full px-[16px]">
-          <div className="flex h-8 p-2.5 bg-zinc-500 rounded-[5px] border border-white justify-center items-center gap-1 lg:gap-2">
+          <div className="flex h-8 p-2.5 bg-zinc-500 rounded-[5px] border border-white justify-center items-center gap-[2px]">
             <div className="ratings">
               <img src={starFill} alt="" />
             </div>
             <p className="text-white text-[14px] lg:text-[16px]">
-              <span className="mr-[2px]">4</span>Star
+              <span className="mr-[2px]">{hotel?.property_class}</span>Star
             </p>
           </div>
           <img src={favourite} alt="favourite icon" />
         </div>
       </div>
       <div className="hotel-details-container">
-        <p className="flex justify-center items-center text-[14px] lg:text-[16px] h-[28px] lg:h-[32px] p-[10px] border-[1px] border-[#808783] w-fit rounded-[4px]">
-          Hotels
-        </p>
+        {hotel?.property_types?.map((type, index) => (
+          <p
+            key={index}
+            className="flex justify-center items-center text-[14px] lg:text-[16px] h-[28px] lg:h-[32px] p-[10px] border-[1px] border-[#808783] w-fit rounded-[4px]"
+          >
+            {type?.name}
+          </p>
+        ))}
         <div className="flex justify-between mt-[2px] gap-[8px]">
           <div>
             <div className="flex">
