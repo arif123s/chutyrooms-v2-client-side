@@ -7,17 +7,21 @@ import tickSquareIcon from "../../../assets/icons/tick-square-black.svg";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import ChildAgeVariation from "./ChildAgeVariation/ChildAgeVariation";
 import BedInfo from "./BedInfo/BedInfo";
-import { useGetAllRoomCategoriesQuery, useRoomAddMutation } from "../../../redux/features/owner/RoomAdd/roomAdd.api";
+import {
+  useGetAllRoomCategoriesQuery,
+  useRoomAddMutation,
+} from "../../../redux/features/owner/RoomAdd/roomAdd.api";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { toast } from "react-toastify";
 
 const RoomAdd = () => {
   const { propertyId } = useParams();
   const navigate = useNavigate();
-  const [dashboard, setDashboard] = useState(false);
+  // const [dashboard, setDashboard] = useState(false);
   const { data: roomCategories, isLoading } =
     useGetAllRoomCategoriesQuery(propertyId);
-const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
+  console.log(roomCategories);
+  const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   const {
     register,
     handleSubmit,
@@ -29,9 +33,9 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
 
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [childAgeVariation, setChildAgeVariation] = useState([
-    { start_age: null, end_age: null, free_qty:null, price: null },
+    { start_age: null, end_age: null, free_qty: null, price: null },
   ]);
-
+  const [validationErrors, setValidationErrors] = useState({});
   const [bedInfos, setBedInfos] = useState([{ bed_name: "", qty: null }]);
   const selectedRoomTypes = useWatch({
     control,
@@ -43,15 +47,18 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
     return <Loading></Loading>;
   }
 
-  const handleDisplayImageSelect = (index, event) => {
+  if (!roomCategories?.status) {
+    return <div className="ml-[18px] mt-[28px]">{roomCategories?.message}!</div>;
+  }
 
+  const handleDisplayImageSelect = (index, event) => {
     const fileInput = event.target;
     if (fileInput.files.length > 0) {
       const newImages = [...displayImages];
       newImages[index] = {
         name: fileInput.files[0].name,
         url: URL.createObjectURL(fileInput.files[0]),
-        displayImageFile: fileInput.files[0],
+        displayImageFile: fileInput?.files[0],
       };
       setDisplayImages(newImages);
     } else {
@@ -59,7 +66,6 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       newImages[index] = null;
       setDisplayImages(newImages);
     }
-
   };
 
   const handleDeleteImage = (index) => {
@@ -71,18 +77,42 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   // const handleSave = () => {
   //   setDashboard(!dashboard)
   // };
+  const renderSpecificImageErrors = (validationErrors, imageIndex) => {
+    const key = `images.${imageIndex}.image`;
+    const errors = validationErrors[key];
 
-  const onSubmit = async(data) => {
-    const displayImageFiles = displayImages.map(
-      (image) => image.displayImageFile
+    return (
+      errors?.length > 0 &&
+      errors.map((err, index) => (
+        <p
+          className="label-text-alt text-red-500 mt-[4px]"
+          key={`${key}-${index}`}
+        >
+          {err}
+        </p>
+      ))
+    );
+  };
+
+  const onSubmit = async (data) => {
+    const toastId = toast.loading("Loading...");
+
+    const displayImageFiles = displayImages?.map(
+      (image) => image?.displayImageFile
     );
 
     // Loop through childAgeVariation to update free_qty if null
     const updatedChildAgeVariation = childAgeVariation.map((childAge) => {
       // If free_qty is null, set it to 0
       if (childAge.free_qty == null) {
-        if(childAge.start_age==null || childAge.end_age==null){
-          return { ...childAge,start_age:0,end_age:0, free_qty: 0, price:0 };
+        if (childAge.start_age == null || childAge.end_age == null) {
+          return {
+            ...childAge,
+            start_age: 0,
+            end_age: 0,
+            free_qty: 0,
+            price: 0,
+          };
         }
 
         return { ...childAge, free_qty: 0 };
@@ -93,7 +123,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
     console.log("updatedChildAgeVariation", updatedChildAgeVariation);
 
     const roomAddInfo = {
-      name: data.room_name,
+      name: data.name,
       number_of_rooms: data.number_of_rooms,
       room_size: data.room_size,
       short_description: data.short_description,
@@ -167,20 +197,23 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
       // Handle successful mutation
       if (result?.data?.status) {
         console.log("Room", result);
+        toast.dismiss(toastId);
         toast.success("Room added successfully");
         navigate(`/dashboard/rooms/${propertyId}`);
       } else {
+        toast.dismiss(toastId);
         console.log("Failed", result);
-        // setValidationErrors(result?.error?.data?.errors);
+         setValidationErrors(result?.error?.data?.errors);
         // console.log("Failed", result);
       }
     } catch (error) {
       // Handle error
+      toast.dismiss(toastId);
       console.error("Error adding payment method:", error);
       // setValidationErrors(err.response.data.errors);
     }
 
-    setDashboard(true);
+    // setDashboard(true);
   };
 
   const navigateDashboard = (e) => {
@@ -189,7 +222,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
   };
 
   return (
-    <div className="mt-[12px] md:mt-[18px] lg:mt-[18px]">
+    <div className="mt-[12px] md:mt-[18px] lg:mt-[18px] ">
       <form
         className="property-add-container"
         onSubmit={handleSubmit(onSubmit)}
@@ -204,7 +237,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
               name="roomTypes"
               control={control}
               defaultValue={[]}
-              rules={{ required: "Please select at least one checkbox." }}
+              // rules={{ required: "Please select at least one checkbox." }}
               render={({ field }) => (
                 <>
                   {roomCategories?.data?.room_types?.map((roomType) => (
@@ -234,9 +267,14 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
               )}
             />
           </div>
-          {errors.propertyTypes && !selectedRoomTypes?.length && (
+          {/* {errors.propertyTypes && !selectedRoomTypes?.length && (
             <span className="label-text-alt text-red-500">
               Please select at least one type
+            </span>
+          )} */}
+          {validationErrors?.room_categories && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.room_categories}
             </span>
           )}
         </div>
@@ -248,21 +286,26 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           </label>
           <input
             className="input-box"
-            id="room_name"
-            name="room_name"
+            id="name"
+            name="name"
             type="text"
             placeholder="Single Room"
-            {...register("room_name", {
+            {...register("name", {
               required: {
                 value: true,
                 message: "Room Name is required",
               },
             })}
           />
+          {/* {validationErrors?.name && (
+            <span className="label-text-alt text-red-500">
+              {validationErrors.name}
+            </span>
+          )} */}
           <label className="">
-            {errors.room_name?.type === "required" && (
+            {errors.name?.type === "required" && (
               <span className="label-text-alt text-red-500">
-                {errors.room_name?.message}
+                {errors.name?.message}
               </span>
             )}
           </label>
@@ -271,7 +314,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Number of room */}
           <div className="">
-            <label className="property-input-title" htmlFor="number_of_rooms">
+            <label
+              className="property-input-title block"
+              htmlFor="number_of_rooms"
+            >
               Number of Rooms
             </label>
             <input
@@ -284,10 +330,20 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   value: true,
                   message: "Number of Rooms is required",
                 },
+                validate: {
+                  positive: (v) =>
+                    parseInt(v) > 0 ||
+                    "Number of Rooms must be a positive number",
+                },
               })}
             />
             <label className="">
               {errors.number_of_rooms?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.number_of_rooms?.message}
+                </span>
+              )}
+              {errors.number_of_rooms?.type === "positive" && (
                 <span className="label-text-alt text-red-500">
                   {errors.number_of_rooms?.message}
                 </span>
@@ -388,6 +444,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   style={{ display: "none" }}
                   onChange={(event) => handleDisplayImageSelect(index, event)}
                 />
+                {renderSpecificImageErrors(validationErrors, index)}
               </div>
             ))}
           </div>
@@ -448,7 +505,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] mt-[18px]">
           {/* Regular Price */}
           <div className="">
-            <label className="property-input-title" htmlFor="regular_price">
+            <label
+              className="property-input-title block"
+              htmlFor="regular_price"
+            >
               Regular Price
             </label>
             <input
@@ -461,10 +521,19 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   value: true,
                   message: "Regular Price is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Regular Price must be a positive number",
+                },
               })}
             />
             <label className="">
               {errors.regular_price?.type === "required" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.regular_price?.message}
+                </span>
+              )}
+              {errors.regular_price?.type === "min" && (
                 <span className="label-text-alt text-red-500">
                   {errors.regular_price?.message}
                 </span>
@@ -474,7 +543,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           {/* Chuty Purchase Price */}
           <div className="">
             <label
-              className="property-input-title"
+              className="property-input-title block"
               htmlFor="chuty_purchase_price"
             >
               Chuty Purchase Price
@@ -489,6 +558,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   value: true,
                   message: "Chuty Purchase Price is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Chuty Purchase Price must be a positive number",
+                },
               })}
             />
             <label className="">
@@ -497,11 +570,19 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   {errors.chuty_purchase_price?.message}
                 </span>
               )}
+              {errors.chuty_purchase_price?.type === "min" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.chuty_purchase_price?.message}
+                </span>
+              )}
             </label>
           </div>
           {/* Adult (qty) */}
           <div className="">
-            <label className="property-input-title" htmlFor="adult_quantity">
+            <label
+              className="property-input-title block"
+              htmlFor="adult_quantity"
+            >
               Adult (qty)
             </label>
             <input
@@ -514,6 +595,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   value: true,
                   message: "Adult Quantity is required",
                 },
+                min: {
+                  value: 1,
+                  message: "Adult Quantity must be a positive number",
+                },
               })}
             />
             <label className="">
@@ -522,11 +607,19 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   {errors.adult_quantity?.message}
                 </span>
               )}
+              {errors.adult_quantity?.type === "min" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.adult_quantity?.message}
+                </span>
+              )}
             </label>
           </div>
           {/* Child (qty) */}
           <div className="">
-            <label className="property-input-title" htmlFor="child_quantity">
+            <label
+              className="property-input-title block"
+              htmlFor="child_quantity"
+            >
               Child (qty)
             </label>
             <input
@@ -539,6 +632,10 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   value: true,
                   message: "Child Quantity is required",
                 },
+                min: {
+                  value: 0,
+                  message: "Child Quantity must be a positive number",
+                },
               })}
             />
             <label className="">
@@ -547,9 +644,15 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
                   {errors.child_quantity?.message}
                 </span>
               )}
+              {errors.child_quantity?.type === "min" && (
+                <span className="label-text-alt text-red-500">
+                  {errors.child_quantity?.message}
+                </span>
+              )}
             </label>
           </div>
         </div>
+
         {/* Extra guest info */}
         <div className="mt-[18px]">
           <div className="flex items-center gap-[8px] mb-[8px]">
@@ -562,7 +665,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
             {/* Extra Adult */}
             <div className="">
               <label
-                className="property-input-title"
+                className="property-input-title block"
                 htmlFor="extra_adult_quantity"
               >
                 Extra Adult
@@ -578,7 +681,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
             {/* Price per person */}
             <div className="">
               <label
-                className="property-input-title"
+                className="property-input-title block"
                 htmlFor="extra_adult_price"
               >
                 Price {"("}per person{")"}
@@ -595,7 +698,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           {/* Extra Child */}
           <div className="">
             <label
-              className="property-input-title"
+              className="property-input-title block"
               htmlFor="extra_child_quantity"
             >
               Extra Child
@@ -624,6 +727,7 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           bedInfos={bedInfos}
           setBedInfos={setBedInfos}
           setValue={setValue}
+          validationErrors={validationErrors}
         ></BedInfo>
         {/* Order By */}
         {/* <div className="mt-[18px]">
@@ -651,14 +755,14 @@ const [roomAdd, { isLoading: roomAddLoading }] = useRoomAddMutation();
           </button>
         </div>
         {/* {dashboard && ( */}
-          <div className="mt-[18px] text-center">
-            <a
-              onClick={navigateDashboard}
-              className="text-[14px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
-            >
-              Go to dashboard
-            </a>
-          </div>
+        <div className="mt-[18px] text-center">
+          <a
+            onClick={navigateDashboard}
+            className="text-[14px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
+          >
+            Go to dashboard
+          </a>
+        </div>
         {/* )} */}
       </form>
     </div>

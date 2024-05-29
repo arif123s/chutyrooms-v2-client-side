@@ -11,7 +11,7 @@ import Rating from "@mui/material/Rating";
 import "./PropertyAdd.css";
 import { useEffect, useState } from "react";
 import {
-  GoogleMap, 
+  GoogleMap,
   useLoadScript,
   Marker,
   Rectangle,
@@ -47,7 +47,6 @@ const mapContainerStyle = {
 // };
 
 const PropertyAdd = () => {
-
   // const MAX_VIDEO_SIZE_MB = 5;
   const navigate = useNavigate();
 
@@ -57,15 +56,15 @@ const PropertyAdd = () => {
     // refetch,
   } = useGetAllPropertyAddingPropertiesQuery();
 
-  console.log(propertyAdding)
+  console.log(propertyAdding);
 
-   const {
-     control,
-     register,
-     handleSubmit,
-     setValue,
-     formState: { errors },
-   } = useForm();
+  const {
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   const [cancellationData, setCancellationData] = useState([
     { duration: { hours: 47, minutes: 59 }, refund_percentage: 100 },
@@ -84,7 +83,10 @@ const PropertyAdd = () => {
     message: "",
     color: false,
     count: 0,
-  }); 
+  });
+  const [validationErrors, setValidationErrors] = useState({});
+  console.log(validationErrors);
+  // console.log(validationErrors?.images.0.image)
 
   const [address, setAddress] = useState("");
   const [rectangleBounds, setRectangleBounds] = useState(null);
@@ -110,11 +112,11 @@ const PropertyAdd = () => {
   const selectedPropertyTypes = useWatch({
     control,
     name: "propertyTypes",
-    defaultValue: [], 
+    defaultValue: [],
   });
 
   const [loading, setLoading] = useState(false);
-  const [rating,setRating]=useState(null)
+  const [rating, setRating] = useState(null);
 
   const [countryId, setCountryId] = useState(null);
   const [divisionId, setDivisionId] = useState(null);
@@ -131,20 +133,20 @@ const PropertyAdd = () => {
   const { data: areaData, refetch: refetchAreas } =
     useGetAllActiveAreaQuery(districtId);
 
-      const [
+  const [
     addPropertyAdd,
     {
       isLoading,
       // isError,
       //  error
     },
-  ]= useAddPropertyAddMutation();
+  ] = useAddPropertyAddMutation();
 
   // console.log("divisionData", divisionData?.data?.length);
 
   useEffect(() => {
     // Fetch data only if Id is not null
-    if (countryId !== null ) {
+    if (countryId !== null) {
       refetchDivisions();
     }
     if (divisionId !== null) {
@@ -195,7 +197,6 @@ const PropertyAdd = () => {
       // Set the selected location
       setSelectedLocation(latLng);
 
-
       // setMapError({
       //   status: false,
       // });
@@ -204,7 +205,7 @@ const PropertyAdd = () => {
         message: "Location selected",
         color: true,
         count: 1,
-      }); 
+      });
     } catch (error) {
       console.error("Error selecting address", error);
     }
@@ -219,11 +220,7 @@ const PropertyAdd = () => {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
 
-  if (
-    !isLoaded ||
-    loading ||
-    propertyLoading
-  ) {
+  if (!isLoaded || loading || propertyLoading) {
     return <Loading></Loading>;
   }
 
@@ -322,7 +319,7 @@ const PropertyAdd = () => {
     setVideoError(false);
   };
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     displayImages.map((i) => {
       if (i === null) {
         displayImageCount++;
@@ -376,14 +373,13 @@ const PropertyAdd = () => {
       return;
     }
 
-    
     const displayImageFiles = displayImages.map(
       (image) => image.displayImageFile
     );
 
     const propertyData = {
       name: data.propertyName,
-      subtitle:data.subtitle,
+      subtitle: data.subtitle,
       bin: data.bin,
       tin: data.tin,
       trade_license_number: "aaaa",
@@ -496,7 +492,7 @@ const PropertyAdd = () => {
       }
     });
 
-    console.log(mapCenter)
+    console.log(mapCenter);
 
     propertyFormData.append("latitude", parseFloat(mapCenter.lat));
     propertyFormData.append("longitude", parseFloat(mapCenter.lng));
@@ -528,6 +524,7 @@ const PropertyAdd = () => {
       } else {
         // console.log("Failed", result);
         console.log("Failed", result.error.data.errors);
+        setValidationErrors(result?.error?.data?.errors);
         // setErrorMessage({
         //   status: true,
         //   message: data.message,
@@ -537,8 +534,25 @@ const PropertyAdd = () => {
       }
     } catch (error) {
       // Handle error
-      // console.error("Error adding payment method:", error);
+      // console.error("Error :", error);
     }
+  };
+
+  const renderSpecificImageErrors = (validationErrors, imageIndex) => {
+    const key = `images.${imageIndex}.image`;
+    const errors = validationErrors[key];
+    
+    return (
+      errors?.length > 0 &&
+      errors.map((err, index) => (
+        <p
+          className="label-text-alt text-red-500 mt-[4px]"
+          key={`${key}-${index}`}
+        >
+          {err}
+        </p>
+      ))
+    );
   };
 
   return (
@@ -870,56 +884,14 @@ const PropertyAdd = () => {
           <label className="property-input-title block" htmlFor="address">
             Property Rating
           </label>
-          {/* <div className="flex gap-x-[4px] mt-[12px]">
-            <img className="w-[20px]" src={starFill} alt="" />
-            <img className="w-[20px]" src={starFill} alt="" />
-            <img className="w-[20px]" src={starFill} alt="" />
-            <img className="w-[20px]" src={starBlank} alt="" />
-            <img className="w-[20px]" src={starBlank} alt="" />
-            <Controller
-              name="rating"
-              control={control}
-              defaultValue={0}
-              render={({ field }) => (
-                <>
-                  {[1, 2, 3, 4, 5].map((index) => (
-                    <img
-                      key={index}
-                      className="w-[20px]"
-                      src={index <= field.value ? starFill : starBlank}
-                      alt=""
-                      onClick={() => field.onChange(index)}
-                    />
-                  ))}
-                </>
-              )}
-              rules={{
-                validate: (value) => {
-                  if (value < 1 || value > 5) {
-                    return "Rating must be between 1 and 5";
-                  }
-                  return true;
-                },
-              }}
-            />
-          </div> */}
-          {/* <Stack spacing={1} className="mt-[1px]">
-            <Rating
-              name="half-rating"
-              defaultValue={0}
-              precision={0.5}
-              disabled={false}
-              className="w-[130px] "
-            />
-          </Stack> */}
-
+          
           <Controller
             name="rating"
             control={control}
             defaultValue={0}
             render={({ field }) => (
               <div
-                className="flex items-center gap-1.5"
+                className="flex items-center gap-1.5 w-fit"
                 onClick={(e) => {
                   field.onChange(e.target.value), setRating(e.target.value);
                 }}
@@ -1564,6 +1536,11 @@ const PropertyAdd = () => {
                   {logoError.message}
                 </p>
               )}
+              {validationErrors.logo && (
+                <span className="label-text-alt text-red-500">
+                  {validationErrors.logo}
+                </span>
+              )}
             </div>
 
             {/* Display Image */}
@@ -1588,14 +1565,14 @@ const PropertyAdd = () => {
                                     className="w-8 mr-1"
                                   />
                                 </div>
-                                <span className="text-[12px] block text-center">
+                                {/* <span className="text-[12px] block text-center">
                                   {image?.name?.length > 16
                                     ? image?.name?.slice(0, 15) + "..."
                                     : image?.name}
-                                </span>
+                                </span> */}
                               </div>
                               <p className="property-input-title text-center">
-                                Browse Photo
+                                Update Photo
                               </p>
                             </div>
                           </>
@@ -1629,6 +1606,44 @@ const PropertyAdd = () => {
                       //   required: "Image is required",
                       // })}
                     />
+                    {
+                      // validationErrors.images[0].image?.length &&
+                      //   validationErrors?.images.index.image.map((err, index) => (
+                      //     <div key={index}>
+                      //       {err.map((value, i) => (
+                      //         <p
+                      //           className="label-text-alt text-rose-500 text-center mb-[2px]"
+                      //           key={i}
+                      //         >
+                      //           {value}
+                      //         </p>
+                      //       ))}
+                      //     </div>
+                      //   ))
+                      // validationErrors["images.0.image"] && (
+                      //   <p className="label-text-alt text-red-500 mt-[4px]">
+                      //     {validationErrors["images.1.image"]}
+                      //   </p>
+                      // )
+                    }
+                    {/* {Object.keys(validationErrors).map((key) => {
+                      if (key.startsWith("images.") && key.endsWith(".image")) {
+                        const errors = validationErrors[key];
+                        return (
+                          errors.length > 0 &&
+                          errors.map((err, index) => (
+                            <p
+                              className="label-text-alt text-red-500 mt-[4px]"
+                              key={`${key}-${index}`}
+                            >
+                              {err}
+                            </p>
+                          ))
+                        );
+                      }
+                      return null;
+                    })} */}
+                    {renderSpecificImageErrors(validationErrors, index)}
                   </div>
                 ))}
               </div>
@@ -1690,7 +1705,7 @@ const PropertyAdd = () => {
           </div>
         </div>
         {/* Video */}
-        <div className="mt-[18px]">
+        {/* <div className="mt-[18px]">
           <h2> Property Video {`(Optional)`}</h2>
           <div className="relative">
             <div
@@ -1776,7 +1791,7 @@ const PropertyAdd = () => {
               </div>
             </label>
           </div>
-        </div>
+        </div> */}
 
         {/* Checkin */}
         <div className="mt-[18px]">
@@ -2403,4 +2418,3 @@ const PropertyAdd = () => {
 };
 
 export default PropertyAdd;
- 

@@ -32,7 +32,7 @@ const Footer = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllActivePaymentMethodsQuery();
 
-  console.log("paymentMethods", data?.paymentMethods);
+  // console.log("paymentMethods", data?.paymentMethods);
 
   return (
     <div className="">

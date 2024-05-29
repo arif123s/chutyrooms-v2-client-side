@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -12,7 +13,7 @@ import starBlank from "../../../assets/icons/star-blank.svg";
 import tickCircle from "../../../assets/icons/tick-circle.svg";
 import favourite from "../../../assets/icons/favourite.svg";
 
-const SingleHotel = () => {
+const SingleHotel = ({hotel}) => {
   return (
     <div className="hotel">
       <div className="hotel-img-slider relative">
@@ -48,17 +49,20 @@ const SingleHotel = () => {
         <p className="flex justify-center items-center text-[14px] lg:text-[16px] h-[28px] lg:h-[32px] p-[10px] border-[1px] border-[#808783] w-fit rounded-[4px]">
           Hotels
         </p>
-        <div className="flex justify-between mt-[2px] gap-[0px]">
+        <div className="flex justify-between mt-[2px] gap-[8px]">
           <div>
-            <div className="flex items-center">
-              <h2 className="hotel-name mr-[8px]">Hotel Sea View</h2>
-              <p className="flex items-center h-[24px] w-fit px-[10px] bg-[#159947] text-[10px] text-white rounded-[4px]">
+            <div className="flex">
+              <h2 className="hotel-name mr-[8px]">{hotel?.property_name}</h2>
+              <p className="flex items-center h-[24px] w-fit px-[10px] bg-[#159947] text-[10px] text-white rounded-[4px] mt-[4px]">
                 CR000002CX
               </p>
             </div>
             <div className="flex items-center mt-[0px] gap-[6px]">
               <img src={location} alt="" />
-              <span className="hotel-info">Cox’s Bazar</span>
+              <div className="hotel-info">
+                <span>{hotel?.area},</span>
+                <span>{hotel?.district}</span>
+              </div>
             </div>
             <div className="flex my-[4px]">
               <div className="ratings">
@@ -71,31 +75,38 @@ const SingleHotel = () => {
               <p className="text-[14px] lg:text-[16px]">4.8 (21 Reviews) </p>
             </div>
             <div className="flex items-start gap-[8px] text-[14px] lg:text-[16px]">
-              <div className="flex items-center">
-                <img
-                  className="w-[20px] mr-[3px]"
-                  src={tickCircle}
-                  alt="tick circle icon"
-                />
-                <p>CCTV</p>
-              </div>
-              <div className="flex items-center">
+              {hotel?.amenities?.map((amenity, index) => (
+                <div key={index} className="flex items-center">
+                  <img
+                    className="w-[20px] mr-[3px]"
+                    src={tickCircle}
+                    alt="tick circle icon"
+                  />
+                  <p>{amenity.name}</p>
+                </div>
+              ))}
+
+              {/* <div className="flex items-center">
                 <img
                   className="w-[20px] mr-[3px]"
                   src={tickCircle}
                   alt="tick circle icon"
                 />
                 <p>Restaurant</p>
-              </div>
-              <p className="text-[#159947]">20+ More</p>
+              </div> */}
+              <p className="text-[#159947]">{hotel?.amenities_more}+ More</p>
             </div>
             <button className="bg-[#159947] h-[40px] flex items-center cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 mt-[10px] hover:bg-[#016A29] transition-all">
               View Details
             </button>
           </div>
           <div>
-            <p className="line-through font-light text-[#808783]">BDT 5000</p>
-            <h2 className="hotel-name">BDT 2300</h2>
+            <p className="line-through font-light text-[#808783]">
+              BDT {hotel?.rooms_regular_price}
+            </p>
+            <h2 className="hotel-name">
+              BDT {hotel?.rooms_website_users_price}
+            </h2>
             <p className="text-[14px] lg:text-[16px]">1 Room, Per Night</p>
           </div>
         </div>

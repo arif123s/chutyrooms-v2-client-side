@@ -12,7 +12,7 @@ const Rooms = () => {
   };
 
   return (
-    <div className="m-[20px] rounded-[8px]">
+    <div className="m-[20px] rounded-[8px] bg-white min-h-[700px]">
       <ul className="country-option">
         <li>
           <Link

@@ -9,7 +9,7 @@ import  RoomGuest from "./RoomGuest";
 
 const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRange , rooms , setRooms , totalAdults, setTotalAdults , totalChildren , setTotalChildren }) => {
   const [open, setDatePickerOpen] = useState(false);
-  const today = new Date();
+  // const today = new Date();
 
   // let nextCusDay = new Date();
   // nextCusDay.setDate(nextCusDay.getDate() + 1);
@@ -18,6 +18,53 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
   // const [startDate, endDate] = dateRange;
 
   const divToBeClickedRef = useRef(null);
+  // const [rooms, setRooms] = useState([
+  //   {
+  //     adults: 1,
+  //     children: 1,
+  //     child_age: {
+  //       0: 1,
+  //     },
+  //   },
+  //   // {
+  //   //   adults: 2,
+  //   //   children: 2,
+  //   //   child_age: {
+  //   //     0: 2,
+  //   //     1: 1,
+  //   //   },
+  //   // },
+  //   // {
+  //   //   adults: 2,
+  //   //   children: 2,
+  //   //   child_age: {
+  //   //     0: 3,
+  //   //     1: 6,
+  //   //   },
+  //   // },
+  // ]);
+
+  // const [searchInputData, setSearchInputData] = useState({
+  //   location: "",
+  //   search_type: "district",
+  //   location_id: 1,
+  //   rooms: 2,
+  //   adult_guest: 1,
+  //   child_guest: 1,
+  //   child_age: 1,
+  //   guest_session_id: "",
+  // });
+
+
+
+  // Function to convert date format
+  const convertDateFormat = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
 
   const handleDivClick = () => {
     if (divToBeClickedRef.current) {
@@ -67,14 +114,8 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       setDatePickerOpen(false);
     }
   };
-
   const [isDivClicked, setDivClicked] = useState(false);
   const navigate = useNavigate();
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    navigate("/search-result-hotel");
-  };
 
   const [scrollY, setScrollY] = useState(0);
 
@@ -83,22 +124,42 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       setScrollY(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
    
-    const formData = {
-      value,
-      startDate,
-      endDate,
-      rooms,
+    // const formData = {
+    //   value,
+    //   startDate,
+    //   endDate,
+    //   rooms,
+    // };
+
+    const searchInfo = {
+      location: value,
+      search_type: "district",
+      location_id: 1,
+      check_in: convertDateFormat(new Date(startDate)),
+      check_out: convertDateFormat(new Date(endDate)),
+      rooms: rooms?.length,
+      adult_guest: totalAdults,
+      child_guest: totalChildren,
+      child_age: 5,
+      guest_session_id: "",
     };
-    console.log('Form Data:', formData);
+    console.log(searchInfo);
+
+    // console.log('Form Data:', formData);
+    const queryString = new URLSearchParams(searchInfo).toString();
+    // navigate(`/search-result-hotel?${queryString}`);
     
   };
 

@@ -83,7 +83,7 @@ const ChildAgeVariation = ({
           className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px] gap-y-[18px] my-[18px]"
         >
           <div>
-            <label className="property-input-title" htmlFor="start_age">
+            <label className="property-input-title block" htmlFor="start_age">
               Age Range
             </label>
             <div className="flex">
@@ -117,10 +117,10 @@ const ChildAgeVariation = ({
             </div>
           </div>
 
-          {/* Price */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[44px]">
+            {/* Free Qty */}
             <div className="">
-              <label className="property-input-title" htmlFor="free_qty">
+              <label className="property-input-title block" htmlFor="free_qty">
                 Free Qty
               </label>
               <input
@@ -137,8 +137,9 @@ const ChildAgeVariation = ({
                 }
               />
             </div>
+            {/* Price */}
             <div className="">
-              <label className="property-input-title" htmlFor="price">
+              <label className="property-input-title block" htmlFor="price">
                 Price
               </label>
               <input

@@ -3,35 +3,41 @@ import plusIcon from "../../../../assets/icons/plus.svg";
 import minusIcon from "../../../../assets/icons/minus.svg";
 import tickSquareIcon from "../../../../assets/icons/tick-square-black.svg";
 
-const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
-      
-    const handleAddBed = (e) => {
-        e.preventDefault();
-        setBedInfos([...bedInfos, { bed_name: "", qty: null }]);
-      };
+const BedInfo = ({ errors, bedInfos, setBedInfos, validationErrors }) => {
+  const handleAddBed = (e) => {
+    e.preventDefault();
+    setBedInfos([...bedInfos, { bed_name: "", qty: null }]);
+  };
 
-      const handleRemoveBed = (e) => {
-        e.preventDefault();
-        if (bedInfos?.length > 1) {
-          setBedInfos(bedInfos.slice(0, -1));
-        }
-      };
+  const handleRemoveBed = (e) => {
+    e.preventDefault();
+    if (bedInfos?.length > 1) {
+      setBedInfos(bedInfos.slice(0, -1));
+    }
+  };
 
-      const handleValueChange = (index, field, value) => {
-        // const numericValue = parseFloat(value);
-        // const newValue = isNaN(numericValue) ? null : numericValue;
-        const newData = [...bedInfos];
-        newData[index][field] = value;
-        setBedInfos(newData);
-      };
-      
+  const handleValueChange = (index, field, value) => {
+    // const numericValue = parseFloat(value);
+    // const newValue = isNaN(numericValue) ? null : numericValue;
+    const newData = [...bedInfos];
+    newData[index][field] = value;
+    setBedInfos(newData);
+  };
+
+ const renderSpecificFieldErrors = (index, field) => {
+   const key = `bed_infos.${index}.${field}`;
+   const error = validationErrors[key];
+
+   return error && <span className="label-text-alt text-red-500">{error}</span>;
+ };
+
   return (
     <div className="mt-[18px]">
       <div className="flex items-center gap-[8px] mb-[8px]">
         <h2 className="text-[16px] font-['Gilroy-SemiBold']">Bed Info</h2>
         <img src={tickSquareIcon} alt="" />
       </div>
-      
+
       {bedInfos.map((bed, index) => (
         <div
           key={index}
@@ -51,12 +57,12 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
               onChange={(e) =>
                 handleValueChange(index, "bed_name", e.target.value)
               }
-            //   {...register("bed_name", {
-            //     required: {
-            //       value: true,
-            //       message: "Bed Name is required",
-            //     },
-            //   })}
+              //   {...register("bed_name", {
+              //     required: {
+              //       value: true,
+              //       message: "Bed Name is required",
+              //     },
+              //   })}
             />
             <label className="">
               {errors.bed_name?.type === "required" && (
@@ -65,11 +71,15 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
                 </span>
               )}
             </label>
+            {renderSpecificFieldErrors(index, "bed_name")}
           </div>
 
           {/* Qty */}
           <div className="">
-            <label className="property-input-title" htmlFor="bed_quantity">
+            <label
+              className="property-input-title block"
+              htmlFor="bed_quantity"
+            >
               Qty
             </label>
             <input
@@ -77,14 +87,15 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
               id="bed_quantity"
               name="bed_quantity"
               type="number"
+              min={1}
               value={bed?.qty || ""}
               onChange={(e) => handleValueChange(index, "qty", e.target.value)}
-            //   {...register("bed_quantity", {
-            //     required: {
-            //       value: true,
-            //       message: "Bed quantity is required",
-            //     },
-            //   })}
+              //   {...register("bed_quantity", {
+              //     required: {
+              //       value: true,
+              //       message: "Bed quantity is required",
+              //     },
+              //   })}
             />
             <label className="">
               {errors.bed_quantity?.type === "required" && (
@@ -93,6 +104,7 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
                 </span>
               )}
             </label>
+            {renderSpecificFieldErrors(index, "qty")}
           </div>
         </div>
       ))}
@@ -111,7 +123,6 @@ const BedInfo = ({ errors, bedInfos, setBedInfos }) => {
           <img src={minusIcon} alt="" /> <span>Remove</span>
         </button>
       </div>
-
     </div>
   );
 };
