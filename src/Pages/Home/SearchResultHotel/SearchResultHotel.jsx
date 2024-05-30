@@ -30,7 +30,7 @@ const SearchResultHotel = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-  const searchInfo = {
+  const [searchInfo,setSearchInfo] = useState({
     location: searchParams.get("location"),
     search_type: searchParams.get("search_type"),
     location_id: parseInt(searchParams.get("location_id")),
@@ -41,9 +41,18 @@ const SearchResultHotel = () => {
     child_guest: parseInt(searchParams.get("child_guest")),
     child_age: parseInt(searchParams.get("child_age")),
     guest_session_id: searchParams.get("guest_session_id"),
-  };
+      start_price: null,
+      end_price: null,
+      hotel_class: null,
+      accommodation_types: [],
+      facilities:[],
+  });
 
-  console.log(searchInfo);
+ const [priceRange, setPriceRange] = useState({
+   lowestPrice: 0,
+   highestPrice: 0,
+ });
+   const [accommodation_types, setAccommodationTypes] = useState([]);
 
   const {
     data: searchData,
@@ -59,6 +68,29 @@ console.log('length',searchData?.data?.hotels_data?.data);
 // hotelResult = 
 //     }
 //   }
+ useEffect(() => {
+setSearchInfo({
+  ...searchInfo,
+  start_price: priceRange.lowestPrice,
+  end_price: priceRange.highestPrice,
+  hotel_class: 4,
+  accommodation_types: ["hotel", "apartment"],
+  facilities: ["wifi", "pool"],
+});
+  //  const updatedBodyData = {
+  //    ...searchInfo.bodyData,
+  //    start_price: priceRange.lowestPrice,
+  //    end_price: priceRange.highestPrice,
+  //    hotel_class: 4,
+  //    accommodation_types: ["hotel", "apartment"],
+  //    facilities: ["wifi", "pool"],
+  //  };
+
+  //  setSearchInfo((prevState) => ({
+  //    ...prevState,
+  //    bodyData: updatedBodyData,
+  //  }));
+ }, [priceRange]);
 
   if (loadError) {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
@@ -78,7 +110,13 @@ console.log('length',searchData?.data?.hotels_data?.data);
 
       <div className="custom-container filter-hotels-container">
         <div className="filter-mobile filter-container">
-          <FilterContainer searchData={searchData?.data}></FilterContainer>
+          <FilterContainer
+            searchData={searchData?.data}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            accommodation_types={accommodation_types}
+            setAccommodationTypes={setAccommodationTypes}
+          ></FilterContainer>
         </div>
 
         <div className="w-[1px]  bg-[#A3A3A3] filter-mobile"></div>
@@ -89,7 +127,7 @@ console.log('length',searchData?.data?.hotels_data?.data);
           <div className="hotels-result-container">
             <div className="flex justify-between  items-start gap-[12px]">
               <h2 className="search-page-title">
-                {searchData?.data?.hotels_data?.data?.length}{" "}
+                ChutyRooms: {searchData?.data?.hotels_data?.data?.length}{" "}
                 {searchData?.data?.hotels_data?.data?.length > 1
                   ? "Properties"
                   : "Property"}{" "}
@@ -178,7 +216,13 @@ console.log('length',searchData?.data?.hotels_data?.data);
               ✕
             </button>
           </form>
-          <FilterContainer></FilterContainer>
+          <FilterContainer
+            searchData={searchData?.data}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            accommodation_types={accommodation_types}
+            setAccommodationTypes={setAccommodationTypes}
+          ></FilterContainer>
         </div>
       </dialog>
     </div>

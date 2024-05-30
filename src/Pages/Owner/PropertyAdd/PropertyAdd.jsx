@@ -862,7 +862,6 @@ const PropertyAdd = () => {
             className="property-description"
             name="description"
             id="description"
-            placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
             {...register("description", {
               required: "Description is required",
               maxLength: {
@@ -901,13 +900,11 @@ const PropertyAdd = () => {
                   precision={0.5}
                   value={parseFloat(field.value)}
                 />
-                {rating && (
+                {/* {rating && (
                   <p>
-                    {"("}
                     {rating}
-                    {")"}
                   </p>
-                )}
+                )} */}
               </div>
             )}
             rules={{

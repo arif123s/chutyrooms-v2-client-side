@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./PopularHotels.css";
 import hotel1 from "../../../../../assets/hotel-img/hotel1.png";
 import hotel2 from "../../../../../assets/hotel-img/hotel2.png";
@@ -12,17 +13,15 @@ import star from "../../../../../assets/icons/star-black.svg";
 import location from "../../../../../assets/icons/map-pin.svg";
 import favouriteIcon from "../../../../../assets/icons/favourite.svg";
 import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const PopularHotels = (props) => {
+const PopularHotels = ({ popularProperties }) => {
   const [favourite, setFavourite] = useState(false);
 
-  if (!Array.isArray(props.popularProperties)) {
-    console.error("Expected an array, received:", props.popularProperties);
-    return null; // Or handle the error gracefully
-  }
-
-
+  // if (!Array.isArray(popularProperties)) {
+  //   console.error("Expected an array, received:", popularProperties);
+  //   return null;
+  // }
 
   return (
     <div className="popular-hotels-container">
@@ -107,7 +106,7 @@ const PopularHotels = (props) => {
             alt="hotel img"
           />
         </div>
-     
+
         <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel3} alt="" />
@@ -288,7 +287,7 @@ const PopularHotels = (props) => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div> 
+        </div>
       </div>
 
       <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">

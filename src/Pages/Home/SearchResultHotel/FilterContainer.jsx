@@ -6,20 +6,21 @@ import checkboxIcon from "../../../assets/icons/square.svg";
 import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 import { useEffect, useState } from "react";
+import sortBy from "sort-by";
 
-const FilterContainer = ({searchData}) => {
+const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_types,setAccommodationTypes}) => {
 
   const [rating, setRating] = useState(0);
   const [value, setValue] = useState([0, 200000]);
-  const [priceRange, setPriceRange] = useState({
-    lowestPrice: 0,
-    highestPrice: 0,
-  });
+  // const [priceRange, setPriceRange] = useState({
+  //   lowestPrice: 0,
+  //   highestPrice: 0,
+  // });
  
   const [allChildLocation,setAllChildLocation]=useState(false);
   const [allFacilities, setAllFacilities] = useState(false);
   const [allAccomodationType, setAllAccomodationType] = useState(false);
-  const [accommodation_types, setAccommodationTypes] = useState([]);
+  // const [accommodation_types, setAccommodationTypes] = useState([]);
 
   console.log(searchData);
   console.log(accommodation_types);
@@ -33,19 +34,17 @@ const FilterContainer = ({searchData}) => {
        setAccommodationTypes(types);
      }
      setPriceRange({lowestPrice:searchData?.min_price || 0, highestPrice:searchData?.max_price||0})
-   }, [searchData]);
+   }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const toggleCheckbox = (index) => {
-    setAccommodationTypes((prevAccommodationTypes) => {
-      const updatedAccommodationTypes = [...prevAccommodationTypes];
-      updatedAccommodationTypes[index].isChecked =
-        !updatedAccommodationTypes[index].isChecked;
-      return updatedAccommodationTypes;
-    });
+    const updatedAccommodationTypes = [...accommodation_types];
+    updatedAccommodationTypes[index].isChecked =
+      !updatedAccommodationTypes[index].isChecked;
+    setAccommodationTypes(updatedAccommodationTypes);
   };
 
   return (
@@ -118,9 +117,8 @@ const FilterContainer = ({searchData}) => {
               className="property-input bg-[#F8FEFF] text-[14px] md:text-[16px] lg:text-[16px] "
               name="popularity"
             >
-              <option value="">Popularity</option>
-              <option value="Popularity">Popularity</option>
-              <option value="Popularity">Popularity</option>
+    
+              <option value="">{searchData?.sort_by[100]}</option>
             </select>
             <img
               // className="absolute top-[14px] right-[12px] arrow-icon"
