@@ -244,13 +244,13 @@ const PropertyAdd = () => {
       });
       // setLogoError("");
       setLogoError(null);
-    } else {
-      setLogo(null);
-      // setLogoError("Logo is required");
-      setLogoError({
-        status: true,
-        message: "Logo is required",
-      });
+    }
+    else {
+      // setLogo(null);
+      // setLogoError({
+      //   status: true,
+      //   message: "Logo is required",
+      // });
     }
   };
 
@@ -282,22 +282,23 @@ const PropertyAdd = () => {
           message: "",
         });
       }
-    } else {
-      const newImages = [...displayImages];
-      newImages[index] = null;
-      setDisplayImages(newImages);
+    }
+    else {
+      // const newImages = [...displayImages];
+      // newImages[index] = null;
+      // setDisplayImages(newImages);
 
-      displayImages.map((i) => {
-        if (i === null) {
-          displayImageCount++;
-        }
-      });
-      if (displayImageCount == 0) {
-        setDisplayImageError({
-          status: true,
-          message: "Please select all four display images.",
-        });
-      }
+      // displayImages.map((i) => {
+      //   if (i === null) {
+      //     displayImageCount++;
+      //   }
+      // });
+      // if (displayImageCount == 0) {
+      //   setDisplayImageError({
+      //     status: true,
+      //     message: "Please select all four display images.",
+      //   });
+      // }
     }
   };
 
@@ -1495,7 +1496,7 @@ const PropertyAdd = () => {
                               </p> */}
                             </div>
                             <p className="text-[14px] text-center absolute -bottom-6 left-4 z-10">
-                              Browse Photo
+                              Update Photo
                             </p>
                             <img
                               src={logo.url}
@@ -1510,7 +1511,7 @@ const PropertyAdd = () => {
                           <div className="flex justify-center mb-[8px]">
                             <img className="w-[20px]" src={imgIcon} alt="" />
                           </div>
-                          <p className="property-input-title text-center">
+                          <p className="text-[14px] text-center">
                             Browse Photo
                           </p>
                         </>
@@ -1554,12 +1555,12 @@ const PropertyAdd = () => {
                         {image ? (
                           <>
                             <div className="grid justify-center ">
-                              <div className="flex items-center mb-[8px] md:block md:justify-center">
-                                <div className="flex md:justify-center">
+                              <div className="flex items-center mb-[8px] justify-center">
+                                <div className="">
                                   <img
                                     src={image.url}
                                     alt={image.name}
-                                    className="w-8 mr-1"
+                                    className="w-12 mr-1"
                                   />
                                 </div>
                                 {/* <span className="text-[12px] block text-center">
@@ -1568,7 +1569,7 @@ const PropertyAdd = () => {
                                     : image?.name}
                                 </span> */}
                               </div>
-                              <p className="property-input-title text-center">
+                              <p className="text-[14px] text-center">
                                 Update Photo
                               </p>
                             </div>

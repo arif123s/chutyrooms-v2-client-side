@@ -8,16 +8,24 @@ import searchIcon from "../../../assets/icons/search-normal.svg";
 import { useEffect, useState } from "react";
 import sortBy from "sort-by";
 
-const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_types,setAccommodationTypes}) => {
-
-  const [rating, setRating] = useState(0);
+const FilterContainer = ({
+  searchData,
+  priceRange,
+  setPriceRange,
+  accommodation_types,
+  setAccommodationTypes,
+  facilities,
+  setFacilities,
+  rating,
+  setRating,
+}) => {
   const [value, setValue] = useState([0, 200000]);
   // const [priceRange, setPriceRange] = useState({
   //   lowestPrice: 0,
   //   highestPrice: 0,
   // });
- 
-  const [allChildLocation,setAllChildLocation]=useState(false);
+
+  const [allChildLocation, setAllChildLocation] = useState(false);
   const [allFacilities, setAllFacilities] = useState(false);
   const [allAccomodationType, setAllAccomodationType] = useState(false);
   // const [accommodation_types, setAccommodationTypes] = useState([]);
@@ -25,26 +33,43 @@ const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_type
   console.log(searchData);
   console.log(accommodation_types);
 
-   useEffect(() => {
-     if (searchData?.accommodation_types) {
-       const types = searchData.accommodation_types.map((type) => ({
-         name: type.name,
-         isChecked: false,
-       }));
-       setAccommodationTypes(types);
-     }
-     setPriceRange({lowestPrice:searchData?.min_price || 0, highestPrice:searchData?.max_price||0})
-   }, []);
+  useEffect(() => {
+    if (searchData?.accommodation_types) {
+      const types = searchData.accommodation_types.map((type) => ({
+        name: type.name,
+        isChecked: false,
+      }));
+      setAccommodationTypes(types);
+    }
+    if (searchData?.amenities_side) {
+      const types = searchData.amenities_side.map((type) => ({
+        name: type.name,
+        isChecked: false,
+      }));
+      setFacilities(types);
+    }
+    setPriceRange({
+      lowestPrice: searchData?.min_price || 0,
+      highestPrice: searchData?.max_price || 0,
+    });
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const toggleCheckbox = (index) => {
+  const accommodationTypesChange = (index) => {
     const updatedAccommodationTypes = [...accommodation_types];
     updatedAccommodationTypes[index].isChecked =
       !updatedAccommodationTypes[index].isChecked;
     setAccommodationTypes(updatedAccommodationTypes);
+  };
+
+  const amenitiesChange = (index) => {
+    const updatedFacilities = [...facilities];
+    updatedFacilities[index].isChecked =
+      !updatedFacilities[index].isChecked;
+    setFacilities(updatedFacilities);
   };
 
   return (
@@ -117,7 +142,6 @@ const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_type
               className="property-input bg-[#F8FEFF] text-[14px] md:text-[16px] lg:text-[16px] "
               name="popularity"
             >
-    
               <option value="">{searchData?.sort_by[100]}</option>
             </select>
             <img
@@ -210,7 +234,7 @@ const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_type
                           ? "checked checkbox"
                           : "unchecked checkbox"
                       }
-                      onClick={() => toggleCheckbox(index)}
+                      onClick={() => accommodationTypesChange(index)}
                     />
                   </div>
                   <label htmlFor={`checkbox-${index}`}>{type.name}</label>
@@ -237,7 +261,7 @@ const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_type
                           ? "checked checkbox"
                           : "unchecked checkbox"
                       }
-                      onClick={() => toggleCheckbox(index)}
+                      onClick={() => accommodationTypesChange(index)}
                     />
                   </div>
                   <label htmlFor={`checkbox-${index}`}>{type.name}</label>
@@ -262,8 +286,20 @@ const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_type
         <div className="mt-[8px] text-[14px] md:text-[16px] lg:text-[16px]">
           {allFacilities ? (
             <>
-              {searchData?.amenities_side.map((amenity) => (
-                <p key={amenity.id}>{amenity?.name}</p>
+              {facilities?.map((amenity, index) => (
+                <div key={amenity.id} className="flex gap-x-[4px]">
+                  <img
+                    className="w-[18px] cursor-pointer"
+                    src={amenity.isChecked ? checkboxTickIcon : checkboxIcon}
+                    alt={
+                      amenity.isChecked
+                        ? "checked checkbox"
+                        : "unchecked checkbox"
+                    }
+                    onClick={() => amenitiesChange(index)}
+                  />
+                  <p>{amenity?.name}</p>
+                </div>
               ))}
               <div
                 onClick={() => setAllFacilities(!allFacilities)}
@@ -275,8 +311,20 @@ const FilterContainer = ({searchData,priceRange,setPriceRange,accommodation_type
             </>
           ) : (
             <>
-              {searchData?.amenities_side?.slice(0, 4).map((amenity) => (
-                <p key={amenity.id}>{amenity?.name}</p>
+              {facilities?.slice(0, 4).map((amenity, index) => (
+                <div key={amenity.id} className="flex gap-x-[4px]">
+                  <img
+                    className="w-[18px] cursor-pointer"
+                    src={amenity.isChecked ? checkboxTickIcon : checkboxIcon}
+                    alt={
+                      amenity.isChecked
+                        ? "checked checkbox"
+                        : "unchecked checkbox"
+                    }
+                    onClick={() => amenitiesChange(index)}
+                  />
+                  <p>{amenity?.name}</p>
+                </div>
               ))}
               {searchData?.amenities_side?.length > 4 && (
                 <div

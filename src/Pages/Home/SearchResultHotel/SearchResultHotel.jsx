@@ -41,56 +41,55 @@ const SearchResultHotel = () => {
     child_guest: parseInt(searchParams.get("child_guest")),
     child_age: parseInt(searchParams.get("child_age")),
     guest_session_id: searchParams.get("guest_session_id"),
-      start_price: null,
-      end_price: null,
-      hotel_class: null,
-      accommodation_types: [],
-      facilities:[],
+  });
+  const [filterProperty, setFilterProperty] = useState({
+    start_price: null,
+    end_price: null,
+    hotel_class: null,
+    accommodation_types: [],
+    facilities: [],
   });
 
  const [priceRange, setPriceRange] = useState({
    lowestPrice: 0,
    highestPrice: 0,
  });
+   const [rating, setRating] = useState(0);
    const [accommodation_types, setAccommodationTypes] = useState([]);
-
+   const [facilities, setFacilities] = useState([]);
+   
+   
   const {
     data: searchData,
-    error,
     isLoading,
+    refetch,
   } = useGetAllSearchResultHotelsQuery(searchInfo);
-  let hotelResult;
-
   console.log(searchData);
-console.log('length',searchData?.data?.hotels_data?.data);
+  
+  let hotelResult; 
+
 //   if (searchData?.hotels_data?.data) {
 //     if (searchData?.hotels_data?.data?.length > 0) {
 // hotelResult = 
 //     }
 //   }
  useEffect(() => {
-setSearchInfo({
-  ...searchInfo,
-  start_price: priceRange.lowestPrice,
-  end_price: priceRange.highestPrice,
-  hotel_class: 4,
-  accommodation_types: ["hotel", "apartment"],
-  facilities: ["wifi", "pool"],
-});
-  //  const updatedBodyData = {
-  //    ...searchInfo.bodyData,
-  //    start_price: priceRange.lowestPrice,
-  //    end_price: priceRange.highestPrice,
-  //    hotel_class: 4,
-  //    accommodation_types: ["hotel", "apartment"],
-  //    facilities: ["wifi", "pool"],
-  //  };
+   // Update filter property when priceRange changes
+   setFilterProperty({
+     ...filterProperty,
+     start_price: priceRange.lowestPrice,
+     end_price: priceRange.highestPrice,
+     hotel_class: rating,
+     accommodation_types: accommodation_types.filter(type=>type?.isChecked==true),
+     facilities: facilities,
+   });
+   refetch();
+ }, [priceRange, rating, accommodation_types,facilities]);
 
-  //  setSearchInfo((prevState) => ({
-  //    ...prevState,
-  //    bodyData: updatedBodyData,
-  //  }));
- }, [priceRange]);
+ console.log("filterProperty", filterProperty);
+
+ 
+  
 
   if (loadError) {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
@@ -116,6 +115,10 @@ setSearchInfo({
             setPriceRange={setPriceRange}
             accommodation_types={accommodation_types}
             setAccommodationTypes={setAccommodationTypes}
+            rating={rating}
+            setRating={setRating}
+            facilities={facilities}
+            setFacilities={setFacilities}
           ></FilterContainer>
         </div>
 
@@ -222,6 +225,10 @@ setSearchInfo({
             setPriceRange={setPriceRange}
             accommodation_types={accommodation_types}
             setAccommodationTypes={setAccommodationTypes}
+            rating={rating}
+            setRating={setRating}
+            facilities={facilities}
+            setFacilities={setFacilities}
           ></FilterContainer>
         </div>
       </dialog>

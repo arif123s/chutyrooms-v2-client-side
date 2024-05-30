@@ -11,9 +11,7 @@ import  RoomGuest from "./RoomGuest";
 const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRange , rooms , setRooms , totalAdults, setTotalAdults , totalChildren , setTotalChildren }) => {
   const [open, setDatePickerOpen] = useState(false);
 
-
-
-  console.log(rooms);
+  // console.log(rooms);
   // const today = new Date();
 
   // let nextCusDay = new Date();
@@ -31,7 +29,6 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
   //       0: 1,
   //     },
   //   },
-
 
   //   // {
   //   //   adults: 2,
@@ -62,8 +59,6 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
   //   guest_session_id: "",
   // });
 
-
-
   // Function to convert date format
   const convertDateFormat = (dateString) => {
     const date = new Date(dateString);
@@ -78,7 +73,6 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       divToBeClickedRef.current.setOpen(true);
     }
   };
-
 
   // const [rooms, setRooms] = useState(initialRooms);
   // const [totalAdults, setTotalAdults] = useState(1);  // Initially 1 adult
@@ -169,30 +163,24 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
     const searchInfo = {
       location: value,
       search_type: "district",
-      location_id: 1, 
+      location_id: 1,
       check_in: convertDateFormat(new Date(startDate)),
       check_out: convertDateFormat(new Date(endDate)),
       rooms: rooms?.length,
       adult_guest: totalAdults,
       child_guest: totalChildren,
-      child_age: 5,
+      child_age: maxChildAge,
       guest_session_id: "",
-      max_child_age : maxChildAge
-      
     };
- 
-
-    console.log(searchInfo);
+    // console.log(searchInfo);
     
-
-  
     const queryString = new URLSearchParams(searchInfo).toString();
-    // navigate(`/search-result-hotel?${queryString}`);
+    navigate(`/search-result-hotel?${queryString}`);
     
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container mt-[18px] lg:mt-[40px]">
 
       <form onSubmit={handleSubmit}>
       <div className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>
