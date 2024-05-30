@@ -47,14 +47,28 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
     }
   };
 
-  const updateGuests = (e, index, type, value) => {
-    // e.preventDefault();
-    // Create a copy of the rooms array
-    const updatedRooms = [...rooms];
-    // Update the guests for the specified room and type (adults or children)
-    updatedRooms[index][type] = value;
-    // Update state with the new rooms array
-    setRooms(updatedRooms);
+
+
+
+  const updateGuests = ( roomIndex, childIndex, value) => {
+   
+    // const updatedRooms = [...rooms];
+  
+    // updatedRooms[index][type] = value;
+   
+    // setRooms(updatedRooms);
+
+
+    
+    setRooms(prevRooms => {
+      const updatedRooms = [...prevRooms];
+      if (!updatedRooms[roomIndex].child_age) {
+        updatedRooms[roomIndex].child_age = [];
+      }
+      updatedRooms[roomIndex].child_age[childIndex] = value;
+   
+      return updatedRooms;
+    });
   };
 
   const addDiv = (event) => {
@@ -222,7 +236,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
                   className="adult-quantity"
                   type="number"
                   onChange={(e) =>
-                    updateGuests(e, index, "children", parseInt(e.target.value))
+                    updateGuests(index, "children", parseInt(e.target.value))
                   }
                   value={room.children}
                   readOnly
@@ -239,13 +253,14 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
                     {/* {(index == Childindex) ?
                   ( */}
                     <div key={Childindex} className="relative">
-                      <select
+                      {/* <select
                         className="childage-select-box childage"
                         onChange={(e) =>
                           updateGuests(
                             index,
                             "child_age",
                             parseInt(e.target.value)
+                            
                           )
                         }
                         // displayEmpty
@@ -286,7 +301,25 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
                         >
                           6
                         </option>
-                      </select>
+                      </select> */}
+
+<select
+          className="childage-select-box childage"
+          // value={childAge} // Bind the value correctly
+          onChange={(e) =>
+            updateGuests(
+              index,
+              Childindex,
+              parseInt(e.target.value)
+            )
+          }
+        >
+          {[1, 2, 3, 4, 5, 6].map((age) => (
+            <option key={age} value={age}>
+              {age}
+            </option>
+          ))}
+        </select>
 
                       <img className="arrow-icon-down" src={ArrowDown}></img>
                     </div>
