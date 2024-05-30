@@ -10,6 +10,10 @@ import  RoomGuest from "./RoomGuest";
 
 const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRange , rooms , setRooms , totalAdults, setTotalAdults , totalChildren , setTotalChildren }) => {
   const [open, setDatePickerOpen] = useState(false);
+
+
+
+  console.log(rooms);
   // const today = new Date();
 
   // let nextCusDay = new Date();
@@ -27,6 +31,8 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
   //       0: 1,
   //     },
   //   },
+
+
   //   // {
   //   //   adults: 2,
   //   //   children: 2,
@@ -143,6 +149,22 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
     //   endDate,
     //   rooms,
     // };
+    // console.log(rooms)
+
+    const findMaxChildAge = (rooms) => {
+      // Extract all child_age values and flatten them into a single array
+      const allAges = rooms.flatMap(room => Object.values(room.child_age));
+    
+      // Find the maximum age
+      const maxAge = Math.max(...allAges);
+    
+      return maxAge;
+    };
+    
+    const maxChildAge = findMaxChildAge(rooms);
+    // console.log("Maximum child age:", maxChildAge);
+
+   
 
     const searchInfo = {
       location: value,
@@ -155,12 +177,17 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       child_guest: totalChildren,
       child_age: 5,
       guest_session_id: "",
+      max_child_age : maxChildAge
+      
     };
-    console.log(searchInfo);
+ 
 
-    // console.log('Form Data:', formData);
+    console.log(searchInfo);
+    
+
+  
     const queryString = new URLSearchParams(searchInfo).toString();
-    navigate(`/search-result-hotel?${queryString}`);
+    // navigate(`/search-result-hotel?${queryString}`);
     
   };
 
