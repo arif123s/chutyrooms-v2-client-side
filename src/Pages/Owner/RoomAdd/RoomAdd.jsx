@@ -68,11 +68,11 @@ const RoomAdd = () => {
     }
   };
 
-  const handleDeleteImage = (index) => {
-    const newImages = [...displayImages];
-    newImages[index] = null;
-    setDisplayImages(newImages);
-  };
+  // const handleDeleteImage = (index) => {
+  //   const newImages = [...displayImages];
+  //   newImages[index] = null;
+  //   setDisplayImages(newImages);
+  // };
 
   // const handleSave = () => {
   //   setDashboard(!dashboard)
@@ -745,7 +745,7 @@ const RoomAdd = () => {
             Cancel
           </a>
           <button
-            // onClick={handleSave}
+            disabled={roomAddLoading}
             type="submit"
             className="text-[14px] flex justify-center items-center w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
           >

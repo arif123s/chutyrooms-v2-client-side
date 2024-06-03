@@ -302,23 +302,23 @@ const PropertyAdd = () => {
     }
   };
 
-  const handleVideoSelect = (event) => {
-    const fileInput = event.target;
-    if (fileInput?.files?.length > 0) {
-      setVideo({
-        name: fileInput.files[0].name,
-        url: URL.createObjectURL(fileInput.files[0]),
-      });
-    } else {
-      setVideo(null);
-      setVideoError(true);
-    }
-  };
+  // const handleVideoSelect = (event) => {
+  //   const fileInput = event.target;
+  //   if (fileInput?.files?.length > 0) {
+  //     setVideo({
+  //       name: fileInput.files[0].name,
+  //       url: URL.createObjectURL(fileInput.files[0]),
+  //     });
+  //   } else {
+  //     setVideo(null);
+  //     setVideoError(true);
+  //   }
+  // };
 
-  const handleVideoDelete = () => {
-    setVideo(null);
-    setVideoError(false);
-  };
+  // const handleVideoDelete = () => {
+  //   setVideo(null);
+  //   setVideoError(false);
+  // };
 
   const onSubmit = async (data) => {
     displayImages.map((i) => {
@@ -2403,6 +2403,7 @@ const PropertyAdd = () => {
           </button>
           <button
             // onClick={(e) => handleSave(e)}
+            disabled={isLoading}
             type="submit"
             // disabled={!rectangleBounds}
             className="w-[80px] flex items-center justify-center md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
