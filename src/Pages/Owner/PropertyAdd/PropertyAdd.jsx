@@ -884,7 +884,7 @@ const PropertyAdd = () => {
           <label className="property-input-title block" htmlFor="address">
             Property Rating
           </label>
-          
+
           <Controller
             name="rating"
             control={control}
@@ -1791,9 +1791,10 @@ const PropertyAdd = () => {
           </div>
         </div> */}
 
-        {/* Checkin */}
+        {/* Checkin Chechout */}
         <div className="mt-[18px]">
-          <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
+          {/* Checkin */}
+          <div className="flex items-center gap-2 lg:gap-4 mb-[4px]">
             <p className="flex w-[100px] justify-between">
               Check In{" "}
               <span className="mr-[4px] md:mr-[8px] lg:mr-[12px]">:</span>{" "}
@@ -1812,25 +1813,18 @@ const PropertyAdd = () => {
                   {...register("checkin_hour", {
                     required: {
                       value: true,
-                      message: "Check in time is required",
+                      message: "Check in hour is required.",
                     },
                     min: {
                       value: 1,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                     max: {
                       value: 12,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkin_hour?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkin_hour?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -1848,7 +1842,7 @@ const PropertyAdd = () => {
                   {...register("checkin_minute", {
                     required: {
                       value: true,
-                      message: "Check in time is required",
+                      message: "Check in minute is required",
                     },
                     min: {
                       value: 0,
@@ -1860,13 +1854,6 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkin_minute?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkin_minute?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -1913,7 +1900,20 @@ const PropertyAdd = () => {
               )}
             </label> */}
           </div>
-          <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
+          <div className="flex gap-[2px]">
+            {errors.checkin_hour && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkin_hour.message}
+              </span>
+            )}
+            {errors.checkin_minute && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkin_minute.message}
+              </span>
+            )}
+          </div>
+          {/* Checkout */}
+          <div className="flex items-center gap-2 lg:gap-4 mb-[4px] mt-[8px]">
             <p className="flex w-[104px] justify-between">
               Check Out{" "}
               <span className="mr-[4px] md:mr-[8px] lg:mr-[12px]">:</span>{" "}
@@ -1932,25 +1932,18 @@ const PropertyAdd = () => {
                   {...register("checkout_hour", {
                     required: {
                       value: true,
-                      message: "Check out time is required",
+                      message: "Checkout hour is required.",
                     },
                     min: {
                       value: 1,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                     max: {
                       value: 12,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkout_hour?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkout_hour?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -1968,7 +1961,7 @@ const PropertyAdd = () => {
                   {...register("checkout_minute", {
                     required: {
                       value: true,
-                      message: "Check in time is required",
+                      message: "Checkout minute is required",
                     },
                     min: {
                       value: 0,
@@ -1980,13 +1973,6 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkout_minute?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkout_minute?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -2020,16 +2006,18 @@ const PropertyAdd = () => {
                 />
               </div>
             </div>
-            {/* <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
-              AM
-            </span> */}
-            <label className="block">
-              {errors.checkin && (
-                <span className="label-text-alt text-red-500">
-                  {errors.checkin?.message}
-                </span>
-              )}
-            </label>
+          </div>
+          <div className="flex gap-[2px]">
+            {errors.checkout_hour && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkout_hour.message}
+              </span>
+            )}
+            {errors.checkout_minute && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkout_minute.message}
+              </span>
+            )}
           </div>
         </div>
         {/* Cancellation Policy */}
