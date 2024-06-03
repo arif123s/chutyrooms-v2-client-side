@@ -11,12 +11,12 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay } from "swiper/modules";
 
-const DealMembership = (props) => {
-
-  if (!Array.isArray(props.sentValue)) {
-    console.error('Expected an array, received:', props.sentValue);
-    return null; 
-  }
+const DealMembership = ({ membershipCards }) => {
+ 
+  // if (!Array.isArray({ membershipCards })) {
+  //   console.error("Expected an array, received:", membershipCards);
+  //   return null;
+  // }
 
   return (
     <div className="deal-membership-container">
@@ -74,16 +74,16 @@ const DealMembership = (props) => {
           }}
         >
           {/* <Swiper {...swiperSettings}> */}
-          {props.sentValue.map((Memberships) => (
-             <SwiperSlide key={Memberships.id}>
-             <img
-               className="membership-card"
-               src={Memberships.image}
-               alt="Platinum card"
-             />
-           </SwiperSlide>
+          {membershipCards?.map((Memberships) => (
+            <SwiperSlide key={Memberships.id}>
+              <img
+                className="membership-card"
+                src={Memberships.image}
+                alt="Platinum card"
+              />
+            </SwiperSlide>
           ))}
-         
+
           {/* <SwiperSlide>
             <img className="membership-card" src={gold} alt="Gold card" />
           </SwiperSlide>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./PopularHotels.css";
 import hotel1 from "../../../../../assets/hotel-img/hotel1.png";
 import hotel2 from "../../../../../assets/hotel-img/hotel2.png";
@@ -155,7 +156,7 @@ const PopularHotels = ( {popularProperties ,startDate , endDate ,rooms , totalAd
             alt="hotel img"
           />
         </div>
-     
+
         <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel3} alt="" />
@@ -340,7 +341,7 @@ const PopularHotels = ( {popularProperties ,startDate , endDate ,rooms , totalAd
       </div>
 
       <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">
-        <button className=" bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all">
+        <button className=" bg-[#159947] cursor-pointer text-white text-[14px] px-[16px] py-[10px] rounded-[8px] border-0 hover:bg-[#016A29] transition-all">
           Show More
         </button>
       </div>

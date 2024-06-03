@@ -1,8 +1,8 @@
 // import starFill from "../../../assets/icons/star-fill.svg";
 // import starBlank from "../../../assets/icons/star-blank.svg";
-import delteIcon from "../../../assets/icons/delete.svg";
+// import delteIcon from "../../../assets/icons/delete.svg";
 import imgIcon from "../../../assets/icons/img.svg";
-import videoIcon from "../../../assets/icons/frame.svg";
+// import videoIcon from "../../../assets/icons/frame.svg";
 import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 // import markLoaction from "../../../assets/icons/mark-location.svg";
@@ -106,8 +106,8 @@ const PropertyAdd = () => {
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
-  const [video, setVideo] = useState(null);
-  const [videoError, setVideoError] = useState(true);
+  // const [video, setVideo] = useState(null);
+  // const [videoError, setVideoError] = useState(true);
 
   const selectedPropertyTypes = useWatch({
     control,
@@ -244,13 +244,13 @@ const PropertyAdd = () => {
       });
       // setLogoError("");
       setLogoError(null);
-    } else {
-      setLogo(null);
-      // setLogoError("Logo is required");
-      setLogoError({
-        status: true,
-        message: "Logo is required",
-      });
+    }
+    else {
+      // setLogo(null);
+      // setLogoError({
+      //   status: true,
+      //   message: "Logo is required",
+      // });
     }
   };
 
@@ -282,42 +282,43 @@ const PropertyAdd = () => {
           message: "",
         });
       }
-    } else {
-      const newImages = [...displayImages];
-      newImages[index] = null;
-      setDisplayImages(newImages);
+    }
+    else {
+      // const newImages = [...displayImages];
+      // newImages[index] = null;
+      // setDisplayImages(newImages);
 
-      displayImages.map((i) => {
-        if (i === null) {
-          displayImageCount++;
-        }
-      });
-      if (displayImageCount == 0) {
-        setDisplayImageError({
-          status: true,
-          message: "Please select all four display images.",
-        });
-      }
+      // displayImages.map((i) => {
+      //   if (i === null) {
+      //     displayImageCount++;
+      //   }
+      // });
+      // if (displayImageCount == 0) {
+      //   setDisplayImageError({
+      //     status: true,
+      //     message: "Please select all four display images.",
+      //   });
+      // }
     }
   };
 
-  const handleVideoSelect = (event) => {
-    const fileInput = event.target;
-    if (fileInput?.files?.length > 0) {
-      setVideo({
-        name: fileInput.files[0].name,
-        url: URL.createObjectURL(fileInput.files[0]),
-      });
-    } else {
-      setVideo(null);
-      setVideoError(true);
-    }
-  };
+  // const handleVideoSelect = (event) => {
+  //   const fileInput = event.target;
+  //   if (fileInput?.files?.length > 0) {
+  //     setVideo({
+  //       name: fileInput.files[0].name,
+  //       url: URL.createObjectURL(fileInput.files[0]),
+  //     });
+  //   } else {
+  //     setVideo(null);
+  //     setVideoError(true);
+  //   }
+  // };
 
-  const handleVideoDelete = () => {
-    setVideo(null);
-    setVideoError(false);
-  };
+  // const handleVideoDelete = () => {
+  //   setVideo(null);
+  //   setVideoError(false);
+  // };
 
   const onSubmit = async (data) => {
     displayImages.map((i) => {
@@ -862,7 +863,6 @@ const PropertyAdd = () => {
             className="property-description"
             name="description"
             id="description"
-            placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
             {...register("description", {
               required: "Description is required",
               maxLength: {
@@ -884,7 +884,7 @@ const PropertyAdd = () => {
           <label className="property-input-title block" htmlFor="address">
             Property Rating
           </label>
-          
+
           <Controller
             name="rating"
             control={control}
@@ -901,13 +901,11 @@ const PropertyAdd = () => {
                   precision={0.5}
                   value={parseFloat(field.value)}
                 />
-                {rating && (
+                {/* {rating && (
                   <p>
-                    {"("}
                     {rating}
-                    {")"}
                   </p>
-                )}
+                )} */}
               </div>
             )}
             rules={{
@@ -1498,7 +1496,7 @@ const PropertyAdd = () => {
                               </p> */}
                             </div>
                             <p className="text-[14px] text-center absolute -bottom-6 left-4 z-10">
-                              Browse Photo
+                              Update Photo
                             </p>
                             <img
                               src={logo.url}
@@ -1513,7 +1511,7 @@ const PropertyAdd = () => {
                           <div className="flex justify-center mb-[8px]">
                             <img className="w-[20px]" src={imgIcon} alt="" />
                           </div>
-                          <p className="property-input-title text-center">
+                          <p className="text-[14px] text-center">
                             Browse Photo
                           </p>
                         </>
@@ -1557,12 +1555,12 @@ const PropertyAdd = () => {
                         {image ? (
                           <>
                             <div className="grid justify-center ">
-                              <div className="flex items-center mb-[8px] md:block md:justify-center">
-                                <div className="flex md:justify-center">
+                              <div className="flex items-center mb-[8px] justify-center">
+                                <div className="">
                                   <img
                                     src={image.url}
                                     alt={image.name}
-                                    className="w-8 mr-1"
+                                    className="w-12 mr-1"
                                   />
                                 </div>
                                 {/* <span className="text-[12px] block text-center">
@@ -1571,7 +1569,7 @@ const PropertyAdd = () => {
                                     : image?.name}
                                 </span> */}
                               </div>
-                              <p className="property-input-title text-center">
+                              <p className="text-[14px] text-center">
                                 Update Photo
                               </p>
                             </div>
@@ -1793,9 +1791,10 @@ const PropertyAdd = () => {
           </div>
         </div> */}
 
-        {/* Checkin */}
+        {/* Checkin Chechout */}
         <div className="mt-[18px]">
-          <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
+          {/* Checkin */}
+          <div className="flex items-center gap-2 lg:gap-4 mb-[4px]">
             <p className="flex w-[100px] justify-between">
               Check In{" "}
               <span className="mr-[4px] md:mr-[8px] lg:mr-[12px]">:</span>{" "}
@@ -1814,25 +1813,18 @@ const PropertyAdd = () => {
                   {...register("checkin_hour", {
                     required: {
                       value: true,
-                      message: "Check in time is required",
+                      message: "Check in hour is required.",
                     },
                     min: {
                       value: 1,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                     max: {
                       value: 12,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkin_hour?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkin_hour?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -1850,7 +1842,7 @@ const PropertyAdd = () => {
                   {...register("checkin_minute", {
                     required: {
                       value: true,
-                      message: "Check in time is required",
+                      message: "Check in minute is required",
                     },
                     min: {
                       value: 0,
@@ -1862,13 +1854,6 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkin_minute?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkin_minute?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -1915,7 +1900,20 @@ const PropertyAdd = () => {
               )}
             </label> */}
           </div>
-          <div className="flex items-center gap-2 lg:gap-4 mb-[12px]">
+          <div className="flex gap-[2px]">
+            {errors.checkin_hour && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkin_hour.message}
+              </span>
+            )}
+            {errors.checkin_minute && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkin_minute.message}
+              </span>
+            )}
+          </div>
+          {/* Checkout */}
+          <div className="flex items-center gap-2 lg:gap-4 mb-[4px] mt-[8px]">
             <p className="flex w-[104px] justify-between">
               Check Out{" "}
               <span className="mr-[4px] md:mr-[8px] lg:mr-[12px]">:</span>{" "}
@@ -1934,25 +1932,18 @@ const PropertyAdd = () => {
                   {...register("checkout_hour", {
                     required: {
                       value: true,
-                      message: "Check out time is required",
+                      message: "Checkout hour is required.",
                     },
                     min: {
                       value: 1,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                     max: {
                       value: 12,
-                      message: "Hour should be between 1 and 12",
+                      message: "Hour should be between 1 and 12.",
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkout_hour?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkout_hour?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -1970,7 +1961,7 @@ const PropertyAdd = () => {
                   {...register("checkout_minute", {
                     required: {
                       value: true,
-                      message: "Check in time is required",
+                      message: "Checkout minute is required",
                     },
                     min: {
                       value: 0,
@@ -1982,13 +1973,6 @@ const PropertyAdd = () => {
                     },
                   })}
                 />
-                {/* <label className="">
-                  {errors.checkout_minute?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.checkout_minute?.message}
-                    </span>
-                  )}
-                </label> */}
               </div>
             </div>
 
@@ -2022,16 +2006,18 @@ const PropertyAdd = () => {
                 />
               </div>
             </div>
-            {/* <span className="text-[14px] md:text-[16px] lg:text-[16px] inline-block ml-[4px]">
-              AM
-            </span> */}
-            <label className="block">
-              {errors.checkin && (
-                <span className="label-text-alt text-red-500">
-                  {errors.checkin?.message}
-                </span>
-              )}
-            </label>
+          </div>
+          <div className="flex gap-[2px]">
+            {errors.checkout_hour && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkout_hour.message}
+              </span>
+            )}
+            {errors.checkout_minute && (
+              <span className="label-text-alt text-red-500">
+                {errors.checkout_minute.message}
+              </span>
+            )}
           </div>
         </div>
         {/* Cancellation Policy */}
@@ -2405,6 +2391,7 @@ const PropertyAdd = () => {
           </button>
           <button
             // onClick={(e) => handleSave(e)}
+            disabled={isLoading}
             type="submit"
             // disabled={!rectangleBounds}
             className="w-[80px] flex items-center justify-center md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"

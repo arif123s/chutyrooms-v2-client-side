@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Menu from "../../../../../assets/icons/menu-large.svg"
 import SearchIcon from "../../../../../assets/icons/search-normal.svg"
 import BellIcon from "../../../../../assets/icons/Group-bell.svg"
@@ -12,6 +13,8 @@ import { useNavigate } from "react-router-dom"
 const NavBar = ({ open, setOpen }) => {
 
    const navigate = useNavigate();
+   const user = JSON.parse(localStorage.getItem("userInfo"));
+   console.log(user)
   
    const handleNavigate = (route) => {
      navigate(`/${route}`);
@@ -25,10 +28,7 @@ const NavBar = ({ open, setOpen }) => {
            src={ChutyLogo}
            className="small-chuty-logo"
          ></img>
-         <img
-           src={MenuSmall}
-           onClick={() => setOpen(!open)}
-         ></img>
+         <img src={MenuSmall} onClick={() => setOpen(!open)}></img>
        </div>
        <div className="dashboard-nav-container">
          {/* <div className="flex items-center justify-between"> */}
@@ -49,9 +49,14 @@ const NavBar = ({ open, setOpen }) => {
              <img className="navbar-icon" src={BellIcon}></img>
            </div>
            <div className="navbar-user-info">
-             <img src={UserIcon} className="user-image"></img>
+             {user.image ? (
+               <img src={user.img} className="user-image"></img>
+             ) : (
+               <img src={UserIcon} className="user-image"></img>
+             )}
+
              <h2 className="user-name hidden lg:block md:block">
-               Joyanta Datta
+               {user?.name}
              </h2>
            </div>
          </div>

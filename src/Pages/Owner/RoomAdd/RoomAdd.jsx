@@ -62,17 +62,17 @@ const RoomAdd = () => {
       };
       setDisplayImages(newImages);
     } else {
-      const newImages = [...displayImages];
-      newImages[index] = null;
-      setDisplayImages(newImages);
+      // const newImages = [...displayImages];
+      // newImages[index] = null;
+      // setDisplayImages(newImages);
     }
   };
 
-  const handleDeleteImage = (index) => {
-    const newImages = [...displayImages];
-    newImages[index] = null;
-    setDisplayImages(newImages);
-  };
+  // const handleDeleteImage = (index) => {
+  //   const newImages = [...displayImages];
+  //   newImages[index] = null;
+  //   setDisplayImages(newImages);
+  // };
 
   // const handleSave = () => {
   //   setDashboard(!dashboard)
@@ -384,14 +384,14 @@ const RoomAdd = () => {
           <div className="property-display-images">
             {displayImages?.map((image, index) => (
               <div className="relative" key={index}>
-                <div className="flex justify-end absolute top-[20px] right-[8px]">
+                {/* <div className="flex justify-end absolute top-[20px] right-[8px]">
                   <img
                     className="px-[10px] py-[8px] bg-[#E6E7E6] rounded-[4px]"
                     src={deleteIcon}
                     onClick={() => handleDeleteImage(index)}
                     alt=""
                   />
-                </div>
+                </div> */}
                 <label
                   htmlFor={`display-image-${index}`}
                   className="input-label"
@@ -400,18 +400,18 @@ const RoomAdd = () => {
                     {image ? (
                       <>
                         <div className="grid justify-center ">
-                          <div className="flex items-center mb-[8px] md:block md:justify-center">
-                            <div className="flex md:justify-center">
+                          <div className="flex items-center mb-[8px] justify-center">
+                            <div className="flex justify-center">
                               <img
                                 src={image.url}
                                 alt={image.name}
-                                className="w-8 mr-1"
+                                className="w-12 mr-1"
                               />
                             </div>
-                            <span className="">{image.name}</span>
+                            {/* <span className="">{image.name}</span> */}
                           </div>
                           <p className="property-input-title text-center">
-                            Browse Photo
+                            Update Photo
                           </p>
                         </div>
                         {/* <img
@@ -458,7 +458,6 @@ const RoomAdd = () => {
             className="property-description"
             name="description"
             id="description"
-            placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
             {...register("description", {
               required: "Description is required",
               maxLength: {
@@ -484,7 +483,6 @@ const RoomAdd = () => {
             className="property-description"
             name="short_description"
             id="short_description"
-            placeholder="ChutyRooms is a trusted, largest, and fastest-growing hospitality partner in Bangladesh. Investing in technology takes the country to a higher status of travel."
             {...register("short_description", {
               required: "Short Description is required",
               maxLength: {
@@ -747,7 +745,7 @@ const RoomAdd = () => {
             Cancel
           </a>
           <button
-            // onClick={handleSave}
+            disabled={roomAddLoading}
             type="submit"
             className="text-[14px] flex justify-center items-center w-[80px] md:w-[100px] lg:w-[100px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"
           >
@@ -755,7 +753,7 @@ const RoomAdd = () => {
           </button>
         </div>
         {/* {dashboard && ( */}
-        <div className="mt-[18px] text-center">
+        <div className="mt-[32px] text-center">
           <a
             onClick={navigateDashboard}
             className="text-[14px] text-[#FFFFFF] bg-[#159947] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] rounded-[8px]"

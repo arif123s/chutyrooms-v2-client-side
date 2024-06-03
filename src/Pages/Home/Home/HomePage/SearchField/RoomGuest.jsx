@@ -8,12 +8,19 @@ import Minus from "./../../../../../assets/icons/minus.svg";
 import GreenAddIcon from "./../../../../../assets/icons/Add-circle-green.svg";
 import ArrowDown from "./../../../../../assets/icons/arrow-down.svg";
 
-const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRooms }) => {
+const RoomGuest = ({
+  isDivClicked,
+  setDivClicked,
+  updateRoomsqty,
+  rooms,
+  setRooms,
+}) => {
+  console.log(rooms);
 
   const setDivClickedCus = (event) => {
     event.preventDefault();
     setDivClicked(!isDivClicked);
-  }
+  };
 
   // const [rooms, setRooms] = useState([
   //   {
@@ -76,23 +83,28 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
 
     const NumberofRooms = [...rooms];
     if (NumberofRooms.length < 4) {
-    const newRoom = {
-      adults: 1,  // You can set default values for adults and children as needed
-      children: 0,
-      child_age: {
-        0: 1,
-      },  // Assuming no children initially
-    };
-    
-    // Create a copy of the current rooms array
-  
-    // Add the new room to the array
-    NumberofRooms.push(newRoom);
-  
-    // Update state with the new rooms array
-    setRooms(NumberofRooms);
-    updateRoomsqty(NumberofRooms);
-    setDivVisibility(rooms.length);
+      const newRoom = {
+        adults: 1, // You can set default values for adults and children as needed
+        children: 0,
+        child_age: {}, // Assuming no children initially
+      };
+      
+      // const newRoom = {
+      //   adults: 1,  // You can set default values for adults and children as needed
+      //   children: 0,
+      //   child_age: {
+      //     0: 1,
+      //   },  // Assuming no children initially
+      // };
+      // Create a copy of the current rooms array
+
+      // Add the new room to the array
+      NumberofRooms.push(newRoom);
+
+      // Update state with the new rooms array
+      setRooms(NumberofRooms);
+      updateRoomsqty(NumberofRooms);
+      setDivVisibility(rooms.length);
 
       // setDivVisibility(updatedRooms.length);
 
@@ -218,7 +230,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
                   type="number"
                   value={room.adults}
                   onChange={(e) =>
-                    updateGuests(e, index, "adults", parseInt(e.target.value))
+                    updateGuests( index, "adults", parseInt(e.target.value))
                   }
                   readOnly
                 ></input>
@@ -259,6 +271,7 @@ const RoomGuest = ({ isDivClicked, setDivClicked, updateRoomsqty , rooms , setRo
                         className="childage-select-box childage"
                         onChange={(e) =>
                           updateGuests(
+                            e,
                             index,
                             "child_age",
                             parseInt(e.target.value)

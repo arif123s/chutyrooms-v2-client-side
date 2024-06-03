@@ -5,8 +5,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper/modules";
-import room1 from "../../../assets/room-img/room1.png";
-import room2 from "../../../assets/room-img/room2.png";
+// import room1 from "../../../assets/room-img/room1.png";
+// import room2 from "../../../assets/room-img/room2.png";
 import location from "../../../assets/icons/map-pin.svg";
 import starFill from "../../../assets/icons/star-fill.svg";
 import starBlank from "../../../assets/icons/star-blank.svg";
@@ -27,7 +27,6 @@ const SingleHotel = ({hotel}) => {
         >
           {hotel?.property_image?.map((img, index) => (
             <SwiperSlide key={index}>
-              {console.log(img.url)}
               <img className="room-img" src={img.url} alt="Place" />
             </SwiperSlide>
           ))}
@@ -52,14 +51,16 @@ const SingleHotel = ({hotel}) => {
         </div>
       </div>
       <div className="hotel-details-container">
-        {hotel?.property_types?.map((type, index) => (
-          <p
-            key={index}
-            className="flex justify-center items-center text-[14px] lg:text-[16px] h-[28px] lg:h-[32px] p-[10px] border-[1px] border-[#808783] w-fit rounded-[4px]"
-          >
-            {type?.name}
-          </p>
-        ))}
+        <div className="flex gap-x-[8px]">
+          {hotel?.property_types?.map((type, index) => (
+            <p
+              key={index}
+              className="flex justify-center items-center text-[14px] lg:text-[16px] h-[28px] lg:h-[32px] p-[10px] border-[1px] border-[#808783] w-fit rounded-[4px]"
+            >
+              {type?.name}
+            </p>
+          ))}
+        </div>
         <div className="flex justify-between mt-[2px] gap-[8px]">
           <div>
             <div className="flex">

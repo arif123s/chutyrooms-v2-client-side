@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
           {
             path: "otp-phone",
             element: <OtpPhoneVerification></OtpPhoneVerification>,
-          },
+          }, 
           {
             path: "otp-email",
             element: <OtpEmailVerification></OtpEmailVerification>,
@@ -154,7 +154,11 @@ export const router = createBrowserRouter([
 
           {
             path: "booking-preview",
-            element: <BookingPreview></BookingPreview>,
+            element: (
+              <ProtectedRoute>
+                <BookingPreview></BookingPreview>
+              </ProtectedRoute>
+            ),
           },
           // {
           //   path: "/email/verify/:user/:token",
@@ -162,12 +166,20 @@ export const router = createBrowserRouter([
           // },
           {
             path: "property-add",
-            element: <OwnerPropertyAdd></OwnerPropertyAdd>,
+            element: (
+              <ProtectedRoute>
+                <OwnerPropertyAdd></OwnerPropertyAdd>
+              </ProtectedRoute>
+            ),
           },
 
           {
             path: "room-add/:propertyId",
-            element: <PropertyRoomAdd></PropertyRoomAdd>,
+            element: (
+              <ProtectedRoute>
+                <PropertyRoomAdd></PropertyRoomAdd>
+              </ProtectedRoute>
+            ),
           },
 
           {

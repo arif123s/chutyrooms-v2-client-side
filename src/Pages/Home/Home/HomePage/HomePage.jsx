@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useHomePageDataQuery } from "../../../../redux/features/HomePage/index.api";
 import PopularHotels from "./PopularHotels/PopularHotels";
 import SearchField from "./SearchField/SearchField";
@@ -87,7 +87,11 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className={`scroll-show-sticky ${isHidden ? "hide" : ""} ${isSticky ? "sticky" : ""}`}>
+      <div
+        className={`scroll-show-sticky ${isHidden ? "hide" : ""} ${
+          isSticky ? "sticky" : ""
+        }`}
+      >
         <img src={ChutyLogo} className="stickyLogo" alt="Chuty Logo" />
         <div className="w-full">
           <SearchField
@@ -98,12 +102,12 @@ const HomePage = () => {
             startDate={startDate}
             endDate={endDate}
             setDateRange={setDateRange}
-            rooms = {rooms}
-            setRooms = {setRooms}
-            totalAdults = {totalAdults}
-            setTotalAdults = {setTotalAdults}
-            totalChildren = {totalChildren}
-            setTotalChildren = {setTotalChildren}
+            rooms={rooms}
+            setRooms={setRooms}
+            totalAdults={totalAdults}
+            setTotalAdults={setTotalAdults}
+            totalChildren={totalChildren}
+            setTotalChildren={setTotalChildren}
           />
         </div>
       </div>
@@ -118,12 +122,12 @@ const HomePage = () => {
               startDate={startDate}
               endDate={endDate}
               setDateRange={setDateRange}
-              rooms = {rooms}
-              setRooms = {setRooms}
-              totalAdults = {totalAdults}
-              setTotalAdults = {setTotalAdults}
-              totalChildren = {totalChildren}
-              setTotalChildren = {setTotalChildren}
+              rooms={rooms}
+              setRooms={setRooms}
+              totalAdults={totalAdults}
+              setTotalAdults={setTotalAdults}
+              totalChildren={totalChildren}
+              setTotalChildren={setTotalChildren}
             />
           </div>
         )}

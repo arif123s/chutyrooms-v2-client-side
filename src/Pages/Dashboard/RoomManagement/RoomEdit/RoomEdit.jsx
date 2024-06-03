@@ -42,7 +42,7 @@ const RoomEdit = () => {
     room_rates: {},
     guest_info: {},
     is_active: null,
-    view_order: null,
+    view_order: null, 
   });
 
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
@@ -60,7 +60,7 @@ const RoomEdit = () => {
 
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
-   const [validationErrors, setValidationErrors] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
 
   console.log("roomData", roomData);
 
@@ -68,14 +68,15 @@ const RoomEdit = () => {
     refetch();
 
     if (data?.data?.room) {
-      let room_rates = {};
-      try {
-        room_rates = data?.data?.room?.room_rates?.rates
-          ? JSON.parse(data?.data?.room?.room_rates?.rates)
-          : {};
-      } catch (error) {
-        console.error('Failed to parse room rates JSON:', error);
-      }
+      const room_rates = data?.data?.room?.room_rates?.rates;
+      // let room_rates = {};
+      // try {
+      //   room_rates = data?.data?.room?.room_rates?.rates
+      //     ? JSON.parse(data?.data?.room?.room_rates?.rates)
+      //     : {};
+      // } catch (error) {
+      //   console.error('Failed to parse room rates JSON:', error);
+      // }
       setDisplayImages(
         data?.data?.room?.room_images?.map((image) => ({
           id: image.id,
@@ -86,13 +87,13 @@ const RoomEdit = () => {
       );
 
       // Function to convert date format
-      const convertDateFormat=(dateString)=> {
+      const convertDateFormat = (dateString) => {
         const date = new Date(dateString);
         const day = date.getDate().toString().padStart(2, "0");
         const month = (date.getMonth() + 1).toString().padStart(2, "0");
         const year = date.getFullYear();
-          return `${year}-${month}-${day}`;
-      }
+        return `${year}-${month}-${day}`;
+      };
 
       setRoomData({ ...data?.data?.room, room_rates: room_rates });
       setRoomData({

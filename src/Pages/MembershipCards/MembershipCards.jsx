@@ -15,15 +15,15 @@ import { BASE_ASSET_API } from "../../BaseApi/AssetUrl";
 
 const MembershipCards = () => {
   const [purchasedCards, setPurchasedCards] = useState([
-    {
-      id: 1,
-      img: platinumCard,
-      name: "Platinum",
-      title: "Flat 8% discount on every purchase",
-      validation: "Validation: 1 year",
-      price: " Tk 1500",
-      isActive: true,
-    },
+    // {
+    //   id: 1,
+    //   img: platinumCard,
+    //   name: "Platinum",
+    //   title: "Flat 8% discount on every purchase",
+    //   validation: "Validation: 1 year",
+    //   price: " Tk 1500",
+    //   isActive: true,
+    // },
     // {
     //   id: 2,
     //   img: goldCard,
