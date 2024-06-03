@@ -52,7 +52,7 @@ const SearchResultHotel = () => {
   } = useGetAllSearchResultHotelsQuery(searchInfo);
   let hotelResult;
 
-  console.log(searchData);
+console.log(searchData);
 console.log('length',searchData?.data?.hotels_data?.data);
 //   if (searchData?.hotels_data?.data) {
 //     if (searchData?.hotels_data?.data?.length > 0) {

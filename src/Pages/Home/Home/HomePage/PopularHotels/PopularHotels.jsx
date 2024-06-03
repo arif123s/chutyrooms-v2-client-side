@@ -13,13 +13,61 @@ import location from "../../../../../assets/icons/map-pin.svg";
 import favouriteIcon from "../../../../../assets/icons/favourite.svg";
 import favouriteGreen from "../../../../../assets/icons/favourite-green.svg";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const PopularHotels = (props) => {
+const PopularHotels = ( {popularProperties ,startDate , endDate ,rooms , totalAdults , totalChildren , child_age}) => {
   const [favourite, setFavourite] = useState(false);
+  const navigate = useNavigate();
+  const convertDateFormat = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
 
-  if (!Array.isArray(props.popularProperties)) {
-    console.error("Expected an array, received:", props.popularProperties);
+
+  
+
+
+
+ 
+
+  //  console.log(popularProperties ,startDate , endDate ,rooms , totalAdults , totalChildren , child_age )
+
+  if (!Array.isArray(popularProperties)) {
+    console.error("Expected an array, received:", popularProperties);
     return null; // Or handle the error gracefully
+  }
+
+ 
+
+  function getProperty(propertyId , location)
+  {
+    // alert(propertyId);
+
+    const hotelSearchInfo = {
+      location : location,
+      search_type: "property",
+      location_id: propertyId,
+      check_in: convertDateFormat(new Date(startDate)),
+      check_out: convertDateFormat(new Date(endDate)),
+      rooms: rooms?.length,
+      adult_guest: totalAdults,
+      child_guest: totalChildren,
+      child_age: child_age,
+      guest_session_id: "",
+   
+      
+    };
+ 
+
+    // console.log(hotelSearchInfo);
+    
+
+  
+    const queryString = new URLSearchParams(hotelSearchInfo).toString();
+    navigate(`/hotel-details?${queryString}`);
   }
 
 
@@ -28,8 +76,8 @@ const PopularHotels = (props) => {
     <div className="popular-hotels-container">
       <h2 className="homepage-title">Popular Hotels</h2>
       <div className="hotels-container">
-        {/* {props.popularProperties.map((popularHotel) => (
-          <div key={popularHotel.id} className="relative">
+        {popularProperties.map((popularHotel) => (
+          <div key={popularHotel.id} className="relative" onClick={()=> getProperty(popularHotel.id , popularHotel.location)}>
             <div className="w-full">
               <img className="hotel-img" src={popularHotel.image} alt="" />
             </div>
@@ -54,9 +102,9 @@ const PopularHotels = (props) => {
               alt="hotel img"
             />
           </div>
-        ))} */}
+        ))}
 
-        <div className="relative">
+        {/* <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel1} alt="" />
           </div>
@@ -288,7 +336,7 @@ const PopularHotels = (props) => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div> 
+        </div>  */}
       </div>
 
       <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">

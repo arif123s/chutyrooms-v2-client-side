@@ -13,7 +13,7 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
 
 
 
-  console.log(rooms);
+  // console.log(rooms);
   // const today = new Date();
 
   // let nextCusDay = new Date();
@@ -182,12 +182,12 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
     };
  
 
-    console.log(searchInfo);
+    // console.log(searchInfo.search_type);
     
 
   
     const queryString = new URLSearchParams(searchInfo).toString();
-    // navigate(`/search-result-hotel?${queryString}`);
+    navigate(`/search-result-hotel?${queryString}`);
     
   };
 

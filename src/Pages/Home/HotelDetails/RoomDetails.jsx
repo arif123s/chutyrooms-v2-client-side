@@ -8,7 +8,7 @@ import TickCircle from "../../../assets/icons/tick-circle.svg";
 const RoomDetails = () => {
     return (
         <div className='room-details-content'>
-            <div className='font-semibold'>Premium Suite</div>
+            <div className='font-semibold'>Premium Suite </div>
             <div className='flex space-x-1'>
                 <img src={DoubleUser}></img>
                 <div>2 Adults , 1 Child</div>
