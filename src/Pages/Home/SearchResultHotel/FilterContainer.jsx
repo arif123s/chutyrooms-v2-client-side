@@ -5,8 +5,7 @@ import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import checkboxIcon from "../../../assets/icons/square.svg";
 import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
-import { useEffect, useState } from "react";
-import sortBy from "sort-by";
+import { useEffect, useRef, useState } from "react";
 
 const FilterContainer = ({
   searchData,
@@ -16,8 +15,10 @@ const FilterContainer = ({
   setAccommodationTypes,
   facilities,
   setFacilities,
-  rating,
   setRating,
+  setSortBy,
+  childLocation,
+  setChildLocation,
 }) => {
   const [value, setValue] = useState([0, 200000]);
   // const [priceRange, setPriceRange] = useState({
@@ -28,25 +29,26 @@ const FilterContainer = ({
   const [allChildLocation, setAllChildLocation] = useState(false);
   const [allFacilities, setAllFacilities] = useState(false);
   const [allAccomodationType, setAllAccomodationType] = useState(false);
-  // const [accommodation_types, setAccommodationTypes] = useState([]);
+ 
 
-  console.log(searchData);
-  console.log(accommodation_types);
+  console.log("childLocation", childLocation);
 
   useEffect(() => {
     if (searchData?.accommodation_types) {
-      const types = searchData.accommodation_types.map((type) => ({
-        name: type.name,
+      const types = searchData?.accommodation_types.map((type) => ({
+        id:type?.id,
+        name: type?.name,
         isChecked: false,
       }));
       setAccommodationTypes(types);
     }
     if (searchData?.amenities_side) {
-      const types = searchData.amenities_side.map((type) => ({
-        name: type.name,
+      const amenities = searchData?.amenities_side.map((amenity) => ({
+        id: amenity?.id,
+        name: amenity?.name,
         isChecked: false,
       }));
-      setFacilities(types);
+      setFacilities(amenities);
     }
     setPriceRange({
       lowestPrice: searchData?.min_price || 0,
@@ -54,22 +56,65 @@ const FilterContainer = ({
     });
   }, []);
 
-  const handleChange = (event, newValue) => {
+  // useEffect(() => {
+  //   refetch();
+  // }, [searchInfo.location_id, searchInfo.search_type, refetch]);
+  // console.log(searchInfo)
+
+    const handleLocationClick = (id, searchType) => {
+      console.log("Location clicked", id, searchType); // Ensure this logs to the console
+      setChildLocation((prevState) => ({
+        ...prevState,
+        location_id: id,
+        search_type: searchType,
+      }));
+    };
+
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
+  const handleSliderChange = (event, newValue) => {
     setValue(newValue);
+    setPriceRange({ lowestPrice: newValue[0], highestPrice: newValue[1] });
   };
 
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+      let newValue = Number(value);
+
+      if (name === "lowest-price" && newValue < searchData?.min_price) {
+        newValue = searchData.min_price;
+      }
+
+      setPriceRange((prevRange) => ({
+        ...prevRange,
+        [name]: newValue,
+      }));
+
+      handleSliderChange(event, [
+        name === "lowest-price" ? newValue : priceRange.lowestPrice,
+        name === "highest-price" ? newValue : priceRange.highestPrice,
+      ]);
+    };
+
   const accommodationTypesChange = (index) => {
-    const updatedAccommodationTypes = [...accommodation_types];
-    updatedAccommodationTypes[index].isChecked =
-      !updatedAccommodationTypes[index].isChecked;
-    setAccommodationTypes(updatedAccommodationTypes);
+    setAccommodationTypes((prevTypes) => {
+      const updatedTypes = [...prevTypes];
+      updatedTypes[index] = {
+        ...updatedTypes[index],
+        isChecked: !updatedTypes[index].isChecked,
+      };
+      return updatedTypes;
+    });
   };
 
   const amenitiesChange = (index) => {
-    const updatedFacilities = [...facilities];
-    updatedFacilities[index].isChecked =
-      !updatedFacilities[index].isChecked;
-    setFacilities(updatedFacilities);
+    setFacilities((prevFacilities) => {
+      const updatedFacilities = prevFacilities.map((amenity, i) =>
+        i === index ? { ...amenity, isChecked: !amenity.isChecked } : amenity
+      );
+      return updatedFacilities;
+    });
   };
 
   return (
@@ -99,7 +144,13 @@ const FilterContainer = ({
         {allChildLocation ? (
           <>
             {searchData?.child_location.map((location) => (
-              <p key={location.id} className="suggested-place">
+              <p
+                key={location.id}
+                onClick={() =>
+                  handleLocationClick(location.id, location.search_type)
+                }
+                className="suggested-place"
+              >
                 {location?.name}
               </p>
             ))}
@@ -114,7 +165,13 @@ const FilterContainer = ({
         ) : (
           <>
             {searchData?.child_location?.slice(0, 4).map((location) => (
-              <p key={location.id} className="suggested-place">
+              <p
+                key={location.id}
+                onClick={() =>
+                  handleLocationClick(location.id, location.search_type)
+                }
+                className="suggested-place"
+              >
                 {location?.name}
               </p>
             ))}
@@ -141,8 +198,11 @@ const FilterContainer = ({
               id="popularity"
               className="property-input bg-[#F8FEFF] text-[14px] md:text-[16px] lg:text-[16px] "
               name="popularity"
+              onClick={(e) => setSortBy(e.target.value)}
             >
-              <option value="">{searchData?.sort_by[100]}</option>
+              <option value={searchData?.sort_by[100]}>
+                {searchData?.sort_by[100]}
+              </option>
             </select>
             <img
               // className="absolute top-[14px] right-[12px] arrow-icon"
@@ -156,16 +216,16 @@ const FilterContainer = ({
       {/* Price Range */}
       <div>
         <h2 className="search-page-title mt-[20px]">Sort By</h2>
-
+        {/* Price Slider */}
         <div className="mt-[8px]">
           <Slider
             value={value}
-            onChange={handleChange}
+            onChange={handleSliderChange}
             valueLabelDisplay="auto"
-            min={priceRange?.lowestPrice}
-            max={priceRange?.highestPrice}
+            min={searchData?.min_price}
+            max={searchData?.max_price}
           />
-
+          {/* Price input */}
           <div className="flex justify-between items-center gap-[12px] text-[12px] md:text-[12px] lg:text-[16px]">
             <div className="h-[40px]  border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">
               <label htmlFor="lowest-price" className="mr-[4px]">
@@ -177,9 +237,14 @@ const FilterContainer = ({
                 name="lowest-price"
                 id="lowest-price"
                 value={priceRange.lowestPrice}
-                onChange={(e) =>
-                  setPriceRange({ ...priceRange, lowestPrice: e.target.value })
-                }
+                min={searchData?.min_price}
+                onChange={(e) => {
+                  setPriceRange({ ...priceRange, lowestPrice: e.target.value }),
+                    handleSliderChange(e, [
+                      e.target.value,
+                      priceRange.highestPrice,
+                    ]);
+                }}
               />
             </div>
 
@@ -192,10 +257,18 @@ const FilterContainer = ({
                 type="number"
                 name="highest-price"
                 id="highest-price"
+                min={searchData?.min_price}
                 value={priceRange.highestPrice}
-                onChange={(e) =>
-                  setPriceRange({ ...priceRange, highestPrice: e.target.value })
-                }
+                onChange={(e) => {
+                  setPriceRange({
+                    ...priceRange,
+                    highestPrice: e.target.value,
+                  });
+                  handleSliderChange(e, [
+                    priceRange.lowestPrice,
+                    e.target.value,
+                  ]);
+                }}
               />
             </div>
           </div>
@@ -267,7 +340,7 @@ const FilterContainer = ({
                   <label htmlFor={`checkbox-${index}`}>{type.name}</label>
                 </div>
               ))}
-              {allAccomodationType?.length > 4 && (
+              {accommodation_types?.length > 4 && (
                 <div
                   onClick={() => setAllAccomodationType(!allAccomodationType)}
                   className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
@@ -281,6 +354,7 @@ const FilterContainer = ({
         </div>
       </div>
       <div className="w-full h-[1px] bg-[#808783] my-[18px] lg:my-[20px]"></div>
+      {/* Facilities */}
       <div>
         <h2 className="search-page-title">Facilities</h2>
         <div className="mt-[8px] text-[14px] md:text-[16px] lg:text-[16px]">
@@ -326,13 +400,13 @@ const FilterContainer = ({
                   <p>{amenity?.name}</p>
                 </div>
               ))}
-              {searchData?.amenities_side?.length > 4 && (
+              {facilities?.length > 4 && (
                 <div
                   onClick={() => setAllFacilities(!allFacilities)}
                   className="mt-[8px] text-[14px] flex h-[40px] px-[10px] bg-[#159947] rounded-[5px] justify-center items-center text-white w-fit"
                 >
                   <img className="mr-[4px]" src={addIcon} alt="" />
-                  <button>See more</button>
+                  <button>See More</button>
                 </div>
               )}
             </>

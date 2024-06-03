@@ -162,7 +162,7 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
 
     const searchInfo = {
       location: value,
-      search_type: "district",
+      search_type: "country",
       location_id: 1,
       check_in: convertDateFormat(new Date(startDate)),
       check_out: convertDateFormat(new Date(endDate)),

@@ -1,8 +1,8 @@
 // import starFill from "../../../assets/icons/star-fill.svg";
 // import starBlank from "../../../assets/icons/star-blank.svg";
-import delteIcon from "../../../assets/icons/delete.svg";
+// import delteIcon from "../../../assets/icons/delete.svg";
 import imgIcon from "../../../assets/icons/img.svg";
-import videoIcon from "../../../assets/icons/frame.svg";
+// import videoIcon from "../../../assets/icons/frame.svg";
 import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
 // import markLoaction from "../../../assets/icons/mark-location.svg";
@@ -106,8 +106,8 @@ const PropertyAdd = () => {
   const [displayImages, setDisplayImages] = useState([null, null, null, null]);
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
-  const [video, setVideo] = useState(null);
-  const [videoError, setVideoError] = useState(true);
+  // const [video, setVideo] = useState(null);
+  // const [videoError, setVideoError] = useState(true);
 
   const selectedPropertyTypes = useWatch({
     control,

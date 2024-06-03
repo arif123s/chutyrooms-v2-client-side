@@ -161,7 +161,7 @@ const EditProfile = () => {
           </div>
         </div>
 
-        {!changePassword && (
+        {/* {!changePassword && (
           <button
             onClick={(e) => {
               e.preventDefault(), setChangePassword(true);
@@ -275,7 +275,7 @@ const EditProfile = () => {
               </label>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className=" flex justify-end gap-x-[12px]">
           <button
