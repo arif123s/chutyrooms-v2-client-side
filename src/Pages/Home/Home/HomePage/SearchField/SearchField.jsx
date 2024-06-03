@@ -170,7 +170,6 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       adult_guest: totalAdults,
       child_guest: totalChildren,
       child_age: maxChildAge,
-      guest_session_id: "",
     };
     // console.log(searchInfo);
     

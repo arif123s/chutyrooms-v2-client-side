@@ -41,7 +41,6 @@ const SearchResultHotel = () => {
   const [sortBy, setSortBy] = useState(null);
   const [accommodation_types, setAccommodationTypes] = useState([]);
   const [facilities, setFacilities] = useState([]);
-  console.log(accommodation_types);
 
   const [searchInfo, setSearchInfo] = useState({
     location: searchParams.get("location"),
@@ -200,7 +199,7 @@ const SearchResultHotel = () => {
 
               {/* <button className="login-btn">See More</button> */}
             </div>
-
+            {/* MapView */}
             {mapView && (
               <div className=" mt-[24px]">
                 <GoogleMap

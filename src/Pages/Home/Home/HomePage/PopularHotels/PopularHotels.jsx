@@ -27,7 +27,7 @@ const PopularHotels = ({ popularProperties }) => {
     <div className="popular-hotels-container">
       <h2 className="homepage-title">Popular Hotels</h2>
       <div className="hotels-container">
-        {/* {props.popularProperties.map((popularHotel) => (
+        {popularProperties?.map((popularHotel) => (
           <div key={popularHotel.id} className="relative">
             <div className="w-full">
               <img className="hotel-img" src={popularHotel.image} alt="" />
@@ -53,9 +53,9 @@ const PopularHotels = ({ popularProperties }) => {
               alt="hotel img"
             />
           </div>
-        ))} */}
+        ))}
 
-        <div className="relative">
+        {/* <div className="relative">
           <div className="">
             <img className="hotel-img" src={hotel1} alt="" />
           </div>
@@ -287,7 +287,8 @@ const PopularHotels = ({ popularProperties }) => {
             src={favourite ? favouriteGreen : favouriteIcon}
             alt="hotel img"
           />
-        </div>
+        </div> */}
+
       </div>
 
       <div className="text-center mt-[20px] md:mt-[24px] lg:hidden">

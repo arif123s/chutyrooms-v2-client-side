@@ -19,10 +19,9 @@ const searchResultHotelApi = baseApi.injectEndpoints({
     getAllSearchResultHotels: builder.query({
       query: (searchQuery) => {
         const { searchInfo, filterProperty } = searchQuery;
-
         // Serialize filter properties
         const filterParams = new URLSearchParams();
-
+        // console.log('filterProperty',filterProperty)
         if (filterProperty.start_price !== null)
           filterParams.append("start_price", filterProperty.start_price);
         if (filterProperty.end_price !== null)
@@ -35,20 +34,18 @@ const searchResultHotelApi = baseApi.injectEndpoints({
             filterProperty.guest_session_id
           );
 
-        //  filterParams.append(
-        //    "accommodation_types",
-        //    filterProperty.accommodation_types
-        //  );
-          if (Array.isArray(filterProperty.accommodation_types)) {
-            filterParams.append(
-              "accommodation_types",
-              [filterProperty.accommodation_types]
-            );
-          }
+        // if (filterProperty.accommodation_types.length) {
+        //   const accommodationTypesString = `[${filterProperty.accommodation_types.join(
+        //     ","
+        //   )}]`;
+        //   filterParams.append("accommodation_types", accommodationTypesString);
+        // }
 
-        filterProperty.facilities.forEach((facility) => {
-          filterParams.append("facilities", facility);
-        });
+        // filterProperty.facilities.forEach((facility) => {
+        //   filterParams.append("facilities", facility);
+        // });
+
+        // console.log("filterParams", filterParams);
 
         // Combine searchInfo and filterParams into the query string
         const queryString = new URLSearchParams({
@@ -61,12 +58,34 @@ const searchResultHotelApi = baseApi.injectEndpoints({
           adult_guest: searchInfo.adult_guest,
           child_guest: searchInfo.child_guest,
           child_age: searchInfo.child_age,
-          ...Object.fromEntries(filterParams),
+          // ...Object.fromEntries(filterParams),
+          ...Object.fromEntries(filterParams.entries()),
         }).toString();
-        console.log("queryString", queryString);
+
+        let apiUrl = `/search?${queryString}`;
+       
+       if (
+         filterProperty.accommodation_types &&
+         filterProperty.accommodation_types.length > 0
+       ) {
+         const accommodationTypesString = `${filterProperty.accommodation_types.join(
+           ","
+         )}`;
+         apiUrl += `&accommodation_types[]=${accommodationTypesString}`;
+       }
+
+        if (filterProperty.facilities && filterProperty.facilities.length > 0) {
+          const facilitiesTypesString = `${filterProperty.facilities.join(
+            ","
+          )}`;
+          apiUrl += `&amenities_side[]=${facilitiesTypesString}`;
+        }
+
+        console.log("queryString", apiUrl);
 
         return {
-          url: `/search?${queryString}`,
+          // url: `/search?${queryString}`,
+          url: `${apiUrl}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

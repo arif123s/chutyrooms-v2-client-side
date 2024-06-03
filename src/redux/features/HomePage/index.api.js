@@ -4,7 +4,7 @@ const homePageApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     homePageData: builder.query({
       query: () => ({
-        url: "/index_app",
+        url: "/index_api",
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
