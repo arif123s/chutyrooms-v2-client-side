@@ -36,10 +36,10 @@ const PopularHotels = ( {popularProperties ,startDate , endDate ,rooms , totalAd
 
   //  console.log(popularProperties ,startDate , endDate ,rooms , totalAdults , totalChildren , child_age )
 
-  if (!Array.isArray(popularProperties)) {
-    console.error("Expected an array, received:", popularProperties);
-    return null; // Or handle the error gracefully
-  }
+  // if (!Array.isArray(popularProperties)) {
+  //   console.error("Expected an array, received:", popularProperties);
+  //   return null; // Or handle the error gracefully
+  // }
 
  
 
@@ -77,21 +77,21 @@ const PopularHotels = ( {popularProperties ,startDate , endDate ,rooms , totalAd
     <div className="popular-hotels-container">
       <h2 className="homepage-title">Popular Hotels</h2>
       <div className="hotels-container">
-        {popularProperties.map((popularHotel) => (
+        {popularProperties?.map((popularHotel) => (
           <div key={popularHotel.id} className="relative" onClick={()=> getProperty(popularHotel.id , popularHotel.location)}>
             <div className="w-full">
-              <img className="hotel-img" src={popularHotel.image} alt="" />
+              <img className="hotel-img" src={popularHotel?.image} alt="" />
             </div>
             <div className="flex justify-between items-center mt-[8px]">
-              <h2 className="hotel-name">{popularHotel.name}</h2>
+              <h2 className="hotel-name">{popularHotel?.name}</h2>
               <div className="flex itens-center gap-[4px]">
                 <img className="w-[14px]" src={star} alt="" />
-                <span className="hotel-info">4.7</span>
+                <span className="hotel-info">{popularHotel?.star}</span>
               </div>
             </div>
             <div className="flex items-center mt-[2px] gap-[6px]">
               <img src={location} alt="" />
-              <span className="hotel-info">{popularHotel.location}</span>
+              <span className="hotel-info">{popularHotel?.location}</span>
             </div>
             <p className="mt-[6px] hotel-info">
               <span className="font-['Gilroy-bold']">BDT 2100</span> Per Night

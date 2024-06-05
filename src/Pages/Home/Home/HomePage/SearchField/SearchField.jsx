@@ -184,7 +184,7 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
   };
 
   return (
-    <div className="main-container mt-[18px] lg:mt-[40px]">
+    <div className="main-container mt-[18px] ">
 
       <form onSubmit={handleSubmit}>
       <div className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>

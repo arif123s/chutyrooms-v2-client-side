@@ -12,8 +12,41 @@ import starFill from "../../../assets/icons/star-fill.svg";
 import starBlank from "../../../assets/icons/star-blank.svg";
 import tickCircle from "../../../assets/icons/tick-circle.svg";
 import favourite from "../../../assets/icons/favourite.svg";
+import { useNavigate } from "react-router-dom";
 
-const SingleHotel = ({hotel}) => {
+const SingleHotel = ({hotel , searchInfo}) => {
+
+  const navigate = useNavigate();
+
+  console.log(searchInfo.location);
+
+  function viewPropertyDetails(propertyId)
+  {
+    // alert(propertyId)
+
+    const hotelSearchInfo = {
+      location : searchInfo.location,
+      search_type: "property",
+      location_id: propertyId,
+      check_in: searchInfo.check_in,
+      check_out: searchInfo.check_out,
+      rooms: searchInfo.rooms,
+      adult_guest: searchInfo.adult_guest,
+      child_guest: searchInfo.child_guest,
+      child_age: searchInfo.child_age,
+      guest_session_id: "",
+   
+      
+    };
+ 
+
+    // console.log(hotelSearchInfo);
+    
+
+  
+    const queryString = new URLSearchParams(hotelSearchInfo).toString();
+    navigate(`/hotel-details?${queryString}`);
+  }
   return (
     <div className="hotel">
       <div className="hotel-img-slider relative">
@@ -108,7 +141,8 @@ const SingleHotel = ({hotel}) => {
               </div> */}
               <p className="text-[#159947]">{hotel?.amenities_more}+ More</p>
             </div>
-            <button className="bg-[#159947] h-[40px] flex items-center cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 mt-[10px] hover:bg-[#016A29] transition-all">
+            <button className="bg-[#159947] h-[40px] flex items-center cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0 mt-[10px] hover:bg-[#016A29] transition-all"
+              onClick = {()=> viewPropertyDetails(hotel.property_id)}>
               View Details
             </button>
           </div>

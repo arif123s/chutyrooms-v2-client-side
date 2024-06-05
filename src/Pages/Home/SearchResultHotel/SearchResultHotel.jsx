@@ -41,7 +41,7 @@ const SearchResultHotel = () => {
   const [sortBy, setSortBy] = useState(null);
   const [accommodation_types, setAccommodationTypes] = useState([]);
   const [facilities, setFacilities] = useState([]);
-  console.log(accommodation_types);
+  // console.log(accommodation_types);
 
   const [searchInfo, setSearchInfo] = useState({
     location: searchParams.get("location"),
@@ -68,14 +68,14 @@ const SearchResultHotel = () => {
     searchInfo,
     filterProperty,
   };
-  console.log(searchQuery);
+  // console.log(searchQuery);
 
   const {
     data: searchData,
     isLoading,
     refetch,
   } = useGetAllSearchResultHotelsQuery(searchQuery);
-  console.log(searchData);
+  // console.log(searchData);
 
   let hotelResult;
 
@@ -185,6 +185,7 @@ const SearchResultHotel = () => {
                   <SingleHotel
                     key={hotel?.property_id}
                     hotel={hotel}
+                    searchInfo = {searchInfo}
                   ></SingleHotel>
                 ))}
 

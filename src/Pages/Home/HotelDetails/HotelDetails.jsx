@@ -122,7 +122,7 @@ const HotelDetails = () => {
         isLoading,
       } = useGetSingleHotelQuery(searchInfo);
 
-    //   console.log(searchData?.data?.hotels_data?.payment_methods);
+      console.log(searchData);
       
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
@@ -690,7 +690,7 @@ const HotelDetails = () => {
                             </div>
                         </div>
 
-                        <div class>Good Service</div>
+                        <div>Good Service</div>
 
                         <div className="review-section">
                             <div className="flex space-x-1">
