@@ -18,7 +18,7 @@ const searchResultHotelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllSearchResultHotels: builder.query({
       query: (searchQuery) => {
-        const { searchInfo, filterProperty } = searchQuery;
+        const { searchInfo, filterProperty, currentPage } = searchQuery;
         // Serialize filter properties
         const filterParams = new URLSearchParams();
         // console.log('filterProperty',filterProperty)
@@ -40,12 +40,6 @@ const searchResultHotelApi = baseApi.injectEndpoints({
         //   )}]`;
         //   filterParams.append("accommodation_types", accommodationTypesString);
         // }
-
-        // filterProperty.facilities.forEach((facility) => {
-        //   filterParams.append("facilities", facility);
-        // });
-
-        // console.log("filterParams", filterParams);
 
         // Combine searchInfo and filterParams into the query string
         const queryString = new URLSearchParams({
@@ -78,14 +72,14 @@ const searchResultHotelApi = baseApi.injectEndpoints({
           const facilitiesTypesString = `${filterProperty.facilities.join(
             ","
           )}`;
-          apiUrl += `&amenities_side[]=${facilitiesTypesString}`;
+          apiUrl += `&amenities_side[]=${facilitiesTypesString}`; 
         }
 
         console.log("queryString", apiUrl);
 
         return {
           // url: `/search?${queryString}`,
-          url: `${apiUrl}`,
+          url: `${apiUrl}&page=${currentPage}`,
           method: "GET",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

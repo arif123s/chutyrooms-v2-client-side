@@ -9,6 +9,8 @@ import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import Loading from "../../Common/Includes/Loading/Loading";
 import { useLocation } from "react-router-dom";
 import { useGetAllSearchResultHotelsQuery } from "../../../redux/features/searchProperty/searchResultHotel.api";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -18,6 +20,8 @@ const mapContainerStyle = {
 };
 
 const SearchResultHotel = () => {
+   const [currentPage, setCurrentPage] = useState(1);
+   const [totalPages, setTotalPages] = useState(0);
   const [mapView, setMapView] = useState(false);
   const [center, setCenter] = useState({
     lat: 23.862725477930507,
@@ -66,6 +70,7 @@ const SearchResultHotel = () => {
   const searchQuery = {
     searchInfo,
     filterProperty,
+    currentPage
   };
   console.log(searchQuery);
 
@@ -83,6 +88,14 @@ const SearchResultHotel = () => {
   // hotelResult =
   //     }
   //   }
+
+useEffect(() => {
+  if (searchData?.data?.hotels_data?.pagination) {
+    setTotalPages(searchData?.data?.hotels_data?.pagination?.last_page);
+  }
+  refetch();
+}, [currentPage, refetch,totalPages]);
+
   useEffect(() => {
     // Update filter property when priceRange changes
     setFilterProperty({
@@ -129,6 +142,10 @@ const SearchResultHotel = () => {
   // if (!searchData?.status)
   //   return <div className="text-center mt-[28px]">Error!!</div>;
 
+    const handlePageChange = (event, page) => {
+      setCurrentPage(page); // Update current page when page changes
+    };
+
   return (
     <div className="hotel-search-result-container">
       {/* <div className={`hotel-search-result-container ${mapView? 'bg-[#FFC0CB]':''}`}> */}
@@ -159,10 +176,10 @@ const SearchResultHotel = () => {
 
         {searchData?.data?.hotels_data?.data ? (
           <div className="hotels-result-container">
-            <div className="flex justify-between  items-start gap-[12px]">
+            <div className="flex justify-between items-start gap-[12px]">
               <h2 className="search-page-title">
-                ChutyRooms: {searchData?.data?.hotels_data?.data?.length}{" "}
-                {searchData?.data?.hotels_data?.data?.length > 1
+                ChutyRooms: {searchData?.data?.hotels_data?.pagination?.total}{" "}
+                {searchData?.data?.hotels_data?.pagination?.total > 1
                   ? "Properties"
                   : "Property"}{" "}
                 Found
@@ -180,39 +197,37 @@ const SearchResultHotel = () => {
             </div>
             <div className={`${mapView ? "hidden" : ""}`}>
               <div className="hotels">
-                {searchData?.data?.hotels_data?.data?.map((hotel) => (
+                {searchData?.data?.hotels_data?.data
+                  .slice(0, 2)
+                  .map((hotel) => (
+                    <SingleHotel
+                      key={hotel?.property_id}
+                      hotel={hotel}
+                    ></SingleHotel>
+                  ))}
+              </div>
+              <img className="download-app-img" src={downloadApp} alt="" />
+              <div className="hotels">
+                {searchData?.data?.hotels_data?.data.slice(2).map((hotel) => (
                   <SingleHotel
                     key={hotel?.property_id}
                     hotel={hotel}
                   ></SingleHotel>
                 ))}
-
-                {/* <SingleHotel></SingleHotel> */}
               </div>
-
-              <img className="download-app-img" src={downloadApp} alt="" />
-
-              {/* <div className="hotels">
-                <SingleHotel></SingleHotel>
-                <SingleHotel></SingleHotel>
-              </div> */}
-
-              {/* <button className="login-btn">See More</button> */}
             </div>
             {/* MapView */}
             {mapView && (
-              <div className=" mt-[24px]">
+              <div className="mt-[24px]">
                 <GoogleMap
                   mapContainerStyle={mapContainerStyle}
                   zoom={10}
                   center={center}
                 >
                   <Marker />
-
                   <Marker
                     clickable={true}
                     className="pointer-events-none"
-                    // position={mapCenter}
                     icon={{
                       url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
                       scaledSize: new window.google.maps.Size(30, 30),
@@ -221,6 +236,16 @@ const SearchResultHotel = () => {
                 </GoogleMap>
               </div>
             )}
+            <div className="flex justify-center">
+              <Stack spacing={2}>
+                <Pagination
+                  count={searchData?.data?.hotels_data?.pagination?.last_page}
+                  page={currentPage}
+                  onChange={handlePageChange}
+                  variant="outlined"
+                />
+              </Stack>
+            </div>
           </div>
         ) : (
           <h2 className="hotels-result-container font-['Gilroy-semibold'] text-[20px]">
@@ -228,6 +253,8 @@ const SearchResultHotel = () => {
           </h2>
         )}
       </div>
+
+      {/* <button className="login-btn">See More</button> */}
 
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
       <div className="sticky bottom-[30px] z-10">

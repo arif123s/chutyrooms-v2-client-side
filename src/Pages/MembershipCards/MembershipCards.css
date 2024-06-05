@@ -6,7 +6,7 @@
 
 .cards-container {
   margin-top: 36px;
-  margin-bottom: 50px;
+  margin-bottom: 32px;
 }
 
 .cards {
@@ -30,9 +30,9 @@
   border-radius: 8px;
 }
 
-.customer-details-container {
+.card-details-container {
   color: #0c1e25;
-  width: 550px;
+  width: 440px;
   padding: 24px 24px 32px 24px;
   border-radius: 8px;
   background: #fff;
@@ -71,7 +71,7 @@ margin-bottom: 24px;
   height: 190px;
 }
 
-  .customer-details-container {
+  .card-details-container {
     width: 90%;
     padding: 22px 18px;
     margin: auto;
@@ -92,7 +92,7 @@ margin-bottom: 24px;
   height: 260px;
 }
 
-  .customer-details-container {
+  .card-details-container {
     width: 400px;
     margin-top: 18px;
     margin-bottom: 24px;
@@ -112,7 +112,7 @@ margin-bottom: 24px;
   /* height: 200px; */
 }
 
-  .customer-details-container {
+  .card-details-container {
     width: 400px;
     margin-top: 18px;
     margin-bottom: 24px;

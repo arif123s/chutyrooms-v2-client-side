@@ -102,6 +102,7 @@
   border-radius: 8px;
 }
 
+
 /********   Map view toggole component customize   ********/
 .toggle-success:checked,
 .toggle-success[checked="true"],
@@ -133,6 +134,14 @@
   background: #ffffff;
   border-radius: 50%;
 }
+
+/****** pagination style ******/
+.css-lqq3n7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+    /* background-color: rgba(0, 0, 0, 0.08); */
+    color: white;
+    background: #159947 !important;
+}
+
 
 /************************
      Responsive
