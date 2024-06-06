@@ -77,6 +77,7 @@ const SearchResultHotel = () => {
   const {
     data: searchData,
     isLoading,
+    isFetching,
     refetch,
   } = useGetAllSearchResultHotelsQuery(searchQuery);
   console.log(searchData);
@@ -131,6 +132,11 @@ useEffect(() => {
     refetch();
   }, [childLocation.location_id, childLocation.search_type, refetch]);
 
+   useEffect(() => {
+     // Scroll to top when the currentPage changes
+     window.scrollTo(0, 0);
+   }, [currentPage]);
+
   if (loadError) {
     return <div className="text-center py-[60px]">Error loading maps!</div>;
   }
@@ -174,83 +180,98 @@ useEffect(() => {
 
         {/* hotel results */}
 
-        {searchData?.data?.hotels_data?.data ? (
-          <div className="hotels-result-container">
-            <div className="flex justify-between items-start gap-[12px]">
-              <h2 className="search-page-title">
-                ChutyRooms: {searchData?.data?.hotels_data?.pagination?.total}{" "}
-                {searchData?.data?.hotels_data?.pagination?.total > 1
-                  ? "Properties"
-                  : "Property"}{" "}
-                Found
-              </h2>
-              <div className="flex items-center w-[120px] lg:w-[130px]">
-                <p className="mr-[4px] text-[12px] md:text-[14px] lg:text-[16px]">
-                  Map View
-                </p>
-                <input
-                  type="checkbox"
-                  className="toggle toggle-success w-[44px] h-[20px] lg:w-[46px] lg:h-[23px]"
-                  onClick={() => setMapView(!mapView)}
-                />
-              </div>
-            </div>
-            <div className={`${mapView ? "hidden" : ""}`}>
-              <div className="hotels">
-                {searchData?.data?.hotels_data?.data
-                  .slice(0, 2)
-                  .map((hotel) => (
-                    <SingleHotel
-                      key={hotel?.property_id}
-                      hotel={hotel}
-                    ></SingleHotel>
-                  ))}
-              </div>
-              <img className="download-app-img" src={downloadApp} alt="" />
-              <div className="hotels">
-                {searchData?.data?.hotels_data?.data.slice(2).map((hotel) => (
-                  <SingleHotel
-                    key={hotel?.property_id}
-                    hotel={hotel}
-                  ></SingleHotel>
-                ))}
-              </div>
-            </div>
-            {/* MapView */}
-            {mapView && (
-              <div className="mt-[24px]">
-                <GoogleMap
-                  mapContainerStyle={mapContainerStyle}
-                  zoom={10}
-                  center={center}
-                >
-                  <Marker />
-                  <Marker
-                    clickable={true}
-                    className="pointer-events-none"
-                    icon={{
-                      url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
-                      scaledSize: new window.google.maps.Size(30, 30),
-                    }}
-                  />
-                </GoogleMap>
-              </div>
-            )}
-            <div className="flex justify-center">
-              <Stack spacing={2}>
-                <Pagination
-                  count={searchData?.data?.hotels_data?.pagination?.last_page}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  variant="outlined"
-                />
-              </Stack>
-            </div>
+        {isFetching ? (
+          <div className="mx-auto">
+            <Loading></Loading>  
           </div>
         ) : (
-          <h2 className="hotels-result-container font-['Gilroy-semibold'] text-[20px]">
-            ChutyRooms: No property found!
-          </h2>
+          <>
+            {searchData?.data?.hotels_data?.data ? (
+              <div className="hotels-result-container">
+                <div className="flex justify-between items-start gap-[12px]">
+                  <h2 className="search-page-title">
+                    ChutyRooms:{" "}
+                    {searchData?.data?.hotels_data?.pagination?.total}{" "}
+                    {searchData?.data?.hotels_data?.pagination?.total > 1
+                      ? "Properties"
+                      : "Property"}{" "}
+                    Found
+                  </h2>
+                  <div className="flex items-center w-[120px] lg:w-[130px]">
+                    <p className="mr-[4px] text-[12px] md:text-[14px] lg:text-[16px]">
+                      Map View
+                    </p>
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-success w-[44px] h-[20px] lg:w-[46px] lg:h-[23px]"
+                      onClick={() => setMapView(!mapView)}
+                    />
+                  </div>
+                </div>
+                <div className={`${mapView ? "hidden" : "mb-[24px]"}`}>
+                  <div className="hotels">
+                    {searchData?.data?.hotels_data?.data
+                      .slice(0, 2)
+                      .map((hotel) => (
+                        <SingleHotel
+                          key={hotel?.property_id}
+                          hotel={hotel}
+                        ></SingleHotel>
+                      ))}
+                  </div>
+                  <img className="download-app-img" src={downloadApp} alt="" />
+                  <div className="hotels">
+                    {searchData?.data?.hotels_data?.data
+                      .slice(2)
+                      .map((hotel) => (
+                        <SingleHotel
+                          key={hotel?.property_id}
+                          hotel={hotel}
+                        ></SingleHotel>
+                      ))}
+                  </div>
+                </div>
+                {/* MapView */}
+                {mapView && (
+                  <div className="mt-[24px]">
+                    <GoogleMap
+                      mapContainerStyle={mapContainerStyle}
+                      zoom={10}
+                      center={center}
+                    >
+                      <Marker />
+                      <Marker
+                        clickable={true}
+                        className="pointer-events-none"
+                        icon={{
+                          url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
+                          scaledSize: new window.google.maps.Size(30, 30),
+                        }}
+                      />
+                    </GoogleMap>
+                  </div>
+                )}
+                {!mapView && (
+                  <div className="flex justify-center">
+                    <Stack spacing={4}>
+                      <Pagination
+                        count={
+                          searchData?.data?.hotels_data?.pagination?.last_page
+                        }
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        variant="outlined"
+                      />
+                    </Stack>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <h2 className="hotels-result-container font-['Gilroy-semibold'] text-[20px]">
+                ChutyRooms: No property found!
+              </h2>
+            )}
+          </>
         )}
       </div>
 

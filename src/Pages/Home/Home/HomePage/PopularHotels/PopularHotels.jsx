@@ -34,7 +34,7 @@ const PopularHotels = ({ popularProperties }) => {
             </div>
             <div className="flex justify-between items-center mt-[8px]">
               <h2 className="hotel-name">{popularHotel.name}</h2>
-              <div className="flex itens-center gap-[4px]">
+              <div className="flex items-center gap-[4px]">
                 <img className="w-[14px]" src={star} alt="" />
                 <span className="hotel-info">4.7</span>
               </div>

@@ -13,6 +13,7 @@ import Loading from "../Common/Includes/Loading/Loading";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 import { BASE_ASSET_API } from "../../BaseApi/AssetUrl";
 import { useForm } from "react-hook-form";
+import ProtectedRoute from "../../Layout/ProtectedRoute";
 
 const MembershipCards = () => {
   const [purchasedCards, setPurchasedCards] = useState([
@@ -515,82 +516,83 @@ const MembershipCards = () => {
       </div>
 
       {purchase && (
-        <div className=" card-details-container">
-          <h2 className="text-[18px] lg:text-[26px] font-['Gilroy-semibold'] mb-[12px]">
-            Card Details
-          </h2>
+        <ProtectedRoute>
+          <div className=" card-details-container">
+            <h2 className="text-[18px] lg:text-[26px] font-['Gilroy-semibold'] mb-[12px]">
+              Card Details
+            </h2>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <p className="mb-[4px]">
-              Card Name :{" "}
-              <span className="font-['Gilroy-semibold']">
-                {purchaseCardInfo.name}
-              </span>
-            </p>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <p className="mb-[4px]">
+                Card Name :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  {purchaseCardInfo.name}
+                </span>
+              </p>
 
-            <p className="mb-[4px]">
-              Price :{" "}
-              <span className="font-['Gilroy-semibold']">
-                TK {purchaseCardInfo.card.price}
-              </span>
-            </p>
+              <p className="mb-[4px]">
+                Price :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  TK {purchaseCardInfo.card.price}
+                </span>
+              </p>
 
-            <p className="mb-[4px]">
-              Discount Percentage :{" "}
-              <span className="font-['Gilroy-semibold']">
-                {purchaseCardInfo.card.amount}%
-              </span>
-            </p>
+              <p className="mb-[4px]">
+                Discount Percentage :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  {purchaseCardInfo.card.amount}%
+                </span>
+              </p>
 
-            <p className="mb-[4px]">
-              Validation :{" "}
-              <span className="font-['Gilroy-semibold']">
-                {purchaseCardInfo.card.validity_year
-                  ? `${
-                      purchaseCardInfo.card.validity_year > 1
-                        ? `${purchaseCardInfo.card.validity_year} years`
-                        : `${purchaseCardInfo.card.validity_year} year`
-                    }`
-                  : ""}
-                {purchaseCardInfo.card.validity_month
-                  ? `${
-                      purchaseCardInfo.card.validity_month > 1
-                        ? ` ${purchaseCardInfo.card.validity_month} months`
-                        : ` ${purchaseCardInfo.card.validity_month} month`
-                    }`
-                  : ""}
-                {purchaseCardInfo.card.validity_day
-                  ? `${
-                      purchaseCardInfo.card.validity_day > 1
-                        ? ` ${purchaseCardInfo.card.validity_day} days`
-                        : ` ${purchaseCardInfo.card.validity_day} day`
-                    }`
-                  : ""}
-                {purchaseCardInfo.card.validity_hour
-                  ? `${
-                      purchaseCardInfo.card.validity_hour > 1
-                        ? ` ${purchaseCardInfo.card.validity_hour} hours`
-                        : ` ${purchaseCardInfo.card.validity_hour} hour`
-                    }`
-                  : ""}
-                {purchaseCardInfo.card.validity_minute
-                  ? `${
-                      purchaseCardInfo.card.validity_minute > 1
-                        ? ` ${purchaseCardInfo.card.validity_minute} minutes`
-                        : ` ${purchaseCardInfo.card.validity_minute} minute`
-                    }`
-                  : ""}
-                {purchaseCardInfo.card.validity_second
-                  ? `${
-                      purchaseCardInfo.card.validity_second > 1
-                        ? ` ${purchaseCardInfo.card.validity_second} seconds`
-                        : ` ${purchaseCardInfo.card.validity_second} second`
-                    }`
-                  : ""}
-              </span>
-            </p>
+              <p className="mb-[4px]">
+                Validation :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  {purchaseCardInfo.card.validity_year
+                    ? `${
+                        purchaseCardInfo.card.validity_year > 1
+                          ? `${purchaseCardInfo.card.validity_year} years`
+                          : `${purchaseCardInfo.card.validity_year} year`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_month
+                    ? `${
+                        purchaseCardInfo.card.validity_month > 1
+                          ? ` ${purchaseCardInfo.card.validity_month} months`
+                          : ` ${purchaseCardInfo.card.validity_month} month`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_day
+                    ? `${
+                        purchaseCardInfo.card.validity_day > 1
+                          ? ` ${purchaseCardInfo.card.validity_day} days`
+                          : ` ${purchaseCardInfo.card.validity_day} day`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_hour
+                    ? `${
+                        purchaseCardInfo.card.validity_hour > 1
+                          ? ` ${purchaseCardInfo.card.validity_hour} hours`
+                          : ` ${purchaseCardInfo.card.validity_hour} hour`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_minute
+                    ? `${
+                        purchaseCardInfo.card.validity_minute > 1
+                          ? ` ${purchaseCardInfo.card.validity_minute} minutes`
+                          : ` ${purchaseCardInfo.card.validity_minute} minute`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_second
+                    ? `${
+                        purchaseCardInfo.card.validity_second > 1
+                          ? ` ${purchaseCardInfo.card.validity_second} seconds`
+                          : ` ${purchaseCardInfo.card.validity_second} second`
+                      }`
+                    : ""}
+                </span>
+              </p>
 
-            {/* <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
+              {/* <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
               <div className="flex items-center">
                 <input
                   className="w-[12px] mr-2"
@@ -617,23 +619,24 @@ const MembershipCards = () => {
               </label>
             </div> */}
 
-            <div className="flex gap-[8px] mt-[18px] w-full">
-              <button
-                onClick={(e) => {
-                  e.preventDefault(), setPurchase(false);
-                }}
-                className="flex flex-1 items-center justify-center py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px] hover:bg-[#F4625C] hover:text-white"
-              >
-                Cancel
-              </button>
-              <input
-                type="submit"
-                className="flex-1 bg-[#159947] text-white py-[10px] rounded-[8px]"
-                value="Pay Now"
-              />
-            </div>
-          </form>
-        </div>
+              <div className="flex gap-[8px] mt-[18px] w-full">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(), setPurchase(false);
+                  }}
+                  className="flex flex-1 items-center justify-center py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px] hover:bg-[#F4625C] hover:text-white"
+                >
+                  Cancel
+                </button>
+                <input
+                  type="submit"
+                  className="flex-1 bg-[#159947] text-white py-[10px] rounded-[8px]"
+                  value="Pay Now"
+                />
+              </div>
+            </form>
+          </div>
+        </ProtectedRoute>
       )}
     </div>
   );

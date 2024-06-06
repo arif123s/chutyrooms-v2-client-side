@@ -244,8 +244,7 @@ const PropertyAdd = () => {
       });
       // setLogoError("");
       setLogoError(null);
-    }
-    else {
+    } else {
       // setLogo(null);
       // setLogoError({
       //   status: true,
@@ -282,12 +281,10 @@ const PropertyAdd = () => {
           message: "",
         });
       }
-    }
-    else {
+    } else {
       // const newImages = [...displayImages];
       // newImages[index] = null;
       // setDisplayImages(newImages);
-
       // displayImages.map((i) => {
       //   if (i === null) {
       //     displayImageCount++;
@@ -540,7 +537,7 @@ const PropertyAdd = () => {
   const renderSpecificImageErrors = (validationErrors, imageIndex) => {
     const key = `images.${imageIndex}.image`;
     const errors = validationErrors[key];
-    
+
     return (
       errors?.length > 0 &&
       errors.map((err, index) => (
