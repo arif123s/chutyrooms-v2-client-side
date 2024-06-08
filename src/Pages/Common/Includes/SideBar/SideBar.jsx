@@ -10,6 +10,7 @@ import Arrow from "../../../../assets/icons/arrow-down.svg";
 import ArrowGreen from "../../../../assets/icons/arrow-down-green.svg";
 import Rectangle from "../../../../assets/icons/Rectangle.svg";
 import RectangleGreen from "../../../../assets/icons/Rectangle-green.svg";
+import logout from "../../../../assets/icons/logout.svg";
 import "../SideBar/SideBar.css";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -183,6 +184,7 @@ const SideBar = ({ open }) => {
             submenu: [
               { name: "Property List", path: "/dashboard/property-list" },
               { name: "Add Property", path: "/dashboard/property-add" },
+              { name: "Profile", path: "/dashboard/owner-profile" },
             ],
           },
           // {
@@ -218,7 +220,7 @@ const SideBar = ({ open }) => {
     <div
       className={` ${
         open ? "sidebar-width" : "sidebar-close-width"
-      }  sidebar-small`}
+      }  sidebar-small `}
     >
       <div className="chuty-logo-division">
         <img
@@ -307,6 +309,10 @@ const SideBar = ({ open }) => {
             )}
           </div>
         ))}
+        <div className="absolute  ml-[12px] bottom-[110px] flex cursor-pointer">
+          <img src={logout} alt="" />
+          <p>Logout</p>
+        </div>
       </div>
     </div>
   );

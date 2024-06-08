@@ -12,6 +12,8 @@ import Loading from "../Common/Includes/Loading/Loading";
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
 import { BASE_ASSET_API } from "../../BaseApi/AssetUrl";
+import { useForm } from "react-hook-form";
+import ProtectedRoute from "../../Layout/ProtectedRoute";
 
 const MembershipCards = () => {
   const [purchasedCards, setPurchasedCards] = useState([
@@ -71,7 +73,18 @@ const MembershipCards = () => {
   //   },
   // ];
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [purchase, setPurchase] = useState(false);
+  const [purchaseCardInfo, setPurchaseCardInfo] = useState({
+    card:{},
+    name:"",
+  });
   const user = JSON.parse(localStorage.getItem("userInfo"));
+  // console.log(user);
 
   const [activatedCardId, setActivatedCardId] = useState(null);
 
@@ -186,7 +199,7 @@ const MembershipCards = () => {
       setPurchasedCards(updatedCards);
       // setActivatedCardId(id);
     }
-  };
+  }; 
 
   const handleConfirmActivationChange = () => {
     const updatedCards = purchasedCards.map((card) =>
@@ -203,9 +216,16 @@ const MembershipCards = () => {
   //      setShowOptions(false); // Close the dropdown after selecting an option
   //    };
 
-  //  const onSubmit = () => {
+  // Function to handle purchase for a specific card
+  const handlePurchase = (card,name) => {
+    setPurchaseCardInfo({card:card,name:name});
+    setPurchase(true)
+  };
 
-  //  }
+  const onSubmit = () => {
+    // setPurchase(true)
+  };
+
 
   return (
     <div className="custom-container membership-card-container">
@@ -354,16 +374,69 @@ const MembershipCards = () => {
                     {card.description}
                   </h2>
                   <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px]">
-                    {card.validation}
+                    Validation :{" "}
+                    <span className="font-['Gilroy-semibold']">
+                      {card.validity_year
+                        ? `${
+                            card.validity_year > 1
+                              ? `${card.validity_year} years`
+                              : `${card.validity_year} year`
+                          }`
+                        : ""}
+                      {card.validity_month
+                        ? `${
+                            card.validity_month > 1
+                              ? ` ${card.validity_month} months`
+                              : ` ${card.validity_month} month`
+                          }`
+                        : ""}
+                      {card.validity_day
+                        ? `${
+                            card.validity_day > 1
+                              ? ` ${card.validity_day} days`
+                              : ` ${card.validity_day} day`
+                          }`
+                        : ""}
+                      {card.validity_hour
+                        ? `${
+                            card.validity_hour > 1
+                              ? ` ${card.validity_hour} hours`
+                              : ` ${card.validity_hour} hour`
+                          }`
+                        : ""}
+                      {card.validity_minute
+                        ? `${
+                            card.validity_minute > 1
+                              ? ` ${card.validity_minute} minutes`
+                              : ` ${card.validity_minute} minute`
+                          }`
+                        : ""}
+                      {card.validity_second
+                        ? `${
+                            card.validity_second > 1
+                              ? ` ${card.validity_second} seconds`
+                              : ` ${card.validity_second} second`
+                          }`
+                        : ""}
+                    </span>
                   </p>
                   <p className="text-[14px] lg:text-[16px] mt-[6px] lg:mt-[12px] mb-[10px] lg:mb-[20px]">
                     TK {card.price}
                   </p>
                   <button
-                    // onClick={(e) => (e.preventDefault(), setPurchase(true))}
-                    className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePurchase(card, card.name);
+                    }}
+                    className={`w-full font-['Gilroy-semibold']  cursor-pointer px-[16px] py-[10px] rounded-[8px] border-0 ${
+                      purchaseCardInfo.name == card.name && purchase
+                        ? "bg-[#E8F5ED] text-[#159947]"
+                        : "bg-[#159947] text-white"
+                    } `}
                   >
-                    Purchase
+                    {purchaseCardInfo.name == card.name && purchase
+                      ? "Selected"
+                      : "Purchase"}
                   </button>
                 </div>
               ))}
@@ -387,10 +460,19 @@ const MembershipCards = () => {
                     TK {card.price}
                   </p>
                   <button
-                    // onClick={(e) => (e.preventDefault(), setPurchase(true))}
-                    className="w-full font-['Gilroy-semibold'] bg-[#159947] cursor-pointer text-white px-[16px] py-[10px] rounded-[8px] border-0"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handlePurchase(card, card.name);
+                    }}
+                    className={`w-full font-['Gilroy-semibold']  cursor-pointer px-[16px] py-[10px] rounded-[8px] border-0 ${
+                      purchaseCardInfo.name == card.name && purchase
+                        ? "bg-[#E8F5ED] text-[#159947]"
+                        : "bg-[#159947] text-white"
+                    } `}
                   >
-                    Purchase
+                    {purchaseCardInfo.name == card.name && purchase
+                      ? "Selected"
+                      : "Purchase"}
                   </button>
                 </div>
               ))}
@@ -433,191 +515,129 @@ const MembershipCards = () => {
           </div> */}
       </div>
 
-      {/* {purchase && (
-          <div className=" customer-details-container">
-            <h2 className="login-title font-['Gilroy-semibold']">
-              Customer Details
+      {purchase && (
+        <ProtectedRoute>
+          <div className=" card-details-container">
+            <h2 className="text-[18px] lg:text-[26px] font-['Gilroy-semibold'] mb-[12px]">
+              Card Details
             </h2>
 
-            <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-[14px]">
-                <label className="input-title" htmlFor="name">
-                  Name
-                </label>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <p className="mb-[4px]">
+                Card Name :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  {purchaseCardInfo.name}
+                </span>
+              </p>
+
+              <p className="mb-[4px]">
+                Price :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  TK {purchaseCardInfo.card.price}
+                </span>
+              </p>
+
+              <p className="mb-[4px]">
+                Discount Percentage :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  {purchaseCardInfo.card.amount}%
+                </span>
+              </p>
+
+              <p className="mb-[4px]">
+                Validation :{" "}
+                <span className="font-['Gilroy-semibold']">
+                  {purchaseCardInfo.card.validity_year
+                    ? `${
+                        purchaseCardInfo.card.validity_year > 1
+                          ? `${purchaseCardInfo.card.validity_year} years`
+                          : `${purchaseCardInfo.card.validity_year} year`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_month
+                    ? `${
+                        purchaseCardInfo.card.validity_month > 1
+                          ? ` ${purchaseCardInfo.card.validity_month} months`
+                          : ` ${purchaseCardInfo.card.validity_month} month`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_day
+                    ? `${
+                        purchaseCardInfo.card.validity_day > 1
+                          ? ` ${purchaseCardInfo.card.validity_day} days`
+                          : ` ${purchaseCardInfo.card.validity_day} day`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_hour
+                    ? `${
+                        purchaseCardInfo.card.validity_hour > 1
+                          ? ` ${purchaseCardInfo.card.validity_hour} hours`
+                          : ` ${purchaseCardInfo.card.validity_hour} hour`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_minute
+                    ? `${
+                        purchaseCardInfo.card.validity_minute > 1
+                          ? ` ${purchaseCardInfo.card.validity_minute} minutes`
+                          : ` ${purchaseCardInfo.card.validity_minute} minute`
+                      }`
+                    : ""}
+                  {purchaseCardInfo.card.validity_second
+                    ? `${
+                        purchaseCardInfo.card.validity_second > 1
+                          ? ` ${purchaseCardInfo.card.validity_second} seconds`
+                          : ` ${purchaseCardInfo.card.validity_second} second`
+                      }`
+                    : ""}
+                </span>
+              </p>
+
+              {/* <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
+              <div className="flex items-center">
                 <input
-                  className="input-box"
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Enter your name"
-                  {...register("name", {
+                  className="w-[12px] mr-2"
+                  type="checkbox"
+                  name="terms"
+                  id="terms"
+                  {...register("terms", {
                     required: {
                       value: true,
-                      message: "Name is Required",
+                      message: "Please accept the Terms & Conditions",
                     },
                   })}
                 />
-                <label className="">
-                  {errors.name?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.name.message}
-                    </span>
-                  )}
-                </label>
-              </div>
 
-              <div className="mb-4">
-                <label className="input-title" htmlFor="email">
-                  Email
-                </label>
+                <p className="mr-[2px]">I agree to Chutyrooms's </p>
+                <a className="text-[#159947]">Terms and conditions</a>
+              </div>
+              <label className=" mb-0 pb-0">
+                {errors.terms?.type === "required" && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.terms.message}
+                  </span>
+                )}
+              </label>
+            </div> */}
+
+              <div className="flex gap-[8px] mt-[18px] w-full">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(), setPurchase(false);
+                  }}
+                  className="flex flex-1 items-center justify-center py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px] hover:bg-[#F4625C] hover:text-white"
+                >
+                  Cancel
+                </button>
                 <input
-                  className="input-box"
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  {...register("email", {
-                    required: {
-                      value: true,
-                      message: "Email is Required",
-                    },
-                  })}
+                  type="submit"
+                  className="flex-1 bg-[#159947] text-white py-[10px] rounded-[8px]"
+                  value="Pay Now"
                 />
-                <label className="">
-                  {errors.email?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.email.message}
-                    </span>
-                  )}
-                </label>
               </div>
-
-              <div className="mb-[14px]">
-                <label className="input-title" htmlFor="phone">
-                  Phone
-                </label>
-                <div className="relative w-full">
-                  <div className="phone-input-box">
-                    <div className="flex w-[104px]">
-                      <div className="relative mr-[4px]">
-                        <div className="custom-select-container">
-                          <div
-                            className="selected-option flex items-center "
-                            onClick={() => setShowOptions(!showOptions)}
-                          >
-                            {selectedCountry ? (
-                              <div className="flex items-center mr-[6px]">
-                                <img
-                                  src={selectedCountry.image}
-                                  alt={selectedCountry.name}
-                                  className="w-[20px] h-[14px] mr-[2px]"
-                                />
-
-                                <span className="cursor-default">
-                                  {selectedCountry.code}
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="flex items-center mr-[6px]">
-                                <img
-                                  src={selectedCountry.image}
-                                  alt=""
-                                  className="w-[20px] h-[14px] mr-[2px]"
-                                />
-                                <span className="country-code">
-                                  {selectedCountry.code}
-                                </span>
-                              </div>
-                            )}
-                            <img className="ml-[14px]" src={arrowIcon} alt="" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-[2px] h-[16px] bg-[#E6E7E6] mr-[4px]"></div>
-                    <input
-                      className="w-full block mb-[4px]"
-                      id="phone"
-                      name="phone"
-                      type="text"
-                      placeholder="Enter your phone number"
-                      {...register("phone", {
-                        required: {
-                          value: true,
-                          message: "Phone number is Required",
-                        },
-                      })}
-                    />
-                  </div>
-                  {showOptions && (
-                    <div className="options-container">
-                      <div className="options-list">
-                        {countryData.map((option, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center gap-[6px] p-[2px] hover:bg-[#159947] hover:text-white"
-                            onClick={() => handleOptionSelect(option)}
-                          >
-                            <img
-                              src={option.image}
-                              alt={option.name}
-                              className="w-[26px] h-[20px]"
-                            />
-                            <span className="country-name">{option.name}</span>
-                            <span className="country-code">{option.code}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <label className="mt-[3px] block">
-                  {errors.phone?.type === "required" && (
-                    <span className="label-text-alt text-red-500 block ">
-                      {errors.phone?.message}
-                    </span>
-                  )}
-                </label>
-              </div>
-
-              <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
-                <div className="flex items-center">
-                  <input
-                    className="w-[12px] mr-2"
-                    type="checkbox"
-                    name="terms"
-                    id="terms"
-                    {...register("terms", {
-                      required: {
-                        value: true,
-                        message: "Please accept the Terms & Conditions",
-                      },
-                    })}
-                  />
-
-                  <p className="mr-[2px]">
-                  
-                    I agree to Chutyrooms's{" "}
-                  </p>
-                  <a className="text-[#159947]">Terms and conditions</a>
-                </div>
-                <label className=" mb-0 pb-0">
-                  {errors.terms?.type === "required" && (
-                    <span className="label-text-alt text-red-500">
-                      {errors.terms.message}
-                    </span>
-                  )}
-                </label>
-              </div>
-
-              <input
-                type="submit"
-                className="login-btn mt-[8px]"
-                value="Pay Now"
-              />
             </form>
           </div>
-        )} */}
+        </ProtectedRoute>
+      )}
     </div>
   );
 };

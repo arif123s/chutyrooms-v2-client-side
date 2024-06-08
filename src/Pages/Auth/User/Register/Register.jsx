@@ -37,7 +37,7 @@ const Register = () => {
   // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [loginMethod, setLoginMethod] = useState("phone");
-const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -63,13 +63,13 @@ const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     // Add more countries as needed
   ];
 
-     const togglePasswordVisibility = () => {
-       setIsPasswordVisible(!isPasswordVisible);
-     };
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
-       const toggleConfirmPasswordVisibility = () => {
-         setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
-       };
+  const toggleConfirmPasswordVisibility = () => {
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
 
   const handleOptionSelect = (option) => {
     setSelectedCountry(option);
@@ -203,7 +203,6 @@ const [isPasswordVisible, setIsPasswordVisible] = useState(false);
                 message: data?.message,
                 errors: [data?.errors],
               });
-             
             }
           });
       } catch (err) {
@@ -508,15 +507,15 @@ const [isPasswordVisible, setIsPasswordVisible] = useState(false);
               },
             })}
           />
-          <span
+          <span  
             className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
             onClick={toggleConfirmPasswordVisibility}
           >
             {isConfirmPasswordVisible ? (
-              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+              <img className="h-5 w-5 mt-[30px]" src={hidePasswordIcon} />
             ) : (
               // Eye icon for showing password
-              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+              <img className="h-5 w-5 mt-[30px]" src={showPasswordIcon} />
             )}
           </span>
           <label className=" mb-0 pb-0">

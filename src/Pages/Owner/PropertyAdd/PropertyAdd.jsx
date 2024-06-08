@@ -244,8 +244,7 @@ const PropertyAdd = () => {
       });
       // setLogoError("");
       setLogoError(null);
-    }
-    else {
+    } else {
       // setLogo(null);
       // setLogoError({
       //   status: true,
@@ -282,12 +281,10 @@ const PropertyAdd = () => {
           message: "",
         });
       }
-    }
-    else {
+    } else {
       // const newImages = [...displayImages];
       // newImages[index] = null;
       // setDisplayImages(newImages);
-
       // displayImages.map((i) => {
       //   if (i === null) {
       //     displayImageCount++;
@@ -390,18 +387,16 @@ const PropertyAdd = () => {
       hotel_class: data.rating,
       property_types: data.propertyTypes,
       amenities: data.amenities,
+      logo: logo.logoFile,
       images: displayImageFiles,
       check_in_time: `${data.checkin_hour}:${data.checkin_minute}`,
       check_in_time_period: data.checkin_time_period,
-      // check_in_time_period: "AM",
       check_out_time: `${data.checkout_hour}:${data.checkout_minute}`,
       check_out_time_period: data.checkout_time_period,
-      // check_out_time_period: "AM",
       latitude: parseFloat(mapCenter.lat),
       longitude: parseFloat(mapCenter.lng),
       cancellation: cancellationData,
       child_age_limit: data.child_age_limit,
-      logo: logo.logoFile,
       short_description: data.shortDescription,
       instruction: data.instruction,
       payment_methods: data.paymentMethods,
@@ -542,7 +537,7 @@ const PropertyAdd = () => {
   const renderSpecificImageErrors = (validationErrors, imageIndex) => {
     const key = `images.${imageIndex}.image`;
     const errors = validationErrors[key];
-    
+
     return (
       errors?.length > 0 &&
       errors.map((err, index) => (
@@ -1883,7 +1878,7 @@ const PropertyAdd = () => {
                   )}
                 </label> */}
                 <img
-                  className="absolute top-2 right-1"
+                  className="absolute top-2 right-1 pointer-events-none"
                   src={arrowDownIcon}
                   alt=""
                 />
@@ -2000,7 +1995,7 @@ const PropertyAdd = () => {
                   )}
                 </label>
                 <img
-                  className="absolute top-2 right-1"
+                  className="absolute top-2 right-1 pointer-events-none"
                   src={arrowDownIcon}
                   alt=""
                 />

@@ -4,7 +4,7 @@ import SideBar from "./../Common/Includes/SideBar/SideBar";
 import "./Dashboard.css";
 import NavBar from "../Common/Includes/Admin/NavBar/NavBar";
 import { useState } from "react";
-import Profile from "./Profile/Profile";
+import Profile from "./Profile/UserProfile/Profile";
 import DashboardHome from "./DashboardHome/DashboardHome";
 import OwnerPropertyAdd from './PropertyManagement/OwnerPropertyAdd'
 

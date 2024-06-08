@@ -5,7 +5,7 @@ import arrowDownIcon from "../../../assets/icons/arrow-down.svg";
 import checkboxIcon from "../../../assets/icons/square.svg";
 import checkboxTickIcon from "../../../assets/icons/square-tick.svg";
 import searchIcon from "../../../assets/icons/search-normal.svg";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const FilterContainer = ({
   searchData,
@@ -29,9 +29,6 @@ const FilterContainer = ({
   const [allChildLocation, setAllChildLocation] = useState(false);
   const [allFacilities, setAllFacilities] = useState(false);
   const [allAccomodationType, setAllAccomodationType] = useState(false);
- 
-
-  // console.log("childLocation", childLocation);
 
   useEffect(() => {
     if (searchData?.accommodation_types) {

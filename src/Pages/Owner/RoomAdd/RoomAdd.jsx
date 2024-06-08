@@ -48,7 +48,9 @@ const RoomAdd = () => {
   }
 
   if (!roomCategories?.status) {
-    return <div className="ml-[18px] mt-[28px]">{roomCategories?.message}!</div>;
+    return (
+      <div className="ml-[18px] mt-[28px]">{roomCategories?.message}!</div>
+    );
   }
 
   const handleDisplayImageSelect = (index, event) => {
@@ -203,7 +205,7 @@ const RoomAdd = () => {
       } else {
         toast.dismiss(toastId);
         console.log("Failed", result);
-         setValidationErrors(result?.error?.data?.errors);
+        setValidationErrors(result?.error?.data?.errors);
         // console.log("Failed", result);
       }
     } catch (error) {

@@ -461,10 +461,10 @@ const OwnerRegister = () => {
             onClick={togglePasswordVisibility}
           >
             {isPasswordVisible ? (
-              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+              <img className="h-5 w-5 mt-[30px]" src={hidePasswordIcon} />
             ) : (
               // Eye icon for showing password
-              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+              <img className="h-5 w-5 mt-[30px]" src={showPasswordIcon} />
             )}
           </span>
           {errors.password && (
@@ -497,10 +497,10 @@ const OwnerRegister = () => {
             onClick={toggleConfirmPasswordVisibility}
           >
             {isConfirmPasswordVisible ? (
-              <img className="h-6 w-6 mt-[30px]" src={hidePasswordIcon} />
+              <img className="h-5 w-5 mt-[30px]" src={hidePasswordIcon} />
             ) : (
               // Eye icon for showing password
-              <img className="h-6 w-6 mt-[30px]" src={showPasswordIcon} />
+              <img className="h-5 w-5 mt-[30px]" src={showPasswordIcon} />
             )}
           </span>
          

@@ -18,7 +18,7 @@ const SingleHotel = ({hotel , searchInfo}) => {
 
   const navigate = useNavigate();
 
-  console.log(searchInfo.location);
+  // console.log(searchInfo.location);
 
   function viewPropertyDetails(propertyId)
   {

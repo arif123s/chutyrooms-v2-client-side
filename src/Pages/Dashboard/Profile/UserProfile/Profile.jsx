@@ -1,9 +1,9 @@
-import userImg from '../../../assets/icons/user.svg'
-import location from '../../../assets/icons/map-pin.svg'
-import editIcon from '../../../assets/icons/edit-icon.svg'
-import platinumCard from "../../../assets/membership/platinum-card.png";
-import goldCard from "../../../assets/membership/gold-card.png";
-import downloadApp from "../../../assets/download-app.png";
+import userImg from '../../../../assets/icons/user.svg'
+import location from '../../../../assets/icons/map-pin.svg'
+import editIcon from '../../../../assets/icons/edit-icon.svg'
+import platinumCard from "../../../../assets/membership/platinum-card.png";
+import goldCard from "../../../../assets/membership/gold-card.png";
+import downloadApp from "../../../../assets/download-app.png";
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
@@ -11,7 +11,7 @@ const Profile = () => {
 const navigate  = useNavigate();
 
     return (
-      <div className="p-[12px] md:p-[24px] lg:p-[24px] lg:pr-[40px]">
+      <div className="p-[12px] md:p-[24px] lg:p-[24px] lg:pr-[40px] lg:w-9/12">
         <div className="flex justify-between items-start ">
           <div className="flex items-start md:items-center lg:items-center">
             <img

@@ -327,12 +327,12 @@ const MembershipEdit = () => {
           </div>
         </div>
 
-        <div class="mb-3">
+        <div className="mb-3">
           <label
-            for="image">
+            htmlFor="image">
             Membership Card Image
           </label>
-          {Membership && Membership.image &&<img src={`${BASE_ASSET_API}/storage/images/Membership/${Membership.image}`}></img>}
+          {Membership && Membership.image &&<img className='w-[200px]' src={`${BASE_ASSET_API}/storage/images/Membership/${Membership.image}`}></img>}
           <input
             className="input-box"
             type="file"
