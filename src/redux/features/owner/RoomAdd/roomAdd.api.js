@@ -3,8 +3,8 @@ import { baseApi } from "../../../api/baseApi";
 const roomAddApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllRoomCategories: builder.query({
-      query: (id , currentPage) => ({
-        url: `/property/room/create?property_id=${id}?page=${currentPage}`,
+      query: (id) => ({
+        url: `/property/room/create?property_id=${id}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -13,8 +13,8 @@ const roomAddApi = baseApi.injectEndpoints({
     }),
 
     getAllRooms: builder.query({
-      query: (id) => ({
-        url: `/property/room/?property_id=${id}`,
+      query: (roomParameters) => ({
+        url: `/property/room/?property_id=${roomParameters.propertyId}&page=${roomParameters.currentPage}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
