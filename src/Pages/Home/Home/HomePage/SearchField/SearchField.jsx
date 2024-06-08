@@ -11,6 +11,8 @@ import  RoomGuest from "./RoomGuest";
 const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRange , rooms , setRooms , totalAdults, setTotalAdults , totalChildren , setTotalChildren }) => {
   const [open, setDatePickerOpen] = useState(false);
 
+
+
   // console.log(rooms);
   // const today = new Date();
 
@@ -171,7 +173,9 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       child_guest: totalChildren,
       child_age: maxChildAge,
     };
-    // console.log(searchInfo);
+ 
+
+    // console.log(searchInfo.search_type);
     
     const queryString = new URLSearchParams(searchInfo).toString();
     navigate(`/search-result-hotel?${queryString}`);
@@ -179,7 +183,7 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
   };
 
   return (
-    <div className="main-container mt-[18px] lg:mt-[40px]">
+    <div className="main-container mt-[18px] ">
 
       <form onSubmit={handleSubmit}>
       <div className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>

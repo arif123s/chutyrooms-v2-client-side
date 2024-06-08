@@ -88,7 +88,14 @@ const RoomGuest = ({
         children: 0,
         child_age: {}, // Assuming no children initially
       };
-
+      
+      // const newRoom = {
+      //   adults: 1,  // You can set default values for adults and children as needed
+      //   children: 0,
+      //   child_age: {
+      //     0: 1,
+      //   },  // Assuming no children initially
+      // };
       // Create a copy of the current rooms array
 
       // Add the new room to the array
@@ -255,7 +262,7 @@ const RoomGuest = ({
             </div>
             <div className="childage-selection">
               {typeof room.child_age === "object" &&
-                Object.keys(room.child_age).map((children_age, Childindex) => (
+                Object.keys(room.child_age).map((child_age,  Childindex) => (
                   <div key={Childindex}>
                     {/* {(index == Childindex) ?
                   ( */}
@@ -311,23 +318,25 @@ const RoomGuest = ({
                         </option>
                       </select> */}
 
-<select
-          className="childage-select-box childage"
-          // value={childAge} // Bind the value correctly
-          onChange={(e) =>
-            updateGuests(
-              index,
-              Childindex,
-              parseInt(e.target.value)
-            )
-          }
-        >
-          {[1, 2, 3, 4, 5, 6].map((age) => (
-            <option key={age} value={age}>
-              {age}
-            </option>
-          ))}
-        </select>
+                          <select
+                               className="childage-select-box childage"
+                              // value={child_age}
+                              onChange={(e) =>
+                                updateGuests(
+                                  index,
+                                  Childindex,
+                                  parseInt(e.target.value)
+                                )
+                              }
+
+                              
+                            >
+                              {[1, 2, 3, 4, 5, 6].map((child_age) => (
+                                <option key={child_age} value={child_age} selected={room.child_age[Childindex] === child_age} >
+                                  {child_age}
+                                </option>
+                              ))}
+                            </select>
 
                       <img className="arrow-icon-down" src={ArrowDown}></img>
                     </div>

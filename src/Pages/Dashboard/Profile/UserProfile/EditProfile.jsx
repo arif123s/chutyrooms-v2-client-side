@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-import userImg from "../../../assets/icons/user.svg";
+import userImg from "../../../../assets/icons/user.svg";
+import arrowDown from "../../../../assets/icons/arrow-down-green.svg";
 import { useState } from "react";
 
 const EditProfile = () => {
@@ -9,25 +10,28 @@ const EditProfile = () => {
    formState: { errors },
  } = useForm();
  const [changePassword,setChangePassword]=useState(false);
-  const [passErrorMessage, setPassErrorMessage] = useState(false);
+ const [passErrorMessage, setPassErrorMessage] = useState(false);
 
  const  onSubmit = () =>{
  
  }
 
   return (
-    <div className="m-[12px] md:m-[24px] lg:m-[24px] bg-white rounded-[8px]">
+    <div className="m-[12px] md:m-[24px] lg:m-[24px]  rounded-[8px]">
       <form
-        className="lg:w-9/12 p-[12px] md:p-[20px] lg:p-[20px] rounded-[8px]"
+        className="lg:w-8/12 p-[12px] md:p-[20px] lg:p-[20px] rounded-[8px] bg-white"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
-          <img className="w-[56px] md:w-[70px] lg:w-[70px] mr-[12px]" src={userImg} alt="Profile" />
+          <img
+            className="w-[56px] md:w-[70px] lg:w-[70px] mr-[12px]"
+            src={userImg}
+            alt="Profile"
+          />
           <p className="text-[#159947] text-[14px]">Change Photo</p>
         </div>
-
         <div className="h-[1px] bg-[#E6E7E6] my-[24px]" />
-
+        {/* User info */}
         <div>
           <div className="mb-[14px]">
             <label className="input-title" htmlFor="name">
@@ -160,18 +164,15 @@ const EditProfile = () => {
             </label>
           </div>
         </div>
-
-        {/* {!changePassword && (
-          <button
-            onClick={(e) => {
-              e.preventDefault(), setChangePassword(true);
-            }}
-            className="mb-[18px] w-full h-[48px] text-[#159947] font-[Gilroy-semibold] rounded-[8px] border-[1px] border-[#159947] flex justify-center items-center hover:text-[#FFFFFF] hover:bg-[#159947]"
-          >
-            Change Password
-          </button>
-        )}
-
+        <button
+          onClick={(e) => {
+            e.preventDefault(), setChangePassword(!changePassword);
+          }}
+          className="mb-[18px] w-full h-[48px] text-[#159947] font-[Gilroy-semibold] rounded-[8px] border-[1px] border-[#159947] flex justify-center items-center hover:bg-[#159947] hover:text-[#FFFFFF]"
+        >
+          Change Password
+        </button>
+        {/* Change Password */}
         {changePassword && (
           <div>
             <div className="mb-[14px]">
@@ -275,13 +276,12 @@ const EditProfile = () => {
               </label>
             </div>
           </div>
-        )} */}
-
+        )}
         <div className=" flex justify-end gap-x-[12px]">
           <button
-            onClick={(e) => {
-              e.preventDefault(), setChangePassword(false);
-            }}
+            // onClick={(e) => {
+            //   e.preventDefault(), setChangePassword(false);
+            // }}
             className="w-[80px] md:w-[100px] lg:w-[100px] h-[40px] md:h-[48px] lg:h-[48px] px-[14px] py-[10px] border-[1px] border-[#C0C3C1] rounded-[8px] flex items-center justify-center"
           >
             Cancel

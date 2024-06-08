@@ -14,6 +14,8 @@ const HomePage = () => {
   const [isOtherDivVisible, setIsOtherDivVisible] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [searchDate, setSearchDate] = useState([new Date(), new Date()]);
+
+  
   // const initialRooms = [{
   //   adults: 1,  // Default value for adults
   //   children: 1,  // Default value for children
@@ -30,6 +32,9 @@ const HomePage = () => {
     },
    
   ]);
+
+
+  // console.log(rooms)
   const [totalAdults, setTotalAdults] = useState(1);  // Initially 1 adult
   const [totalChildren, setTotalChildren] = useState(1);  // Initially 1 child
   const today = new Date();
@@ -45,6 +50,20 @@ const HomePage = () => {
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+
+  const findMaxChildAge = (rooms) => {
+    // Extract all child_age values and flatten them into a single array
+    const allAges = rooms.flatMap(room => Object.values(room.child_age));
+  
+    // Find the maximum age
+    const maxAge = Math.max(...allAges);
+  
+    return maxAge;
+  };
+  
+  const maxChildAge = findMaxChildAge(rooms);
+
+  // console.log(startDate , endDate , rooms);
 
   const { data } = useHomePageDataQuery();
   const popularProperties = data?.data?.properties;
@@ -113,8 +132,8 @@ const HomePage = () => {
           </div>
         )}
         <div className="hotels-membership-container">
-          <PopularHotels popularProperties={popularProperties} />
-          <DealMembership membershipCards={membershipCards} />
+          <PopularHotels popularProperties={popularProperties}  startDate={startDate} endDate={endDate} rooms = {rooms} totalAdults = {totalAdults} totalChildren = {totalChildren} child_age={maxChildAge}  />
+          <DealMembership sentValue={membershipCards} />
         </div>
         <ExploreCountry />
       </div>

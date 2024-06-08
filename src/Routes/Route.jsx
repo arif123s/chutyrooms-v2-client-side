@@ -44,8 +44,9 @@ import DistrictAdd from "../Pages/Dashboard/Admin/SoftwareSetup/District/Distric
 import DistrictEdit from "../Pages/Dashboard/Admin/SoftwareSetup/District/DistrictEdit";
 import HotelDetails from "../Pages/Home/HotelDetails/HotelDetails";
 
-import Profile from "../Pages/Dashboard/Profile/Profile";
-import EditProfile from "../Pages/Dashboard/Profile/EditProfile";
+import Profile from "../Pages/Dashboard/Profile/UserProfile/Profile";
+import EditProfile from "../Pages/Dashboard/Profile/UserProfile/EditProfile";
+import OwnerProfile from "../Pages/Dashboard/Profile/OwnerProfile/OwnerProfile";
 
 import ProtectedRoute from "../Layout/ProtectedRoute";
 
@@ -92,6 +93,8 @@ import RoomRate from "../Pages/Dashboard/RoomManagement/RoomRate/RoomRate";
 import RoomEdit from "../Pages/Dashboard/RoomManagement/RoomEdit/RoomEdit";
 import RoomList from "../Pages/Dashboard/RoomManagement/RoomList/RoomList";
 import Rooms from "../Pages/Dashboard/RoomManagement/RoomList/Rooms";
+import OwnerProfileEdit from "../Pages/Dashboard/Profile/OwnerProfile/OwnerProfileEdit/OwnerProfileEdit";
+import OwnerChangePassword from "../Pages/Dashboard/Profile/OwnerProfile/OwnerChangePassword/OwnerChangePassword";
 
 export const router = createBrowserRouter([
   {
@@ -121,7 +124,7 @@ export const router = createBrowserRouter([
           {
             path: "otp-phone",
             element: <OtpPhoneVerification></OtpPhoneVerification>,
-          }, 
+          },
           {
             path: "otp-email",
             element: <OtpEmailVerification></OtpEmailVerification>,
@@ -160,10 +163,6 @@ export const router = createBrowserRouter([
               </ProtectedRoute>
             ),
           },
-          // {
-          //   path: "/email/verify/:user/:token",
-          //   element: <EmailVerification></EmailVerification>,
-          // },
           {
             path: "property-add",
             element: (
@@ -249,6 +248,18 @@ export const router = createBrowserRouter([
           {
             path: "/dashboard/edit-profile",
             element: <EditProfile></EditProfile>,
+          },
+          {
+            path: "/dashboard/owner-profile",
+            element: <OwnerProfile></OwnerProfile>,
+          },
+          {
+            path: "/dashboard/owner-profile-edit",
+            element: <OwnerProfileEdit></OwnerProfileEdit>,
+          },
+          {
+            path: "/dashboard/owner-change-password",
+            element: <OwnerChangePassword></OwnerChangePassword>,
           },
           {
             path: "/dashboard/property-add",

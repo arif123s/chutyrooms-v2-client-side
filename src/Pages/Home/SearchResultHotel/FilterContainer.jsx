@@ -59,7 +59,7 @@ const FilterContainer = ({
   // console.log(searchInfo)
 
     const handleLocationClick = (id, searchType) => {
-      console.log("Location clicked", id, searchType); // Ensure this logs to the console
+      // console.log("Location clicked", id, searchType); // Ensure this logs to the console
       setChildLocation((prevState) => ({
         ...prevState,
         location_id: id,

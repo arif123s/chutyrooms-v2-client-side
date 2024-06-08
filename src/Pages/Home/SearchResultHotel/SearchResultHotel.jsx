@@ -1,5 +1,4 @@
 import "./SearchResultHotel.css";
-// import SearchField from "../Home/HomePage/SearchField/SearchField";
 import filterIcon from "../../../assets/icons/filter.svg";
 import downloadApp from "../../../assets/download-app.png";
 import { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { useGetAllSearchResultHotelsQuery } from "../../../redux/features/searchProperty/searchResultHotel.api";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import SearchField from "../Home/HomePage/SearchField/SearchField";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -72,7 +72,7 @@ const SearchResultHotel = () => {
     filterProperty,
     currentPage
   };
-  console.log(searchQuery);
+  // console.log(searchQuery);
 
   const {
     data: searchData,
@@ -80,7 +80,7 @@ const SearchResultHotel = () => {
     isFetching,
     refetch,
   } = useGetAllSearchResultHotelsQuery(searchQuery);
-  console.log(searchData);
+  // console.log(searchData);
 
   let hotelResult;
 
@@ -182,7 +182,7 @@ useEffect(() => {
 
         {isFetching ? (
           <div className="mx-auto">
-            <Loading></Loading>  
+            <Loading></Loading>
           </div>
         ) : (
           <>
@@ -216,6 +216,7 @@ useEffect(() => {
                         <SingleHotel
                           key={hotel?.property_id}
                           hotel={hotel}
+                          searchInfo={searchInfo}
                         ></SingleHotel>
                       ))}
                   </div>
@@ -227,6 +228,7 @@ useEffect(() => {
                         <SingleHotel
                           key={hotel?.property_id}
                           hotel={hotel}
+                          searchInfo={searchInfo}
                         ></SingleHotel>
                       ))}
                   </div>
@@ -278,7 +280,7 @@ useEffect(() => {
       {/* <button className="login-btn">See More</button> */}
 
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
-      <div className="sticky bottom-[30px] z-10">
+      <div className="sticky bottom-[24px] z-10">
         <button
           className="filter-btn"
           onClick={(e) => {
