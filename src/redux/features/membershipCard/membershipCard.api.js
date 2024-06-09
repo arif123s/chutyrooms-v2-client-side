@@ -3,8 +3,8 @@ import { baseApi } from "../../api/baseApi";
 const membershipCardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     membershipCard: builder.query({
-      query: (currentPage) => ({
-        url: `/membershipcards?page=${currentPage}`,
+      query: () => ({
+        url: `/membershipcards`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -16,7 +16,22 @@ const membershipCardApi = baseApi.injectEndpoints({
         return response; // Ensure the response continues as usual
       },
     }),
+
+    addMembershipPurchaseRequest: builder.mutation({
+      query: (membershipId) => {
+        return {
+          url: `/membershipCardPurchase/${membershipId}`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+         
+        };
+      },
+    }),
   }),
+
+ 
 });
 
-export const { useMembershipCardQuery } = membershipCardApi;
+export const { useMembershipCardQuery , useAddMembershipPurchaseRequestMutation } = membershipCardApi;
