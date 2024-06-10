@@ -712,7 +712,7 @@ const RoomAdd = () => {
             />
           </div>
 
-          {/* age variation */}
+          {/* child age variation */}
           <ChildAgeVariation
             childAgeVariation={childAgeVariation}
             setChildAgeVariation={setChildAgeVariation}

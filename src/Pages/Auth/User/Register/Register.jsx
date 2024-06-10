@@ -54,13 +54,6 @@ const Register = () => {
     { code: "+750", name: "Australia", image: countryIcon },
     { code: "+320", name: "Germany", image: countryIcon },
     { code: "+160", name: "UK", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    // Add more countries as needed
   ];
 
   const togglePasswordVisibility = () => {

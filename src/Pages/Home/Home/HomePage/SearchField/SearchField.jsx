@@ -6,13 +6,13 @@ import "./SearchField.css";
 import Gps from "./../../../../../assets/icons/gps.svg";
 import { useNavigate } from "react-router-dom";
 import  RoomGuest from "./RoomGuest";
+import { useDispatch } from "react-redux";
+import { setSearchInfo } from "../../../../../redux/features/searchProperty/searchHotelSlice";
 
 
 const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRange , rooms , setRooms , totalAdults, setTotalAdults , totalChildren , setTotalChildren }) => {
   const [open, setDatePickerOpen] = useState(false);
-
-
-
+  const dispatch = useDispatch();
   // console.log(rooms);
   // const today = new Date();
 
@@ -160,8 +160,6 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
     const maxChildAge = findMaxChildAge(rooms);
     // console.log("Maximum child age:", maxChildAge);
 
-   
-
     const searchInfo = {
       location: value,
       search_type: "country",
@@ -173,18 +171,30 @@ const SearchField = ({ value, onChange, onDateChange,startDate,endDate,setDateRa
       child_guest: totalChildren,
       child_age: maxChildAge,
     };
- 
 
-    // console.log(searchInfo.search_type);
+    dispatch(
+      setSearchInfo({
+        value:value,
+        onChange:onChange,
+        onDateChange:onDateChange,
+        startDate:startDate,
+        endDate:endDate,
+        setDateRange:setDateRange,
+        rooms:rooms,
+        setRooms:setRooms,
+        totalAdults:totalAdults,
+        setTotalAdults:setTotalAdults,
+        totalChildren:totalChildren,
+        setTotalChildren  :setTotalChildren,
+      })
+    );
     
     const queryString = new URLSearchParams(searchInfo).toString();
     navigate(`/search-result-hotel?${queryString}`);
-    
   };
 
   return (
     <div className="main-container mt-[18px] ">
-
       <form onSubmit={handleSubmit}>
       <div className={`searchBox ${scrollY > 0 ? 'remove-border' : ''}`}>
         <div className='search-input-container'>

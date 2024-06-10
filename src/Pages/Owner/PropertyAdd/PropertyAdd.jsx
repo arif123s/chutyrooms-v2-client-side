@@ -2157,7 +2157,7 @@ const PropertyAdd = () => {
           </h2>
 
           <div className="text-[14px] flex items-center gap-x-[10px] md:gap-x-[12px] lg:gap-x-[12px]">
-            <div className="flex flex-wrap gap-x-[4px] md:gap-x-[8px] lg:gap-x-[8px]">
+            <div className="flex flex-wrap gap-x-[6px] md:gap-x-[8px] lg:gap-x-[10px]">
               <Controller
                 name="paymentMethods"
                 control={control}
@@ -2169,7 +2169,7 @@ const PropertyAdd = () => {
                       (paymentMethod) => (
                         <div
                           key={paymentMethod.id}
-                          className="flex items-center "
+                          className="flex items-center gap-[6px]"
                         >
                           <input
                             type="checkbox"

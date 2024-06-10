@@ -17,7 +17,6 @@ const FilterContainer = ({
   setFacilities,
   setRating,
   setSortBy,
-  childLocation,
   setChildLocation,
 }) => {
   const [value, setValue] = useState([0, 200000]);
@@ -215,13 +214,15 @@ const FilterContainer = ({
         <h2 className="search-page-title mt-[20px]">Sort By</h2>
         {/* Price Slider */}
         <div className="mt-[8px]">
-          <Slider
-            value={value}
-            onChange={handleSliderChange}
-            valueLabelDisplay="auto"
-            min={searchData?.min_price}
-            max={searchData?.max_price}
-          />
+          <div className="">
+            <Slider
+              value={value}
+              onChange={handleSliderChange}
+              valueLabelDisplay="auto"
+              min={searchData?.min_price}
+              max={searchData?.max_price}
+            />
+          </div>
           {/* Price input */}
           <div className="flex justify-between items-center gap-[12px] text-[12px] md:text-[12px] lg:text-[16px]">
             <div className="h-[40px]  border-[1px] border-[#808783] flex justify-center items-center w-fit pl-[4px] lg:pl-[10px] rounded-[4px]">

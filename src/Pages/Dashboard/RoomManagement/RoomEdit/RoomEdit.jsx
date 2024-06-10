@@ -179,8 +179,8 @@ const RoomEdit = () => {
       id: bed.id,
       bed_name: bed.bed_name,
       qty: bed.qty,
-      is_active: bed.is_active,
-      view_order: bed.view_order,
+      is_active: bed.is_active || 1,
+      view_order: bed.view_order || 1,
     }));
     const updateChildVariation = childAgeVariation.map((variation) => ({
       id: parseInt(variation.id),

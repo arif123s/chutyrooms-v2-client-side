@@ -15,6 +15,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import popularHotelReducer from "./features/popularHotels/popularHotelSlice";
+import searchHotelReducer from "./features/searchProperty/searchHotelSlice";
 
 
 const persistConfig = {
@@ -31,8 +32,8 @@ const store = configureStore({
     auth: persistedAuthReducer,
     user: userReducer,
     popularHotel: popularHotelReducer,
-    membershipCard : membershipCardReducer,
-    
+    membershipCard: membershipCardReducer,
+    searchHotel: searchHotelReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

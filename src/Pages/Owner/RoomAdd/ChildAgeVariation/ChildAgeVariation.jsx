@@ -84,7 +84,7 @@ const ChildAgeVariation = ({
         >
           <div>
             <label className="property-input-title block" htmlFor="start_age">
-              Age Range
+              Child Age Range
             </label>
             <div className="flex">
               <input
