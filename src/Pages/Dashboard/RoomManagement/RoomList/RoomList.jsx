@@ -23,22 +23,32 @@ const RoomList = () => {
   let RightArrowUrl = defaultRightArrow;
   let LeftArrowUrl = defaultLeftArrow;
   const { propertyId } = useParams();
-  const { data, isLoading, refetch } = useGetAllRoomsQuery(
-    propertyId,
-    currentPage
-  );
+
+
+  const roomParameters = {propertyId , currentPage}
+  const { data, isLoading, refetch } = useGetAllRoomsQuery(roomParameters);
 
   const RoomLists = data?.data?.data;
+
+  console.log(data?.data?.pagination);
 
   useEffect(() => {
     if (data?.data?.pagination) {
       setTotalPages(data?.data?.pagination.last_page);
     }
-  }, [currentPage, data]);
-
-  useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, [currentPage, refetch, RoomLists]);
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch]);
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+     
+    }
+  };
 
   if (currentPage === 1) {
     RightArrowUrl = conditionalRightArrow;
@@ -52,11 +62,7 @@ const RoomList = () => {
     LeftArrowUrl = defaultLeftArrow;
   }
 
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
+ 
 
   if (isLoading) {
     return <Loading></Loading>;

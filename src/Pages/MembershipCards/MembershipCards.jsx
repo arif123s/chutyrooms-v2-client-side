@@ -7,7 +7,7 @@ import { useState } from "react";
 // import { styled } from "@mui/material/styles";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Switch from "@mui/material/Switch";
-import { useMembershipCardQuery } from "../../redux/features/membershipCard/membershipCard.api";
+import { useAddMembershipPurchaseRequestMutation, useMembershipCardQuery } from "../../redux/features/membershipCard/membershipCard.api";
 import Loading from "../Common/Includes/Loading/Loading";
 // import countryIcon from "../../../../assets/bd.svg";
 // import arrowIcon from "../../../../assets/icons/arrow-down.svg";
@@ -17,15 +17,15 @@ import ProtectedRoute from "../../Layout/ProtectedRoute";
 
 const MembershipCards = () => {
   const [purchasedCards, setPurchasedCards] = useState([
-    // {
-    //   id: 1,
-    //   img: platinumCard,
-    //   name: "Platinum",
-    //   title: "Flat 8% discount on every purchase",
-    //   validation: "Validation: 1 year",
-    //   price: " Tk 1500",
-    //   isActive: true,
-    // },
+    {
+      id: 1,
+      img: platinumCard,
+      name: "Platinum",
+      title: "Flat 8% discount on every purchase",
+      validation: "Validation: 1 year",
+      price: " Tk 1500",
+      isActive: true,
+    },
     // {
     //   id: 2,
     //   img: goldCard,
@@ -84,7 +84,7 @@ const MembershipCards = () => {
     name:"",
   });
   const user = JSON.parse(localStorage.getItem("userInfo"));
-  // console.log(user);
+  console.log(user);
 
   const [activatedCardId, setActivatedCardId] = useState(null);
 
@@ -92,7 +92,12 @@ const MembershipCards = () => {
   const [newActivatedCardId, setNewActivatedCardId] = useState(null);
   const { data: membershipCard, isLoading } = useMembershipCardQuery();
 
-  console.log(membershipCard?.data);
+  const [
+    addMembershipPurchaseRequest, 
+
+  ] = useAddMembershipPurchaseRequestMutation();
+
+  // console.log(membershipCard?.data);
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -218,8 +223,12 @@ const MembershipCards = () => {
 
   // Function to handle purchase for a specific card
   const handlePurchase = (card,name) => {
+   console.log(card)
+  
     setPurchaseCardInfo({card:card,name:name});
     setPurchase(true)
+
+    addMembershipPurchaseRequest(card.id);
   };
 
   const onSubmit = () => {

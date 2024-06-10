@@ -13,8 +13,8 @@ const roomAddApi = baseApi.injectEndpoints({
     }),
 
     getAllRooms: builder.query({
-      query: (id) => ({
-        url: `/property/room/?property_id=${id}`,
+      query: (roomParameters) => ({
+        url: `/property/room/?property_id=${roomParameters.propertyId}&page=${roomParameters.currentPage}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
