@@ -160,10 +160,11 @@ const Register = () => {
           .then((res) => res.json())
           .then((data) => {
             // setLoading(false);
+            console.log("data", data);
             toast.dismiss(toastId.current);
             setDisableButton(false);
             if (data.status == 102) {
-              console.log("Successfully registered!", data);
+              console.log("Successfully registered phone!", data);
               sessionStorage.setItem(
                 "user",
                 JSON.stringify({
@@ -177,7 +178,7 @@ const Register = () => {
               navigate(`/otp-phone`);
             }
             if (data.status == 101) {
-              console.log("Successfully registered!", data);
+              console.log("Successfully registered email!", data);
               sessionStorage.setItem(
                 "user",
                 JSON.stringify({

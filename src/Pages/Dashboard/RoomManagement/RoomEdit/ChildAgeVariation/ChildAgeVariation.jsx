@@ -8,6 +8,7 @@ const ChildAgeVariation = ({
   childAgeVariation,
   setChildAgeVariation,
   childAgeLimit,
+  setChildAgeVariationDelete,
 }) => {
   const [errorMessage, setErrorMessage] = useState({
     message: "",
@@ -25,8 +26,18 @@ const ChildAgeVariation = ({
 
   const handleRemoveAgeVariation = (e) => {
     e.preventDefault();
+    // if (childAgeVariation?.length > 1) {
+    //   setChildAgeVariation(childAgeVariation.slice(0, -1));
+    // }
     if (childAgeVariation?.length > 1) {
-      setChildAgeVariation(childAgeVariation.slice(0, -1));
+      const updatedChildAgeVariation = [...childAgeVariation];
+      const removedAgeVariation = updatedChildAgeVariation.pop(); // Remove the last age variation
+      setChildAgeVariation(updatedChildAgeVariation);
+
+      // Add the ID of the removed age variation to child_age_variation_delete
+      if (removedAgeVariation.id) {
+        setChildAgeVariationDelete((prev) => [...prev, removedAgeVariation.id]);
+      }
     }
   };
 

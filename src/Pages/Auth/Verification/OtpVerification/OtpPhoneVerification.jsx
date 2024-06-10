@@ -27,7 +27,7 @@ const OtpPhoneVerification = () => {
   // const [otpExpiresAt, setOtpExpiresAt] = useState("");
 
   const user = JSON.parse(sessionStorage.getItem("user"));
-  // console.log(user);
+  console.log(user);
 
   useEffect(() => {
     // const otpExpiresAt = userInfo?.data?.otp_expires_at;
