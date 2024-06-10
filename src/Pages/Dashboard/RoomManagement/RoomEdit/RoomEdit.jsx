@@ -188,8 +188,8 @@ const RoomEdit = () => {
       end_age: parseInt(variation.end_age),
       price: parseInt(variation.price),
       free_qty: parseInt(variation.free_qty),
-      view_order: parseInt(variation.view_order),
-      is_active: parseInt(variation.is_active),
+      view_order: parseInt(variation.view_order) || 1,
+      is_active: parseInt(variation.is_active)||1,
     }));
 
     console.log(updatedBeds);
