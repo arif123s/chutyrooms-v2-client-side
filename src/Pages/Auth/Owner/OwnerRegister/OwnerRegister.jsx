@@ -50,13 +50,6 @@ const OwnerRegister = () => {
     { code: "+750", name: "Australia", image: countryIcon },
     { code: "+320", name: "Germany", image: countryIcon },
     { code: "+160", name: "UK", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    { code: "+960", name: "Argentina", image: countryIcon },
-    // Add more countries as needed
   ];
 
       const togglePasswordVisibility = () => {
@@ -206,6 +199,7 @@ const OwnerRegister = () => {
       </div>
 
       <form className="mt-[20px]" onSubmit={handleSubmit(onSubmit)}>
+        {/* Owner Name */}
         <div className="mb-[14px]">
           <label className="input-title" htmlFor="name">
             Owner Name
@@ -231,34 +225,9 @@ const OwnerRegister = () => {
             )}
           </label>
         </div>
-
-        {/* <div className="mb-[14px]">
-          <label className="input-title" htmlFor="username">
-            Phone/Email
-          </label>
-          <input
-            className="input-box mb-[4px]"
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Enter your phone number or email"
-            {...register("username", {
-              required: {
-                value: true,
-                message: "Phone or email is Required",
-              },
-            })}
-          />
-          <label className="">
-            {errors.username?.type === "required" && (
-              <span className="label-text-alt text-red-500 block ">
-                {errors.username?.message}
-              </span>
-            )}
-          </label>
-        </div> */}
-
+        {/* Phone / email  */}
         {loginMethod === "phone" ? (
+          // Phone
           <div className="mb-[14px]">
             <label className="input-title" htmlFor="phone">
               Phone
@@ -377,7 +346,6 @@ const OwnerRegister = () => {
             </label>
           </div>
         )}
-
         {/* <div className="mb-4">
           <label className="input-title" htmlFor="phone">
             Phone Number
@@ -393,7 +361,6 @@ const OwnerRegister = () => {
             placeholder="Enter your phone number"
           />
         </div> */}
-
         {/* password */}
         {/* <div className="mb-[14px]">
           <label className="input-title" htmlFor="password">
@@ -473,7 +440,6 @@ const OwnerRegister = () => {
             </span>
           )}
         </div>
-
         {/* confirm password */}
         <div className="relative mb-[14px]">
           <label className="input-title" htmlFor="confirmPassword">
@@ -503,7 +469,7 @@ const OwnerRegister = () => {
               <img className="h-5 w-5 mt-[30px]" src={showPasswordIcon} />
             )}
           </span>
-         
+
           <label className="">
             {errors.confirmPassword?.type === "required" && (
               <span className="label-text-alt text-red-500">
@@ -517,7 +483,6 @@ const OwnerRegister = () => {
             )}
           </label>
         </div>
-
         <div className=" mt-3 text-[12px] lg:text-[14px] mb-[12px]">
           {/* <img className="w-[12px] mr-2" src={selectBoxIcon} alt="" /> */}
           <div className="flex items-center">
@@ -548,13 +513,11 @@ const OwnerRegister = () => {
             )}
           </label>
         </div>
-
         {errorMessage.status && (
           <p className="label-text-alt text-red-500 text-center">
             {errorMessage.message}
           </p>
         )}
-
         {errorMessage.errors?.length > 0 &&
           errorMessage?.errors?.map((err, index) => (
             <div key={index}>
@@ -568,7 +531,6 @@ const OwnerRegister = () => {
               ))}
             </div>
           ))}
-
         <input
           type="submit"
           disabled={disableButton}

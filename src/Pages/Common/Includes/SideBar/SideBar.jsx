@@ -309,10 +309,10 @@ const SideBar = ({ open }) => {
             )}
           </div>
         ))}
-        <div className="absolute  ml-[12px] bottom-[110px] flex cursor-pointer">
+        {/* <div className="absolute  ml-[12px] bottom-[110px] flex cursor-pointer">
           <img src={logout} alt="" />
           <p>Logout</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

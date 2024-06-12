@@ -52,11 +52,15 @@ const RoomEdit = () => {
   ]);
 
   const [bedInfos, setBedInfos] = useState([{ bed_name: "", qty: null }]);
+  const [bed_infos_delete, setBedInfosDelete] = useState([]);
+  const [child_age_variation_delete, setChildAgeVariationDelete] = useState([]);
   const selectedRoomTypes = useWatch({
     control,
     name: "roomTypes",
     defaultValue: [],
   });
+
+  console.log(bed_infos_delete)
 
   const [displayImageError, setDisplayImageError] = useState(null);
   let displayImageCount = 0;
@@ -179,8 +183,8 @@ const RoomEdit = () => {
       id: bed.id,
       bed_name: bed.bed_name,
       qty: bed.qty,
-      is_active: bed.is_active,
-      view_order: bed.view_order,
+      is_active: bed.is_active || 1,
+      view_order: bed.view_order || 1,
     }));
     const updateChildVariation = childAgeVariation.map((variation) => ({
       id: parseInt(variation.id),
@@ -188,8 +192,8 @@ const RoomEdit = () => {
       end_age: parseInt(variation.end_age),
       price: parseInt(variation.price),
       free_qty: parseInt(variation.free_qty),
-      view_order: parseInt(variation.view_order),
-      is_active: parseInt(variation.is_active),
+      view_order: parseInt(variation.view_order) || 1,
+      is_active: parseInt(variation.is_active)||1,
     }));
 
     console.log(updatedBeds);
@@ -227,6 +231,8 @@ const RoomEdit = () => {
       },
       child_age_variation: updateChildVariation,
       beds: updatedBeds,
+      bed_infos_delete:bed_infos_delete,
+      child_age_variation_delete:child_age_variation_delete,
       is_active: roomData.is_active,
       view_order: roomData.view_order,
     };
@@ -256,6 +262,14 @@ const RoomEdit = () => {
         } else if (key === "guest_infos") {
           Object.entries(value).forEach(([subKey, subValue]) => {
             formData.append(`guest_infos[${subKey}]`, subValue);
+          });
+        } else if (key === "bed_infos_delete" && value.length > 0) {
+          value.forEach((item, index) => {
+            formData.append(`${key}[${index}]`, item);
+          });
+        } else if (key === "child_age_variation_delete" && value.length > 0) {
+          value.forEach((item, index) => {
+            formData.append(`${key}[${index}]`, item);
           });
         } else {
           formData.append(key, value);
@@ -817,6 +831,7 @@ const RoomEdit = () => {
             setChildAgeVariation={setChildAgeVariation}
             register={register}
             childAgeLimit={parseInt(data?.data?.çhild_age_limit)}
+            setChildAgeVariationDelete={setChildAgeVariationDelete}
           ></ChildAgeVariation>
         </div>
         {/* Bed info */}
@@ -827,6 +842,7 @@ const RoomEdit = () => {
           setBedInfos={setBedInfos}
           setValue={setValue}
           validationErrors={validationErrors}
+          setBedInfosDelete={setBedInfosDelete}
         ></BedInfo>
 
         {/*  Is Active */}

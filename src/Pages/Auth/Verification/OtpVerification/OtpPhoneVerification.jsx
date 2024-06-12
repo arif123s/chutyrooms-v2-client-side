@@ -27,7 +27,7 @@ const OtpPhoneVerification = () => {
   // const [otpExpiresAt, setOtpExpiresAt] = useState("");
 
   const user = JSON.parse(sessionStorage.getItem("user"));
-  // console.log(user);
+  console.log(user);
 
   useEffect(() => {
     // const otpExpiresAt = userInfo?.data?.otp_expires_at;
@@ -107,7 +107,6 @@ const OtpPhoneVerification = () => {
     }
   };
 
-  // console.log(userInfo?.data);
 
   const handleResendCode = () => {
     // setLoading(true);
@@ -115,13 +114,12 @@ const OtpPhoneVerification = () => {
 
     // get data
     fetch(`${BASE_API}/user/otp/verify/resend?user=${user.id}`)
-    // fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
         // setLoading(false);
         toast.dismiss(toastId.current);
         reset();
-        console.log("data", data.data);
+        console.log("data", data);
         // setOtpExpiresAt(data.data.otp_expires_at);
         // setSeconds[122];
         sessionStorage.setItem(
@@ -131,7 +129,7 @@ const OtpPhoneVerification = () => {
             otpExpiresAt: data.data.otp_expires_at,
           })
         );
-        window.location.reload();
+        // window.location.reload();
       });
   };
 
@@ -149,7 +147,7 @@ const OtpPhoneVerification = () => {
       .then((data) => {
         // setLoading(false);
          toast.dismiss(toastId.current);
-        if (data.status === true) {
+        if (data.status ==1) {
           console.log("data", data);
           console.log("role code", data.data.roles);
           localStorage.setItem("accessToken", data.accessToken);

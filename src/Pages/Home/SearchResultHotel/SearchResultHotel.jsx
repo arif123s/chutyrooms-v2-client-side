@@ -57,6 +57,7 @@ const SearchResultHotel = () => {
     child_guest: parseInt(searchParams.get("child_guest")),
     child_age: parseInt(searchParams.get("child_age")),
   });
+  
   const [filterProperty, setFilterProperty] = useState({
     guest_session_id: searchParams.get("guest_session_id"),
     start_price: null,
@@ -72,7 +73,6 @@ const SearchResultHotel = () => {
     filterProperty,
     currentPage
   };
-  // console.log(searchQuery);
 
   const {
     data: searchData,
@@ -80,22 +80,19 @@ const SearchResultHotel = () => {
     isFetching,
     refetch,
   } = useGetAllSearchResultHotelsQuery(searchQuery);
-  // console.log(searchData);
-
-  let hotelResult;
-
-  //   if (searchData?.hotels_data?.data) {
-  //     if (searchData?.hotels_data?.data?.length > 0) {
-  // hotelResult =
-  //     }
-  //   }
+  console.log(searchData);
 
 useEffect(() => {
   if (searchData?.data?.hotels_data?.pagination) {
     setTotalPages(searchData?.data?.hotels_data?.pagination?.last_page);
   }
+  
   refetch();
-}, [currentPage, refetch,totalPages]);
+}, [
+  currentPage,
+  refetch,
+  totalPages,
+]);
 
   useEffect(() => {
     // Update filter property when priceRange changes
@@ -112,6 +109,7 @@ useEffect(() => {
         .filter((type) => type?.isChecked == true)
         .map((type) => type.id),
     });
+    setCurrentPage(1);
     refetch();
   }, [priceRange, rating, accommodation_types, facilities, sortBy, refetch]);
 
@@ -145,9 +143,6 @@ useEffect(() => {
     return <Loading></Loading>;
   }
 
-  // if (!searchData?.status)
-  //   return <div className="text-center mt-[28px]">Error!!</div>;
-
     const handlePageChange = (event, page) => {
       setCurrentPage(page); // Update current page when page changes
     };
@@ -155,7 +150,21 @@ useEffect(() => {
   return (
     <div className="hotel-search-result-container">
       {/* <div className={`hotel-search-result-container ${mapView? 'bg-[#FFC0CB]':''}`}> */}
-      {/* <SearchField></SearchField> */}
+      {/* <SearchField
+        value={location}
+        onChange={handleSearchChange}
+        date={searchDate}
+        onDateChange={handleDateChange}
+        startDate={startDate}
+        endDate={endDate}
+        setDateRange={setDateRange}
+        rooms={rooms}
+        setRooms={setRooms}
+        totalAdults={totalAdults}
+        setTotalAdults={setTotalAdults}
+        totalChildren={totalChildren}
+        setTotalChildren={setTotalChildren}
+      /> */}
 
       <div className="custom-container filter-hotels-container">
         <div className="filter-mobile filter-container">
@@ -181,7 +190,7 @@ useEffect(() => {
         {/* hotel results */}
 
         {isFetching ? (
-          <div className="mx-auto">
+          <div className="hotels-result-container mx-auto">
             <Loading></Loading>
           </div>
         ) : (

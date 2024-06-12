@@ -4,11 +4,12 @@ import minusIcon from "../../../../../assets/icons/minus.svg";
 import tickSquareIcon from "../../../../../assets/icons/tick-square-black.svg";
 import { useState } from "react";
 
-const BedInfo = ({ errors, bedInfos, setBedInfos, validationErrors }) => {
+const BedInfo = ({ errors, bedInfos, setBedInfos, validationErrors, setBedInfosDelete }) => {
   const [errorMessage, setErrorMessage] = useState({
     message: "",
     active: false,
   });
+  console.log(bedInfos)
 
   const handleAddBed = (e) => {
     e.preventDefault();
@@ -17,9 +18,19 @@ const BedInfo = ({ errors, bedInfos, setBedInfos, validationErrors }) => {
 
   const handleRemoveBed = (e) => {
     e.preventDefault();
-    if (bedInfos?.length > 1) {
-      setBedInfos(bedInfos.slice(0, -1));
-    }
+    // if (bedInfos?.length > 1) {
+    //   setBedInfos(bedInfos.slice(0, -1));
+    // }
+     if (bedInfos?.length > 1) {
+       const updatedBedInfos = [...bedInfos];
+       const removedBed = updatedBedInfos.pop(); // Remove the last bed
+       setBedInfos(updatedBedInfos);
+
+       // Add the ID of the removed bed to bed_infos_delete
+       if (removedBed.id) {
+         setBedInfosDelete((prev) => [...prev, removedBed.id]);
+       }
+     }
   };
 
   const handleValueChange = (index, field, value) => {

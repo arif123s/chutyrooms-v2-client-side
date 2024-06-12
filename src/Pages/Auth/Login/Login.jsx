@@ -133,7 +133,7 @@ const Login = () => {
       setDisableButton(false);
       toast.dismiss(toastId);
 
-      if (data.status === 1) {
+      if (data.status == 1) {
         console.log("Successfully logged in!", data);
         console.log(data.data.roles[0].role_code);
         localStorage.setItem("accessToken", data.accessToken);

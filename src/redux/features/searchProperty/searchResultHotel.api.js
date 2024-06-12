@@ -57,25 +57,23 @@ const searchResultHotelApi = baseApi.injectEndpoints({
         }).toString();
 
         let apiUrl = `/search?${queryString}`;
-       
-       if (
-         filterProperty.accommodation_types &&
-         filterProperty.accommodation_types.length > 0
-       ) {
-         const accommodationTypesString = `${filterProperty.accommodation_types.join(
-           ","
-         )}`;
-         apiUrl += `&accommodation_types[]=${accommodationTypesString}`;
-       }
+
+        if (
+          filterProperty.accommodation_types &&
+          filterProperty.accommodation_types.length > 0
+        ) {
+          const accommodationTypesString = `${filterProperty.accommodation_types.join(
+            ","
+          )}`;
+          apiUrl += `&accommodation_types[]=${accommodationTypesString}`;
+        }
 
         if (filterProperty.facilities && filterProperty.facilities.length > 0) {
           const facilitiesTypesString = `${filterProperty.facilities.join(
             ","
           )}`;
-          apiUrl += `&amenities_side[]=${facilitiesTypesString}`; 
+          apiUrl += `&amenities_side[]=${facilitiesTypesString}`;
         }
-
-        console.log("queryString", apiUrl);
 
         return {
           // url: `/search?${queryString}`,

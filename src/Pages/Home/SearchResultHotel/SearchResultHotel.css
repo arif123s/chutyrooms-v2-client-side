@@ -17,7 +17,7 @@
 
 .filter-container {
   width: 30%;
-  margin-right: 50px;
+  padding-right: 50px;
 }
 
 .suggested-place {
@@ -35,8 +35,7 @@
 
 .hotels-result-container {
   width: 70%;
-  /* display: flex; */
-  margin-left: 50px;
+  padding-left: 50px;
 }
 
 .hotels {
@@ -163,7 +162,7 @@
 
   .hotels-result-container {
     width: 100%;
-    margin-left: 0px;
+    padding-left: 0px;
   }
 
   .hotel {
@@ -227,13 +226,13 @@
   }
 
   .filter-container {
-    width: 35%;
-    margin-right: 16px;
+    width: 36%;
+    padding-right: 16px;
   }
 
   .hotels-result-container {
-    width: 62%;
-    margin-left: 16px;
+    width: 64%;
+    padding-left: 16px;
   }
 
   .hotel {
@@ -264,12 +263,12 @@
 
   .filter-container {
     width: 40%;
-    margin-right: 22px;
+    padding-right: 22px;
   }
 
   .hotels-result-container {
     width: 60%;
-    margin-left: 22px;
+    padding-left: 22px;
   }
 
   .hotel {
@@ -300,12 +299,12 @@
 
   .filter-container {
     width: 40%;
-    margin-right: 40px;
+    padding-right: 40px;
   }
 
   .hotels-result-container {
     width: 60%;
-    margin-left: 40px;
+    padding-left: 40px;
   }
 
   .hotel {
@@ -337,24 +336,23 @@
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   .filter-container {
     width: 28%;
-    margin-right: 40px;
+    padding-right: 40px;
   }
 
   .hotels-result-container {
     width: 72%;
-    /* display: flex; */
-    margin-left: 40px;
+    padding-left: 40px;
   }
 }
 
 @media (min-width: 1400px) {
   .filter-container {
     width: 28%;
-    margin-right: 40px;
+    padding-right: 40px;
   }
 
   .hotels-result-container {
     width: 72%;
-    margin-left: 40px;
+    padding-left: 40px;
   }
 }

@@ -22,8 +22,9 @@ const NavBar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userRole = userInfo?.role?.role_code;
+  // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+ const user = JSON.parse(localStorage.getItem("userInfo"));
+ const userRole = user?.role?.role_code;
   const countryList = [
     { id: 1, name: "BD", flag: globalLogo },
     // { id: 2, name: "USA", flag: globalLogo },
@@ -33,8 +34,8 @@ const NavBar = () => {
   const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
   const [country, setCountry] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem("userInfo"));
-  console.log(user);
+  
+  // console.log(user);
 
   useEffect(() => {
     // Set the duration in milliseconds (e.g., 3000 for 3 seconds)

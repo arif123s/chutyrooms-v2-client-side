@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 // import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ const OtpEmailVerification = () => {
 
      const navigate = useNavigate();
      const [otp, setOtp] = useState(["", "", "", ""]);
+     const toastId = useRef(null);
      const [seconds, setSeconds] = useState(119); // Initial seconds set to 1 minute and 59 seconds
      const [expired, setExpired] = useState(false); // Initialize expired state
      const {
@@ -26,7 +27,7 @@ const OtpEmailVerification = () => {
      // const [otpExpiresAt, setOtpExpiresAt] = useState("");
 
      const user = JSON.parse(sessionStorage.getItem("user"));
-     // console.log(user);
+     console.log(user);
 
      useEffect(() => {
        // const otpExpiresAt = userInfo?.data?.otp_expires_at;
@@ -108,29 +109,30 @@ const OtpEmailVerification = () => {
 
      // console.log(userInfo?.data);
 
-     const handleResendCode = () => {
-       setLoading(true);
+const handleResendCode = () => {
+  // setLoading(true);
+  toast.loading("Loading...");
 
-       // get data
-       fetch(`${BASE_API}/user/otp/verify/resend?user=${user.id}`)
-      //  fetch(`http://127.0.0.1:8000/api/user/otp/verify/resend?user=${user.id}`)
-         .then((res) => res.json())
-         .then((data) => {
-           setLoading(false);
-           reset();
-           console.log("data", data.data);
-           // setOtpExpiresAt(data.data.otp_expires_at);
-           // setSeconds[122];
-           sessionStorage.setItem(
-             "user",
-             JSON.stringify({
-               id: data.data.id,
-               otpExpiresAt: data.data.otp_expires_at,
-             })
-           );
-           window.location.reload();
-         });
-     };
+  // get data
+  fetch(`${BASE_API}/user/email/verify/resend?user=${user.id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      // setLoading(false);
+      toast.dismiss(toastId.current);
+      reset();
+      console.log("data", data);
+      // setOtpExpiresAt(data.data.otp_expires_at);
+      // setSeconds[122];
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: data.data.id,
+          otpExpiresAt: data.data.email_verification_token_expires_at,
+        })
+      );
+      // window.location.reload();
+    });
+};
 
      const onSubmit = () => {
        const concatOtp = parseInt(otp.join(""));
@@ -139,32 +141,34 @@ const OtpEmailVerification = () => {
        // setOtpError({ status: false, message: "" });
 
        // get data
-       fetch( `${BASE_API}/user/email/verify?user=${user.id}&token=${concatOtp}`)
-      //  fetch( `http://127.0.0.1:8000/api/user/email/verify?user=${user.id}&token=${concatOtp}`)
+       fetch(`${BASE_API}/user/email/verify?user=${user.id}&token=${concatOtp}`)
+         //  fetch( `http://127.0.0.1:8000/api/user/email/verify?user=${user.id}&token=${concatOtp}`)
          .then((res) => res.json())
          .then((data) => {
-           setLoading(false);
-           if (data?.status === true) {
+           // setLoading(false);
+           toast.dismiss(toastId.current);
+           if (data.status == 1) {
              console.log("data", data);
-             localStorage.setItem("accessToken", data.accessToken);
+             console.log("role code", data?.data?.roles);
+             localStorage.setItem("accessToken", data?.accessToken);
              localStorage.setItem(
                "userInfo",
                JSON.stringify({
-                 id: data?.data?.id,
-                 accessToken: data?.accessToken,
-                 name: data?.data?.name,
-                 img: data?.data?.image,
+                 id: data.data.id,
+                 accessToken: data.accessToken,
+                 name: data.data.name,
+                 img: data.data.image,
                  role: data.data.roles[0],
                })
              );
              toast.success("Successfully registered!");
-              if (data?.data?.roles[0]?.role_code == 345) {
-                navigate("/");
-              } else navigate("/dashboard");
-              if (data?.data?.roles[0]?.role_code == 234) {
-                // navigate("/dashboard/property-list");
-                navigate("/property-add");
-              }
+             if (data?.data?.roles[0]?.role_code == 345) {
+               navigate("/");
+             }
+             if (data?.data?.roles[0]?.role_code == 234) {
+               //  navigate("/dashboard/property-list");
+               navigate("/property-add");
+             }
            } else {
              setOtpError({ status: true, message: data.message });
              console.log(data);
