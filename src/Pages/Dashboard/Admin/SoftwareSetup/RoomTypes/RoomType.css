@@ -18,6 +18,7 @@
 .RoomType-list {
   background-color: #ffff;
   padding: 20px;
+  min-height: 550px;
 }
 
 .RoomType-add-division

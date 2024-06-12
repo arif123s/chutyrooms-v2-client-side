@@ -107,7 +107,7 @@ return (
 
           <tbody className="gap-y-5">
             {propertyData?.data?.data?.map((property) => (
-              <tr className="gap-y-[12px]" key={property?.id}>
+              <tr className="gap-y-[25px] gap-x-[20px]" key={property?.id}>
                 <td>
                   <img
                     className="w-12"
@@ -134,7 +134,7 @@ return (
                       e.preventDefault(),
                         navigate(`/dashboard/rooms/${property?.id}`);
                     }}
-                    className="active-inactive-btn"
+                    className="-btn"
                   >
                     Room List
                   </a>

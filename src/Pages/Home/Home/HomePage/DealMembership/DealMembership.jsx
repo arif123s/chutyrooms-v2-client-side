@@ -18,6 +18,8 @@ const DealMembership = ({ membershipCards }) => {
   //   return null;
   // }
 
+  console.log(membershipCards)
+
   return (
     <div className="deal-membership-container">
       <div className="membership-cards-large">
@@ -31,9 +33,13 @@ const DealMembership = ({ membershipCards }) => {
           <span className="membership-title block">Get Discount!</span>
         </div>
         <div className="membership-cards">
-          <img className="membership-card" src={platinum} alt="Platinum card" />
-          <img className="membership-card" src={gold} alt="Gold card" />
-          <img className="membership-card" src={silver} alt="Silver card" />
+          {membershipCards?.map((membershipCard)=>
+
+              <img className="membership-card" src={membershipCard.image} alt="Platinum card" />
+          )}
+          
+          {/* <img className="membership-card" src={gold} alt="Gold card" />
+          <img className="membership-card" src={silver} alt="Silver card" /> */}
         </div>
       </div>
       <div className="membership-cards-slider">

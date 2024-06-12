@@ -13,6 +13,8 @@
 .payment-list {
   background-color: #ffff;
   padding: 20px;
+  min-height: 550px;
+  position: relative;
 }
 
 .paymentmethod-add-division

@@ -18,6 +18,7 @@
 .amenities-list {
   background-color: #ffff;
   padding: 20px;
+  min-height: 550px;
 }
 
 .amenities-add-division

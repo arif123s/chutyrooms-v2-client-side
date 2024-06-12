@@ -148,6 +148,7 @@ const CountryList = () => {
     <div>
 
       <div className='country-list'>
+      <div className='booking-list'>
 
         <table className='custom-table'>
           <thead className='country-tbl-head'>
@@ -201,7 +202,7 @@ const CountryList = () => {
 
     
       </div>
-
+    </div>
     </div>
   );
 };

@@ -74,7 +74,7 @@ const MembershipList = () => {
 
 
     return (
-      <div className="membership-list">
+      <div className="membership-list ">
         <table className="custom-table">
           <thead className="membership-tbl-head">
             <tr>

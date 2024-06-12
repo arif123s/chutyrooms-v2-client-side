@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LightGallery from 'lightgallery/react';
 
 // import styles
@@ -49,7 +49,12 @@ import Dbbl from "../../../assets/icons/dbbl.svg";
 import Visa from "../../..//assets/icons/visa.svg";
 import Nagad from "../../../assets/icons/nagad.svg";
 import UserBackground from "../../../assets/icons/user-background-icon.svg";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  MarkerF,
+  Rectangle,
+  useLoadScript,
+} from "@react-google-maps/api";
 import Loading from "../../Common/Includes/Loading/Loading";
 import PricingOverview from "./PricingOverview";
 import RoomDetails from "./RoomDetails";
@@ -70,10 +75,7 @@ const HotelDetails = () => {
     const [counters, setCounters] = useState({});
     const [mapView, setMapView] = useState(false);
     const [color, setColor] = useState(false);
-    const [center, setCenter] = useState({
-        lat: 23.862725477930507,
-        lng: 90.40080333547479,
-    });
+    // const [center, setCenter] = useState({});
 
     const [modalId, setModalId] = useState(null);
 
@@ -87,7 +89,7 @@ const HotelDetails = () => {
     // const location = useLocation();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    console.log(searchParams);
+    // console.log(searchParams);
 
 
     const searchInfo = {
@@ -122,18 +124,34 @@ const HotelDetails = () => {
         isLoading,
       } = useGetSingleHotelQuery(searchInfo);
 
-      console.log(searchData);
+      // console.log(searchData);
       
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyDvhGL9yHeg55wvR1olWnMfdtDa-JdRMyY",
         libraries,
     });
 
+    const [center, setCenter] = useState({
+      lat: searchData?.data?.hotels_data?.latitude || 0,
+      lng: searchData?.data?.hotels_data?.longitude || 0,
+    });
+
+    useEffect(() => {
+      
+        setCenter({
+          lat: searchData?.data?.hotels_data?.latitude,
+          lng: searchData?.data?.hotels_data?.longitude,
+        });
+      
+    }, [searchData]);
+
+    console.log(center)
+
     if (loadError) {
         return <div className="text-center py-[60px]">Error loading maps!</div>;
     }
 
-    if (!isLoaded) {
+    if (!isLoaded || isLoading) {
         return <Loading></Loading>;
     }
 
@@ -150,6 +168,8 @@ const HotelDetails = () => {
     //         setCounter(counter - 1);
     //     }
     // };
+
+   
 
     const handleIncrement = (roomId) => {
         setCounters((prevCounters) => ({
@@ -773,34 +793,17 @@ const HotelDetails = () => {
             <div className=" p-[24px] ">
               <GoogleMap
                 mapContainerStyle={mapContainerStyle}
-                // mapContainerStyle={"map-view-container"}
                 zoom={10}
-                // center={center}
                 center={center}
-                // onLoad={onMapLoad}
-                // onClick={(e) => {
-                //   setCenter({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-                //   setValue("map", { lat: e.latLng.lat(), lng: e.latLng.lng() });
-                // }}
-                // onClick={onMapClick}
-                // onClick={handleMapClick}
-              >
-                {/* {rectangleBounds && (
-                    <Rectangle bounds={rectangleBounds} onLoad={onRectangleLoad} />
-                )} */}
-                {/* <Marker position={center} /> */}
-                <Marker />
-                {/* Additional marker at the search location */}
-
-                <Marker
-                  clickable={true}
-                  className="pointer-events-none"
-                  // position={mapCenter}
-                  icon={{
-                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Customize the marker icon as needed
+                >
+                {/* <MarkerF position={center} />
+                <MarkerF /> */}
+                {center && (
+                  <MarkerF position={center} icon={{
+                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
                     scaledSize: new window.google.maps.Size(30, 30),
-                  }}
-                />
+                  }}/>)
+                  }
               </GoogleMap>
             </div>
             <div className="p-[24px] space-y-[10px]">

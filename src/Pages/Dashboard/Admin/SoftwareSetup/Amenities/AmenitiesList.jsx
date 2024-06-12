@@ -107,7 +107,7 @@ const handlePageChange = (pageNumber) => {
 
 
     return (
-        <div className="amenities-list">
+        <div className="amenities-list relative">
       <table className="custom-table">
         <thead className="amaenities-tbl-head">
           <tr>
@@ -173,7 +173,7 @@ const handlePageChange = (pageNumber) => {
         </tbody>
       </table>
 
-      <div className='pagination w-full'>
+      <div className='pagination w-full absolute'>
         <img  src={RightArrowUrl} onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}></img>
         {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (

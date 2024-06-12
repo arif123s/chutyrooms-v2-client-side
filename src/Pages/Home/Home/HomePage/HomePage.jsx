@@ -68,6 +68,7 @@ const HomePage = () => {
   const { data } = useHomePageDataQuery();
   const popularProperties = data?.data?.properties;
   const membershipCards = data?.data?.memberships;
+  // console.log(membershipCards);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,7 +134,7 @@ const HomePage = () => {
         )}
         <div className="hotels-membership-container">
           <PopularHotels popularProperties={popularProperties}  startDate={startDate} endDate={endDate} rooms = {rooms} totalAdults = {totalAdults} totalChildren = {totalChildren} child_age={maxChildAge}  />
-          <DealMembership sentValue={membershipCards} />
+          <DealMembership membershipCards={membershipCards} />
         </div>
         <ExploreCountry />
       </div>
